@@ -1,0 +1,13 @@
+.vscode
+__pycache__
+.pytest_cache
+
+*.ifc
+!test/*.ifc
+
+*.json
+!test/**/*.json
+!src/**/*.json
+!kv2bim-dev-keevalue.json
+
+*.glb
