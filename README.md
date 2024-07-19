@@ -4,12 +4,15 @@
 
 Build docker image
 ```console
-docker build -t viewer-extraction -f Dockerfile .
+docker build -t cs2bim-run -f Dockerfile .
 ```
 Run docker image
 ```console
-docker run -e IFC_VERSION=[str("IF4";"IFC4x3")] -e NAME=[str] -e POLYGON=[str(wkt)] --name cs2bim
+docker run -e IFC_VERSION=[str("IF4";"IFC4x3")] -e NAME=[str] -e POLYGON=[str(wkt)] --name cs2bim-run cs2bim-run
 ```
+
+Example:\
+docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e POLYGON="POLYGON ((2689625.65 1283556.46, 2689594.44 1283614.38, 2689527.96 1283597.71, 2689625.65 1283556.46))" --name cs2bim-run cs2bim-run
 
 Important: If you change the config.yml, the container must be rebuild to make it work.
 
