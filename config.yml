@@ -1,0 +1,45 @@
+############# DB configuration #############
+db:
+  dbname: "cs2bim"
+  user: "postgres"
+  host: "host.docker.internal"
+  password: "postgres"
+
+############# tin configuration #############
+tin:
+  grid_size: 0.5
+  max_height_error: 0.05
+
+############# ifc configuration #############
+ifc:
+  author: "FHNW"
+  version: "1.0"
+  application_name: "cs2bim"
+  project_name: "cs2bim"
+  geo_referencing: LO_GEO_REF_30
+  triangulation_representation_type: TESSELLATION
+  feature_classes:
+    parcel:
+      entity_type: IFC_GEOGRAPHIC_ELEMENT
+      spatial_structure:
+        entity_type: IFC_SITE 
+        name: "Site"
+      groups: 
+        - "FeatureClasses.CadastralSurveying.Parcels"
+      color_definition:  
+        r: 0.31
+        g: 0.67
+        b: 0.04
+        a: 0.85
+    land_cover:
+      entity_type: IFC_GEOGRAPHIC_ELEMENT
+      spatial_structure:
+        entity_type: IFC_SITE 
+        name: "Site"
+      groups: 
+        - "FeatureClasses.CadastralSurveying.LandCover"
+      color_definition:  
+        r: 0.52
+        g: 0.42
+        b: 0.04
+        a: 0.85
