@@ -4,15 +4,24 @@
 
 Build docker image
 ```console
-docker build -t cs2bim-run -f Dockerfile .
+docker build -t cs2bim-run -f Dockerfile . --rm
 ```
 Run docker image
 ```console
-docker run -e IFC_VERSION=[str("IF4";"IFC4x3")] -e NAME=[str] -e POLYGON=[str(wkt)] --name cs2bim-run cs2bim-run
+docker run -e IFC_VERSION=[cs2bim.enum.ifc_version.IfcVersion] -e NAME=[str] -e BOUNDING_BOX=[str] --name cs2bim-run --rm cs2bim-run
 ```
+The bounding box is provided as four numbers (epsg code (wgs84 or lv95) is configurable):\
+bbox = min Longitude , min Latitude , max Longitude , max Latitude 
 
-Example:\
-docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e POLYGON="POLYGON ((2689625.65 1283556.46, 2689594.44 1283614.38, 2689527.96 1283597.71, 2689625.65 1283556.46))" --name cs2bim-run cs2bim-run
+Examples:
+- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e BOUNDING_BOX="8.619857,47.707097,8.621066,47.707740" --name cs2bim-run --rm cs2bim-run
+
+After you run the docker container successfully there will be new output ifc file. 
+
+Copy output from docker container to host
+```console
+docker cp cs2bim-run:workspace/output .
+```
 
 Important: If you change the config.yml, the container must be rebuild to make it work.
 
@@ -40,7 +49,9 @@ Some properties of this python project can be configured using the config.yaml f
 |db.host|str|?|"host.docker.internal"|
 |db.password|str|?|"xxx"|
 |---|---|---|---|
-|tin.grid_size|float|0.5|0.5|
+|control.epsg_code|EPSGCode|LV95; WGS84|LV95|
+|---|---|---|---|
+|tin.grid_size|float|0.5;2|0.5|
 |tin.max_height_error|float|TODO|0.05|
 |---|---|---|---|
 |ifc.author|str|?|"author"|
@@ -60,6 +71,7 @@ Some properties of this python project can be configured using the config.yaml f
 
 ### Types
 
+EPSGCode -> cs2bim.enum.epsg_code.py
 GeoReferencing -> tin2ifc.enum.geo_referencing.py\
 TriangulationRepresentationType -> tin2ifc.enum.triangulation_representation_type.py\
 ElementEntityType -> tin2ifc.enum.element_entity_type.py\

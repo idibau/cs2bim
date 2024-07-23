@@ -5,6 +5,10 @@ db:
   host: "host.docker.internal"
   password: "postgres"
 
+########## control configuration ############
+control:
+  epsg_code: WGS84
+
 ############# tin configuration #############
 tin:
   grid_size: 0.5
@@ -23,9 +27,9 @@ ifc:
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       spatial_structure:
         entity_type: IFC_SITE 
-        name: "Site"
+        name: ""
       groups: 
-        - "FeatureClasses.CadastralSurveying.Parcels"
+        - "Amtliche Vermessung.Feature-Klassen.Liegenschaften"
       color_definition:  
         r: 0.31
         g: 0.67
@@ -35,9 +39,9 @@ ifc:
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       spatial_structure:
         entity_type: IFC_SITE 
-        name: "Site"
+        name: ""
       groups: 
-        - "FeatureClasses.CadastralSurveying.LandCover"
+        - "Amtliche Vermessung.Feature-Klassen.Bodenbedeckung (Gebaeude)"
       color_definition:  
         r: 0.52
         g: 0.42

@@ -1,3 +1,4 @@
+import os
 import sys
 import logging
 import numpy as np
@@ -9,9 +10,11 @@ from tin2ifc.model.entitiy.element import Element
 from tin2ifc.model.geometry.triangulation import Triangulation
 from tin2ifc.build.ifc_builder import IfcBuilder
 
-from configuration import config
-from service.swisstopo_service import SwisstopoService
-from service.postgis_service import PostgisService
+from cs2bim.configuration import config
+from cs2bim.bounding_box import BoundingBox
+from cs2bim.enum.ifc_version import IfcVersion
+from cs2bim.service.swisstopo_service import SwisstopoService
+from cs2bim.service.postgis_service import PostgisService
 
 
 logging_format = "%(asctime)s - %(filename)s:%(lineno)s - %(levelname)s - %(message)s"
@@ -31,18 +34,42 @@ swiss_topo_service = SwisstopoService()
 postgis_service = PostgisService()
 
 
-def main(ifc_version: str, name: str, polygon: str):
-    dtm_file = swiss_topo_service.fetch_dtm_file("")
-    p_raster = np.loadtxt(dtm_file, delimiter=" ", skiprows=1)
+def main(ifc_version: IfcVersion, name: str, bounding_box: BoundingBox):
+    logger.info("fetch parcels")
+    parcels = postgis_service.fetch_parcels(bounding_box)
+
+    logger.info("fetch landcovers")
+    land_covers = postgis_service.fetch_land_cover(bounding_box)
+
+    logger.info("calculate extended bounding box")
+    # ensures that parcels that exceed the bounding box are also included in the dtm files
+    wkts = []
+    for parcel in parcels:
+        wkts.append(parcel.wkt)
+    for land_cover in land_covers:
+        wkts.append(land_cover.wkt)
+    
+    if len(wkts) == 0:
+        logger.warning("No content found for this bounding box")
+        extended_bounding_box = bounding_box
+    else:
+        extended_bounding_box = postgis_service.get_bounding_box(wkts)
+
+    logger.info("fetch dtm files")
+    dtm_files = swiss_topo_service.fetch_dtm_files(extended_bounding_box)
+    logger.info(f"fetched {len(dtm_files)} dtm files")
+
+    logger.info("load raster")
+    p_raster_parts = list((np.loadtxt(dtm_file, delimiter=" ", skiprows=1) for dtm_file in dtm_files))
+    p_raster = np.concatenate(p_raster_parts)
     origin = p_raster.min(axis=0)
 
-    # create model object
-    model = IfcModel(name, ifc_version, (float(origin[0]), float(origin[1]), float(origin[2])))
+    model = IfcModel(name, ifc_version.value, (float(origin[0]), float(origin[1]), float(origin[2])))
 
-    # add elements for "PARCEL" feature class
+    logger.info("create parcel feature class")
     feature_class = config.feature_classes["parcel"]
-    parcels = postgis_service.fetch_parcels(polygon)
-    for parcel in parcels:
+    for index, parcel in enumerate(parcels):
+        logger.info(f"create parcel {parcel.egris_egrid} ({index + 1}/{len(parcels)})")
         area = Area(wkt_str=parcel.wkt, origin=origin[:2])
         dtm_points = RasterPoints(p_raster, origin=origin)
         subset_P_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
@@ -51,6 +78,7 @@ def main(ifc_version: str, name: str, polygon: str):
         mesh_clipped_decimated = mesh_clipped.decimate(
             max_height_error=config.max_height_error, grid_size=config.grid_size
         )
+        logger.debug(f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}")
         triangulation = Triangulation()
         triangulation.load_from_data(mesh_clipped_decimated.get_data())
         element = Element("-", "-", triangulation)
@@ -59,10 +87,10 @@ def main(ifc_version: str, name: str, polygon: str):
         element.add_property("CHKGK_CS", "EGRIS_EGRID", parcel.egris_egrid)
         model.add_element(feature_class.key, element)
 
-    # add elements for "BODEN" feature class
+    logger.info("create land cover feature class")
     feature_class = config.feature_classes["land_cover"]
-    land_covers = postgis_service.fetch_land_cover(polygon)
-    for land_cover in land_covers:
+    for index, land_cover in enumerate(land_covers):
+        logger.info(f"create land cover ({index + 1}/{len(land_covers)})")
         area = Area(wkt_str=land_cover.wkt, origin=origin[:2])
         dtm_points = RasterPoints(p_raster, origin=origin)
         subset_P_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
@@ -76,7 +104,6 @@ def main(ifc_version: str, name: str, polygon: str):
         element = Element("-", "-", triangulation)
         model.add_element(feature_class.key, element)
 
-    # build ifc object
     ifc_builder = IfcBuilder(
         config.author,
         config.version,
@@ -88,13 +115,17 @@ def main(ifc_version: str, name: str, polygon: str):
     )
     ifc_file = ifc_builder.build(model)
 
-    # write ifc file
-    ifc_file.write("files/test5.ifc")
+    ifc_file.write(f"output/{name}.ifc")
 
 
 if __name__ == "__main__":
-    ifc_version = "IFC4"
-    name = "Test"
-    polygon = "POLYGON ((2689625.65 1283556.46, 2689594.44 1283614.38, 2689527.96 1283597.71, 2689625.65 1283556.46))"
-
-    main(ifc_version, name, polygon)
+    MANDATORY_ENV_VARS = ["IFC_VERSION", "NAME", "BOUNDING_BOX"]
+    for var in MANDATORY_ENV_VARS:
+        if var not in os.environ:
+            raise EnvironmentError(f"Failed because {var} is not set.")
+    ifc_version = IfcVersion[os.environ["IFC_VERSION"]]
+    name = os.environ["NAME"]
+    points = os.environ["BOUNDING_BOX"].split(",")
+    logger.info(f"IFC_VERSION: {ifc_version.name}, NAME: {name}, BOUNDING_BOX: {os.environ['BOUNDING_BOX']}")
+    bounding_box = BoundingBox(float(points[0]), float(points[1]), float(points[2]), float(points[3]), config.epsg_code)
+    main(ifc_version, name, bounding_box)
