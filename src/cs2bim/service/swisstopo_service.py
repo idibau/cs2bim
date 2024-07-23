@@ -6,19 +6,23 @@ from zipfile import ZipFile
 
 from cs2bim.bounding_box import BoundingBox
 
+
 class SwisstopoService:
+    """Service that accesses the swisstopo api"""
 
     def __init__(self) -> None:
         self.temp_dir = tempfile.TemporaryDirectory()
 
     def fetch_dtm_files(self, bounding_box: BoundingBox) -> list[str]:
+        """Fetches all dtm files that are needed to display the are defined by the bounding box and saves them in a temporary folder"""
         file_paths = []
         items_url = "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
         items_response = requests.get(items_url, params={"bbox": bounding_box.get_wgs84_bounding_box_as_string()})
         if items_response.status_code == 200:
             for feature in items_response.json()["features"]:
                 assets = feature["assets"].values()
-                filtered_assets = list(filter(self.asset_filter, assets))
+                asset_filter = lambda asset: asset["type"] == "application/x.ascii-xyz+zip" and asset["eo:gsd"] == 0.5
+                filtered_assets = list(filter(asset_filter, assets))
                 if len(filtered_assets) != 1:
                     raise Exception("filtering assets returned more than one result")
 
@@ -34,6 +38,3 @@ class SwisstopoService:
         else:
             raise Exception(f"requesting items failed with HTTP error {items_response.status_code}")
         return file_paths
-
-    def asset_filter(self, asset: Any):
-        return asset["type"] == "application/x.ascii-xyz+zip" and asset["eo:gsd"] == 0.5

@@ -5,6 +5,22 @@ from cs2bim.enum.epsg_code import EPSGCode
 
 
 class BoundingBox:
+    """
+    Information about a bounding box in a specified coordinate system
+
+    Attributes
+    ----------
+    min_lon : float
+        Minimum longitude
+    min_lat : float
+        Minimum latitude
+    max_lon : float
+        Maximum longitude
+    max_lat : float
+        Maximum latitude
+    epsg_code : EPSGCode
+        EPSG code of the attributes
+    """
 
     def __init__(self, min_lon: float, min_lat: float, max_lon: float, max_lat: float, epsg_code: EPSGCode) -> None:
         self.min_lon = min_lon
@@ -15,6 +31,7 @@ class BoundingBox:
 
     @classmethod
     def from_wkt(cls, wkt: str, epsg_code: EPSGCode) -> BoundingBox:
+        """Constructor with a wkt parameter. The wkt should be a closed POLYGON with 5 coordiantes."""
         coordinates = []
         for points in wkt[9:-2].split(","):
             coordinates.append((float(points.split(" ")[0]), float(points.split(" ")[1])))

@@ -38,8 +38,8 @@ def main(ifc_version: IfcVersion, name: str, bounding_box: BoundingBox):
     logger.info("fetch parcels")
     parcels = postgis_service.fetch_parcels(bounding_box)
 
-    logger.info("fetch landcovers")
-    land_covers = postgis_service.fetch_land_cover(bounding_box)
+    logger.info("fetch landcovers (building)")
+    land_covers = postgis_service.fetch_building_land_cover(bounding_box)
 
     logger.info("calculate extended bounding box")
     # ensures that parcels that exceed the bounding box are also included in the dtm files
@@ -87,7 +87,7 @@ def main(ifc_version: IfcVersion, name: str, bounding_box: BoundingBox):
         element.add_property("CHKGK_CS", "EGRIS_EGRID", parcel.egris_egrid)
         model.add_element(feature_class.key, element)
 
-    logger.info("create land cover feature class")
+    logger.info("create land cover (building) feature class")
     feature_class = config.feature_classes["land_cover"]
     for index, land_cover in enumerate(land_covers):
         logger.info(f"create land cover ({index + 1}/{len(land_covers)})")

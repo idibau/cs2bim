@@ -8,6 +8,7 @@ from cs2bim.model.land_cover import LandCover
 
 
 class PostgisService:
+    """Service that accesses a postgis database according to the configuration"""
 
     def __init__(self) -> None:
         self.connection = psycopg2.connect(
@@ -15,6 +16,7 @@ class PostgisService:
         )
 
     def fetch_parcels(self, bounding_box: BoundingBox) -> list[Parcel]:
+        """Fetch all parcels that lay inside the bounding box"""
         cur = self.connection.cursor()
         cur.execute(
             f"""
@@ -29,7 +31,8 @@ class PostgisService:
         results = cur.fetchall()
         return list(Parcel(result[0], result[1], result[2], result[3]) for result in results)
 
-    def fetch_land_cover(self, bounding_box: BoundingBox) -> list[LandCover]:
+    def fetch_building_land_cover(self, bounding_box: BoundingBox) -> list[LandCover]:
+        """Fetch all building land covers that lay inside the bounding box"""
         cur = self.connection.cursor()
         cur.execute(
             f"""
@@ -55,5 +58,5 @@ class PostgisService:
         wkt = cur.fetchall()[0][0]
         coordinates = []
         for points in wkt[9:-2].split(","):
-            coordinates.append((float(points.split(" ")[0]),float(points.split(" ")[1])))
-        return BoundingBox(coordinates[0][1], coordinates[0][0],coordinates[2][1], coordinates[2][0], EPSGCode.LV95)
+            coordinates.append((float(points.split(" ")[0]), float(points.split(" ")[1])))
+        return BoundingBox(coordinates[0][1], coordinates[0][0], coordinates[2][1], coordinates[2][0], EPSGCode.LV95)
