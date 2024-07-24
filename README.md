@@ -8,22 +8,17 @@ docker build -t cs2bim-run -f Dockerfile . --rm
 ```
 Run docker image
 ```console
-docker run -e IFC_VERSION=[cs2bim.enum.ifc_version.IfcVersion] -e NAME=[str] -e BOUNDING_BOX=[str] --name cs2bim-run --rm cs2bim-run
+docker run -e IFC_VERSION=[cs2bim.enum.ifc_version.IfcVersion] -e NAME=[str] -e BOUNDING_BOX=[str] -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
 ```
 The bounding box is provided as four numbers (epsg code (wgs84 or lv95) is configurable):\
 bbox = min Longitude , min Latitude , max Longitude , max Latitude 
 
 Examples:
-- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e BOUNDING_BOX="8.619857,47.707097,8.621066,47.707740" --name cs2bim-run --rm cs2bim-run
-- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e BOUNDING_BOX="8.627678,47.709467,8.630310,47.710234" --name cs2bim-run --rm cs2bim-run
-- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e BOUNDING_BOX="8.626216,47.698555,8.626548,47.698647" --name cs2bim-run --rm cs2bim-run
+- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e BOUNDING_BOX="8.619857,47.707097,8.621066,47.707740" -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
+- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e BOUNDING_BOX="8.627678,47.709467,8.630310,47.710234" -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
+- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e BOUNDING_BOX="8.626216,47.698555,8.626548,47.698647" -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
 
-After you run the docker container successfully there will be new output ifc file. 
-
-Copy output from docker container to host
-```console
-docker cp cs2bim-run:workspace/output .
-```
+After you run the docker container successfully there will be new output ifc file inside the folder from where you started the container.
 
 Important: If you change the config.yml, the container must be rebuild to make it work.
 
