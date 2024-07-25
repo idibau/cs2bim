@@ -11,7 +11,6 @@ from tin2ifc.model.geometry.triangulation import Triangulation
 from tin2ifc.build.ifc_builder import IfcBuilder
 
 from cs2bim.configuration import config
-from cs2bim.bounding_box import BoundingBox
 from cs2bim.enum.ifc_version import IfcVersion
 from cs2bim.service.swisstopo_service import SwisstopoService
 from cs2bim.service.postgis_service import PostgisService
@@ -34,29 +33,29 @@ swiss_topo_service = SwisstopoService()
 postgis_service = PostgisService()
 
 
-def main(ifc_version: IfcVersion, name: str, bounding_box: BoundingBox):
+def main(ifc_version: IfcVersion, name: str, polygon: str):
     logger.info("fetch parcels")
-    parcels = postgis_service.fetch_parcels(bounding_box)
+    parcels = postgis_service.fetch_parcels(polygon)
 
     logger.info("fetch landcovers (building)")
-    land_covers = postgis_service.fetch_building_land_cover(bounding_box)
+    land_covers = postgis_service.fetch_building_land_cover(polygon)
 
-    logger.info("calculate extended bounding box")
+    logger.info("calculate bounding box for fetching dtm files")
     # ensures that parcels that exceed the bounding box are also included in the dtm files
     wkts = []
     for parcel in parcels:
         wkts.append(parcel.wkt)
     for land_cover in land_covers:
         wkts.append(land_cover.wkt)
-    
+
     if len(wkts) == 0:
-        logger.warning("No content found for this bounding box")
-        extended_bounding_box = bounding_box
+        logger.warning("No content found for this polygon")
+        bounding_box = postgis_service.get_bounding_box([polygon])
     else:
-        extended_bounding_box = postgis_service.get_bounding_box(wkts)
+        bounding_box = postgis_service.get_bounding_box(wkts)
 
     logger.info("fetch dtm files")
-    dtm_files = swiss_topo_service.fetch_dtm_files(extended_bounding_box)
+    dtm_files = swiss_topo_service.fetch_dtm_files(bounding_box)
     logger.info(f"fetched {len(dtm_files)} dtm files")
 
     logger.info("load raster")
@@ -119,13 +118,12 @@ def main(ifc_version: IfcVersion, name: str, bounding_box: BoundingBox):
 
 
 if __name__ == "__main__":
-    MANDATORY_ENV_VARS = ["IFC_VERSION", "NAME", "BOUNDING_BOX"]
+    MANDATORY_ENV_VARS = ["IFC_VERSION", "NAME", "POLYGON"]
     for var in MANDATORY_ENV_VARS:
         if var not in os.environ:
             raise EnvironmentError(f"Failed because {var} is not set.")
     ifc_version = IfcVersion[os.environ["IFC_VERSION"]]
     name = os.environ["NAME"]
-    points = os.environ["BOUNDING_BOX"].split(",")
-    logger.info(f"IFC_VERSION: {ifc_version.name}, NAME: {name}, BOUNDING_BOX: {os.environ['BOUNDING_BOX']}")
-    bounding_box = BoundingBox(float(points[0]), float(points[1]), float(points[2]), float(points[3]), config.epsg_code)
-    main(ifc_version, name, bounding_box)
+    polygon = os.environ["POLYGON"]
+    logger.info(f"IFC_VERSION: {ifc_version.name}, NAME: {name}, POLYGON: {polygon}")
+    main(ifc_version, name, polygon)

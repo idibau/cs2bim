@@ -8,15 +8,12 @@ docker build -t cs2bim-run -f Dockerfile . --rm
 ```
 Run docker image
 ```console
-docker run -e IFC_VERSION=[cs2bim.enum.ifc_version.IfcVersion] -e NAME=[str] -e BOUNDING_BOX=[str] -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
+docker run -e IFC_VERSION=[cs2bim.enum.ifc_version.IfcVersion] -e NAME=[str] -e POLYGON=[wkt] -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
 ```
-The bounding box is provided as four numbers (epsg code (wgs84 or lv95) is configurable):\
-bbox = min Longitude , min Latitude , max Longitude , max Latitude 
+The polygon must be a valid wkt string in LV95.
 
 Examples:
-- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e BOUNDING_BOX="8.619857,47.707097,8.621066,47.707740" -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
-- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e BOUNDING_BOX="8.627678,47.709467,8.630310,47.710234" -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
-- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e BOUNDING_BOX="8.626216,47.698555,8.626548,47.698647" -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
+- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e POLYGON="POLYGON((2689114 1285136,2689143 1285192,2689170 1285159,2689114 1285136))" -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
 
 After you run the docker container successfully there will be new output ifc file inside the folder from where you started the container.
 
@@ -45,8 +42,6 @@ Some properties of this python project can be configured using the config.yaml f
 |db.user|str|?|"postgres"|
 |db.host|str|?|"host.docker.internal"|
 |db.password|str|?|"xxx"|
-|---|---|---|---|
-|control.epsg_code|EPSGCode|LV95; WGS84|LV95|
 |---|---|---|---|
 |tin.grid_size|float|0.5;2|0.5|
 |tin.max_height_error|float|TODO|0.05|

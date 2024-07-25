@@ -6,8 +6,6 @@ from tin2ifc.model.feature_class import FeatureClass
 from tin2ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
 from tin2ifc.model.entitiy.spatial_structure import SpatialStructure
 
-from cs2bim.enum.epsg_code import EPSGCode
-
 class Configuration:
     """
     Holds the configuration information
@@ -26,10 +24,6 @@ class Configuration:
         self.user = db_config["user"]
         self.host = db_config["host"]
         self.password = db_config["password"]
-
-        # init control configuration
-        control_config = self.config_file["control"]
-        self.epsg_code = EPSGCode[control_config["epsg_code"]]
 
         # init tin configuration
         tin_config = self.config_file["tin"]
