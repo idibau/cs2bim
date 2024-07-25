@@ -1,6 +1,6 @@
 {
     "initializeCommand": "dir",
-    "name": "kv2bim-extract",
+    "name": "cs2bim",
     "dockerComposeFile": "docker-compose-dev.yml",
     "service": "development",
     "workspaceFolder": "/workspace",
