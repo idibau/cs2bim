@@ -80,7 +80,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
         logger.debug(f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}")
         triangulation = Triangulation()
         triangulation.load_from_data(mesh_clipped_decimated.get_data())
-        element = Element("-", "-", triangulation)
+        element = Element(parcel.egris_egrid, "", triangulation)
         element.add_property("CHKGK_CS", "NBIdent", parcel.nbident)
         element.add_property("CHKGK_CS", "Nummer", parcel.nummer)
         element.add_property("CHKGK_CS", "EGRIS_EGRID", parcel.egris_egrid)
@@ -100,7 +100,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
         )
         triangulation = Triangulation()
         triangulation.load_from_data(mesh_clipped_decimated.get_data())
-        element = Element("-", "-", triangulation)
+        element = Element("", "", triangulation)
         model.add_element(feature_class.key, element)
 
     ifc_builder = IfcBuilder(
