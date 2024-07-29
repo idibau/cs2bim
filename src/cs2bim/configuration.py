@@ -23,6 +23,7 @@ class Configuration:
         self.dbname = db_config["dbname"]
         self.user = db_config["user"]
         self.host = db_config["host"]
+        self.port = db_config["port"]
         self.password = db_config["password"]
 
         # init tin configuration

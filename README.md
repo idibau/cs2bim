@@ -41,6 +41,7 @@ Some properties of this python project can be configured using the config.yaml f
 |db.dbname|str|?|"cs2bim"|
 |db.user|str|?|"postgres"|
 |db.host|str|?|"host.docker.internal"|
+|db.port|int|?|5432|
 |db.password|str|?|"xxx"|
 |---|---|---|---|
 |tin.grid_size|float|0.5;2|0.5|

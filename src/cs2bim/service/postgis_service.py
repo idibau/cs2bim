@@ -11,7 +11,7 @@ class PostgisService:
 
     def __init__(self) -> None:
         self.connection = psycopg2.connect(
-            f"dbname = {config.dbname} user = {config.user} host = {config.host} password = {config.password}"
+            f"dbname = {config.dbname} user = {config.user} host = {config.host} password = {config.password} port = {config.port}"
         )
 
     def fetch_parcels(self, polygon: str) -> list[Parcel]:
