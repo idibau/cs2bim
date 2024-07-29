@@ -22,8 +22,8 @@ class PostgisService:
                 with perimeter as 
                     (select ST_GeomFromText('{polygon}', 2056) as geom)                    
                 select ST_AsText(ST_CurveToLine(geometrie, 1)), nbident, nummer, egris_egrid 
-                from cs2bim.liegenschaft l
-                left join cs2bim.grundstueck g on (l.liegenschaft_von = g.t_id)
+                from {config.schema}.liegenschaft l
+                left join {config.schema}.grundstueck g on (l.liegenschaft_von = g.t_id)
                 join perimeter on ST_Intersects(l.geometrie, perimeter.geom)
             """
         )
@@ -38,7 +38,7 @@ class PostgisService:
                 with perimeter as 
                     (select ST_GeomFromText('{polygon}', 2056) as geom)                    
                 select ST_AsText(ST_CurveToLine(geometrie, 1))
-                from cs2bim.boflaeche bb 
+                from {config.schema}.boflaeche bb 
                 join perimeter on ST_Intersects(bb.geometrie, perimeter.geom)
                 where bb.art = 'Gebaeude'
             """

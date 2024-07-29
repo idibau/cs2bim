@@ -1,3 +1,4 @@
+import logging
 import requests
 import tempfile
 from typing import Any
@@ -5,6 +6,9 @@ from io import BytesIO
 from zipfile import ZipFile
 
 from cs2bim.bounding_box import BoundingBox
+
+
+logger = logging.getLogger(__name__)
 
 
 class SwisstopoService:
@@ -18,6 +22,7 @@ class SwisstopoService:
         file_paths = []
         items_url = "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
         items_response = requests.get(items_url, params={"bbox": bounding_box.get_wgs84_bounding_box_as_string()})
+        logger.debug(f"swisstopo request: {items_response.url}")
         if items_response.status_code == 200:
             for feature in items_response.json()["features"]:
                 assets = feature["assets"].values()
