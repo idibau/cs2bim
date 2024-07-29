@@ -43,6 +43,7 @@ Some properties of this python project can be configured using the config.yaml f
 |db.host|str|?|"host.docker.internal"|
 |db.port|int|?|5432|
 |db.password|str|?|"xxx"|
+|db.schema|str|?|"cs2bim"|
 |---|---|---|---|
 |tin.grid_size|float|0.5;2|0.5|
 |tin.max_height_error|float|TODO|0.05|

@@ -5,6 +5,7 @@ db:
   host: "host.docker.internal"
   port: 5432
   password: "postgres"
+  schema: "cs2bim"
 
 ############# tin configuration #############
 tin:
