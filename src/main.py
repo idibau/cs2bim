@@ -71,9 +71,10 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
         logger.info(f"create parcel {parcel.egris_egrid} ({index + 1}/{len(parcels)})")
         area = Area(wkt_str=parcel.wkt, origin=origin[:2])
         dtm_points = RasterPoints(p_raster, origin=origin)
-        subset_P_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
-        mesh = Mesh(subset_P_buffer)
-        mesh_clipped = mesh.clip_mesh_by_area(area)
+        raster_points_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
+        raster_points_within = dtm_points.within(area.get_geometry, buffer_dist=0)
+        mesh = Mesh(raster_points_buffer)
+        mesh_clipped = mesh.clip_mesh_by_area(area, raster_points_within)
         mesh_clipped_decimated = mesh_clipped.decimate(
             max_height_error=config.max_height_error, grid_size=config.grid_size
         )
@@ -92,12 +93,14 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
         logger.info(f"create land cover ({index + 1}/{len(land_covers)})")
         area = Area(wkt_str=land_cover.wkt, origin=origin[:2])
         dtm_points = RasterPoints(p_raster, origin=origin)
-        subset_P_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
-        mesh = Mesh(subset_P_buffer)
-        mesh_clipped = mesh.clip_mesh_by_area(area)
+        raster_points_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
+        raster_points_within = dtm_points.within(area.get_geometry, buffer_dist=0)
+        mesh = Mesh(raster_points_buffer)
+        mesh_clipped = mesh.clip_mesh_by_area(area, raster_points_within)
         mesh_clipped_decimated = mesh_clipped.decimate(
             max_height_error=config.max_height_error, grid_size=config.grid_size
         )
+        logger.debug(f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}")
         triangulation = Triangulation()
         triangulation.load_from_data(mesh_clipped_decimated.get_data())
         element = Element("", "", triangulation)
