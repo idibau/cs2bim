@@ -6,7 +6,7 @@ from wkt2tin.polygon import Area
 from wkt2tin.raster import RasterPoints
 from wkt2tin.mesh import Mesh
 from tin2ifc.model.ifc_model import IfcModel
-from tin2ifc.model.entitiy.element import Element
+from tin2ifc.model.entity.element import Element
 from tin2ifc.model.geometry.triangulation import Triangulation
 from tin2ifc.build.ifc_builder import IfcBuilder
 

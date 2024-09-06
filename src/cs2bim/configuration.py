@@ -4,7 +4,7 @@ from tin2ifc.enum.triangulation_representation_type import TriangulationRepresen
 from tin2ifc.enum.element_entity_type import ElementEntityType
 from tin2ifc.model.feature_class import FeatureClass
 from tin2ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
-from tin2ifc.model.entitiy.spatial_structure import SpatialStructure
+from tin2ifc.model.entity.spatial_structure import SpatialStructure
 
 class Configuration:
     """
