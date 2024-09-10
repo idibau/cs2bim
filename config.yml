@@ -1,4 +1,4 @@
-############# DB configuration #############
+########## postgis configuration ############
 db:
   dbname: "cs2bim"
   user: "postgres"
@@ -6,6 +6,10 @@ db:
   port: 5432
   password: "postgres"
   schema: "cs2bim"
+
+######### swiss topo configuration ##########
+swisstopo:
+  stac_api: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
 
 ############# tin configuration #############
 tin:

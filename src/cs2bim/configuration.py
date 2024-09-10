@@ -18,7 +18,7 @@ class Configuration:
         with open(file_name, "r") as file:
             self.config_file = yaml.safe_load(file)
 
-        # init db configuration
+        # init postgis configuration
         db_config = self.config_file["db"]
         self.dbname = db_config["dbname"]
         self.user = db_config["user"]
@@ -26,6 +26,10 @@ class Configuration:
         self.port = db_config["port"]
         self.password = db_config["password"]
         self.schema = db_config["schema"]
+
+        # init swisstopo configuration
+        swisstopo_config = self.config_file["swisstopo"]
+        self.stac_api = swisstopo_config["stac_api"]
 
         # init tin configuration
         tin_config = self.config_file["tin"]

@@ -1,10 +1,10 @@
 import logging
 import requests
 import tempfile
-from typing import Any
 from io import BytesIO
 from zipfile import ZipFile
 
+from cs2bim.configuration import config
 from cs2bim.bounding_box import BoundingBox
 
 
@@ -20,8 +20,7 @@ class SwisstopoService:
     def fetch_dtm_files(self, bounding_box: BoundingBox) -> list[str]:
         """Fetches all dtm files that are needed to display the are defined by the bounding box and saves them in a temporary folder"""
         file_paths = []
-        items_url = "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
-        items_response = requests.get(items_url, params={"bbox": bounding_box.get_wgs84_bounding_box_as_string()})
+        items_response = requests.get(config.stac_api, params={"bbox": bounding_box.get_wgs84_bounding_box_as_string()})
         logger.debug(f"swisstopo request: {items_response.url}")
         if items_response.status_code == 200:
             for feature in items_response.json()["features"]:

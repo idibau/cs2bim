@@ -45,6 +45,8 @@ Some properties of this python project can be configured using the config.yaml f
 |db.password|str|?|"xxx"|
 |db.schema|str|?|"cs2bim"|
 |---|---|---|---|
+|swisstopo.stac_api|str|?|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
+|---|---|---|---|
 |tin.grid_size|float|0.5;2|0.5|
 |tin.max_height_error|float|TODO|0.05|
 |---|---|---|---|
@@ -57,7 +59,7 @@ Some properties of this python project can be configured using the config.yaml f
 |ifc.feature_classes.$FeatureClassKey.entity_type|ElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
 |ifc.feature_classes.$FeatureClassKey.spatial_structure.entity_type|SpatialStructureEntityType|IFC_SITE|IFC_SITE|
 |ifc.feature_classes.$FeatureClassKey.spatial_structure.name|str|?|"Site"|
-|ifc.feature_classes.$FeatureClassKey.groups|list[str]|?.?.?...|group_1.group_1_1.group_1_1_1|
+|ifc.feature_classes.$FeatureClassKey.groups|list[str]|?.?.?...|"group_1.group_1_1.group_1_1_1"|
 |ifc.feature_classes.$FeatureClassKey.color_definition.r|float|0.0 - 1-0|0.1|
 |ifc.feature_classes.$FeatureClassKey.color_definition.g|float|0.0 - 1-0|0.5|
 |ifc.feature_classes.$FeatureClassKey.color_definition.b|float|0.0 - 1-0|0.5|
