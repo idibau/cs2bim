@@ -1,10 +1,11 @@
 import yaml
-from tin2ifc.enum.geo_referencing import GeoReferencing
-from tin2ifc.enum.triangulation_representation_type import TriangulationRepresentationType
-from tin2ifc.enum.element_entity_type import ElementEntityType
-from tin2ifc.model.feature_class import FeatureClass
-from tin2ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
-from tin2ifc.model.entity.spatial_structure import SpatialStructure
+
+from cs2bim.config.feature_class import FeatureClass
+from cs2bim.config.geo_referencing import GeoReferencing
+from cs2bim.ifc.geometry.triangulation import TriangulationRepresentationType
+from cs2bim.ifc.entity.ifc_element import IfcElementEntityType
+from cs2bim.ifc.entity.ifc_spatial_structure import IfcSpatialStructure, IfcSpatialStructureEntityType
+
 
 class Configuration:
     """
@@ -48,9 +49,9 @@ class Configuration:
         ]
         self.feature_classes = {}
         for key, value in ifc_config["feature_classes"].items():
-            entity_type = ElementEntityType[value["entity_type"]]
-            spatial_structure = SpatialStructure(
-                SpatialStructureEntityType[value["spatial_structure"]["entity_type"]],
+            entity_type = IfcElementEntityType[value["entity_type"]]
+            spatial_structure = IfcSpatialStructure(
+                IfcSpatialStructureEntityType[value["spatial_structure"]["entity_type"]],
                 value["spatial_structure"]["name"],
             )
             groups = value["groups"]

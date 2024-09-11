@@ -1,9 +1,17 @@
 import logging
 from stl import mesh
+from enum import Enum
 
-from tin2ifc.model.geometry.geometry import Geometry
+from cs2bim.ifc.geometry.geometry import Geometry
 
 logger = logging.getLogger(__name__)
+
+
+class TriangulationRepresentationType(Enum):
+    """Build methods for the triangulations in the ifc"""
+
+    TESSELLATION = "Tessellation"
+    BREP = "Brep"
 
 
 class Triangulation(Geometry):

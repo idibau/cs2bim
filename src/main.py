@@ -2,16 +2,16 @@ import os
 import sys
 import logging
 import numpy as np
-from wkt2tin.polygon import Area
-from wkt2tin.raster import RasterPoints
-from wkt2tin.mesh import Mesh
-from tin2ifc.model.ifc_model import IfcModel
-from tin2ifc.model.entity.element import Element
-from tin2ifc.model.geometry.triangulation import Triangulation
-from tin2ifc.build.ifc_builder import IfcBuilder
 
-from cs2bim.configuration import config
-from cs2bim.enum.ifc_version import IfcVersion
+from cs2bim.config.configuration import config
+from cs2bim.config.ifc_version import IfcVersion
+from cs2bim.tin.mesh import Mesh
+from cs2bim.tin.polygon import Area
+from cs2bim.tin.raster import RasterPoints
+from cs2bim.ifc.ifc_model import IfcModel
+from cs2bim.ifc.ifc_builder import IfcBuilder
+from cs2bim.ifc.entity.ifc_element import IfcElement
+from cs2bim.ifc.geometry.triangulation import Triangulation
 from cs2bim.service.swisstopo_service import SwisstopoService
 from cs2bim.service.postgis_service import PostgisService
 
@@ -81,7 +81,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
         logger.debug(f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}")
         triangulation = Triangulation()
         triangulation.load_from_data(mesh_clipped_decimated.get_data())
-        element = Element(parcel.egris_egrid, "", triangulation)
+        element = IfcElement(parcel.egris_egrid, "", triangulation)
         element.add_property("CHKGK_CS", "NBIdent", parcel.nbident)
         element.add_property("CHKGK_CS", "Nummer", parcel.nummer)
         element.add_property("CHKGK_CS", "EGRIS_EGRID", parcel.egris_egrid)
@@ -103,7 +103,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
         logger.debug(f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}")
         triangulation = Triangulation()
         triangulation.load_from_data(mesh_clipped_decimated.get_data())
-        element = Element("", "", triangulation)
+        element = IfcElement("", "", triangulation)
         model.add_element(feature_class.key, element)
 
     ifc_builder = IfcBuilder(

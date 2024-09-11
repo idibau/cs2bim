@@ -1,5 +1,5 @@
-from tin2ifc.enum.element_entity_type import ElementEntityType
-from tin2ifc.model.entity.spatial_structure import SpatialStructure
+from cs2bim.ifc.entity.ifc_element import IfcElementEntityType
+from cs2bim.ifc.entity.ifc_spatial_structure import IfcSpatialStructure
 
 class FeatureClass:
     """
@@ -22,8 +22,8 @@ class FeatureClass:
     def __init__(
         self,
         key: str,
-        entity_type: ElementEntityType,
-        spatial_structure: SpatialStructure,
+        entity_type: IfcElementEntityType,
+        spatial_structure: IfcSpatialStructure,
         groups: list[str],
         color_definition: tuple[float, float, float, float],
     ) -> None:

@@ -1,8 +1,16 @@
-from tin2ifc.model.entity.property_set import PropertySet
-from tin2ifc.model.geometry.geometry import Geometry
+from enum import Enum
+
+from cs2bim.ifc.geometry.geometry import Geometry
+from cs2bim.ifc.entity.ifc_property_set import IfcPropertySet
 
 
-class Element:
+class IfcElementEntityType(Enum):
+    """Supported Ifc entity types for elements"""
+
+    IFC_GEOGRAPHIC_ELEMENT = 0
+
+
+class IfcElement:
     """
     Representation of an IfcElement that can be added to a model
 
@@ -28,5 +36,5 @@ class Element:
     def add_property(self, property_set: str, key: str, value: str):
         """Adds a new property to the element"""
         if not property_set in self.property_sets:
-            self.property_sets[property_set] = PropertySet(property_set)
+            self.property_sets[property_set] = IfcPropertySet(property_set)
         self.property_sets[property_set].add_property(key, value)

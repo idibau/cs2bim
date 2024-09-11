@@ -1,4 +1,4 @@
-from tin2ifc.model.entity.element import Element
+from cs2bim.ifc.entity.ifc_element import IfcElement
 
 
 class IfcModel:
@@ -23,7 +23,7 @@ class IfcModel:
         self.origin = origin
         self.feature_classes = {}
 
-    def add_element(self, feature_class_key: str, element: Element) -> None:
+    def add_element(self, feature_class_key: str, element: IfcElement) -> None:
         if not feature_class_key in self.feature_classes:
             self.feature_classes[feature_class_key] = []
         self.feature_classes[feature_class_key].append(element)

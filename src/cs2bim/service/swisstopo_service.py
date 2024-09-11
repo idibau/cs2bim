@@ -4,8 +4,8 @@ import tempfile
 from io import BytesIO
 from zipfile import ZipFile
 
-from cs2bim.configuration import config
-from cs2bim.bounding_box import BoundingBox
+from cs2bim.config.configuration import config
+from cs2bim.service.bounding_box import BoundingBox
 
 
 logger = logging.getLogger(__name__)

@@ -1,7 +1,7 @@
 import psycopg2
 
-from cs2bim.bounding_box import BoundingBox
-from cs2bim.configuration import config
+from cs2bim.service.bounding_box import BoundingBox
+from cs2bim.config.configuration import config
 from cs2bim.model.parcel import Parcel
 from cs2bim.model.land_cover import LandCover
 
@@ -24,7 +24,7 @@ class PostgisService:
                 select ST_AsText(ST_CurveToLine(geometrie, 1)), nbident, nummer, egris_egrid 
                 from {config.schema}.liegenschaft l
                 left join {config.schema}.grundstueck g on (l.liegenschaft_von = g.t_id)
-                join perimeter on ST_Intersects(l.geometrie, perimeter.geom)
+                join perimeter on ST_Intersects(geometrie, perimeter.geom)
             """
         )
         results = cur.fetchall()

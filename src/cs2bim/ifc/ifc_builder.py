@@ -1,14 +1,13 @@
 import datetime
 from ifcopenshell import file
 
-from tin2ifc.build.ifc_utils import *
-from tin2ifc.enum.geo_referencing import GeoReferencing
-from tin2ifc.enum.triangulation_representation_type import TriangulationRepresentationType
-from tin2ifc.model.ifc_model import IfcModel
-from tin2ifc.model.entity.spatial_structure import SpatialStructureEntityType
-from tin2ifc.model.geometry.triangulation import Triangulation
-from tin2ifc.model.feature_class import FeatureClass
-from tin2ifc.enum.element_entity_type import ElementEntityType
+from cs2bim.config.geo_referencing import GeoReferencing
+from cs2bim.config.feature_class import FeatureClass
+from cs2bim.ifc.ifc_utils import *
+from cs2bim.ifc.ifc_model import IfcModel
+from cs2bim.ifc.entity.ifc_spatial_structure import IfcSpatialStructureEntityType
+from cs2bim.ifc.entity.ifc_element import IfcElementEntityType
+from cs2bim.ifc.geometry.triangulation import Triangulation, TriangulationRepresentationType
 
 logger = logging.getLogger(__name__)
 
@@ -87,7 +86,7 @@ class IfcBuilder:
             logger.info(f"FeatureClass {feature_class_key}: build ifc spatial structure")
             spatial_structure = feature_class.spatial_structure
             if not spatial_structure.get_key() in spatial_structures_entities:
-                if spatial_structure.type == SpatialStructureEntityType.IFC_SITE:
+                if spatial_structure.type == IfcSpatialStructureEntityType.IFC_SITE:
                     site = add_ifc_site(ifc_file, spatial_structure.name, owner_history, local_placement)
                     add_ifc_rel_aggregates(ifc_file, project, [site])
                     spatial_structures_entities[spatial_structure.get_key()] = site
@@ -146,7 +145,7 @@ class IfcBuilder:
                     ifc_file, representation_context, representation_type.value, item
                 )
                 product_definition_shape = add_ifc_product_definition_shape(ifc_file, shape_representation)
-                if feature_class.entity_type == ElementEntityType.IFC_GEOGRAPHIC_ELEMENT:
+                if feature_class.entity_type == IfcElementEntityType.IFC_GEOGRAPHIC_ELEMENT:
                     element_entity = add_ifc_geographic_element(ifc_file, element.name, element.description)
                 else:
                     raise Exception(

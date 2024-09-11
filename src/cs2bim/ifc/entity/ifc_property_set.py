@@ -1,4 +1,4 @@
-class PropertySet:
+class IfcPropertySet:
     """
     ifc property set
 
