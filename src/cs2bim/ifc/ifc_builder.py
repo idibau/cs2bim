@@ -7,7 +7,7 @@ from cs2bim.ifc.ifc_utils import *
 from cs2bim.ifc.ifc_model import IfcModel
 from cs2bim.ifc.entity.ifc_spatial_structure import IfcSpatialStructureEntityType
 from cs2bim.ifc.entity.ifc_element import IfcElementEntityType
-from cs2bim.ifc.geometry.triangulation import Triangulation, TriangulationRepresentationType
+from cs2bim.geometry.triangulation import Triangulation, TriangulationRepresentationType
 
 logger = logging.getLogger(__name__)
 

@@ -2,7 +2,7 @@ import logging
 from stl import mesh
 from enum import Enum
 
-from cs2bim.ifc.geometry.geometry import Geometry
+from cs2bim.geometry.geometry import Geometry
 
 logger = logging.getLogger(__name__)
 

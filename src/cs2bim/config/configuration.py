@@ -2,7 +2,7 @@ import yaml
 
 from cs2bim.config.feature_class import FeatureClass
 from cs2bim.config.geo_referencing import GeoReferencing
-from cs2bim.ifc.geometry.triangulation import TriangulationRepresentationType
+from cs2bim.geometry.triangulation import TriangulationRepresentationType
 from cs2bim.ifc.entity.ifc_element import IfcElementEntityType
 from cs2bim.ifc.entity.ifc_spatial_structure import IfcSpatialStructure, IfcSpatialStructureEntityType
 

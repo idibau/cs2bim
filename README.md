@@ -56,8 +56,8 @@ Some properties of this python project can be configured using the config.yaml f
 |ifc.project_name|str|?|"Project A"|
 |ifc.geo_referencing|GeoReferencing|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
 |ifc.triangulation_representation_type|TriangulationRepresentationType|TESSELLATION; BREP|BREP|
-|ifc.feature_classes.$FeatureClassKey.entity_type|ElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
-|ifc.feature_classes.$FeatureClassKey.spatial_structure.entity_type|SpatialStructureEntityType|IFC_SITE|IFC_SITE|
+|ifc.feature_classes.$FeatureClassKey.entity_type|IfcElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
+|ifc.feature_classes.$FeatureClassKey.spatial_structure.entity_type|IfcSpatialStructureEntityType|IFC_SITE|IFC_SITE|
 |ifc.feature_classes.$FeatureClassKey.spatial_structure.name|str|?|"Site"|
 |ifc.feature_classes.$FeatureClassKey.groups|list[str]|?.?.?...|"group_1.group_1_1.group_1_1_1"|
 |ifc.feature_classes.$FeatureClassKey.color_definition.r|float|0.0 - 1-0|0.1|
@@ -68,10 +68,10 @@ Some properties of this python project can be configured using the config.yaml f
 ### Types
 
 EPSGCode -> cs2bim.enum.epsg_code.py
-GeoReferencing -> tin2ifc.enum.geo_referencing.py\
-TriangulationRepresentationType -> tin2ifc.enum.triangulation_representation_type.py\
-ElementEntityType -> tin2ifc.enum.element_entity_type.py\
-SpatialStructureEntityType -> tin2ifc.enum.spatial_structure_entity_type.py
+GeoReferencing -> cs2bim.config.geo_referencing.py\
+TriangulationRepresentationType -> cs2bim.geometry.triangulation.py\
+IfcElementEntityType -> cs2bim.ifc.entity.ifc_element.py\
+IfcSpatialStructureEntityType -> cs2bim.ifc.entity.ifc_spatial_structure.py
 
 ## Code structure
 
