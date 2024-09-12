@@ -1,3 +1,4 @@
+import logging
 import pyvista as pv
 import pandas as pd
 import numpy as np
@@ -5,6 +6,8 @@ import shapely
 import itertools
 
 from .polygon import Area
+
+logger = logging.getLogger(__name__)
 
 
 class Mesh(object):
@@ -45,9 +48,7 @@ class Mesh(object):
 
         return pv.PolyData(pts).delaunay_2d()
 
-    def decimate(
-        self, max_height_error: float, grid_size: float, max_edge_len: float = 0
-    ) -> "Mesh":
+    def decimate(self, max_height_error: float, grid_size: float, max_edge_len: float = 0) -> "Mesh":
         """
         Decimate number of triangle of this surface.
 
@@ -95,12 +96,8 @@ class Mesh(object):
         assert pts_sorted.ndim == 2 & pts_unsorted.ndim == 2
 
         # add index to sorted points
-        pts_sorted_ind = np.hstack(
-            (pts_sorted, np.arange(pts_sorted.shape[0]).reshape(pts_sorted.shape[0], 1))
-        )
-        return self._sort_pts_2d(pts_unsorted)[
-            np.argsort(self._sort_pts_2d(pts_sorted_ind)[:, -1].astype(int))
-        ]
+        pts_sorted_ind = np.hstack((pts_sorted, np.arange(pts_sorted.shape[0]).reshape(pts_sorted.shape[0], 1)))
+        return self._sort_pts_2d(pts_unsorted)[np.argsort(self._sort_pts_2d(pts_sorted_ind)[:, -1].astype(int))]
 
     def project_points_on_surface(self, pts_2d: np.ndarray | list) -> np.ndarray:
         """
@@ -123,9 +120,7 @@ class Mesh(object):
         assert pts_2d.ndim == 2
         assert pts_2d.shape[1] == 2
 
-        assert (
-            len(set(tuple(p) for p in pts_2d)) == pts_2d.shape[0]
-        ), "Only unique coord tuples can be converted"
+        assert len(set(tuple(p) for p in pts_2d)) == pts_2d.shape[0], "Only unique coord tuples can be converted"
         pts_3d = self.mesh.multi_ray_trace(
             np.hstack((pts_2d, np.zeros((pts_2d.shape[0], 1)))),
             np.array([[0, 0, 1]] * pts_2d.shape[0]),
@@ -133,9 +128,7 @@ class Mesh(object):
         )[0]
         return self._resort_pts_2d(pts_2d, pts_3d)
 
-    def calculate_edge_segment(
-        self, p_start: np.ndarray, p_end: np.ndarray, th_line_p: float = 1e-8
-    ) -> list:
+    def calculate_edge_segment(self, p_start: np.ndarray, p_end: np.ndarray, th_line_p: float = 1e-8) -> list:
         """Slice surface along axis and return all edge points in correct order"""
         assert p_start.ndim == 1 and p_end.ndim == 1
 
@@ -155,9 +148,7 @@ class Mesh(object):
             )[0]
         ]
 
-        return pts_on_edge[
-            np.argsort(np.linalg.norm(pts_on_edge[:, :2] - p_start[:2], axis=1))
-        ].tolist()
+        return pts_on_edge[np.argsort(np.linalg.norm(pts_on_edge[:, :2] - p_start[:2], axis=1))].tolist()
 
     def slice_along_boundary(self, vertices_2d: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         """Slices along boundary"""
@@ -201,9 +192,9 @@ class Mesh(object):
         vertices = mesh.points[:, :2]
 
         test_geom_area = area._geometry.buffer(0.0005)
-        test_geom_boundary = shapely.LinearRing(
-            area.get_exterior_points(exclude_last_point=False)
-        ).buffer(distance=0.0005)
+        test_geom_boundary = shapely.LinearRing(area.get_exterior_points(exclude_last_point=False)).buffer(
+            distance=0.0005
+        )
 
         for triangle in triangles:
             points = vertices[triangle, :]
@@ -211,9 +202,7 @@ class Mesh(object):
             center_of_mass = shapely.Point(points.mean(axis=0).tolist())
 
             triangle_mask.append(
-                1
-                if tri.within(test_geom_area) and not center_of_mass.within(test_geom_boundary)
-                else 0
+                1 if tri.within(test_geom_area) and not center_of_mass.within(test_geom_boundary) else 0
             )
 
         tri_filtered = triangles[np.array(triangle_mask, dtype=bool), :]
@@ -221,9 +210,7 @@ class Mesh(object):
 
         return tri_filtered
 
-    def clip_mesh_by_area(
-        self, area: Area, points_within_area: np.ndarray | pd.DataFrame
-    ) -> "Mesh":
+    def clip_mesh_by_area(self, area: Area, points_within_area: np.ndarray | pd.DataFrame) -> "Mesh":
         """
         Clips mesh by provided area.
 
@@ -296,9 +283,7 @@ class Mesh(object):
 
     def _area_triangle(self, p1: np.ndarray, p2: np.ndarray, p3: np.ndarray) -> float:
 
-        return np.abs(
-            (p1[0] * (p2[1] - p3[1]) + p2[0] * (p3[1] - p1[1]) + p3[0] * (p1[1] - p2[1])) / 2
-        )
+        return np.abs((p1[0] * (p2[1] - p3[1]) + p2[0] * (p3[1] - p1[1]) + p3[0] * (p1[1] - p2[1])) / 2)
 
     @property
     def get_area_2d(self) -> float:
@@ -319,6 +304,7 @@ class Mesh(object):
         """
         Checks if 2d area covered by this mesh differs less than the provided treshhold from the area provided.
         """
+        logger.debug(f"area consistency: {np.abs(self.get_area_2d - area)}")
         if np.abs(self.get_area_2d - area) < treshold:
             return True
         else:

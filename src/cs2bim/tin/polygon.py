@@ -58,7 +58,7 @@ class Area(object):
         # check interiors if present
         holes = []
         if len(poly.interiors) > 0:
-            mask = [True if shapely.is_ccw(h) else False for h in geom.interiors]
+            mask = [True if shapely.is_ccw(h) else False for h in poly.interiors]
             if sum(mask) > 0:
                 # reverse linearring it is ccw defined
                 for i, m in enumerate(mask):

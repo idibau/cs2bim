@@ -1,3 +1,6 @@
+################# general ###################
+logging_level: DEBUG
+
 ########## postgis configuration ############
 db:
   dbname: "cs2bim"
@@ -42,8 +45,8 @@ ifc:
       spatial_structure:
         entity_type: IFC_SITE 
         name: ""
-      groups: 
-        - "Amtliche Vermessung.Feature-Klassen.Liegenschaften"
+      group_columns: 
+        - "group"
       color_definition:
         r: 0.31
         g: 0.67
@@ -57,8 +60,8 @@ ifc:
       spatial_structure:
         entity_type: IFC_SITE 
         name: ""
-      groups: 
-        - "Amtliche Vermessung.Feature-Klassen.Bodenbedeckung (Gebaeude)"
+      group_columns: 
+        - "group"
       color_definition:  
         r: 0.52
         g: 0.42

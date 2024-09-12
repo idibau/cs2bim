@@ -101,6 +101,7 @@ class IfcBuilder:
             shading = add_ifc_surface_style_shading(ifc_file, color, values[3])
             style_entity = add_ifc_surface_style(ifc_file, shading)
 
+            groups = {}
             element_entities = []
             for element in elements:
                 if isinstance(element.geometry, Triangulation):
@@ -162,11 +163,16 @@ class IfcBuilder:
                     add_ifc_rel_defines_by_properties(ifc_file, [element_entity], property_set)
 
                 element_entities.append(element_entity)
+                
+                for group in element.groups:
+                    if not group in groups:
+                        groups[group] = []
+                    groups[group].append(element_entity)
 
             add_ifc_rel_aggregates(ifc_file, spatial_structures_entities[spatial_structure.get_key()], element_entities)
 
             logger.info(f"FeatureClass {feature_class_key}: build ifc groups")
-            for group_definition in feature_class.groups:
+            for group_definition, group_element_entities in groups.items():
                 path = []
                 for group in group_definition.split("."):
                     parent_group_path = ".".join(path)
@@ -178,7 +184,7 @@ class IfcBuilder:
                             add_ifc_rel_assigns_to_group(
                                 ifc_file, [group_entities[group_path]], group_entities[parent_group_path]
                             )
-                add_ifc_rel_assigns_to_group(ifc_file, element_entities, group_entities[group_definition])
+                add_ifc_rel_assigns_to_group(ifc_file, group_element_entities, group_entities[group_definition])
 
         logger.info("completed ifc build")
 

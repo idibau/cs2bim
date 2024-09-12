@@ -38,6 +38,8 @@ Some properties of this python project can be configured using the config.yaml f
 
 | Key | Type | Values | Example |
 |---|---|---|---|
+|logging_level|str|NOTSET; DEBUG; INFO; WARN; ERROR; CRITICAL|"cs2bim"|
+|---|---|---|---|
 |db.dbname|str|?|"cs2bim"|
 |db.user|str|?|"postgres"|
 |db.host|str|?|"host.docker.internal"|
@@ -56,10 +58,14 @@ Some properties of this python project can be configured using the config.yaml f
 |ifc.project_name|str|?|"Project A"|
 |ifc.geo_referencing|GeoReferencing|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
 |ifc.triangulation_representation_type|TriangulationRepresentationType|TESSELLATION; BREP|BREP|
+|ifc.feature_classes.$FeatureClassKey.element_name_column|str|?|"name_column"|
+|ifc.feature_classes.$FeatureClassKey.properties.$ListElement.name|str|?|"Property"|
+|ifc.feature_classes.$FeatureClassKey.properties.$ListElement.column|str|?|"property_column"|
+|ifc.feature_classes.$FeatureClassKey.properties.$ListElement.set|str|?|"PropertySet"|
 |ifc.feature_classes.$FeatureClassKey.entity_type|IfcElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
 |ifc.feature_classes.$FeatureClassKey.spatial_structure.entity_type|IfcSpatialStructureEntityType|IFC_SITE|IFC_SITE|
 |ifc.feature_classes.$FeatureClassKey.spatial_structure.name|str|?|"Site"|
-|ifc.feature_classes.$FeatureClassKey.groups|list[str]|?.?.?...|"group_1.group_1_1.group_1_1_1"|
+|ifc.feature_classes.$FeatureClassKey.group_columns|list[str]|?|"group_column"|
 |ifc.feature_classes.$FeatureClassKey.color_definition.r|float|0.0 - 1-0|0.1|
 |ifc.feature_classes.$FeatureClassKey.color_definition.g|float|0.0 - 1-0|0.5|
 |ifc.feature_classes.$FeatureClassKey.color_definition.b|float|0.0 - 1-0|0.5|
@@ -75,7 +81,9 @@ IfcSpatialStructureEntityType -> cs2bim.ifc.entity.ifc_spatial_structure.py
 
 ### Postgis-Queries
 
-For each feature class you have to provide a sql for querying the data. At the moment terrain data is the only supported type of data for feature classes. This type requiers the sql to take a polyon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be a column for the entity names or for properties.
+For each feature class you have to provide a sql for querying the data. At the moment terrain data is the only supported type of data for feature classes. This type requiers the sql to take a polyon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be a column for the entity names, properties or groups.
+
+When defining a group you can use "." to create nested group structures.
 
 Example:
 config.yaml
@@ -88,6 +96,8 @@ feature_class_x:
         - name: "Property"
           column: "property_column"
           set: "ProperttySetName" 
+      group_columns:
+        - "group"
 ...
 ```
 sql/feature_class_x.sql
@@ -100,6 +110,10 @@ select
     ST_AsText(ST_CurveToLine(geometrie, 1)) as wkt,
     nbident as name_column,
     nummer as property_column,
+    CASE 
+        WHEN x THEN 'Amtliche Vermessung.Feature-Klassen.x' 
+        ELSE 'Amtliche Vermessung.Feature-Klassen.y'
+    END as group
 from
     cs2bim.liegenschaft l
     left join cs2bim.grundstueck g on (l.liegenschaft_von = g.t_id)
@@ -113,6 +127,7 @@ ST_GeomFromText -> Constructs a PostGIS ST_Geometry object \
 ST_AsText -> Returns the OGC WKT representation of the geometry\
 ST_CurveToLine ->  Converts a given geometry to a linear geometry\
 ST_Intersects -> Returns true if two geometries intersect. Geometries intersect if they have any point in common.
+ST_Contains -> Returns true if the first geometry contains the second.
 
 ## Code structure
 

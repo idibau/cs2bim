@@ -22,15 +22,17 @@ class IfcElement:
         Description of the element
     geometry : Geometry
         The geometry of the element
+    groups : list[str]
+        A list of all groups that this element is assigned to
     property_sets : dict[str, PropertySet]
         A map of all property sets identified by their name
     """
 
-    def __init__(self, name: str, description: str, geometry: Geometry) -> None:
+    def __init__(self, name: str, description: str, groups: list[str], geometry: Geometry) -> None:
         self.name = name
         self.description = description
         self.geometry = geometry
-
+        self.groups = groups
         self.property_sets = {}
 
     def add_property(self, property_set: str, key: str, value: str):

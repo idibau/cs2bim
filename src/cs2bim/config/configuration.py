@@ -18,6 +18,9 @@ class Configuration:
     def load(self, file_name: str) -> None:
         with open(file_name, "r") as file:
             self.config_file = yaml.safe_load(file)
+        
+        # init general configuration
+        self.logging_level = self.config_file["logging_level"]
 
         # init postgis configuration
         db_config = self.config_file["db"]
@@ -63,7 +66,7 @@ class Configuration:
                 IfcSpatialStructureEntityType[value["spatial_structure"]["entity_type"]],
                 value["spatial_structure"]["name"],
             )
-            groups = value["groups"]
+            group_columns = value["group_columns"]
             color_definition = (
                 value["color_definition"]["r"],
                 value["color_definition"]["g"],
@@ -76,7 +79,7 @@ class Configuration:
                 properties,
                 entity_type,
                 spatial_structure,
-                groups,
+                group_columns,
                 color_definition,
             )
             self.feature_classes[key] = feature_class
