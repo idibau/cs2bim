@@ -58,19 +58,19 @@ Some properties of this python project can be configured using the config.yaml f
 |ifc.project_name|str|?|"Project A"|
 |ifc.geo_referencing|GeoReferencing|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
 |ifc.triangulation_representation_type|TriangulationRepresentationType|TESSELLATION; BREP|BREP|
-|ifc.feature_classes.$FeatureClassKey.element_name_column|str|?|"name_column"|
-|ifc.feature_classes.$FeatureClassKey.properties.$ListElement.name|str|?|"Property"|
-|ifc.feature_classes.$FeatureClassKey.properties.$ListElement.column|str|?|"property_column"|
-|ifc.feature_classes.$FeatureClassKey.properties.$ListElement.set|str|?|"PropertySet"|
-|ifc.feature_classes.$FeatureClassKey.entity_type|IfcElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
-|ifc.feature_classes.$FeatureClassKey.spatial_structure.entity_type|IfcSpatialStructureEntityType|IFC_SITE|IFC_SITE|
-|ifc.feature_classes.$FeatureClassKey.spatial_structure.name|str|?|"Site"|
-|ifc.feature_classes.$FeatureClassKey.group_columns|list[str]|?|"group_column"|
-|ifc.feature_classes.$FeatureClassKey.color_definition.r|float|0.0 - 1-0|0.1|
-|ifc.feature_classes.$FeatureClassKey.color_definition.g|float|0.0 - 1-0|0.5|
-|ifc.feature_classes.$FeatureClassKey.color_definition.b|float|0.0 - 1-0|0.5|
-|ifc.feature_classes.$FeatureClassKey.color_definition.a|float|0.0 - 1-0|0.3|
-
+|ifc.feature_classes.<em>FeatureClassKeyX</em>.element_name_column|str|?|"name_column"|
+|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|?|"Property"|
+|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|?|"property_column"|
+|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set|str|?|"PropertySet"|
+|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|IfcElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
+|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|IfcSpatialStructureEntityType|IFC_SITE|IFC_SITE|
+|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.name|str|?|"Site"|
+|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns|list[str]|?|"group_column"|
+|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.r|float|0.0 - 1-0|0.1|
+|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.g|float|0.0 - 1-0|0.5|
+|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.b|float|0.0 - 1-0|0.5|
+|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.a|float|0.0 - 1-0|0.3|
+X
 ### Types
 
 EPSGCode -> cs2bim.enum.epsg_code.py
@@ -120,7 +120,6 @@ from
     join perimeter on ST_Intersects(geometrie, perimeter.geom)
 ```
 
-
 Useful postgis functions:
 
 ST_GeomFromText -> Constructs a PostGIS ST_Geometry object \
@@ -131,16 +130,22 @@ ST_Contains -> Returns true if the first geometry contains the second.
 
 ## Code structure
 
-### model
+### config
+Contains all files needed for the configuration of the main processing step.
 
+### geometry
+Hold classes that hold information about certain geometry objects.
+
+### ifc
 Builds an Ifc file using the ifcopenshell library based on a model object.
 
 ### service
-
 There are two services available. A postgis service to query a postgis database and a swisstopo service to download terrain models.
 
-### main.py
+### tin
+The tin package allows to create triangulations by clipping terrain models with wkt strings.
 
+### main.py
 To execute the main function you need to provide three parameters as environment variables. IFC_VERSION, NAME and POLYGON.
 
 1. Load configuration file
