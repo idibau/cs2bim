@@ -73,6 +73,47 @@ TriangulationRepresentationType -> cs2bim.geometry.triangulation.py\
 IfcElementEntityType -> cs2bim.ifc.entity.ifc_element.py\
 IfcSpatialStructureEntityType -> cs2bim.ifc.entity.ifc_spatial_structure.py
 
+### Postgis-Queries
+
+For each feature class you have to provide a sql for querying the data. At the moment terrain data is the only supported type of data for feature classes. This type requiers the sql to take a polyon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be a column for the entity names or for properties.
+
+Example:
+config.yaml
+```yaml
+...
+feature_class_x:
+      sql: "sql/feature_class_x.sql"
+      element_name_column: "name_column"
+      properties:
+        - name: "Property"
+          column: "property_column"
+          set: "ProperttySetName" 
+...
+```
+sql/feature_class_x.sql
+```sql
+with perimeter as (
+    select
+        ST_GeomFromText(%(polygon)s, 2056) as geom
+)
+select
+    ST_AsText(ST_CurveToLine(geometrie, 1)) as wkt,
+    nbident as name_column,
+    nummer as property_column,
+from
+    cs2bim.liegenschaft l
+    left join cs2bim.grundstueck g on (l.liegenschaft_von = g.t_id)
+    join perimeter on ST_Intersects(geometrie, perimeter.geom)
+```
+
+
+Useful postgis functions:
+
+ST_GeomFromText -> Constructs a PostGIS ST_Geometry object \
+ST_AsText -> Returns the OGC WKT representation of the geometry\
+ST_CurveToLine ->  Converts a given geometry to a linear geometry\
+ST_Intersects -> Returns true if two geometries intersect. Geometries intersect if they have any point in common.
+
 ## Code structure
 
 ### model
@@ -82,35 +123,6 @@ Builds an Ifc file using the ifcopenshell library based on a model object.
 ### service
 
 There are two services available. A postgis service to query a postgis database and a swisstopo service to download terrain models.
-
-### Postgis-Queries
-
-- fetch_parcels(wkt)
-
-```sql
-WITH perimeter AS 
-    (SELECT ST_GeomFromText('{wkt}', 2056) AS geom)                    
-SELECT ST_AsText(ST_CurveToLine(geometrie)), nbident, nummer, egris_egrid 
-FROM cs2bim.liegenschaft l
-LEFT JOIN cs2bim.grundstueck g ON (l.liegenschaft_von = g.t_id)
-JOIN perimeter ON ST_Intersects(l.geometrie, perimeter.geom)
-```
-
-- fetch_land_covers(wkt)
-
-```sql
-WITH perimeter AS 
-    (SELECT ST_GeomFromText('{wkt}', 2056) AS geom)                    
-SELECT ST_AsText(ST_CurveToLine(geometrie))
-FROM cs2bim.boflaeche bb 
-JOIN perimeter on ST_Intersects(bb.geometrie, perimeter.geom)
-WHERE bb.art = 'Gebaeude'
-```
-
-ST_GeomFromText -> Constructs a PostGIS ST_Geometry object \
-ST_AsText -> Returns the OGC WKT representation of the geometry\
-ST_CurveToLine ->  Converts a given geometry to a linear geometry\
-ST_Intersects -> Returns true if two geometries intersect. Geometries intersect if they have any point in common.
 
 ### main.py
 

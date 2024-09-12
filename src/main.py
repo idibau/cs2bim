@@ -11,7 +11,7 @@ from cs2bim.tin.raster import RasterPoints
 from cs2bim.ifc.ifc_model import IfcModel
 from cs2bim.ifc.ifc_builder import IfcBuilder
 from cs2bim.ifc.entity.ifc_element import IfcElement
-from cs2bim.ifc.geometry.triangulation import Triangulation
+from cs2bim.geometry.triangulation import Triangulation
 from cs2bim.service.swisstopo_service import SwisstopoService
 from cs2bim.service.postgis_service import PostgisService
 
@@ -34,20 +34,17 @@ postgis_service = PostgisService()
 
 
 def main(ifc_version: IfcVersion, name: str, polygon: str):
-    logger.info("fetch parcels")
-    parcels = postgis_service.fetch_parcels(polygon)
-
-    logger.info("fetch landcovers (building)")
-    land_covers = postgis_service.fetch_building_land_cover(polygon)
-
+    wkts = []
+    feature_class_elements = {}
+    for feature_class_key, feature_class in config.feature_classes.items():
+        logger.info(f"fetch {feature_class_key}")
+        elements = postgis_service.fetch_feature_class_elements(feature_class, polygon)
+        feature_class_elements[feature_class_key] = elements
+        for element in elements:
+            wkts.append(element["wkt"])
+    
     logger.info("calculate bounding box for fetching dtm files")
     # ensures that parcels that exceed the bounding box are also included in the dtm files
-    wkts = []
-    for parcel in parcels:
-        wkts.append(parcel.wkt)
-    for land_cover in land_covers:
-        wkts.append(land_cover.wkt)
-
     if len(wkts) == 0:
         logger.warning("No content found for this polygon")
         bounding_box = postgis_service.get_bounding_box([polygon])
@@ -65,46 +62,28 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
 
     model = IfcModel(name, ifc_version.value, (float(origin[0]), float(origin[1]), float(origin[2])))
 
-    logger.info("create parcel feature class")
-    feature_class = config.feature_classes["parcel"]
-    for index, parcel in enumerate(parcels):
-        logger.info(f"create parcel {parcel.egris_egrid} ({index + 1}/{len(parcels)})")
-        area = Area(wkt_str=parcel.wkt, origin=origin[:2])
-        dtm_points = RasterPoints(p_raster, origin=origin)
-        raster_points_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
-        raster_points_within = dtm_points.within(area.get_geometry, buffer_dist=0)
-        mesh = Mesh(raster_points_buffer)
-        mesh_clipped = mesh.clip_mesh_by_area(area, raster_points_within)
-        mesh_clipped_decimated = mesh_clipped.decimate(
-            max_height_error=config.max_height_error, grid_size=config.grid_size
-        )
-        logger.debug(f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}")
-        triangulation = Triangulation()
-        triangulation.load_from_data(mesh_clipped_decimated.get_data())
-        element = IfcElement(parcel.egris_egrid, "", triangulation)
-        element.add_property("CHKGK_CS", "NBIdent", parcel.nbident)
-        element.add_property("CHKGK_CS", "Nummer", parcel.nummer)
-        element.add_property("CHKGK_CS", "EGRIS_EGRID", parcel.egris_egrid)
-        model.add_element(feature_class.key, element)
-
-    logger.info("create land cover (building) feature class")
-    feature_class = config.feature_classes["land_cover"]
-    for index, land_cover in enumerate(land_covers):
-        logger.info(f"create land cover ({index + 1}/{len(land_covers)})")
-        area = Area(wkt_str=land_cover.wkt, origin=origin[:2])
-        dtm_points = RasterPoints(p_raster, origin=origin)
-        raster_points_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
-        raster_points_within = dtm_points.within(area.get_geometry, buffer_dist=0)
-        mesh = Mesh(raster_points_buffer)
-        mesh_clipped = mesh.clip_mesh_by_area(area, raster_points_within)
-        mesh_clipped_decimated = mesh_clipped.decimate(
-            max_height_error=config.max_height_error, grid_size=config.grid_size
-        )
-        logger.debug(f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}")
-        triangulation = Triangulation()
-        triangulation.load_from_data(mesh_clipped_decimated.get_data())
-        element = IfcElement("", "", triangulation)
-        model.add_element(feature_class.key, element)
+    for feature_class_key, feature_class in config.feature_classes.items():
+        logger.info(f"create {feature_class_key} feature class")
+        elements = feature_class_elements[feature_class_key]
+        for index, element in enumerate(elements):
+            element_name = element[feature_class.element_name_column] if feature_class.element_name_column is not None else ""
+            logger.info(f"create {feature_class_key} {element_name} ({index + 1}/{len(elements)})")
+            area = Area(wkt_str=element["wkt"], origin=origin[:2])
+            dtm_points = RasterPoints(p_raster, origin=origin)
+            raster_points_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
+            raster_points_within = dtm_points.within(area.get_geometry, buffer_dist=0)
+            mesh = Mesh(raster_points_buffer)
+            mesh_clipped = mesh.clip_mesh_by_area(area, raster_points_within)
+            mesh_clipped_decimated = mesh_clipped.decimate(
+                max_height_error=config.max_height_error, grid_size=config.grid_size
+            )
+            logger.debug(f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}")
+            triangulation = Triangulation()
+            triangulation.load_from_data(mesh_clipped_decimated.get_data())
+            ifc_element = IfcElement(element_name, "", triangulation)
+            for property in feature_class.properties:
+                ifc_element.add_property(property.set, property.name, element[property.column])
+            model.add_ifc_element(feature_class_key, ifc_element)
 
     ifc_builder = IfcBuilder(
         config.author,

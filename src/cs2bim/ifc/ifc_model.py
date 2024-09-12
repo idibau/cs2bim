@@ -23,7 +23,7 @@ class IfcModel:
         self.origin = origin
         self.feature_classes = {}
 
-    def add_element(self, feature_class_key: str, element: IfcElement) -> None:
+    def add_ifc_element(self, feature_class_key: str, element: IfcElement) -> None:
         if not feature_class_key in self.feature_classes:
             self.feature_classes[feature_class_key] = []
         self.feature_classes[feature_class_key].append(element)

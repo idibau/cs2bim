@@ -26,18 +26,33 @@ ifc:
   triangulation_representation_type: TESSELLATION
   feature_classes:
     parcel:
+      sql: "sql/parcels.sql"
+      element_name_column: "egris_egrid"
+      properties:
+        - name: "NBIdent"
+          column: "nbident"
+          set: "CHKGK_CS" 
+        - name: "Nummer"
+          column: "nummer"
+          set: "CHKGK_CS" 
+        - name: "EGRIS_EGRID"
+          column: "egris_egrid"
+          set: "CHKGK_CS" 
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       spatial_structure:
         entity_type: IFC_SITE 
         name: ""
       groups: 
         - "Amtliche Vermessung.Feature-Klassen.Liegenschaften"
-      color_definition:  
+      color_definition:
         r: 0.31
         g: 0.67
         b: 0.04
         a: 0.85
     land_cover:
+      sql: "sql/land_covers.sql"
+      element_name_column:
+      properties: []
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       spatial_structure:
         entity_type: IFC_SITE 

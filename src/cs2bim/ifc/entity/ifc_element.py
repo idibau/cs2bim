@@ -1,6 +1,6 @@
 from enum import Enum
 
-from cs2bim.ifc.geometry.geometry import Geometry
+from cs2bim.geometry.geometry import Geometry
 from cs2bim.ifc.entity.ifc_property_set import IfcPropertySet
 
 

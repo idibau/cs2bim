@@ -1,6 +1,15 @@
 from cs2bim.ifc.entity.ifc_element import IfcElementEntityType
 from cs2bim.ifc.entity.ifc_spatial_structure import IfcSpatialStructure
 
+
+class Property:
+
+    def __init__(self, name: str, column: str, set: str) -> None:
+        self.name = name
+        self.column = column
+        self.set = set
+
+
 class FeatureClass:
     """
     Data class for a feature class object
@@ -9,6 +18,8 @@ class FeatureClass:
     ----------
     key : str
         Feature class key
+    sql : str
+
     entity_type : ElementEntityType
         Entity type of all elemets assigned to this feature class
     spatial_structure : SpatialStructure
@@ -21,13 +32,17 @@ class FeatureClass:
 
     def __init__(
         self,
-        key: str,
+        sql: str,
+        element_name_column: str,
+        properties: list[Property],
         entity_type: IfcElementEntityType,
         spatial_structure: IfcSpatialStructure,
         groups: list[str],
         color_definition: tuple[float, float, float, float],
     ) -> None:
-        self.key = key
+        self.sql = sql
+        self.element_name_column = element_name_column
+        self.properties = properties
         self.entity_type = entity_type
         self.spatial_structure = spatial_structure
         self.groups = groups
