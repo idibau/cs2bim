@@ -173,5 +173,5 @@ To execute the main function you need to provide three parameters as environment
 4. Save model
 
 ## Known Issues
-- Entity types that are only supported in one of the two ifc versions
+- Entity types that are only supported in one of the two ifc versions (IfcBuiltSystem)
 - Only one supported type of feature class data: All feature classes are processed the same way and are implemented to represent terrain data.
