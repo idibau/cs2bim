@@ -29,7 +29,7 @@ ifc:
   triangulation_representation_type: TESSELLATION
   feature_classes:
     parcel:
-      sql: "sql/parcels_contains.sql"
+      sql: "sql/parcels.sql"
       element_name_column: "egris_egrid"
       properties:
         - name: "NBIdent"
