@@ -53,7 +53,7 @@ ifc:
         b: 0.04
         a: 0.85
     land_cover:
-      sql: "sql/land_covers_contains.sql"
+      sql: "sql/land_covers.sql"
       element_name_column:
       properties: []
       entity_type: IFC_GEOGRAPHIC_ELEMENT
