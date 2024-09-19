@@ -1,13 +1,16 @@
 import datetime
 from ifcopenshell import file
 
+from cs2bim.config.configuration import config
 from cs2bim.config.geo_referencing import GeoReferencing
 from cs2bim.config.feature_class import FeatureClass
 from cs2bim.ifc.ifc_utils import *
 from cs2bim.ifc.ifc_model import IfcModel
 from cs2bim.ifc.entity.ifc_spatial_structure import IfcSpatialStructureEntityType
 from cs2bim.ifc.entity.ifc_element import IfcElementEntityType
+from cs2bim.ifc.entity.ifc_group import IfcGroupEntityType
 from cs2bim.geometry.triangulation import Triangulation, TriangulationRepresentationType
+
 
 logger = logging.getLogger(__name__)
 
@@ -179,7 +182,22 @@ class IfcBuilder:
                     path.append(group)
                     group_path = ".".join(path)
                     if not group_path in group_entities:
-                        group_entities[group_path] = add_ifc_group(ifc_file, group)
+                        if group_path in config.groups:
+                            ifc_group = config.groups[group_definition]
+                            if ifc_group.entity_type == IfcGroupEntityType.IFC_DISTRIBUTION_SYSTEM:
+                                group_entities[group_path] = add_ifc_distribution_system(ifc_file, group, ifc_group.object_type, ifc_group.predefined_type)
+                            elif ifc_group.entity_type == IfcGroupEntityType.IFC_DISTRIBUTION_CIRCUIT:
+                                group_entities[group_path] = add_ifc_distribution_circuit(ifc_file, group, ifc_group.object_type, ifc_group.predefined_type)
+                            elif ifc_group.entity_type == IfcGroupEntityType.IFC_BUILDING_SYSTEM:
+                                group_entities[group_path] = add_ifc_building_system(ifc_file, group, ifc_group.object_type, ifc_group.predefined_type)
+                            elif ifc_group.entity_type == IfcGroupEntityType.IFC_STRUCTURAL_ANALYSIS_MODEL:
+                                group_entities[group_path] = add_ifc_structural_analysis_model(ifc_file, group, ifc_group.object_type, ifc_group.predefined_type)
+                            elif ifc_group.entity_type == IfcGroupEntityType.IFC_ZONE:
+                                group_entities[group_path] = add_ifc_zone(ifc_file, group, ifc_group.object_type)
+                            else:
+                                raise Exception(f"builing step for ifc group entity {type(ifc_group.entity_type)} not implemented")
+                        else:
+                            group_entities[group_path] = add_ifc_group(ifc_file, group)
                         if not parent_group_path == "":
                             add_ifc_rel_assigns_to_group(
                                 ifc_file, [group_entities[group_path]], group_entities[parent_group_path]

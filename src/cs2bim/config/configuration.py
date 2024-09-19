@@ -5,6 +5,7 @@ from cs2bim.config.geo_referencing import GeoReferencing
 from cs2bim.geometry.triangulation import TriangulationRepresentationType
 from cs2bim.ifc.entity.ifc_element import IfcElementEntityType
 from cs2bim.ifc.entity.ifc_spatial_structure import IfcSpatialStructure, IfcSpatialStructureEntityType
+from cs2bim.ifc.entity.ifc_group import IfcGroup, IfcGroupEntityType
 
 
 class Configuration:
@@ -83,6 +84,13 @@ class Configuration:
                 color_definition,
             )
             self.feature_classes[key] = feature_class
+        self.groups = {}
+        for key, value in ifc_config["groups"].items():
+            entity_type = IfcGroupEntityType[value["entity_type"]]
+            object_type = value["object_type"]
+            predefined_type = value["predefined_type"]
+            ifc_group = IfcGroup(entity_type, object_type, predefined_type)
+            self.groups[key] = ifc_group
 
 
 config = Configuration()

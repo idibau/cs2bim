@@ -36,68 +36,87 @@ Some properties of this python project can be configured using the config.yaml f
 
 ### Structure
 
-| Key | Type | Values | Example |
-|---|---|---|---|
-|logging_level|str|NOTSET; DEBUG; INFO; WARN; ERROR; CRITICAL|"cs2bim"|
-|---|---|---|---|
-|db.dbname|str|?|"cs2bim"|
-|db.user|str|?|"postgres"|
-|db.host|str|?|"host.docker.internal"|
-|db.port|int|?|5432|
-|db.password|str|?|"xxx"|
-|db.schema|str|?|"cs2bim"|
-|---|---|---|---|
-|swisstopo.stac_api|str|?|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
-|---|---|---|---|
-|tin.grid_size|float|0.5;2|0.5|
-|tin.max_height_error|float|TODO|0.05|
-|---|---|---|---|
-|ifc.author|str|?|"author"|
-|ifc.version|str|?|"1.0"|
-|ifc.application_name|str|?|"cs2bim"|
-|ifc.project_name|str|?|"Project A"|
-|ifc.geo_referencing|GeoReferencing|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
-|ifc.triangulation_representation_type|TriangulationRepresentationType|TESSELLATION; BREP|BREP|
-|ifc.feature_classes.<em>FeatureClassKeyX</em>.element_name_column|str|?|"name_column"|
-|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|?|"Property"|
-|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|?|"property_column"|
-|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set|str|?|"PropertySet"|
-|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|IfcElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
-|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|IfcSpatialStructureEntityType|IFC_SITE|IFC_SITE|
-|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.name|str|?|"Site"|
-|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns|list[str]|?|"group_column"|
-|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.r|float|0.0 - 1-0|0.1|
-|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.g|float|0.0 - 1-0|0.5|
-|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.b|float|0.0 - 1-0|0.5|
-|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.a|float|0.0 - 1-0|0.3|
-X
+| Number | Key | Type | Values | Example |
+|---|---|---|---|---|
+|0|logging_level|str|NOTSET; DEBUG; INFO; WARN; ERROR; CRITICAL|"cs2bim"|
+|---|---|---|---|---|
+|1|db.dbname|str|?|"cs2bim"|
+|2|db.user|str|?|"postgres"|
+|3|db.host|str|?|"host.docker.internal"|
+|4|db.port|int|?|5432|
+|5|db.password|str|?|"xxx"|
+|6|db.schema|str|?|"cs2bim"|
+|---|---|---|---|---|
+|7|swisstopo.stac_api|str|?|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
+|---|---|---|---|---|
+|8|tin.grid_size|float|0.5;2|0.5|
+|9|tin.max_height_error|float|TODO|0.05|
+|---|---|---|---|---|
+|10|ifc.author|str|?|"author"|
+|11|ifc.version|str|?|"1.0"|
+|12|ifc.application_name|str|?|"cs2bim"|
+|13|ifc.project_name|str|?|"Project A"|
+|14|ifc.geo_referencing|GeoReferencing|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
+|15|ifc.triangulation_representation_type|TriangulationRepresentationType|TESSELLATION; BREP|BREP|
+|16|ifc.feature_classes|map|---|---|
+|17|ifc.feature_classes.<em>FeatureClassKeyX</em>.sql|str|<em>Path to sql file</em>|"sql/parcels.sql"|
+|18|ifc.feature_classes.<em>FeatureClassKeyX</em>.element_name_column|str|?|"name_column"|
+|19|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties|list|---|---|
+|20|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|?|"Property"|
+|21|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|?|"property_column"|
+|22|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set|str|?|"PropertySet"|
+|23|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|IfcElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
+|24|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|IfcSpatialStructureEntityType|IFC_SITE|IFC_SITE|
+|25|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.name|str|?|"Site"|
+|26|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns|list[str]|?|"group_column"|
+|27|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.r|float|0.0 - 1-0|0.1|
+|28|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.g|float|0.0 - 1-0|0.5|
+|29|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.b|float|0.0 - 1-0|0.5|
+|30|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.a|float|0.0 - 1-0|0.3|
+|31|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups|map|---|---|
+|32|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.entity_type|IfcGroupEntityType|IFC_DISTRIBUTION_SYSTEM, IFC_DISTRIBUTION_CIRCUIT, IFC_BUILDING_SYSTEM, IFC_STRUCTURAL_ANALYSIS_MODEL, IFC_ZONE|IFC_DISTRIBUTION_SYSTEM|
+|33|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.object_type|str|?|"ObjectType"|
+|34|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.predefined_type|str|?|"PredefinedType"|
+
 ### Types
 
 EPSGCode -> cs2bim.enum.epsg_code.py
 GeoReferencing -> cs2bim.config.geo_referencing.py\
 TriangulationRepresentationType -> cs2bim.geometry.triangulation.py\
 IfcElementEntityType -> cs2bim.ifc.entity.ifc_element.py\
-IfcSpatialStructureEntityType -> cs2bim.ifc.entity.ifc_spatial_structure.py
+IfcSpatialStructureEntityType -> cs2bim.ifc.entity.ifc_spatial_structure.py\
+IfcGroupEntityType -> cs2bim.ifc.entity.ifc_group.py
 
 ### Postgis-Queries
 
-For each feature class you have to provide a sql for querying the data. At the moment terrain data is the only supported type of data for feature classes. This type requiers the sql to take a polyon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be a column for the entity names, properties or groups.
+For each feature class you have to provide a sql for querying the data(17). At the moment terrain data is the only supported type of data for feature classes. This type requiers the sql to take a polyon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be a column for the element names(18), properties(21) or groups(26).
 
-When defining a group you can use "." to create nested group structures.
+When defining a group you can use "." to create nested group structures. (IfcGroupKey)\
+By default all IfcGroups are generated using the IfcGroup entity type. Defining other types of groups can be done by creating a new group config referencing the IfcGroupKey in the configuration file(32).
 
 Example:
 config.yaml
 ```yaml
 ...
-feature_class_x:
-      sql: "sql/feature_class_x.sql"
-      element_name_column: "name_column"
-      properties:
-        - name: "Property"
-          column: "property_column"
-          set: "ProperttySetName" 
-      group_columns:
-        - "group"
+feature_classes:
+    feature_class_x:
+        sql: "sql/feature_class_x.sql"
+        element_name_column: "name_column"
+        properties:
+            - name: "Property"
+            column: "property_column"
+            set: "PropertySetName" 
+        group_columns:
+            - "group"
+groups:
+    Amtliche Vermessung.Feature-Klassen:
+        entity_type: IFC_DISTRIBUTION_SYSTEM
+        object_type: ""
+        predefined_type: "NOTDEFINED"
+    Amtliche Vermessung.Feature-Klassen.x:
+        entity_type: IFC_DISTRIBUTION_SYSTEM
+        object_type: "ObjectType"
+        predefined_type: "NOTDEFINED"
 ...
 ```
 sql/feature_class_x.sql
@@ -152,3 +171,7 @@ To execute the main function you need to provide three parameters as environment
 2. Create model
 3. Build model
 4. Save model
+
+## Known Issues
+- Entity types that are only supported in one of the two ifc versions
+- Only one supported type of feature class data: All feature classes are processed the same way and are implemented to represent terrain data.

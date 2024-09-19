@@ -27,10 +27,7 @@ def add_ifc_person_and_organization(
 
 
 def add_ifc_application(
-    ifc_file: file,
-    application_developer: entity_instance,
-    version: str,
-    application_full_name: str,
+    ifc_file: file, application_developer: entity_instance, version: str, application_full_name: str
 ) -> entity_instance:
     return ifc_file.create_entity(
         "IfcApplication",
@@ -103,11 +100,7 @@ def add_ifc_map_conversion(
 
 
 def add_ifc_si_unit(ifc_file: file, unit_type: str, name: str) -> entity_instance:
-    return ifc_file.create_entity(
-        "IfcSIUnit",
-        UnitType=unit_type,
-        Name=name,
-    )
+    return ifc_file.create_entity("IfcSIUnit", UnitType=unit_type, Name=name)
 
 
 def add_ifc_plane_angle_measure(ifc_file: file) -> entity_instance:
@@ -117,11 +110,7 @@ def add_ifc_plane_angle_measure(ifc_file: file) -> entity_instance:
 def add_ifc_measure_with_unit(
     ifc_file: file, value_component: entity_instance, unit_component: entity_instance
 ) -> entity_instance:
-    return ifc_file.create_entity(
-        "IfcMeasureWithUnit",
-        ValueComponent=value_component,
-        UnitComponent=unit_component,
-    )
+    return ifc_file.create_entity("IfcMeasureWithUnit", ValueComponent=value_component, UnitComponent=unit_component)
 
 
 def add_ifc_dimensional_exponents(ifc_file: file) -> entity_instance:
@@ -157,8 +146,7 @@ def add_ifc_unit_assignment(
     conversion_based_unit: entity_instance,
 ) -> entity_instance:
     return ifc_file.create_entity(
-        "IfcUnitAssignment",
-        Units=[length_unit, area_unit, volume_unit, conversion_based_unit],
+        "IfcUnitAssignment", Units=[length_unit, area_unit, volume_unit, conversion_based_unit]
     )
 
 
@@ -184,24 +172,15 @@ def add_ifc_local_placement(ifc_file: file, relative_placement: entity_instance)
 
 
 def add_ifc_site(
-    ifc_file: file,
-    name: str,
-    owner_history: entity_instance,
-    object_placement: entity_instance,
+    ifc_file: file, name: str, owner_history: entity_instance, object_placement: entity_instance
 ) -> entity_instance:
     return ifc_file.create_entity(
-        "IfcSite",
-        Name=name,
-        GlobalId=guid.new(),
-        OwnerHistory=owner_history,
-        ObjectPlacement=object_placement,
+        "IfcSite", Name=name, GlobalId=guid.new(), OwnerHistory=owner_history, ObjectPlacement=object_placement
     )
 
 
 def add_ifc_rel_aggregates(
-    ifc_file: file,
-    relating_object: entity_instance,
-    related_objects: list[entity_instance],
+    ifc_file: file, relating_object: entity_instance, related_objects: list[entity_instance]
 ) -> entity_instance:
     return ifc_file.create_entity(
         "IfcRelAggregates",
@@ -213,6 +192,40 @@ def add_ifc_rel_aggregates(
 
 def add_ifc_group(ifc_file: file, name: str) -> entity_instance:
     return ifc_file.create_entity("IfcGroup", GlobalId=guid.new(), Name=name)
+
+
+def add_ifc_distribution_system(ifc_file: file, name: str, object_type: str, predefined_type: str) -> entity_instance:
+    return ifc_file.create_entity(
+        "IfcDistributionSystem", GlobalId=guid.new(), Name=name, ObjectType=object_type, PredefinedType=predefined_type
+    )
+
+
+def add_ifc_distribution_circuit(ifc_file: file, name: str, object_type: str, predefined_type: str) -> entity_instance:
+    return ifc_file.create_entity(
+        "IfcDistributionCircuit", GlobalId=guid.new(), Name=name, ObjectType=object_type, PredefinedType=predefined_type
+    )
+
+
+def add_ifc_building_system(ifc_file: file, name: str, object_type: str, predefined_type: str) -> entity_instance:
+    return ifc_file.create_entity(
+        "IfcBuildingSystem", GlobalId=guid.new(), Name=name, ObjectType=object_type, PredefinedType=predefined_type
+    )
+
+
+def add_ifc_structural_analysis_model(
+    ifc_file: file, name: str, object_type: str, predefined_type: str
+) -> entity_instance:
+    return ifc_file.create_entity(
+        "IfcStructuralAnalysisModel",
+        GlobalId=guid.new(),
+        Name=name,
+        ObjectType=object_type,
+        PredefinedType=predefined_type,
+    )
+
+
+def add_ifc_zone(ifc_file: file, name: str, object_type: str) -> entity_instance:
+    return ifc_file.create_entity("IfcZone", GlobalId=guid.new(), Name=name, ObjectType=object_type)
 
 
 def add_ifc_rel_assigns_to_group(
@@ -228,10 +241,7 @@ def add_ifc_face_outer_bound(ifc_file: file, bound: entity_instance) -> entity_i
 
 
 def add_ifc_face(ifc_file: file, bound: entity_instance) -> entity_instance:
-    return ifc_file.create_entity(
-        "IfcFace",
-        Bounds=[bound],
-    )
+    return ifc_file.create_entity("IfcFace", Bounds=[bound])
 
 
 def add_ifc_poly_loop(ifc_file: file, polygon: list[tuple[float, float, float]]) -> entity_instance:
@@ -273,36 +283,23 @@ def add_ifc_cartesian_point_list_3D(
 
 
 def add_ifc_triangulated_face_set(
-    ifc_file: file,
-    cartesian_point_list: entity_instance,
-    coord_index: list[tuple[int, int, int]],
+    ifc_file: file, cartesian_point_list: entity_instance, coord_index: list[tuple[int, int, int]]
 ) -> entity_instance:
-    return ifc_file.create_entity(
-        "IfcTriangulatedFaceSet",
-        Coordinates=cartesian_point_list,
-        CoordIndex=coord_index,
-    )
+    return ifc_file.create_entity("IfcTriangulatedFaceSet", Coordinates=cartesian_point_list, CoordIndex=coord_index)
 
 
-def add_ifc_geographic_element(ifc_file: file, name:str, description: str) -> entity_instance:
+def add_ifc_geographic_element(ifc_file: file, name: str, description: str) -> entity_instance:
     return ifc_file.create_entity("IfcGeographicElement", GlobalId=guid.new(), Name=name, Description=description)
 
 
-def add_ifc_colour_rgb(
-    ifc_file: file,
-    color: tuple[float, float, float],
-) -> entity_instance:
+def add_ifc_colour_rgb(ifc_file: file, color: tuple[float, float, float]) -> entity_instance:
     return ifc_file.create_entity("IfcColourRgb", Red=color[0], Green=color[1], Blue=color[2])
 
 
 def add_ifc_surface_style_shading(
     ifc_file: file, surface_colour: entity_instance, transparency: float
 ) -> entity_instance:
-    return ifc_file.create_entity(
-        "IfcSurfaceStyleShading",
-        SurfaceColour=surface_colour,
-        Transparency=transparency,
-    )
+    return ifc_file.create_entity("IfcSurfaceStyleShading", SurfaceColour=surface_colour, Transparency=transparency)
 
 
 def add_ifc_surface_style(ifc_file: file, style: entity_instance) -> entity_instance:

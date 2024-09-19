@@ -29,7 +29,7 @@ ifc:
   triangulation_representation_type: TESSELLATION
   feature_classes:
     parcel:
-      sql: "sql/parcels.sql"
+      sql: "sql/parcels_contains.sql"
       element_name_column: "egris_egrid"
       properties:
         - name: "NBIdent"
@@ -53,7 +53,7 @@ ifc:
         b: 0.04
         a: 0.85
     land_cover:
-      sql: "sql/land_covers.sql"
+      sql: "sql/land_covers_contains.sql"
       element_name_column:
       properties: []
       entity_type: IFC_GEOGRAPHIC_ELEMENT
@@ -67,3 +67,8 @@ ifc:
         g: 0.42
         b: 0.04
         a: 0.85
+  groups:
+    Amtliche Vermessung.Feature-Klassen.Bodenbedeckung (Gebaeude):
+      entity_type: IFC_DISTRIBUTION_SYSTEM
+      object_type: ""
+      predefined_type: "NOTDEFINED"
