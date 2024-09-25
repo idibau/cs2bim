@@ -115,7 +115,8 @@ The following types are defined: --> TO CHECK: vollständige Liste?
 
 ## IFC configuration
 In this section of the configuration you can make some general definitions about the resulting ifc file and you can define the feature classes that are generated and exported as ifc entities.  
-Below some of the parameters are explained in detail.
+
+Below some of the parameters are explained.
 
 ### Geo Referencing
 You can provide the so called "Level of Georeferencing" (LoGeoRef), according to *"Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408"*.  
@@ -123,12 +124,12 @@ The different levels represent different methods of defining informations about 
 Supported values are LO_GEO_REF_30, LO_GEO_REF_40, LO_GEO_REF_50.
 
 ### Triangulation Representation Type
-You can define the IFC geometry type that is used to represent the TINs.  
+You can define the IFC geometry type that is used to represent the TIN geometry.  
 Supported values are TESSELLATION, BREP (TESSELATION is recommended).
 
 ### Feature Classes
 A "Feature Class" is the definition of a set of  objects that are exported in an IFC entity with common definitions.  
-The main configurations of a feature class are:
+The main configurations of a feature class include:
 - sql: A SQL query that selects objects in the GIS database, returning a geometry (must be an area) and some other attributes for each object.
 - entity_type: The IFC entity, to which all selected objects of the feature class are exported to.
 - properties: Any number of property definitions that are exported as IFC properties/property sets.
@@ -137,8 +138,8 @@ The main configurations of a feature class are:
 - colour_definition: An IFC colour definition
 
 
-### SQL (Postgis-Queries)
-For each feature class you have to provide a sql for querying the data(17). With the query you are selecting the cadastral data (with area geometry type). The sql query requiers to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be one column for the element name(18) and multiple columns for properties(21) or groups(26).
+### SQL
+For each feature class you have to provide a sql for querying the data(17). With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be one column for the element name(18) and multiple columns for properties(21) or groups(26).
 
 The following schema shows the relationship between the attributes defined by the sql query and their linking to the configuration.  
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
