@@ -11,7 +11,7 @@ The diagram shows the system architecture and all major components of the implem
 | component | name | description |
 | ------ |----- | ------ |
 |   1     | database |   The cadastral data is imported in INTERLIS (.xtf or itf) format via the standard component ili2pg (swisstopo) and made available in a PostGIS database for further processing. The component database is not covered within the code   |
-|   2     | swisstopo database | The digital terrain model (DTM) is direct loaded with the API service to swissalti3d data. |
+|   2     | swisstopo database | The digital terrain model (DTM) is loaded with the API service to swissalti3d data. |
 |   3     | wkt2tin | Component for creating 3D surfaces by projecting 2D vector objects (usually polygons) onto a terrain model. As a result of this component, mesh surface geometries are available for each object instance (of the cadastral information).      | 
 |   4     | tin2ifc | This component writes the resulting IFC file. The open library IfcOpenShell is used for this purpose. |
 |   5     |  API & configuration   |In this service package, control the individual components into a ‘CS2BIM’ service. The service is build in an docker container. |
