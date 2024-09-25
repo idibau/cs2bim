@@ -5,7 +5,7 @@ The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launch
 - Processing of the terrain model data and creation of the resulting 3D surfaces
 - Export of the objects to IFC format using the IfcOpenShell component
 
-![CS2BIM System Architecture](./uploads/cs2bim_system_architecture.jpg){width=600}
+![CS2BIM System Architecture](./uploads/CS2BIM_system_architecture.jpg){width=600}
 
 The diagram shows the system architecture and all major components of the implementation. Description of the compontens:
 | component | name | description |
@@ -17,7 +17,7 @@ The diagram shows the system architecture and all major components of the implem
 
 ## Resulting IFC Files
 
-![CS2BIM test data](./uploads/CS2BIM_testdata.jpg){width=600}
+![CS2BIM test data](./uploads/CS2BIM_testdata.JPG){width=600}
 
 Example files can be downloaded with the following links.
 
