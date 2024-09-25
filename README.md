@@ -15,6 +15,15 @@ The diagram shows the system architecture and all major components of the implem
 |   3     | tin2ifc | This component writes the resulting IFC file. The open library IfcOpenShell is used for this purpose. |
 |   4     |  API & configuration   |In this service package, control the individual components into a ‘CS2BIM’ service. The service is build in an docker container. |
 
+## Resulting IFC Files
+
+| ID | name | link |
+| ------ | ------ | ----- |
+|  1  |    200mx200m.ifc    |   https://drive.switch.ch/index.php/s/YOgygwb3ZqmG44v   |
+|  2  |    200mx200m_con.ifc   | https://drive.switch.ch/index.php/s/2pivcwXtneYqSdY |
+|  3  |    200mx200m_int.ifc    |  https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf  |
+|  4  |    500mx500m.ifc   |   https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf |
+
 ## Getting started
 
 Build docker image
