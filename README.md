@@ -17,6 +17,10 @@ The diagram shows the system architecture and all major components of the implem
 
 ## Resulting IFC Files
 
+![CS2BIM test data](./uploads/testdata.jpg){width=600}
+
+Example files can be downloaded with the following links.
+
 | ID | name | link |
 | ------ | ------ | ----- |
 |  1  |    200mx200m.ifc    |   https://drive.switch.ch/index.php/s/YOgygwb3ZqmG44v   |
