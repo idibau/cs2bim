@@ -12,7 +12,7 @@ The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launch
 
 # Getting started
 ## Getting started
-Modify the configuration according to your needs/environment. Details about configuration [see below](#configuration).
+Modify the configuration according to your needs/environment. Details about configuration [see below](#configuration).  
 Prerequisites: 
 - The PostGIS database with the cadastral data is available (connection with psychopg is possible)
 - The service to get terrain data is available
@@ -27,7 +27,7 @@ Run docker image
 ```console
 docker run -e IFC_VERSION=[cs2bim.enum.ifc_version.IfcVersion] -e NAME=[str] -e POLYGON=[wkt] -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
 ```
-With these run parameters:
+The run parameters are:
 - IFC_VERSION: Ifc version of the resulting ifc file (supported versions/values see src\cs2bim\config\ifc_version.py).
 - NAME: Name of the resulting ifc file.
 - POLYGON : The area in which the data is treated. The polygon must be a valid wkt string in LV95.
@@ -51,7 +51,7 @@ pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 ```
 
 # Configuration
-Some properties of this python project can be configured using the config.yml file.
+Some properties of this python project can be configured using the config.yml file.  
 The configuration has different sections/topics:
 - postgis configuration: Connection to the database with the cadastral data.
 - swiss topo configuration: Connection to the service that provides terrain data.
@@ -114,23 +114,41 @@ The following types are defined: --> TO CHECK: vollständige Liste?
 - IfcGroupEntityType -> cs2bim.ifc.entity.ifc_group.py
 
 ## IFC configuration
-In this section you can make some general definitions about the resulting ifc file and you can define the feature classes, that are generated and exported as ifc entities.
+In this section of the configuration you can make some general definitions about the resulting ifc file and you can define the feature classes that are generated and exported as ifc entities.  
+Below some of the parameters are explained in detail.
 
 ### Geo Referencing
-You can provide the so called Level of Georeferencing (LoGeoRef), according to "Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408". The different levels represent different methods of defining informations about georeferencing in IFC.
+You can provide the so called "Level of Georeferencing" (LoGeoRef), according to *"Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408"*.  
+The different levels represent different methods of defining informations about georeferencing in IFC.  
 Supported values are LO_GEO_REF_30, LO_GEO_REF_40, LO_GEO_REF_50.
 
-### triangulation_representation_type
-You can define the IFC geometry type that is used to represent the TINs.
+### Triangulation Representation Type
+You can define the IFC geometry type that is used to represent the TINs.  
 Supported values are TESSELLATION, BREP (TESSELATION is recommended).
 
 ### Feature Classes
+A "Feature Class" is the definition of a set of  objects that are exported in an IFC entity with common definitions.  
+The main configurations of a feature class are:
+- sql: A SQL query that selects objects in the GIS database, returning a geometry (must be an area) and some other attributes for each object.
+- entity_type: The IFC entity, to which all selected objects of the feature class are exported to.
+- properties: Any number of property definitions that are exported as IFC properties/property sets.
+- group_columns: Any number of IFC group assignments.
+- spatial_structure: ??? TO CHECK and Define
+- colour_definition: An IFC colour definition
+
 
 ### SQL (Postgis-Queries)
-For each feature class you have to provide a sql for querying the data(17). With the query you are selecting the cadastral data (with area geometry type). The sql query requiers to take a polyon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be one column for the element name(18) and multiple columns for properties(21) or groups(26).
+For each feature class you have to provide a sql for querying the data(17). With the query you are selecting the cadastral data (with area geometry type). The sql query requiers to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be one column for the element name(18) and multiple columns for properties(21) or groups(26).
+
+The following schema shows the relationship between the attributes defined by the sql query and their linking to the configuration.  
+![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
 
 
 ### Groups
+Every exported object can be assigned to a group (zero to multiple). The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a group configuration.  
+For each group configuration the system is creating an ifc group according to the configured parameters (entity_type, predefined_type, object_type).  
+TO CHECK: When there is no group configuration for an assigned value, the system will create a ifc group with some default parameters.  
+
 When defining a group you can use "." to create nested group structures. (IfcGroupKey)\
 By default all IfcGroups are generated using the IfcGroup entity type. Defining other types of groups can be done by creating a new group config referencing the IfcGroupKey in the configuration file(32).
 
