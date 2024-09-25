@@ -1,3 +1,6 @@
+[[_TOC_]]
+
+
 # cs2bim project description
 
 The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launched a research project Cadastral Surveying Data to Building Information Modelling (CS2BIM). The Institute of Virtual Design and Construction and the Institute of Geomatics at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed a service based on open source libraries. The service contains the following major components:
@@ -7,14 +10,18 @@ The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launch
 
 ![CS2BIM System Architecture](./uploads/cs2bim_system_architecture.jpg){width=600}
 
+# Getting started
 ## Getting started
-Modify the configuration according to your needs/environment. Details about configuration [see below](#configuration)
+Modify the configuration according to your needs/environment. Details about configuration [see below](#configuration).
+Prerequisites: 
+- The PostGIS database with the cadastral data is available (connection with psychopg is possible)
+- The service to get terrain data is available
+
 
 Build docker image
 ```console
 docker build -t cs2bim-run -f Dockerfile . --rm
 ```
-TO-CHECK: What about database? No configuration needed? Is this a prerequisite?
 
 Run docker image
 ```console
@@ -43,11 +50,15 @@ Install pip packages (Run in container at /workspace)
 pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 ```
 
-## Configuration
-
+# Configuration
 Some properties of this python project can be configured using the config.yml file.
+The configuration has different sections/topics:
+- postgis configuration: Connection to the database with the cadastral data.
+- swiss topo configuration: Connection to the service that provides terrain data.
+- tin configuration: Configurations for the creation and treatment of tins.
+- ifc configuration: Configurations of the resulting ifc file.
 
-### Structure
+## Configuration parameters (overview)
 
 | Line Number | Key | Type | Values | Example |
 |---|---|---|---|---|
@@ -91,24 +102,40 @@ Some properties of this python project can be configured using the config.yml fi
 |33|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.object_type|str|?|"ObjectType"|
 |34|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.predefined_type|str|?|"PredefinedType"|
 
-### Types
+## Types
+Some parameters can only be configured with predefined values (types), because these values are referenced in the code. To guarantee a proper configuration and execution of the code, these predefined values (types) are defined as constants in different modules/classes in the python code.
 
-EPSGCode -> cs2bim.enum.epsg_code.py
-GeoReferencing -> cs2bim.config.geo_referencing.py\
-TriangulationRepresentationType -> cs2bim.geometry.triangulation.py\
-IfcElementEntityType -> cs2bim.ifc.entity.ifc_element.py\
-IfcSpatialStructureEntityType -> cs2bim.ifc.entity.ifc_spatial_structure.py\
-IfcGroupEntityType -> cs2bim.ifc.entity.ifc_group.py
+The following types are defined: --> TO CHECK: vollständige Liste?
+- EPSGCode -> cs2bim.enum.epsg_code.py
+- GeoReferencing -> cs2bim.config.geo_referencing.py\
+- TriangulationRepresentationType -> cs2bim.geometry.triangulation.py\
+- IfcElementEntityType -> cs2bim.ifc.entity.ifc_element.py\
+- IfcSpatialStructureEntityType -> cs2bim.ifc.entity.ifc_spatial_structure.py\
+- IfcGroupEntityType -> cs2bim.ifc.entity.ifc_group.py
 
-### Postgis-Queries
+## IFC configuration
+In this section you can make some general definitions about the resulting ifc file and you can define the feature classes, that are generated and exported as ifc entities.
 
-For each feature class you have to provide a sql for querying the data(17). At the moment terrain data is the only supported type of data for feature classes. This type requiers the sql to take a polyon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be a column for the element names(18), properties(21) or groups(26).
+### Geo Referencing
+You can provide the so called Level of Georeferencing (LoGeoRef), according to "Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408". The different levels represent different methods of defining informations about georeferencing in IFC.
+Supported values are LO_GEO_REF_30, LO_GEO_REF_40, LO_GEO_REF_50.
 
+### triangulation_representation_type
+You can define the IFC geometry type that is used to represent the TINs.
+Supported values are TESSELLATION, BREP (TESSELATION is recommended).
+
+### Feature Classes
+
+### SQL (Postgis-Queries)
+For each feature class you have to provide a sql for querying the data(17). With the query you are selecting the cadastral data (with area geometry type). The sql query requiers to take a polyon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be one column for the element name(18) and multiple columns for properties(21) or groups(26).
+
+
+### Groups
 When defining a group you can use "." to create nested group structures. (IfcGroupKey)\
 By default all IfcGroups are generated using the IfcGroup entity type. Defining other types of groups can be done by creating a new group config referencing the IfcGroupKey in the configuration file(32).
 
-Example:
-config.yaml
+### Example
+config.yml
 ```yaml
 ...
 feature_classes:
@@ -160,31 +187,34 @@ ST_CurveToLine ->  Converts a given geometry to a linear geometry\
 ST_Intersects -> Returns true if two geometries intersect. Geometries intersect if they have any point in common.
 ST_Contains -> Returns true if the first geometry contains the second.
 
-## Code structure
 
-### config
+
+# Code structure
+
+## config
 Contains all files needed for the configuration of the main processing step.
 
-### geometry
-Hold classes that hold information about certain geometry objects.
+## geometry
+Holds classes that hold information about certain geometry objects.
 
-### ifc
+## ifc
 Builds an Ifc file using the ifcopenshell library based on a model object.
 
-### service
+## service
 There are two services available. A postgis service to query a postgis database and a swisstopo service to download terrain models.
 
-### tin
+## tin
 The tin package allows to create triangulations by clipping terrain models with wkt strings.
 
-### main.py
-To execute the main function you need to provide three parameters as environment variables. IFC_VERSION, NAME and POLYGON.
-
+## main.py
+To execute the main function you need to provide three parameters: IFC_VERSION, NAME and POLYGON.
+The program executes the following steps:
 1. Load configuration file
-2. Create model
+2. Create model --> TO CHEK: What is a model???
 3. Build model
 4. Save model
 
-## Known Issues
-- Entity types that are only supported in one of the two ifc versions (IfcBuiltSystem)
-- Only one supported type of feature class data: All feature classes are processed the same way and are implemented to represent terrain data.
+
+# Known Issues
+- Entity types that are only supported in one of the two allowed ifc versions (4, 4x3) are not supported (e.g. IfcBuiltSystem)
+- Only one supported type of feature class data: All feature classes are processed the same way and are implemented to represent a surface that is projected to the terrain.
