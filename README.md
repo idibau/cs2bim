@@ -1,11 +1,11 @@
-# cs2bim
+# cs2bim project description
 
 The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launched a research project Cadastral Surveying Data to Building Information Modelling (CS2BIM). The Institute of Virtual Design and Construction and the Institute of Geomatics at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed a service based on open source libraries. The service contains the following major components:
 - Import and processing of Interlis data by the ili2pg components and storage in a PostGIS database. The vector data is read from WKT format.
 - Processing of the terrain model data and creation of the resulting 3D surfaces
 - Export of the objects to IFC format using the IfcOpenShell component
 
-![CS2BIM System Architecture](cs2bim_system_architecture.jpg){width=600}
+![CS2BIM System Architecture](./uploads/cs2bim_system_architecture.jpg){width=600}
 
 ## Getting started
 
