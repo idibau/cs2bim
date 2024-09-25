@@ -8,27 +8,33 @@ The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launch
 ![CS2BIM System Architecture](./uploads/cs2bim_system_architecture.jpg){width=600}
 
 ## Getting started
+Modify the configuration according to your needs/environment. Details about configuration [see below](#configuration)
 
 Build docker image
 ```console
 docker build -t cs2bim-run -f Dockerfile . --rm
 ```
+TO-CHECK: What about database? No configuration needed? Is this a prerequisite?
+
 Run docker image
 ```console
 docker run -e IFC_VERSION=[cs2bim.enum.ifc_version.IfcVersion] -e NAME=[str] -e POLYGON=[wkt] -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
 ```
-The polygon must be a valid wkt string in LV95.
+With these run parameters:
+- IFC_VERSION: Ifc version of the resulting ifc file (supported versions/values see src\cs2bim\config\ifc_version.py).
+- NAME: Name of the resulting ifc file.
+- POLYGON : The area in which the data is treated. The polygon must be a valid wkt string in LV95.
 
-Examples:
+Example:
 - docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e POLYGON="POLYGON((2689114 1285136,2689143 1285192,2689170 1285159,2689114 1285136))" -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
 
-After you run the docker container successfully there will be new output ifc file inside the folder from where you started the container.
+After you run the docker container successfully there will be a new output ifc file inside the folder from where you started the container.
 
-Important: If you change the config.yml, the container must be rebuild to make it work.
+Important: If you change the config.yml, the container must be rebuilt to make it work.
 
 ## Getting started dev
 
-Build and run docker container or build and open cotainer with VSCode
+Build and run docker container or build and open container with your IDE (e.g. VSCode)
 ```console
 docker-compose -f docker-compose-dev.yml up 
 ```
@@ -39,11 +45,11 @@ pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 
 ## Configuration
 
-Some properties of this python project can be configured using the config.yaml file.
+Some properties of this python project can be configured using the config.yml file.
 
 ### Structure
 
-| Number | Key | Type | Values | Example |
+| Line Number | Key | Type | Values | Example |
 |---|---|---|---|---|
 |0|logging_level|str|NOTSET; DEBUG; INFO; WARN; ERROR; CRITICAL|"cs2bim"|
 |---|---|---|---|---|
