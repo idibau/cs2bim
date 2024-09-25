@@ -31,7 +31,7 @@ Example files can be downloaded with the following links.
 |  3  |    200mx200m_int.ifc    |  https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf  |
 |  4  |    500mx500m.ifc   |   https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf |
 
-## Getting started
+# Getting started
 
 Build docker image
 ```console
@@ -61,11 +61,11 @@ Install pip packages (Run in container at /workspace)
 pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 ```
 
-## Configuration
+# Configuration
 
 Some properties of this python project can be configured using the config.yaml file.
 
-### Structure
+## Structure
 
 | Number | Key | Type | Values | Example |
 |---|---|---|---|---|
@@ -109,7 +109,7 @@ Some properties of this python project can be configured using the config.yaml f
 |33|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.object_type|str|?|"ObjectType"|
 |34|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.predefined_type|str|?|"PredefinedType"|
 
-### Types
+## Types
 
 EPSGCode -> cs2bim.enum.epsg_code.py
 GeoReferencing -> cs2bim.config.geo_referencing.py\
@@ -118,7 +118,7 @@ IfcElementEntityType -> cs2bim.ifc.entity.ifc_element.py\
 IfcSpatialStructureEntityType -> cs2bim.ifc.entity.ifc_spatial_structure.py\
 IfcGroupEntityType -> cs2bim.ifc.entity.ifc_group.py
 
-### Postgis-Queries
+## Postgis-Queries
 
 For each feature class you have to provide a sql for querying the data(17). At the moment terrain data is the only supported type of data for feature classes. This type requiers the sql to take a polyon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be a column for the element names(18), properties(21) or groups(26).
 
@@ -178,24 +178,24 @@ ST_CurveToLine ->  Converts a given geometry to a linear geometry\
 ST_Intersects -> Returns true if two geometries intersect. Geometries intersect if they have any point in common.
 ST_Contains -> Returns true if the first geometry contains the second.
 
-## Code structure
+# Code structure
 
-### config
+## config
 Contains all files needed for the configuration of the main processing step.
 
-### geometry
+## geometry
 Hold classes that hold information about certain geometry objects.
 
-### ifc
+## ifc
 Builds an Ifc file using the ifcopenshell library based on a model object.
 
-### service
+## service
 There are two services available. A postgis service to query a postgis database and a swisstopo service to download terrain models.
 
-### tin
+## tin
 The tin package allows to create triangulations by clipping terrain models with wkt strings.
 
-### main.py
+## main.py
 To execute the main function you need to provide three parameters as environment variables. IFC_VERSION, NAME and POLYGON.
 
 1. Load configuration file
@@ -203,6 +203,6 @@ To execute the main function you need to provide three parameters as environment
 3. Build model
 4. Save model
 
-## Known Issues
+# Known Issues
 - Entity types that are only supported in one of the two ifc versions (IfcBuiltSystem)
 - Only one supported type of feature class data: All feature classes are processed the same way and are implemented to represent terrain data.
