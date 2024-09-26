@@ -7,7 +7,7 @@ db:
   user: "postgres"
   host: "host.docker.internal"
   port: 5432
-  password: "postgres"
+  password: ???
   schema: "cs2bim"
 
 ######### swiss topo configuration ##########
@@ -30,18 +30,18 @@ ifc:
   feature_classes:
     parcel:
       sql: "sql/parcels.sql"
+      entity_type: IFC_GEOGRAPHIC_ELEMENT
       element_name_column: "egris_egrid"
       properties:
         - name: "NBIdent"
+          set: "CHKGK_CS" 
           column: "nbident"
-          set: "CHKGK_CS" 
         - name: "Nummer"
+          set: "CHKGK_CS" 
           column: "nummer"
-          set: "CHKGK_CS" 
         - name: "EGRIS_EGRID"
-          column: "egris_egrid"
           set: "CHKGK_CS" 
-      entity_type: IFC_GEOGRAPHIC_ELEMENT
+          column: "egris_egrid"
       spatial_structure:
         entity_type: IFC_SITE 
         name: ""
@@ -54,9 +54,9 @@ ifc:
         a: 0.85
     land_cover:
       sql: "sql/land_covers.sql"
+      entity_type: IFC_GEOGRAPHIC_ELEMENT
       element_name_column:
       properties: []
-      entity_type: IFC_GEOGRAPHIC_ELEMENT
       spatial_structure:
         entity_type: IFC_SITE 
         name: ""

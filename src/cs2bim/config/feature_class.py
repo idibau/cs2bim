@@ -10,16 +10,16 @@ class Property:
     ----------
     name : str
         Name of the property
-    column : str
-        Column that holds the property value
     set : str
         Name of the property set
+    column : str
+        Column that holds the property value
     """
 
-    def __init__(self, name: str, column: str, set: str) -> None:
+    def __init__(self, name: str, set: str, column: str) -> None:
         self.name = name
-        self.column = column
         self.set = set
+        self.column = column
 
 
 class FeatureClass:
@@ -30,12 +30,12 @@ class FeatureClass:
     ----------
     sql : str
         Path to the sql file
+    entity_type : ElementEntityType
+        Entity type of all elemets assigned to this feature class
     element_name_column : str
         Column that holds element name information
     properties : list[Property]
         List of property definitions (name, column, set)
-    entity_type : ElementEntityType
-        Entity type of all elemets assigned to this feature class
     spatial_structure : SpatialStructure
         Parent spatial structure of all elemets assigned to this feature class
     group_columns : list[str]
@@ -47,9 +47,9 @@ class FeatureClass:
     def __init__(
         self,
         sql: str,
+        entity_type: IfcElementEntityType,
         element_name_column: str,
         properties: list[Property],
-        entity_type: IfcElementEntityType,
         spatial_structure: IfcSpatialStructure,
         group_columns: list[str],
         color_definition: tuple[float, float, float, float],

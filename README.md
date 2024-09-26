@@ -104,12 +104,12 @@ The configuration has different sections/topics:
 |15|ifc.triangulation_representation_type|TriangulationRepresentationType|TESSELLATION; BREP|BREP|
 |16|ifc.feature_classes|map|---|---|
 |17|ifc.feature_classes.<em>FeatureClassKeyX</em>.sql|str|<em>Path to sql file</em>|"sql/parcels.sql"|
-|18|ifc.feature_classes.<em>FeatureClassKeyX</em>.element_name_column|str|?|"name_column"|
-|19|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties|list|---|---|
-|20|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|?|"Property"|
-|21|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|?|"property_column"|
+|18|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|IfcElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
+|19|ifc.feature_classes.<em>FeatureClassKeyX</em>.element_name_column|str|?|"name_column"|
+|20|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties|list|---|---|
+|21|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|?|"Property"|
 |22|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set|str|?|"PropertySet"|
-|23|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|IfcElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
+|23|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|?|"property_column"|
 |24|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|IfcSpatialStructureEntityType|IFC_SITE|IFC_SITE|
 |25|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.name|str|?|"Site"|
 |26|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns|list[str]|?|"group_column"|
@@ -158,7 +158,7 @@ The main configurations of a feature class include:
 
 
 ### SQL
-For each feature class you have to provide a sql for querying the data(17). With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be one column for the element name(18) and multiple columns for properties(21) or groups(26).
+For each feature class you have to provide a sql for querying the data(17). With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be one column for the element name(19) and multiple columns for properties(23) or groups(26).
 
 The following schema shows the relationship between the attributes defined by the sql query and their linking to the configuration.  
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}

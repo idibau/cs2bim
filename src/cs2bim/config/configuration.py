@@ -56,13 +56,13 @@ class Configuration:
             with open(value["sql"], "r") as file:
                 sql = file.read()
             element_name_column = value["element_name_column"]
+            entity_type = IfcElementEntityType[value["entity_type"]]
             properties = []
             for property in value["properties"]:
                 property_name = property["name"]
-                property_column = property["column"]
                 property_set = property["set"]
-                properties.append(Property(property_name, property_column, property_set))
-            entity_type = IfcElementEntityType[value["entity_type"]]
+                property_column = property["column"]
+                properties.append(Property(property_name, property_set, property_column))
             spatial_structure = IfcSpatialStructure(
                 IfcSpatialStructureEntityType[value["spatial_structure"]["entity_type"]],
                 value["spatial_structure"]["name"],
@@ -76,9 +76,9 @@ class Configuration:
             )
             feature_class = FeatureClass(
                 sql,
+                entity_type,
                 element_name_column,
                 properties,
-                entity_type,
                 spatial_structure,
                 group_columns,
                 color_definition,
