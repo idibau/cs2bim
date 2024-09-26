@@ -13,7 +13,7 @@ from cs2bim.ifc.ifc_model import IfcModel
 from cs2bim.ifc.ifc_builder import IfcBuilder
 from cs2bim.ifc.entity.ifc_element import IfcElement
 from cs2bim.geometry.triangulation import Triangulation
-from cs2bim.service.swisstopo_service import SwisstopoService
+from cs2bim.service.dtm_service import DTMService
 from cs2bim.service.postgis_service import PostgisService
 
 # load configuration File
@@ -30,7 +30,7 @@ root_logger.addHandler(stream_handler)
 logger = logging.getLogger(__name__)
 
 
-swiss_topo_service = SwisstopoService()
+swiss_topo_service = DTMService()
 postgis_service = PostgisService()
 
 

@@ -11,8 +11,8 @@ from cs2bim.service.bounding_box import BoundingBox
 logger = logging.getLogger(__name__)
 
 
-class SwisstopoService:
-    """Service that accesses the swisstopo api"""
+class DTMService:
+    """Service that accesses the digital terrain model api defined in the config"""
 
     def __init__(self) -> None:
         self.temp_dir = tempfile.TemporaryDirectory()
@@ -21,7 +21,7 @@ class SwisstopoService:
         """Fetches all dtm files that are needed to display the are defined by the bounding box and saves them in a temporary folder"""
         file_paths = []
         items_response = requests.get(config.stac_api, params={"bbox": bounding_box.get_wgs84_bounding_box_as_string()})
-        logger.debug(f"swisstopo request: {items_response.url}")
+        logger.debug(f"dtm request: {items_response.url}")
         if items_response.status_code == 200:
             for feature in items_response.json()["features"]:
                 assets = feature["assets"].values()

@@ -91,7 +91,7 @@ The configuration has different sections/topics:
 |5|db.password|str|?|"xxx"|
 |6|db.schema|str|?|"cs2bim"|
 |---|---|---|---|---|
-|7|swisstopo.stac_api|str|?|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
+|7|dtm.stac_api|str|?|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
 |---|---|---|---|---|
 |8|tin.grid_size|float|0.5;2|0.5|
 |9|tin.max_height_error|float|TODO|0.05|
@@ -239,7 +239,7 @@ Holds classes that hold information about certain geometry objects.
 Builds an Ifc file using the ifcopenshell library based on a model object.
 
 ## service
-There are two services available. A postgis service to query a postgis database and a swisstopo service to download terrain models.
+There are two services available. A postgis service to query a postgis database and a dtm service to download terrain models.
 
 ## tin
 The tin package allows to create triangulations by clipping terrain models with wkt strings.

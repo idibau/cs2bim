@@ -10,8 +10,8 @@ db:
   password: ???
   schema: "cs2bim"
 
-######### swiss topo configuration ##########
-swisstopo:
+########## dtm api configuration ############
+dtm:
   stac_api: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
 
 ############# tin configuration #############

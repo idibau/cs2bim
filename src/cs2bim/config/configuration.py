@@ -32,9 +32,9 @@ class Configuration:
         self.password = db_config["password"]
         self.schema = db_config["schema"]
 
-        # init swisstopo configuration
-        swisstopo_config = self.config_file["swisstopo"]
-        self.stac_api = swisstopo_config["stac_api"]
+        # init dtm configuration
+        dtm_config = self.config_file["dtm"]
+        self.stac_api = dtm_config["stac_api"]
 
         # init tin configuration
         tin_config = self.config_file["tin"]
