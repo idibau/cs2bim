@@ -105,8 +105,7 @@ The configuration has different sections/topics:
 ## Types
 Some parameters can only be configured with predefined values (types), because these values are referenced in the code. To guarantee a proper configuration and execution of the code, these predefined values (types) are defined as constants in different modules/classes in the python code.
 
-The following types are defined: --> TO CHECK: vollständige Liste?
-- EPSGCode -> cs2bim.enum.epsg_code.py
+The following types are defined:
 - GeoReferencing -> cs2bim.config.geo_referencing.py\
 - TriangulationRepresentationType -> cs2bim.geometry.triangulation.py\
 - IfcElementEntityType -> cs2bim.ifc.entity.ifc_element.py\
@@ -134,7 +133,7 @@ The main configurations of a feature class include:
 - entity_type: The IFC entity, to which all selected objects of the feature class are exported to.
 - properties: Any number of property definitions that are exported as IFC properties/property sets.
 - group_columns: Any number of IFC group assignments.
-- spatial_structure: ??? TO CHECK and Define
+- spatial_structure: The IFC spatial structure, that appends all objects of the feature class.
 - colour_definition: An IFC colour definition
 
 
@@ -148,7 +147,7 @@ The following schema shows the relationship between the attributes defined by th
 ### Groups
 Every exported object can be assigned to a group (zero to multiple). The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a group configuration.  
 For each group configuration the system is creating an ifc group according to the configured parameters (entity_type, predefined_type, object_type).  
-TO CHECK: When there is no group configuration for an assigned value, the system will create a ifc group with some default parameters.  
+When there is no group configuration for an assigned value, the system will create a simple ifc group entity without any special attributes.
 
 When defining a group you can use "." to create nested group structures. (IfcGroupKey)\
 By default all IfcGroups are generated using the IfcGroup entity type. Defining other types of groups can be done by creating a new group config referencing the IfcGroupKey in the configuration file(32).
