@@ -249,7 +249,7 @@ The tin package allows to create triangulations by clipping terrain models with 
 To execute the main function you need to provide three parameters: IFC_VERSION, NAME and POLYGON.
 The program executes the following steps:
 1. Load configuration file
-2. Create model --> TO CHEK: What is a model???
+2. Create model
 3. Build model
 4. Save model
 
