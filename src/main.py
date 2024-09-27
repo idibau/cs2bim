@@ -68,8 +68,10 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
         logger.info(f"create {feature_class_key} feature class")
         elements = feature_class_elements[feature_class_key]
         for index, element in enumerate(elements):
-            element_name = element[feature_class.element_name_column] if feature_class.element_name_column is not None else ""
-            logger.info(f"create {feature_class_key} {element_name} ({index + 1}/{len(elements)})")
+            attributes = {}
+            for attribute, column in feature_class.attributes.items():
+                attributes[attribute] = element[column]
+            logger.info(f"create {feature_class_key} {index + 1}/{len(elements)}")
             logger.debug("create area")
             wkt_str = element["wkt"]
             if isinstance(shapely.from_wkt(wkt_str), shapely.MultiPolygon):
@@ -92,7 +94,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
             triangulation = Triangulation()
             triangulation.load_from_data(mesh_clipped_decimated.get_data())
             groups = [element[group_column] for group_column in feature_class.group_columns]
-            ifc_element = IfcElement(element_name, "", groups, triangulation)
+            ifc_element = IfcElement(attributes, groups, triangulation)
             for property in feature_class.properties:
                 ifc_element.add_property(property.set, property.name, element[property.column])
             model.add_ifc_element(feature_class_key, ifc_element)

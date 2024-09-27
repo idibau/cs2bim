@@ -32,8 +32,8 @@ class FeatureClass:
         Path to the sql file
     entity_type : ElementEntityType
         Entity type of all elemets assigned to this feature class
-    element_name_column : str
-        Column that holds element name information
+    attributes : dict[str, str]
+        All columns that should be represented in a attribute
     properties : list[Property]
         List of property definitions (name, column, set)
     spatial_structure : SpatialStructure
@@ -48,14 +48,14 @@ class FeatureClass:
         self,
         sql: str,
         entity_type: IfcElementEntityType,
-        element_name_column: str,
+        attributes: dict[str, str],
         properties: list[Property],
         spatial_structure: IfcSpatialStructure,
         group_columns: list[str],
         color_definition: tuple[float, float, float, float],
     ) -> None:
         self.sql = sql
-        self.element_name_column = element_name_column
+        self.attributes = attributes
         self.properties = properties
         self.entity_type = entity_type
         self.spatial_structure = spatial_structure

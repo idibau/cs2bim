@@ -69,7 +69,9 @@ def add_ifc_unit_assignment(
     )
 
 
-def add_ifc_geometric_representation_context(ifc_file: file, location_coordinates: tuple[float, float, float]) -> entity_instance:
+def add_ifc_geometric_representation_context(
+    ifc_file: file, location_coordinates: tuple[float, float, float]
+) -> entity_instance:
     location = add_ifc_cartesian_point(ifc_file, location_coordinates)
     world_coordinate_system = ifc_file.create_entity("IfcAxis2Placement3D", Location=location)
     return ifc_file.create_entity(
@@ -133,13 +135,12 @@ def add_ifc_local_placement(ifc_file: file, location_coordinates: tuple[float, f
 
 def add_ifc_site(
     ifc_file: file,
-    name: str,
     owner_history: entity_instance,
     object_placement: entity_instance,
     project: entity_instance,
 ) -> entity_instance:
     site = ifc_file.create_entity(
-        "IfcSite", Name=name, GlobalId=guid.new(), OwnerHistory=owner_history, ObjectPlacement=object_placement
+        "IfcSite", GlobalId=guid.new(), OwnerHistory=owner_history, ObjectPlacement=object_placement
     )
     add_ifc_rel_aggregates(ifc_file, project, [site])
     return site
@@ -160,38 +161,24 @@ def add_ifc_group(ifc_file: file, name: str) -> entity_instance:
     return ifc_file.create_entity("IfcGroup", GlobalId=guid.new(), Name=name)
 
 
-def add_ifc_distribution_system(ifc_file: file, name: str, object_type: str, predefined_type: str) -> entity_instance:
-    return ifc_file.create_entity(
-        "IfcDistributionSystem", GlobalId=guid.new(), Name=name, ObjectType=object_type, PredefinedType=predefined_type
-    )
+def add_ifc_distribution_system(ifc_file: file, name: str) -> entity_instance:
+    return ifc_file.create_entity("IfcDistributionSystem", GlobalId=guid.new(), Name=name)
 
 
-def add_ifc_distribution_circuit(ifc_file: file, name: str, object_type: str, predefined_type: str) -> entity_instance:
-    return ifc_file.create_entity(
-        "IfcDistributionCircuit", GlobalId=guid.new(), Name=name, ObjectType=object_type, PredefinedType=predefined_type
-    )
+def add_ifc_distribution_circuit(ifc_file: file, name: str) -> entity_instance:
+    return ifc_file.create_entity("IfcDistributionCircuit", GlobalId=guid.new(), Name=name)
 
 
-def add_ifc_building_system(ifc_file: file, name: str, object_type: str, predefined_type: str) -> entity_instance:
-    return ifc_file.create_entity(
-        "IfcBuildingSystem", GlobalId=guid.new(), Name=name, ObjectType=object_type, PredefinedType=predefined_type
-    )
+def add_ifc_building_system(ifc_file: file, name: str) -> entity_instance:
+    return ifc_file.create_entity("IfcBuildingSystem", GlobalId=guid.new(), Name=name)
 
 
-def add_ifc_structural_analysis_model(
-    ifc_file: file, name: str, object_type: str, predefined_type: str
-) -> entity_instance:
-    return ifc_file.create_entity(
-        "IfcStructuralAnalysisModel",
-        GlobalId=guid.new(),
-        Name=name,
-        ObjectType=object_type,
-        PredefinedType=predefined_type,
-    )
+def add_ifc_structural_analysis_model(ifc_file: file, name: str) -> entity_instance:
+    return ifc_file.create_entity("IfcStructuralAnalysisModel", GlobalId=guid.new(), Name=name)
 
 
-def add_ifc_zone(ifc_file: file, name: str, object_type: str) -> entity_instance:
-    return ifc_file.create_entity("IfcZone", GlobalId=guid.new(), Name=name, ObjectType=object_type)
+def add_ifc_zone(ifc_file: file, name: str) -> entity_instance:
+    return ifc_file.create_entity("IfcZone", GlobalId=guid.new(), Name=name)
 
 
 def add_ifc_rel_assigns_to_group(
@@ -233,8 +220,8 @@ def add_ifc_triangulated_face_set(
     return ifc_file.create_entity("IfcTriangulatedFaceSet", Coordinates=coordinates, CoordIndex=coord_index)
 
 
-def add_ifc_geographic_element(ifc_file: file, name: str, description: str) -> entity_instance:
-    return ifc_file.create_entity("IfcGeographicElement", GlobalId=guid.new(), Name=name, Description=description)
+def add_ifc_geographic_element(ifc_file: file, representaion: entity_instance) -> entity_instance:
+    return ifc_file.create_entity("IfcGeographicElement", GlobalId=guid.new(), Representation=representaion)
 
 
 def add_ifc_surface_style(ifc_file: file, color: tuple[float, float, float, float]) -> entity_instance:

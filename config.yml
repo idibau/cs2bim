@@ -31,21 +31,23 @@ ifc:
     parcel:
       sql: "sql/parcels.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
-      element_name_column: "egris_egrid"
+      attributes:
+        - attribute: "Name"
+          column: "egris_egrid"
       properties:
         - name: "NBIdent"
-          set: "CHKGK_CS" 
+          set: "CHKGK_CS"
           column: "nbident"
         - name: "Nummer"
-          set: "CHKGK_CS" 
+          set: "CHKGK_CS"
           column: "nummer"
         - name: "EGRIS_EGRID"
-          set: "CHKGK_CS" 
+          set: "CHKGK_CS"
           column: "egris_egrid"
       spatial_structure:
-        entity_type: IFC_SITE 
-        name: ""
-      group_columns: 
+        entity_type: IFC_SITE
+        attributes: []
+      group_columns:
         - "group"
       color_definition:
         r: 0.31
@@ -55,11 +57,11 @@ ifc:
     land_cover:
       sql: "sql/land_covers.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
-      element_name_column:
+      attributes: []
       properties: []
       spatial_structure:
-        entity_type: IFC_SITE 
-        name: ""
+        entity_type: IFC_SITE
+        attributes: []
       group_columns: 
         - "group"
       color_definition:  
@@ -70,5 +72,8 @@ ifc:
   groups:
     Amtliche Vermessung.Feature-Klassen.Bodenbedeckung (Gebaeude):
       entity_type: IFC_DISTRIBUTION_SYSTEM
-      object_type: ""
-      predefined_type: "NOTDEFINED"
+      attributes:
+        - attribute: "ObjectType"
+          value: ""
+        - attribute: "PredefinedTYpe"
+          value: "NOTDEFINED"

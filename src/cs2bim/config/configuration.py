@@ -55,17 +55,27 @@ class Configuration:
         for key, value in ifc_config["feature_classes"].items():
             with open(value["sql"], "r") as file:
                 sql = file.read()
-            element_name_column = value["element_name_column"]
             entity_type = IfcElementEntityType[value["entity_type"]]
+            attributes = {}
+            for attribute in value["attributes"]:
+                attribute_name = attribute["attribute"]
+                attribute_column = attribute["column"]
+                attributes[attribute_name] = attribute_column
             properties = []
             for property in value["properties"]:
                 property_name = property["name"]
                 property_set = property["set"]
                 property_column = property["column"]
                 properties.append(Property(property_name, property_set, property_column))
+            spatial_structure_entity_type = IfcSpatialStructureEntityType[value["spatial_structure"]["entity_type"]]
+            spatial_structure_attributes = {}
+            for spatial_structure_attribute in value["spatial_structure"]["attributes"]:
+                attribute_name = spatial_structure_attribute["attribute"]
+                attribute_value = spatial_structure_attribute["value"]
+                spatial_structure_attributes[attribute_name] = attribute_value
             spatial_structure = IfcSpatialStructure(
-                IfcSpatialStructureEntityType[value["spatial_structure"]["entity_type"]],
-                value["spatial_structure"]["name"],
+                spatial_structure_entity_type,
+                spatial_structure_attributes
             )
             group_columns = value["group_columns"]
             color_definition = (
@@ -77,7 +87,7 @@ class Configuration:
             feature_class = FeatureClass(
                 sql,
                 entity_type,
-                element_name_column,
+                attributes,
                 properties,
                 spatial_structure,
                 group_columns,
@@ -87,9 +97,12 @@ class Configuration:
         self.groups = {}
         for key, value in ifc_config["groups"].items():
             entity_type = IfcGroupEntityType[value["entity_type"]]
-            object_type = value["object_type"]
-            predefined_type = value["predefined_type"]
-            ifc_group = IfcGroup(entity_type, object_type, predefined_type)
+            group_attributes = {}
+            for group_attribute in value["attributes"]:
+                attribute_name = group_attribute["attribute"]
+                attribute_value = group_attribute["value"]
+                group_attributes[attribute_name] = attribute_value
+            ifc_group = IfcGroup(entity_type, group_attribute)
             self.groups[key] = ifc_group
 
 

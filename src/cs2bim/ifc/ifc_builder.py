@@ -73,12 +73,16 @@ class IfcBuilder:
             spatial_structure = feature_class.spatial_structure
             if not spatial_structure.get_key() in spatial_structures_entities:
                 if spatial_structure.type == IfcSpatialStructureEntityType.IFC_SITE:
-                    site = add_ifc_site(ifc_file, spatial_structure.name, owner_history, local_placement, project)
+                    site = add_ifc_site(ifc_file, owner_history, local_placement, project)
                     spatial_structures_entities[spatial_structure.get_key()] = site
                 else:
                     raise Exception(
                         f"builing step for structure entity type {spatial_structure.type.name} not implemented"
                     )
+                spatial_structures_entity = spatial_structures_entities[spatial_structure.get_key()]
+                for attribute, value in spatial_structure.attributes.items():
+                    if hasattr(spatial_structures_entity, attribute):
+                        setattr(spatial_structures_entity, attribute, value)
 
             logger.info(f"FeatureClass {feature_class_key}: build ifc elements")
             style_entity = add_ifc_surface_style(ifc_file, feature_class.color_definition)
@@ -125,12 +129,14 @@ class IfcBuilder:
                     ifc_file, representation_context, representation_type.value, item
                 )
                 if feature_class.entity_type == IfcElementEntityType.IFC_GEOGRAPHIC_ELEMENT:
-                    element_entity = add_ifc_geographic_element(ifc_file, element.name, element.description)
+                    element_entity = add_ifc_geographic_element(ifc_file, product_definition_shape)
                 else:
                     raise Exception(
-                        f"builing step for feature class entity type {element.feature_class.entity_type.name} not implemented"
+                        f"builing step for feature class entity type {feature_class.entity_type.name} not implemented"
                     )
-                element_entity.Representation = product_definition_shape
+                for attribute, value in element.attributes.items():
+                    if hasattr(element_entity, attribute):
+                        setattr(element_entity, attribute, value)
 
                 for property_set in element.property_sets.values():
                     property_entites = []
@@ -158,29 +164,26 @@ class IfcBuilder:
                         if group_path in config.groups:
                             ifc_group = config.groups[group_definition]
                             if ifc_group.entity_type == IfcGroupEntityType.IFC_DISTRIBUTION_SYSTEM:
-                                group_entities[group_path] = add_ifc_distribution_system(
-                                    ifc_file, group, ifc_group.object_type, ifc_group.predefined_type
-                                )
+                                group_entities[group_path] = add_ifc_distribution_system(ifc_file, group)
                             elif ifc_group.entity_type == IfcGroupEntityType.IFC_DISTRIBUTION_CIRCUIT:
-                                group_entities[group_path] = add_ifc_distribution_circuit(
-                                    ifc_file, group, ifc_group.object_type, ifc_group.predefined_type
-                                )
+                                group_entities[group_path] = add_ifc_distribution_circuit(ifc_file, group)
                             elif ifc_group.entity_type == IfcGroupEntityType.IFC_BUILDING_SYSTEM:
-                                group_entities[group_path] = add_ifc_building_system(
-                                    ifc_file, group, ifc_group.object_type, ifc_group.predefined_type
-                                )
+                                group_entities[group_path] = add_ifc_building_system(ifc_file, group)
                             elif ifc_group.entity_type == IfcGroupEntityType.IFC_STRUCTURAL_ANALYSIS_MODEL:
-                                group_entities[group_path] = add_ifc_structural_analysis_model(
-                                    ifc_file, group, ifc_group.object_type, ifc_group.predefined_type
-                                )
+                                group_entities[group_path] = add_ifc_structural_analysis_model(ifc_file, group)
                             elif ifc_group.entity_type == IfcGroupEntityType.IFC_ZONE:
-                                group_entities[group_path] = add_ifc_zone(ifc_file, group, ifc_group.object_type)
+                                group_entities[group_path] = add_ifc_zone(ifc_file, group)
                             else:
                                 raise Exception(
                                     f"builing step for ifc group entity {type(ifc_group.entity_type)} not implemented"
                                 )
+                            group_entity = group_entities[group_path]
+                            for attribute, value in ifc_group.attributes.items():
+                                if hasattr(group_entity, attribute):
+                                    setattr(group_entity, attribute, value)
                         else:
                             group_entities[group_path] = add_ifc_group(ifc_file, group)
+
                         if not parent_group_path == "":
                             add_ifc_rel_assigns_to_group(
                                 ifc_file, [group_entities[group_path]], group_entities[parent_group_path]

@@ -1,3 +1,4 @@
+import json
 from enum import Enum
 
 
@@ -10,10 +11,10 @@ class IfcSpatialStructureEntityType(Enum):
 class IfcSpatialStructure:
     """Ifc spatial structure"""
 
-    def __init__(self, type: IfcSpatialStructureEntityType, name: str) -> None:
+    def __init__(self, type: IfcSpatialStructureEntityType, attributes: dict[str, str]) -> None:
         self.type = type
-        self.name = name
+        self.attributes = attributes
 
     def get_key(self) -> str:
         """Returns a key to identify a spatial structure instance"""
-        return f"{self.name}-{self.type.name}"
+        return f"{json.dumps(self.attributes, sort_keys=True)}-{self.type.name}"

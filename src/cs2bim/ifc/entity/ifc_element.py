@@ -16,10 +16,8 @@ class IfcElement:
 
     Attributes
     ----------
-    name : str
-        Name of the element
-    description : str
-        Description of the element
+    attributes : str
+        Attributes of the element
     geometry : Geometry
         The geometry of the element
     groups : list[str]
@@ -28,9 +26,8 @@ class IfcElement:
         A map of all property sets identified by their name
     """
 
-    def __init__(self, name: str, description: str, groups: list[str], geometry: Geometry) -> None:
-        self.name = name
-        self.description = description
+    def __init__(self, attributes: dict[str, str], groups: list[str], geometry: Geometry) -> None:
+        self.attributes = attributes
         self.geometry = geometry
         self.groups = groups
         self.property_sets = {}

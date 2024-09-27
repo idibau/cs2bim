@@ -12,7 +12,6 @@ class IfcGroupEntityType(Enum):
 
 class IfcGroup:
 
-    def __init__(self, entity_type: IfcGroupEntityType, object_type: str, predefined_type: str) -> None:
+    def __init__(self, entity_type: IfcGroupEntityType, attributes: dict[str, str]) -> None:
         self.entity_type = entity_type
-        self.object_type = object_type
-        self.predefined_type = predefined_type
+        self.attributes = attributes
