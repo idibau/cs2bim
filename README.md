@@ -170,7 +170,7 @@ The following schema shows the relationship between the attributes defined by th
 
 ### Groups
 Every exported object can be assigned to a group (zero to multiple). The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a group configuration.  
-For each group configuration the system is creating an ifc group according to the configured parameters (entity_type, predefined_type, object_type).  
+For each group configuration the system is creating an ifc group according to the configured parameters (entity_type and any number of attributes).  
 When there is no group configuration for an assigned value, the system will create a simple ifc group entity without any special attributes.
 
 When defining a group you can use "." to create nested group structures. (IfcGroupKey)\
