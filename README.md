@@ -156,6 +156,7 @@ A "Feature Class" is the definition of a set of  objects that are exported in an
 The main configurations of a feature class include:
 - sql: A SQL query that selects objects in the GIS database, returning a geometry (must be an area) and some other attributes for each object.
 - entity_type: The IFC entity, to which all selected objects of the feature class are exported to.
+- attributes: All attributes that are set on the objects.
 - properties: Any number of property definitions that are exported as IFC properties/property sets.
 - group_columns: Any number of IFC group assignments.
 - spatial_structure: The IFC spatial structure, that appends all objects of the feature class.
