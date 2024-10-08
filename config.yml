@@ -5,9 +5,9 @@ logging_level: DEBUG
 db:
   dbname: "cs2bim"
   user: "postgres"
-  host: "localhost"
+  host: "host.docker.internal"
   port: 5432
-  password: postgres
+  password: ???
   schema: "cs2bim"
 
 ########## dtm api configuration ############
