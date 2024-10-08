@@ -5,9 +5,9 @@ logging_level: DEBUG
 db:
   dbname: "cs2bim"
   user: "postgres"
-  host: "host.docker.internal"
+  host: "localhost"
   port: 5432
-  password: ???
+  password: postgres
   schema: "cs2bim"
 
 ########## dtm api configuration ############
@@ -32,6 +32,10 @@ ifc:
       sql: "sql/parcels.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       attributes:
+        - attribute: "PredefinedType"
+          column: "predefined_type"
+        - attribute: "ObjectType"
+          column: "object_type"
         - attribute: "Name"
           column: "egris_egrid"
       properties:
@@ -46,7 +50,15 @@ ifc:
           column: "egris_egrid"
       spatial_structure:
         entity_type: IFC_SITE
-        attributes: []
+        attributes:
+        - attribute: "CompositionType"
+          value: "COMPLEX"
+        - attribute: "PredefinedType"
+          value: "USERDEFINED"
+        - attribute: "ObjectType"
+          value: "Liegenschaften"
+        - attribute: "Name"
+          value: "Liegenschaften"
       group_columns:
         - "group"
       color_definition:
@@ -57,11 +69,25 @@ ifc:
     land_cover:
       sql: "sql/land_covers.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
-      attributes: []
+      attributes:
+        - attribute: "PredefinedType"
+          column: "predefined_type"
+        - attribute: "ObjectType"
+          column: "art"
+        - attribute: "Name"
+          column: "art"
       properties: []
       spatial_structure:
         entity_type: IFC_SITE
-        attributes: []
+        attributes:
+        - attribute: "CompositionType"
+          value: "COMPLEX"
+        - attribute: "PredefinedType"
+          value: "USERDEFINED"
+        - attribute: "ObjectType"
+          value: "Bodenbedeckung"
+        - attribute: "Name"
+          value: "Bodenbedeckung"
       group_columns: 
         - "group"
       color_definition:  
@@ -69,11 +95,43 @@ ifc:
         g: 0.42
         b: 0.04
         a: 0.85
-  groups:
-    Amtliche Vermessung.Feature-Klassen.Bodenbedeckung (Gebaeude):
-      entity_type: IFC_DISTRIBUTION_SYSTEM
+    buildings:
+      sql: "sql/land_covers_buildings.sql"
+      entity_type: IFC_GEOGRAPHIC_ELEMENT
       attributes:
+        - attribute: "PredefinedType"
+          column: "predefined_type"
         - attribute: "ObjectType"
-          value: ""
-        - attribute: "PredefinedTYpe"
-          value: "NOTDEFINED"
+          column: "art"
+        - attribute: "Name"
+          column: "gwr_egid"
+      properties:
+        - name: "GWR-EGID"
+          set: "CHKGK_CS"
+          column: "gwr_egid"
+      spatial_structure:
+        entity_type: IFC_SITE
+        attributes:
+        - attribute: "CompositionType"
+          value: "COMPLEX"
+        - attribute: "PredefinedType"
+          value: "USERDEFINED"
+        - attribute: "ObjectType"
+          value: "Gebäude"
+        - attribute: "Name"
+          value: "Gebäude"
+      group_columns: 
+        - "group"
+      color_definition:  
+        r: 1.00
+        g: 0.00
+        b: 0.00
+        a: 0.85
+  groups:
+    Amtliche Vermessung.Gebaeude:
+      entity_type: IFC_BUILDING_SYSTEM
+      attributes:
+        - attribute: "PredefinedType"
+          value: "USERDEFINED"
+        - attribute: "ObjectType"
+          value: "Gebaeude"

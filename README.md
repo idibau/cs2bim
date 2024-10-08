@@ -147,6 +147,9 @@ You can provide the so called "Level of Georeferencing" (LoGeoRef), according to
 The different levels represent different methods of defining informations about georeferencing in IFC.  
 Supported values are LO_GEO_REF_30, LO_GEO_REF_40, LO_GEO_REF_50.
 
+### Coordinates and Offets
+==> TO BE DESCRIBED !!!
+
 ### Triangulation Representation Type
 You can define the IFC geometry type that is used to represent the TIN geometry.  
 Supported values are TESSELLATION, BREP (TESSELATION is recommended).
@@ -159,7 +162,7 @@ The main configurations of a feature class include:
 - attributes: All attributes that are set on the objects.
 - properties: Any number of property definitions that are exported as IFC properties/property sets.
 - group_columns: Any number of IFC group assignments.
-- spatial_structure: The IFC spatial structure, that appends all objects of the feature class.
+- spatial_structure: The IFC spatial structure, to which all objects of the feature class are appended.
 - colour_definition: An IFC colour definition
 
 ### SQL
@@ -167,6 +170,11 @@ For each feature class you have to provide a sql for querying the data(17). With
 
 The following schema shows the relationship between the attributes defined by the sql query and their linking to the configuration.  
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
+
+### Spatial Structure
+All objects of a feature class are assigned to one common spatial structure. The spatial structure instance can be configured with its entity type and attributes.
+
+If the specification of the spatial structure instance in different feature class definitions is identical, then only one spatial structure instance is created (and all objects of the feature classes are assigned to the same spatial structure).
 
 ### Groups
 Every exported object can be assigned to a group (zero to multiple). The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a group configuration.  
