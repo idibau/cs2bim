@@ -18,7 +18,7 @@ class DTMService:
         self.temp_dir = tempfile.TemporaryDirectory()
 
     def fetch_dtm_files(self, bounding_box: BoundingBox) -> list[str]:
-        """Fetches all dtm files that are needed to display the are defined by the bounding box and saves them in a temporary folder"""
+        """Fetches all dtm files that are needed to display the area defined by the bounding box and saves them in a temporary folder"""
         file_paths = []
         items_response = requests.get(config.stac_api, params={"bbox": bounding_box.get_wgs84_bounding_box_as_string()})
         logger.debug(f"dtm request: {items_response.url}")

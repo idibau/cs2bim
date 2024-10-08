@@ -28,7 +28,7 @@ class PostgisService:
         return result
 
     def get_bounding_box(self, wkts: list[str]) -> BoundingBox:
-        """Calculates and returns a minimal bounding box containg all geometries from the wkts"""
+        """Calculates and returns a minimal bounding box containing all geometries from the wkts"""
         cur = self.connection.cursor()
         cur.execute(
             f"""

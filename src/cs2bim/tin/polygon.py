@@ -8,7 +8,7 @@ class Area(object):
 
     NOTE
     ----
-    Circular arcs are not supported. Therefore the must be segmented in advance.
+    Circular arcs are not supported. Therefore they must be segmented in advance.
 
     ``ST_CurveToLine`` https://postgis.net/docs/ST_CurveToLine.html provides such
     functionality. However, make sure to use ``flag 1`` to create symmetric output.
