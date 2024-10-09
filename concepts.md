@@ -41,8 +41,9 @@ The attribute values of a feature can be transformed into
 - in a group assignment of the entity instance
 - in a classification value assignment of the entity instance (not implemented, not shown in figure above)
 
-The GIS geometry is transformed into a "Body" geometry of IFC. In the current implementation, only 2D surface geometries are supported in the source geometry. These are transformed into 3D surfaces (preferably of the tesselation type). In future developments, it is planned to support different geometry types in the feature classes and to be able to convert them into different geometry types of IFC.
+The GIS geometry is transformed into a "Body" geometry of IFC. In the current implementation, only 2D surface geometries are supported in the source geometry. These are transformed into 3D surfaces (preferably of the tesselation type). In future developments, it is planned to support different geometry types in the feature classes and to be able to convert them into different geometry types of IFC.  
 
+The GIS geometry is expected to be in WKT format ([ISO 19125-1])[^ISO19125-1]. If the geodata source is in INTERLIS format (ILI-RefMan)[^ILIRefMan], a preprocess must be run to transform it to the WKT format (e.g. ili2pg).
 
 # Internal object model
 
