@@ -4,7 +4,7 @@
 
 
 ## IFC basic principles
-The "Industry Foundation Classes" (IFC) is an open, international standard that defines a conceptual data model for buildings. It is developped and maintained by buildingSmart International and documented in an open HTML based documentation [[1]](#1). IFC is also published as an ISO standard [[2]](#2), that is identical to the open standard.  
+The "Industry Foundation Classes" (IFC) is an open, international standard that defines a conceptual data model for buildings. It is developped and maintained by buildingSmart International and documented in an open HTML based documentation [^1] [[1]](#1). IFC is also published as an ISO standard [[2]](#2), that is identical to the open standard.  
 
 IFC defines a large data model. In the context of cs2bim, the core of the IFC data model can be described (simplified) with the following structures (see also [[3]](#3)).
 - IfcElement:  
@@ -24,7 +24,8 @@ As an alternative to IfcGroup, an IfcElement can be assigned to a classification
 ![IFC principles (simplified), according to [[3]](#3)](./uploads/ifc-principles.png){width=600}
 
 
-The data model shown above is simplified and conceptualised. In fact, the data model of IFC is much more structured and uses, amongst other things, inheritance relationships and relationship classes. The figure below shows the same core elements again, but taking into account the most important inheritance relationships from IFC (note: this figure is also a simplified representation).
+The data model shown above is simplified and conceptualised. In fact, the data model of IFC is much more structured and uses, amongst other things, inheritance relationships and relationship classes. The figure below shows the same core elements again, but taking into account the most important inheritance relationships from IFC (note: this figure is also a simplified representation).  
+
 ![IFC schema (extraction, simplified)](./uploads/ifc-simplified.png){width=600}
 
 
@@ -44,6 +45,7 @@ The GIS geometry is transformed into a "Body" geometry of IFC. In the current im
 
 
 ## Internal object model
+
 --> to be verified
 
 ![Internal object model](./uploads/internal-class-model.png){width=600}
@@ -68,4 +70,4 @@ ISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature acce
 <a id="6">[6]</a> 
 eCH-0031 iliRefMan, 2017. eCH-0031 INTERLIS 2 - Referenzhandbuch, Version 2.0.  
 
-
+[^1]: buildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html .  
