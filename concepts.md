@@ -4,11 +4,11 @@
 
 
 ## IFC basic principles
-The "Industry Foundation Classes" (IFC) is an open, international standard that defines a conceptual data model for buildings. It is developped and maintained by buildingSmart International and documented in an open HTML based documentation [^1] [[1]](#1). IFC is also published as an ISO standard [[2]](#2), that is identical to the open standard.  
+The "Industry Foundation Classes" (IFC) is an open, international standard that defines a conceptual data model for buildings. It is developped and maintained by buildingSmart International and documented in an open HTML based documentation (IFC-Doc)[^IFC-Doc]. IFC is also published as an ISO standard (ISO16739-1)[^ISO16739-1], that is identical to the open standard.  
 
 IFC defines a large data model. In the context of cs2bim, the core of the IFC data model can be described (simplified) with the following structures (see also [[3]](#3)).
 - IfcElement:  
-IfcElement is an abstact entity that can be specialised with a lot of different, conrete "business" entities, e.g. IfcDoor, IfcWall etc. The individual semantics of all enitities is definied in [[1]](#1). In the context of cs2bim, IfcGeographicElement is currently the main candidate to be used. 
+IfcElement is an abstact entity that can be specialised with a lot of different, conrete "business" entities, e.g. IfcDoor, IfcWall etc. The individual semantics of all enitities is definied in (IFC-Doc)[^IFC-Doc]. In the context of cs2bim, IfcGeographicElement is currently the main candidate to be used. 
 - IfcPropertySet:  
 IfcPropertySet (with Properties) is a generic strucutre within IFC that allows the assignment of arbitrary properties to an IfcElement. 
 - IfcShapeRepresentation:  
@@ -57,10 +57,8 @@ The GIS geometry is transformed into a "Body" geometry of IFC. In the current im
 
 
 ## References
-<a id="1">[1]</a> 
-buildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html .  
-<a id="2">[2]</a> 
-ISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.  
+[^IFC-Doc]: buildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html .  
+[^ISO16739-1]: ISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.  
 <a id="3">[3]</a> 
 Schildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100  
 <a id="4">[4]</a> 
@@ -70,4 +68,3 @@ ISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature acce
 <a id="6">[6]</a> 
 eCH-0031 iliRefMan, 2017. eCH-0031 INTERLIS 2 - Referenzhandbuch, Version 2.0.  
 
-[^1]: buildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html .  
