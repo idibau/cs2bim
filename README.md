@@ -31,7 +31,7 @@ Example files can be downloaded with the following links.
 |  1  |    200mx200m.ifc    |   https://drive.switch.ch/index.php/s/YOgygwb3ZqmG44v   |
 |  2  |    200mx200m_con.ifc   | https://drive.switch.ch/index.php/s/2pivcwXtneYqSdY |
 |  3  |    200mx200m_int.ifc    |  https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf  |
-|  4  |    500mx500m.ifc   |   https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf |
+|  4  |    500mx500m.ifc   |   https://drive.switch.ch/index.php/s/Bcq40YjOljKZ2oa |
 
 # Getting started
 
