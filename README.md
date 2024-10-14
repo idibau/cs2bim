@@ -283,3 +283,4 @@ The program executes the following steps:
 # Known Issues
 - Entity types that are only supported in one of the two allowed ifc versions (4, 4x3) are not supported (e.g. IfcBuiltSystem)
 - Only one supported type of feature class data: All feature classes are processed the same way and are implemented to represent a surface that is projected to the terrain.
+- Potential code optimization not yet done (parallelize computational tasks with threads, cache dtm data, load only needed dmt data in memory)
