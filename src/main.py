@@ -99,15 +99,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
                 ifc_element.add_property(property.set, property.name, element[property.column])
             model.add_ifc_element(feature_class_key, ifc_element)
 
-    ifc_builder = IfcBuilder(
-        config.author,
-        config.version,
-        config.application_name,
-        config.project_name,
-        config.geo_referencing,
-        config.triangulation_representation_type,
-        config.feature_classes,
-    )
+    ifc_builder = IfcBuilder()
     ifc_file = ifc_builder.build(model)
 
     ifc_file.write(f"output/{name}.ifc")
