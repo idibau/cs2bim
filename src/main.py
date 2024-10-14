@@ -30,7 +30,7 @@ root_logger.addHandler(stream_handler)
 logger = logging.getLogger(__name__)
 
 
-swiss_topo_service = DTMService()
+dmt_topo_service = DTMService()
 postgis_service = PostgisService()
 
 
@@ -53,7 +53,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
         bounding_box = postgis_service.get_bounding_box(wkts)
 
     logger.info("fetch dtm files")
-    dtm_files = swiss_topo_service.fetch_dtm_files(bounding_box)
+    dtm_files = dmt_topo_service.fetch_dtm_files(bounding_box)
     logger.info(f"fetched {len(dtm_files)} dtm files")
 
     logger.info("load raster")
