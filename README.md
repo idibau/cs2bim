@@ -190,25 +190,41 @@ By default all IfcGroups are generated using the IfcGroup entity type. Defining 
 config.yml
 ```yaml
 ...
-feature_classes:
-    feature_class_x:
-        sql: "sql/feature_class_x.sql"
-        element_name_column: "name_column"
-        properties:
-            - name: "Property"
-            column: "property_column"
-            set: "PropertySetName" 
-        group_columns:
-            - "group"
-groups:
-    Amtliche Vermessung.Feature-Klassen:
-        entity_type: IFC_DISTRIBUTION_SYSTEM
-        object_type: ""
-        predefined_type: "NOTDEFINED"
-    Amtliche Vermessung.Feature-Klassen.x:
-        entity_type: IFC_DISTRIBUTION_SYSTEM
-        object_type: "ObjectType"
-        predefined_type: "NOTDEFINED"
+  author: "FHNW"
+  version: "1.0"
+  application_name: "cs2bim"
+  project_name: "cs2bim"
+  geo_referencing: LO_GEO_REF_30
+  triangulation_representation_type: TESSELLATION
+  feature_classes:
+    parcel:
+      sql: "sql/parcels.sql"
+      entity_type: IFC_GEOGRAPHIC_ELEMENT
+      attributes:
+        - attribute: "PredefinedType"
+          column: "predefined_type"
+      properties:
+        - name: "NBIdent"
+          set: "CHKGK_CS"
+          column: "nbident"
+      spatial_structure:
+        entity_type: IFC_SITE
+        attributes:
+        - attribute: "CompositionType"
+          value: "COMPLEX"
+      group_columns:
+        - "group"
+      color_definition:
+        r: 0.31
+        g: 0.67
+        b: 0.04
+        a: 0.85
+  groups:
+    Amtliche Vermessung.Gebaeude:
+      entity_type: IFC_BUILDING_SYSTEM
+      attributes:
+        - attribute: "PredefinedType"
+          value: "USERDEFINED"
 ...
 ```
 sql/feature_class_x.sql
