@@ -1,6 +1,6 @@
-class IfcPropertySet:
+class PropertySet:
     """
-    ifc property set
+    Class holding a set of properties
 
     Attributes
     ----------

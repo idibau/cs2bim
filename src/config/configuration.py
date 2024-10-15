@@ -1,11 +1,15 @@
 import yaml
 
-from cs2bim.config.feature_class import FeatureClass, Property
-from cs2bim.config.geo_referencing import GeoReferencing
-from cs2bim.geometry.triangulation import TriangulationRepresentationType
-from cs2bim.ifc.entity.ifc_element import IfcElementEntityType
-from cs2bim.ifc.entity.ifc_spatial_structure import IfcSpatialStructure, IfcSpatialStructureEntityType
-from cs2bim.ifc.entity.ifc_group import IfcGroup, IfcGroupEntityType
+from cs2bim.ifc.config.feature_class import FeatureClass
+from cs2bim.ifc.config.group_config import GroupConfig
+from cs2bim.ifc.config.property_config import PropertyConfig
+from cs2bim.ifc.config.spatial_structure_config import SpatialStructureConfig
+from cs2bim.ifc.enum.geo_referencing import GeoReferencing
+from cs2bim.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
+from cs2bim.ifc.enum.element_entitiy_type import IfcElementEntityType
+from cs2bim.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
+from cs2bim.ifc.enum.group_entity_type import GroupEntityType
+from cs2bim.ifc.model.color import Color
 
 
 class Configuration:
@@ -19,7 +23,7 @@ class Configuration:
     def load(self, file_name: str) -> None:
         with open(file_name, "r") as file:
             self.config_file = yaml.safe_load(file)
-        
+
         # init general configuration
         self.logging_level = self.config_file["logging_level"]
 
@@ -66,43 +70,34 @@ class Configuration:
                 property_name = property["name"]
                 property_set = property["set"]
                 property_column = property["column"]
-                properties.append(Property(property_name, property_set, property_column))
-            spatial_structure_entity_type = IfcSpatialStructureEntityType[value["spatial_structure"]["entity_type"]]
+                properties.append(PropertyConfig(property_name, property_set, property_column))
+            spatial_structure_entity_type = SpatialStructureEntityType[value["spatial_structure"]["entity_type"]]
             spatial_structure_attributes = {}
             for spatial_structure_attribute in value["spatial_structure"]["attributes"]:
                 attribute_name = spatial_structure_attribute["attribute"]
                 attribute_value = spatial_structure_attribute["value"]
                 spatial_structure_attributes[attribute_name] = attribute_value
-            spatial_structure = IfcSpatialStructure(
-                spatial_structure_entity_type,
-                spatial_structure_attributes
-            )
+            spatial_structure = SpatialStructureConfig(spatial_structure_entity_type, spatial_structure_attributes)
             group_columns = value["group_columns"]
-            color_definition = (
+            color = Color(
                 value["color_definition"]["r"],
                 value["color_definition"]["g"],
                 value["color_definition"]["b"],
                 value["color_definition"]["a"],
             )
             feature_class = FeatureClass(
-                sql,
-                entity_type,
-                attributes,
-                properties,
-                spatial_structure,
-                group_columns,
-                color_definition,
+                sql, entity_type, attributes, properties, spatial_structure, group_columns, color
             )
             self.feature_classes[key] = feature_class
         self.groups = {}
         for key, value in ifc_config["groups"].items():
-            entity_type = IfcGroupEntityType[value["entity_type"]]
+            entity_type = GroupEntityType[value["entity_type"]]
             group_attributes = {}
             for group_attribute in value["attributes"]:
                 attribute_name = group_attribute["attribute"]
                 attribute_value = group_attribute["value"]
                 group_attributes[attribute_name] = attribute_value
-            ifc_group = IfcGroup(entity_type, group_attributes)
+            ifc_group = GroupConfig(entity_type, group_attributes)
             self.groups[key] = ifc_group
 
 

@@ -1,7 +1,7 @@
-from cs2bim.ifc.entity.ifc_element import IfcElement
+from cs2bim.ifc.model.element import Element
 
 
-class IfcModel:
+class Model:
     """
     Class holding all variable data for creating the ifc
 
@@ -12,7 +12,7 @@ class IfcModel:
     schema : str
         IFC schema has to be either IFC4 or IFC4x3
     origin: tuple[float, float, float]
-        Origin coordinate x, y, z
+        Origin coordinate (east, north, height)
     elements : list[Element]
         List of all elements that should be added
     """
@@ -23,7 +23,7 @@ class IfcModel:
         self.origin = origin
         self.feature_classes = {}
 
-    def add_ifc_element(self, feature_class_key: str, element: IfcElement) -> None:
+    def add_element(self, feature_class_key: str, element: Element) -> None:
         if not feature_class_key in self.feature_classes:
             self.feature_classes[feature_class_key] = []
         self.feature_classes[feature_class_key].append(element)

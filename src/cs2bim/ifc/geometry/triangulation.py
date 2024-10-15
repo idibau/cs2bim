@@ -1,17 +1,9 @@
 import logging
 from stl import mesh
-from enum import Enum
 
-from cs2bim.geometry.geometry import Geometry
+from cs2bim.ifc.geometry.geometry import Geometry
 
 logger = logging.getLogger(__name__)
-
-
-class TriangulationRepresentationType(Enum):
-    """Build methods for the triangulations in the ifc"""
-
-    TESSELLATION = "Tessellation"
-    BREP = "Brep"
 
 
 class Triangulation(Geometry):
@@ -45,7 +37,7 @@ class Triangulation(Geometry):
         self.triangles = list(zip(v0, v1, v2))
         logger.debug("completed read triangulation")
 
-    def load_from_data(self, data: tuple[list[list[float]], list[list[int]]]):
+    def load_from_points_and_faces(self, data: tuple[list[list[float]], list[list[int]]]):
         """Takes a list of points and a list of indexes to build the triangulation"""
         self.triangles = []
         point_list = data[0]

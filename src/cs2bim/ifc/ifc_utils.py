@@ -1,6 +1,12 @@
+"""
+This module contains wrapper funcitons to simplify the process of building an ifc using ifcopenshells "create_entity" function.
+"""
+
 import logging
 import datetime
 from ifcopenshell import file, entity_instance, guid
+
+from cs2bim.ifc.model.color import Color
 
 logger = logging.getLogger(__name__)
 
@@ -224,9 +230,9 @@ def add_ifc_geographic_element(ifc_file: file, representaion: entity_instance) -
     return ifc_file.create_entity("IfcGeographicElement", GlobalId=guid.new(), Representation=representaion)
 
 
-def add_ifc_surface_style(ifc_file: file, color: tuple[float, float, float, float]) -> entity_instance:
-    surface_colour = ifc_file.create_entity("IfcColourRgb", Red=color[0], Green=color[1], Blue=color[2])
-    style = ifc_file.create_entity("IfcSurfaceStyleShading", SurfaceColour=surface_colour, Transparency=color[3])
+def add_ifc_surface_style(ifc_file: file, color: Color) -> entity_instance:
+    surface_colour = ifc_file.create_entity("IfcColourRgb", Red=color.r, Green=color.g, Blue=color.b)
+    style = ifc_file.create_entity("IfcSurfaceStyleShading", SurfaceColour=surface_colour, Transparency=color.a)
     return ifc_file.create_entity("IfcSurfaceStyle", Side="BOTH", Styles=[style])
 
 

@@ -25,7 +25,7 @@ ifc:
   version: "1.0"
   application_name: "cs2bim"
   project_name: "cs2bim"
-  geo_referencing: LO_GEO_REF_30
+  geo_referencing: LO_GEO_REF_50
   triangulation_representation_type: TESSELLATION
   feature_classes:
     parcel:

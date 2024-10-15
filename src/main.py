@@ -5,17 +5,17 @@ import numpy as np
 import shapely
 from datetime import datetime
 
-from cs2bim.config.configuration import config
-from cs2bim.config.ifc_version import IfcVersion
+from config.configuration import config
 from cs2bim.tin.mesh import Mesh
 from cs2bim.tin.polygon import Area
 from cs2bim.tin.raster import RasterPoints
-from cs2bim.ifc.ifc_model import IfcModel
+from cs2bim.ifc.enum.ifc_version import IfcVersion
 from cs2bim.ifc.ifc_builder import IfcBuilder
-from cs2bim.ifc.entity.ifc_element import IfcElement
-from cs2bim.geometry.triangulation import Triangulation
-from cs2bim.service.dtm_service import DTMService
-from cs2bim.service.postgis_service import PostgisService
+from cs2bim.ifc.model.model import Model
+from cs2bim.ifc.model.element import Element
+from cs2bim.ifc.geometry.triangulation import Triangulation
+from service.dtm_service import DTMService
+from service.postgis_service import PostgisService
 
 # load configuration File
 config.load("config.yml")
@@ -39,15 +39,15 @@ dmt_topo_service = DTMService()
 postgis_service = PostgisService()
 
 
-def main(ifc_version: IfcVersion, name: str, polygon: str):
+def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple[float, float, float] | None):
     wkts = []
     feature_class_elements = {}
     for feature_class_key, feature_class in config.feature_classes.items():
         logger.info(f"fetch {feature_class_key}")
-        elements = postgis_service.fetch_feature_class_elements(feature_class, polygon)
+        elements = postgis_service.fetch_feature_class_elements(feature_class.sql, polygon)
         feature_class_elements[feature_class_key] = elements
-        for element in elements:
-            wkts.append(element["wkt"])
+        for element_data in elements:
+            wkts.append(element_data["wkt"])
 
     logger.info("calculate bounding box for fetching dtm files")
     # ensures that parcels that exceed the bounding box are also included in the dtm files
@@ -64,21 +64,28 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
     logger.info("load raster")
     p_raster_parts = list((np.loadtxt(dtm_file, delimiter=" ", skiprows=1) for dtm_file in dtm_files))
     p_raster = np.concatenate(p_raster_parts)
-    origin = p_raster.min(axis=0)
+    if (project_origin is None):
+        origin = p_raster.min(axis=0)
+        project_origin = (float(origin[0]), float(origin[1]), float(origin[2]))
+    else:
+        origin = np.array(project_origin)
+
+    logger.info(f"fetched {len(dtm_files)} dtm files")
+
     dtm_points = RasterPoints(p_raster, origin=origin)
 
-    model = IfcModel(name, ifc_version.value, (float(origin[0]), float(origin[1]), float(origin[2])))
+    model = Model(name, ifc_version.value, project_origin)
 
     for feature_class_key, feature_class in config.feature_classes.items():
         logger.info(f"create {feature_class_key} feature class")
         elements = feature_class_elements[feature_class_key]
-        for index, element in enumerate(elements):
+        for index, element_data in enumerate(elements):
             attributes = {}
             for attribute, column in feature_class.attributes.items():
-                attributes[attribute] = element[column]
+                attributes[attribute] = element_data[column]
             logger.info(f"create {feature_class_key} {index + 1}/{len(elements)}")
             logger.debug("create area")
-            wkt_str = element["wkt"]
+            wkt_str = element_data["wkt"]
             if isinstance(shapely.from_wkt(wkt_str), shapely.MultiPolygon):
                 logger.warn("Multipolygons are not supported at the moment. Skipping element...")
                 continue
@@ -99,14 +106,23 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
                 f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}"
             )
             triangulation = Triangulation()
-            triangulation.load_from_data(mesh_clipped_decimated.get_data())
-            groups = [element[group_column] for group_column in feature_class.group_columns]
-            ifc_element = IfcElement(attributes, groups, triangulation)
+            triangulation.load_from_points_and_faces(mesh_clipped_decimated.get_data())
+            groups = [element_data[group_column] for group_column in feature_class.group_columns]
+            element = Element(attributes, groups, triangulation)
             for property in feature_class.properties:
-                ifc_element.add_property(property.set, property.name, element[property.column])
-            model.add_ifc_element(feature_class_key, ifc_element)
+                element.add_property(property.set, property.name, element_data[property.column])
+            model.add_element(feature_class_key, element)
 
-    ifc_builder = IfcBuilder()
+    ifc_builder = IfcBuilder(
+        config.author,
+        config.version,
+        config.application_name,
+        config.project_name,
+        config.geo_referencing,
+        config.triangulation_representation_type,
+        config.feature_classes,
+        config.groups,
+    )
     ifc_file = ifc_builder.build(model)
 
     ifc_file.write(f"output/{name}.ifc")
@@ -120,5 +136,15 @@ if __name__ == "__main__":
     ifc_version = IfcVersion[os.environ["IFC_VERSION"]]
     name = os.environ["NAME"]
     polygon = os.environ["POLYGON"]
-    logger.info(f"IFC_VERSION: {ifc_version.name}, NAME: {name}, POLYGON: {polygon}")
-    main(ifc_version, name, polygon)
+    if "PROJECT_ORIGIN" in os.environ:
+        try:
+            string_values = os.environ["PROJECT_ORIGIN"].split(",")
+            project_origin = (float(string_values[0]),float(string_values[1]),float(string_values[2]))
+        except:
+            raise EnvironmentError(f"PROJECT_ORIGIN need to be of format float,float,float")
+    else:
+        project_origin = None
+    logger.info(
+        f"IFC_VERSION: {ifc_version.name}, NAME: {name}, POLYGON: {polygon}, PROJECT_ORIGIN: {project_origin if not project_origin is None else 'calculated'}"
+    )
+    main(ifc_version, name, polygon, project_origin)

@@ -47,7 +47,7 @@ docker build -t cs2bim-run -f Dockerfile . --rm
 
 Run docker image
 ```console
-docker run -e IFC_VERSION=[cs2bim.enum.ifc_version.IfcVersion] -e NAME=[str] -e POLYGON=[wkt] -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
+docker run -e IFC_VERSION=[enum.ifc_version.IfcVersion] -e NAME=[str] -e POLYGON=[wkt] -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
 ```
 The run parameters are:
 - IFC_VERSION: Ifc version of the resulting ifc file (supported versions/values see src\cs2bim\config\ifc_version.py).
@@ -133,11 +133,11 @@ The configuration has different sections/topics:
 Some parameters can only be configured with predefined values (types), because these values are referenced in the code. To guarantee a proper configuration and execution of the code, these predefined values (types) are defined as constants in different modules/classes in the python code.
 
 The following types are defined:
-- GeoReferencing -> cs2bim.config.geo_referencing.py\
-- TriangulationRepresentationType -> cs2bim.geometry.triangulation.py\
-- IfcElementEntityType -> cs2bim.ifc.entity.ifc_element.py\
-- IfcSpatialStructureEntityType -> cs2bim.ifc.entity.ifc_spatial_structure.py\
-- IfcGroupEntityType -> cs2bim.ifc.entity.ifc_group.py
+- GeoReferencing -> config.geo_referencing.py\
+- TriangulationRepresentationType -> geometry.triangulation.py\
+- IfcElementEntityType -> ifc.entity.ifc_element.py\
+- IfcSpatialStructureEntityType -> ifc.entity.ifc_spatial_structure.py\
+- IfcGroupEntityType -> ifc.entity.ifc_group.py
 
 ## IFC configuration
 In this section of the configuration you can make some general definitions about the resulting ifc file and you can define the feature classes that are generated and exported as ifc entities.  
