@@ -56,6 +56,9 @@ The GIS geometry is expected to be in WKT format ([ISO 19125-1])[^ISO19125-1]. I
 --> Jonas ?
 
 
+[Here](examples/wkt2tin.slides.html) you can find a detailled explanaition of the code.
+
+
 
 # References
 [^IFC-Doc]: buildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html .  
