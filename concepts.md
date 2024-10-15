@@ -1,6 +1,10 @@
 On this page some basics and concepts of the cs2bim project are documented.
 
-[[_TOC_]]
+- [IFC basic principles](#ifc-basic-principles)
+- [Transformation GIS --> IFC](#transformation-gis--->-ifc)
+- [Internal object model](#internal-object-model)
+- [Projection and triangulation](#projection-and-triangulation)
+- [References](#references)
 
 
 # IFC basic principles

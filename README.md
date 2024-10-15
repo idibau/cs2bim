@@ -1,7 +1,5 @@
 # cs2bim
 
-## Table of Contents
-
 - [Project description](#project-description)
   - [Resulting IFC Files](#resulting-ifc-files)
 - [Concepts](#concepts)
