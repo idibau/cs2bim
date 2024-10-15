@@ -6,7 +6,7 @@ from cs2bim.ifc.config.property_config import PropertyConfig
 from cs2bim.ifc.config.spatial_structure_config import SpatialStructureConfig
 from cs2bim.ifc.enum.geo_referencing import GeoReferencing
 from cs2bim.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
-from cs2bim.ifc.enum.element_entitiy_type import IfcElementEntityType
+from cs2bim.ifc.enum.element_entity_type import ElementEntityType
 from cs2bim.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
 from cs2bim.ifc.enum.group_entity_type import GroupEntityType
 from cs2bim.ifc.model.color import Color
@@ -59,7 +59,7 @@ class Configuration:
         for key, value in ifc_config["feature_classes"].items():
             with open(value["sql"], "r") as file:
                 sql = file.read()
-            entity_type = IfcElementEntityType[value["entity_type"]]
+            entity_type = ElementEntityType[value["entity_type"]]
             attributes = {}
             for attribute in value["attributes"]:
                 attribute_name = attribute["attribute"]

@@ -4,7 +4,7 @@ from cs2bim.ifc.ifc_utils import *
 from cs2bim.ifc.model.model import Model
 from cs2bim.ifc.enum.geo_referencing import GeoReferencing
 from cs2bim.ifc.enum.group_entity_type import GroupEntityType
-from cs2bim.ifc.enum.element_entitiy_type import IfcElementEntityType
+from cs2bim.ifc.enum.element_entity_type import ElementEntityType
 from cs2bim.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
 from cs2bim.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
 from cs2bim.ifc.geometry.triangulation import Triangulation
@@ -135,7 +135,7 @@ class IfcBuilder:
                 product_definition_shape = add_ifc_product_definition_shape(
                     ifc_file, ifc_representation_context, representation_type.value, ifc_face_set
                 )
-                if feature_class.entity_type == IfcElementEntityType.IFC_GEOGRAPHIC_ELEMENT:
+                if feature_class.entity_type == ElementEntityType.IFC_GEOGRAPHIC_ELEMENT:
                     ifc_element = add_ifc_geographic_element(ifc_file, product_definition_shape)
                 else:
                     raise Exception(

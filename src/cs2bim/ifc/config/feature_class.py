@@ -1,5 +1,5 @@
 from cs2bim.ifc.model.color import Color
-from cs2bim.ifc.enum.element_entitiy_type import IfcElementEntityType
+from cs2bim.ifc.enum.element_entity_type import ElementEntityType
 from cs2bim.ifc.config.property_config import PropertyConfig
 from cs2bim.ifc.config.spatial_structure_config import SpatialStructureConfig
 
@@ -30,7 +30,7 @@ class FeatureClass:
     def __init__(
         self,
         sql: str,
-        entity_type: IfcElementEntityType,
+        entity_type: ElementEntityType,
         attributes: dict[str, str],
         properties: list[PropertyConfig],
         spatial_structure: SpatialStructureConfig,

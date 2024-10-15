@@ -51,15 +51,16 @@ docker build -t cs2bim-run -f Dockerfile . --rm
 
 Run docker image
 ```console
-docker run -e IFC_VERSION=[enum.ifc_version.IfcVersion] -e NAME=[str] -e POLYGON=[wkt] -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
+docker run -e IFC_VERSION=[enum.ifc_version.IfcVersion] -e NAME=[str] -e POLYGON=[wkt] -e PROJECT_ORIGIN=[float,float,float] -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
 ```
 The run parameters are:
-- IFC_VERSION: Ifc version of the resulting ifc file (supported versions/values see src\cs2bim\config\ifc_version.py).
+- IFC_VERSION: Ifc version of the resulting ifc file (supported versions/values see src\cs2bim\ifc\enum\ifc_version.py).
 - NAME: Name of the resulting ifc file.
 - POLYGON : The area in which the data is treated. The polygon must be a valid wkt string in LV95.
+- PROJECT_ORIGIN (optional) : The project origin in LV95 coordinates "East,North,Height"
 
 Example:
-- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e POLYGON="POLYGON((2689114 1285136,2689143 1285192,2689170 1285159,2689114 1285136))" -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
+- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e POLYGON="POLYGON((2689114 1285136,2689143 1285192,2689170 1285159,2689114 1285136))" -e PROJECT_ORIGIN=2600000,1200000,0 -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
 
 After you run the docker container successfully there will be a new output ifc file inside the folder from where you started the container.
 
@@ -110,7 +111,7 @@ The configuration has different sections/topics:
 |15|ifc.triangulation_representation_type|TriangulationRepresentationType|TESSELLATION; BREP|BREP|
 |16|ifc.feature_classes|map|---|---|
 |17|ifc.feature_classes.<em>FeatureClassKeyX</em>.sql|str|<em>Path to sql file</em>|"sql/parcels.sql"|
-|18|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|IfcElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
+|18|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|ElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
 |19|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes|list|---|---|
 |20|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.attribute|str|?|"Name"|
 |21|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.column|str|?|"egris_egrid"|
@@ -118,7 +119,7 @@ The configuration has different sections/topics:
 |23|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|?|"Property"|
 |24|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set|str|?|"PropertySet"|
 |25|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|?|"property_column"|
-|26|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|IfcSpatialStructureEntityType|IFC_SITE|IFC_SITE|
+|26|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|SpatialStructureEntityType|IFC_SITE|IFC_SITE|
 |27|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes|list|---|---|
 |28|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.attribute|str|?|"Name"|
 |29|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.value|str|?|"Site"|
@@ -128,7 +129,7 @@ The configuration has different sections/topics:
 |33|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.b|float|0.0 - 1-0|0.5|
 |34|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.a|float|0.0 - 1-0|0.3|
 |35|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups|map|---|---|
-|36|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.entity_type|IfcGroupEntityType|IFC_DISTRIBUTION_SYSTEM, IFC_DISTRIBUTION_CIRCUIT, IFC_BUILDING_SYSTEM, IFC_STRUCTURAL_ANALYSIS_MODEL, IFC_ZONE|IFC_DISTRIBUTION_SYSTEM|
+|36|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.entity_type|GroupEntityType|IFC_DISTRIBUTION_SYSTEM, IFC_DISTRIBUTION_CIRCUIT, IFC_BUILDING_SYSTEM, IFC_STRUCTURAL_ANALYSIS_MODEL, IFC_ZONE|IFC_DISTRIBUTION_SYSTEM|
 |37|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.attributes|list|---|---|
 |38|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.attributes.<em>ListElementX</em>.attribute|str|?|"Name"|
 |39|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.attributes.<em>ListElementX</em>.value|str|?|"Group"|
@@ -137,11 +138,11 @@ The configuration has different sections/topics:
 Some parameters can only be configured with predefined values (types), because these values are referenced in the code. To guarantee a proper configuration and execution of the code, these predefined values (types) are defined as constants in different modules/classes in the python code.
 
 The following types are defined:
-- GeoReferencing -> config.geo_referencing.py\
-- TriangulationRepresentationType -> geometry.triangulation.py\
-- IfcElementEntityType -> ifc.entity.ifc_element.py\
-- IfcSpatialStructureEntityType -> ifc.entity.ifc_spatial_structure.py\
-- IfcGroupEntityType -> ifc.entity.ifc_group.py
+- GeoReferencing -> cs2bim.ifc.enum.geo_referencing.py\
+- TriangulationRepresentationType -> cs2bim.ifc.enum.triangulation_representation_type.py\
+- ElementEntityType -> cs2bim.ifc.enum.element_entity_type.py\
+- SpatialStructureEntityType -> cs2bim.ifc.enum.spatial_structure_entity_type.py\
+- GroupEntityType -> cs2bim.ifc.enum.group_entity_type.py
 
 ## IFC configuration
 In this section of the configuration you can make some general definitions about the resulting ifc file and you can define the feature classes that are generated and exported as ifc entities.  
@@ -262,31 +263,6 @@ ST_AsText -> Returns the OGC WKT representation of the geometry\
 ST_CurveToLine ->  Converts a given geometry to a linear geometry\
 ST_Intersects -> Returns true if two geometries intersect. Geometries intersect if they have any point in common.
 ST_Contains -> Returns true if the first geometry contains the second.
-
-# Code structure
-
-## config
-Contains all files needed for the configuration of the main processing step.
-
-## geometry
-Holds classes that hold information about certain geometry objects.
-
-## ifc
-Builds an Ifc file using the ifcopenshell library based on a model object.
-
-## service
-There are two services available. A postgis service to query a postgis database and a dtm service to download terrain models.
-
-## tin
-The tin package allows to create triangulations by clipping terrain models with wkt strings.
-
-## main.py
-To execute the main function you need to provide three parameters: IFC_VERSION, NAME and POLYGON.
-The program executes the following steps:
-1. Load configuration file
-2. Create model
-3. Build model
-4. Save model
 
 # Known Issues
 - Only one supported geometry type: All feature classes are processed the same way and are implemented to represent a surface that is projected to the terrain. Until now no support of e.g. points, lines or parametrised geometries.  
