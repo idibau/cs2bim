@@ -33,6 +33,10 @@ Example files can be downloaded with the following links.
 |  3  |    200mx200m_int.ifc    |  https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf  |
 |  4  |    500mx500m.ifc   |   https://drive.switch.ch/index.php/s/Bcq40YjOljKZ2oa |
 
+# Concepts
+The cs2bim service supports different central IFC concepts and allows a relatively dynamic (configurable) transformation between the geodata and the IFC data model. The main IFC concepts and principles of data transformation and processing are briefly explained on the [Concepts](concepts.md) page.
+
+
 # Getting started
 
 Modify the configuration according to your needs/environment. Details about configuration [see below](#configuration).  
@@ -144,13 +148,17 @@ In this section of the configuration you can make some general definitions about
 
 Below some of the parameters are explained.
 
-### Geo Referencing
-You can provide the so called "Level of Georeferencing" (LoGeoRef), according to *"Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408"*.  
+### Geo referencing
+You can provide the so called "Level of Georeferencing" (LoGeoRef), according to (Clemen&Görne, 2019) [^LoGeoRef].  
 The different levels represent different methods of defining informations about georeferencing in IFC.  
 Supported values are LO_GEO_REF_30, LO_GEO_REF_40, LO_GEO_REF_50.
 
-### Coordinates and Offets
-==> TO BE DESCRIBED !!!
+![Levels of Georeferencing LoGeoRef](./uploads/LoGeoRef.png){width=400}
+
+**Coordinates and Offets**  
+You can provide a project origin in LV95 coordinates (East, North, Height). The project origin can also be set to (0,0,0).  
+If not provided, the system sets a project origin calculated on a minimum bounding box of the perimeter.  
+
 
 ### Triangulation Representation Type
 You can define the IFC geometry type that is used to represent the TIN geometry.  
@@ -265,5 +273,11 @@ The program executes the following steps:
 4. Save model
 
 # Known Issues
-- Entity types that are only supported in one of the two allowed ifc versions (4, 4x3) are not supported (e.g. IfcBuiltSystem)
-- Only one supported type of feature class data: All feature classes are processed the same way and are implemented to represent a surface that is projected to the terrain.
+- Only one supported geometry type: All feature classes are processed the same way and are implemented to represent a surface that is projected to the terrain. Until now no support of e.g. points, lines or parametrised geometries.  
+- Entity types that are only supported in one of the two allowed ifc versions (4, 4x3) are not supported (e.g. IfcBuiltSystem). Explanation: There is no switch in the code that could deal with different cases based on different ifc version, neither are there parameters in the configuration to support different ifc versions.
+- No performance optimisation. Possiple options include parallelisation of processes, reuse of local parameters, process the point cloud only once and then derive feature class geometries from TIN instead of point clouds.
+- No support of ifc classification concept. Could be done the same way as the already implemented group concept.
+
+
+# References
+[^LoGeoRef]: "Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408" .  
