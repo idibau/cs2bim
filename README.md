@@ -1,6 +1,27 @@
-[[_TOC_]]
+# cs2bim
 
-# cs2bim project description
+## Table of Contents
+
+- [Project description](#project-description)
+  - [Resulting IFC Files](#resulting-ifc-files)
+- [Concepts](#concepts)
+- [Getting started](#getting-started)
+  - [Getting started dev](#getting-started-dev)
+- [Configuration](#configuration)
+  - [Configuration parameters (overview)](#configuration-parameters-(overview))
+  - [Types](#types)
+  - [IFC configuration](#ifc-configuration)
+    - [Geo referencing](#geo-referencing)
+    - [Triangulation Representation Type](#triangulation-representation-type)
+    - [Feature Classes](#feature-classes)
+    - [SQL](#sql)
+    - [Spatial Structure](#spatial-structure)
+    - [Groups](#groups)
+    - [Example](#example)
+- [Known Issues](#known-issues)
+- [References](#references)
+
+# Project description
 
 The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launched a research project Cadastral Surveying Data to Building Information Modelling (CS2BIM). The Institute of Virtual Design and Construction and the Institute of Geomatics at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed a service based on open source libraries. The service transforms GIS based cadastral survey data with area geometries (2D) to IFC instances with 3D surface geometries. The geometry transformation is based on a projection of the 2D geometries onto the digital terrain model.  
 
