@@ -102,7 +102,7 @@ class Configuration:
                 attribute_name = group_attribute["attribute"]
                 attribute_value = group_attribute["value"]
                 group_attributes[attribute_name] = attribute_value
-            ifc_group = IfcGroup(entity_type, group_attribute)
+            ifc_group = IfcGroup(entity_type, group_attributes)
             self.groups[key] = ifc_group
 
 

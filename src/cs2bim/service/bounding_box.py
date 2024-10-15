@@ -8,24 +8,24 @@ class BoundingBox:
 
     Attributes
     ----------
-    min_lon : float
+    min_north : float
         Minimum longitude
-    min_lat : float
+    min_east : float
         Minimum latitude
-    max_lon : float
+    max_north : float
         Maximum longitude
-    max_lat : float
+    max_east : float
         Maximum latitude
     """
 
-    def __init__(self, min_lon: float, min_lat: float, max_lon: float, max_lat: float) -> None:
-        self.min_lon = min_lon
-        self.min_lat = min_lat
-        self.max_lon = max_lon
-        self.max_lat = max_lat
+    def __init__(self, min_north: float, min_east: float, max_north: float, max_east: float) -> None:
+        self.min_north = min_north
+        self.min_east = min_east
+        self.max_north = max_north
+        self.max_east = max_east
 
     def get_wgs84_bounding_box_as_string(self) -> str:
         transformer = Transformer.from_crs("epsg:2056", "epsg:4326")
-        p_1 = transformer.transform(self.min_lat, self.min_lon)
-        p_2 = transformer.transform(self.max_lat, self.max_lon)
+        p_1 = transformer.transform(self.min_east, self.min_north)
+        p_2 = transformer.transform(self.max_east, self.max_north)
         return f"{p_1[1]},{p_1[0]},{p_2[1]},{p_2[0]}"

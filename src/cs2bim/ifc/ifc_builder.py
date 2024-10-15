@@ -5,6 +5,7 @@ from cs2bim.config.geo_referencing import GeoReferencing
 from cs2bim.config.feature_class import FeatureClass
 from cs2bim.ifc.ifc_utils import *
 from cs2bim.ifc.ifc_model import IfcModel
+from cs2bim.ifc.entity.ifc_group import IfcGroup
 from cs2bim.ifc.entity.ifc_spatial_structure import IfcSpatialStructureEntityType
 from cs2bim.ifc.entity.ifc_element import IfcElementEntityType
 from cs2bim.ifc.entity.ifc_group import IfcGroupEntityType
@@ -16,23 +17,8 @@ logger = logging.getLogger(__name__)
 
 class IfcBuilder:
 
-    def __init__(
-        self,
-        author: str,
-        version: str,
-        application_name: str,
-        project_name: str,
-        geo_referencing: GeoReferencing,
-        triangulation_representation_type: TriangulationRepresentationType,
-        feature_classes: dict[str, FeatureClass],
-    ):
-        self.author = author
-        self.version = version
-        self.application_name = application_name
-        self.project_name = project_name
-        self.geo_referencing = geo_referencing
-        self.triangulation_representation_type = triangulation_representation_type
-        self.feature_classes = feature_classes
+    def __init__(self):
+        pass
 
     def build(self, ifc_model: IfcModel) -> file:
         """Builds an ifcopenshell ifc file based on a model object"""
@@ -41,25 +27,25 @@ class IfcBuilder:
         ifc_file.wrapped_data.header.file_name.name = ifc_model.file_name
 
         logger.info(f"build ifc")
-        owner_history = add_ifc_owner_history(ifc_file, self.author, self.version, self.application_name)
+        owner_history = add_ifc_owner_history(ifc_file, config.author, config.version, config.application_name)
         length_unit = add_ifc_si_unit(ifc_file, "LENGTHUNIT", "METRE")
         area_unit = add_ifc_si_unit(ifc_file, "AREAUNIT", "SQUARE_METRE")
         volume_unit = add_ifc_si_unit(ifc_file, "VOLUMEUNIT", "CUBIC_METRE")
         degree_unit = add_ifc_si_unit(ifc_file, "PLANEANGLEUNIT", "RADIAN")
         unit_assignment = add_ifc_unit_assignment(ifc_file, length_unit, area_unit, volume_unit, degree_unit)
 
-        if self.geo_referencing == GeoReferencing.LO_GEO_REF_40:
+        if config.geo_referencing == GeoReferencing.LO_GEO_REF_40:
             location = ifc_model.origin
         else:
             location = (0.0, 0.0, 0.0)
         representation_context = add_ifc_geometric_representation_context(ifc_file, location)
 
-        if self.geo_referencing == GeoReferencing.LO_GEO_REF_50:
+        if config.geo_referencing == GeoReferencing.LO_GEO_REF_50:
             add_ifc_map_conversion(ifc_file, length_unit, representation_context, ifc_model.origin)
 
-        project = add_ifc_project(ifc_file, self.project_name, owner_history, representation_context, unit_assignment)
+        project = add_ifc_project(ifc_file, config.project_name, owner_history, representation_context, unit_assignment)
 
-        if self.geo_referencing == GeoReferencing.LO_GEO_REF_30:
+        if config.geo_referencing == GeoReferencing.LO_GEO_REF_30:
             location = ifc_model.origin
         else:
             location = (0.0, 0.0, 0.0)
@@ -68,7 +54,7 @@ class IfcBuilder:
         group_entities = {}
         spatial_structures_entities = {}
         for feature_class_key, elements in ifc_model.feature_classes.items():
-            feature_class = self.feature_classes[feature_class_key]
+            feature_class = config.feature_classes[feature_class_key]
             logger.info(f"FeatureClass {feature_class_key}: build ifc spatial structure")
             spatial_structure = feature_class.spatial_structure
             if not spatial_structure.get_key() in spatial_structures_entities:
@@ -91,7 +77,7 @@ class IfcBuilder:
             element_entities = []
             for element in elements:
                 if isinstance(element.geometry, Triangulation):
-                    representation_type = self.triangulation_representation_type
+                    representation_type = config.triangulation_representation_type
                     if representation_type == TriangulationRepresentationType.TESSELLATION:
                         vertices_dict = {}
                         vertices = []

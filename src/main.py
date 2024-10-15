@@ -3,6 +3,7 @@ import sys
 import logging
 import numpy as np
 import shapely
+from datetime import datetime
 
 from cs2bim.config.configuration import config
 from cs2bim.config.ifc_version import IfcVersion
@@ -22,15 +23,19 @@ config.load("config.yml")
 logging_format = "%(asctime)s - %(filename)s:%(lineno)s - %(levelname)s - %(message)s"
 stream_handler = logging.StreamHandler(sys.stdout)
 stream_handler.setFormatter(logging.Formatter(logging_format))
+log_file_name = datetime.now().strftime("%Y-%m-%d--%H-%M-%S.log")
+file_handler = logging.FileHandler(f"output/{log_file_name}")
+file_handler.setFormatter(logging.Formatter(logging_format))
 
 root_logger = logging.getLogger()
 root_logger.setLevel(config.logging_level)
 root_logger.addHandler(stream_handler)
+root_logger.addHandler(file_handler)
 
 logger = logging.getLogger(__name__)
 
 
-swiss_topo_service = DTMService()
+dmt_topo_service = DTMService()
 postgis_service = PostgisService()
 
 
@@ -43,7 +48,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
         feature_class_elements[feature_class_key] = elements
         for element in elements:
             wkts.append(element["wkt"])
-    
+
     logger.info("calculate bounding box for fetching dtm files")
     # ensures that parcels that exceed the bounding box are also included in the dtm files
     if len(wkts) == 0:
@@ -53,7 +58,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
         bounding_box = postgis_service.get_bounding_box(wkts)
 
     logger.info("fetch dtm files")
-    dtm_files = swiss_topo_service.fetch_dtm_files(bounding_box)
+    dtm_files = dmt_topo_service.fetch_dtm_files(bounding_box)
     logger.info(f"fetched {len(dtm_files)} dtm files")
 
     logger.info("load raster")
@@ -90,7 +95,9 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
             mesh_clipped_decimated = mesh_clipped.decimate(
                 max_height_error=config.max_height_error, grid_size=config.grid_size
             )
-            logger.info(f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}")
+            logger.info(
+                f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}"
+            )
             triangulation = Triangulation()
             triangulation.load_from_data(mesh_clipped_decimated.get_data())
             groups = [element[group_column] for group_column in feature_class.group_columns]
@@ -99,15 +106,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str):
                 ifc_element.add_property(property.set, property.name, element[property.column])
             model.add_ifc_element(feature_class_key, ifc_element)
 
-    ifc_builder = IfcBuilder(
-        config.author,
-        config.version,
-        config.application_name,
-        config.project_name,
-        config.geo_referencing,
-        config.triangulation_representation_type,
-        config.feature_classes,
-    )
+    ifc_builder = IfcBuilder()
     ifc_file = ifc_builder.build(model)
 
     ifc_file.write(f"output/{name}.ifc")
