@@ -183,7 +183,19 @@ Below some of the parameters are explained.
 ### Geo referencing
 You can provide the so called "Level of Georeferencing" ([LoGeoRef](#conf-fc-gr)), according to (Clemen&Görne, 2019) [^LoGeoRef].  
 The different levels represent different methods of defining informations about georeferencing in IFC.  
-Supported values are LO_GEO_REF_30, LO_GEO_REF_40, LO_GEO_REF_50.
+Supported values are:
+- LO_GEO_REF_30
+  - IfcObjectPlacement of an IfcSpatialStructureElement contains georeferencing 
+  - Suitability for local projects on a smaller scale 
+  - IFC 2.3
+- LO_GEO_REF_40
+  - IfcGeometricRepresentation context of IfcProject contains georeferencing 
+  - Suited for larger infrastructure projects 
+  - IFC 2.3
+- LO_GEO_REF_50
+  - IfcMapConversion defines georeferencing of the "SurveyPoint", including coordinate system parameters 
+  - Suited for large-scale and linear project expansions 
+  - IFC 4.0
 
 ![Levels of Georeferencing LoGeoRef](./uploads/LoGeoRef.png){width=400}
 
@@ -191,8 +203,9 @@ Supported values are LO_GEO_REF_30, LO_GEO_REF_40, LO_GEO_REF_50.
 
 **Coordinates and Offets**  
 You can provide a project origin in LV95 coordinates (Easting, Northing, Height). The project origin can also be set to (0,0,0).  
-If not provided, the system sets a project origin calculated on a minimum bounding box of the perimeter.  
+If not provided, the system sets a project origin calculated on a minimum bounding box of the perimeter. 
 
+![Levels of Georeferencing LoGeoRef](./uploads/project_origin.png){width=400}
 
 ### Triangulation Representation Type
 You can define the [representation type](#conf-fc-trt) that is used to represent the TIN geometry in the ifc.  
