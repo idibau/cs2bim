@@ -123,52 +123,51 @@ The configuration has different sections/topics:
 |3|db.host|str|*|"host.docker.internal"|
 |4|db.port|int|*|5432|
 |5|db.password|str|*|"xxx"|
-|6|db.schema|str|*|"cs2bim"|
 |---|---|---|---|---|
-|7|dtm.stac_api|str|*|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
+|6|dtm.stac_api|str|*|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
 |---|---|---|---|---|
-|8|tin.grid_size|float|0.5;2|0.5|
-|9|tin.max_height_error|float|TODO|0.05|
+|7|tin.grid_size|float|0.5;2|0.5|
+|8|tin.max_height_error|float|TODO|0.05|
 |---|---|---|---|---|
-|10|ifc.author|str|*|"author"|
-|11|ifc.version|str|*|"1.0"|
-|12|ifc.application_name|str|*|"cs2bim"|
-|13|ifc.project_name|str|*|"Project A"|
-|14 <a id="conf-fc-gr"></a>|ifc.geo_referencing|[GeoReferencing](src/cs2bim/ifc/enum/geo_referencing.py)|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
-|15 <a id="conf-fc-trt"></a>|ifc.triangulation_representation_type|[TriangulationRepresentationType](src/cs2bim/ifc/enum/triangulation_representation_type.py)|TESSELLATION; BREP|BREP|
-|16|ifc.feature_classes|map|---|---|
-|17|ifc.feature_classes.<em>FeatureClassKeyX</em>|map|---|---|
-|18 <a id="conf-fc-s"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.sql|str|<em>Path to sql file</em>|"sql/parcels.sql"|
-|19 <a id="conf-fc-et"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|[ElementEntityType](src/cs2bim/ifc/enum/element_entity_type.py)|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
-|20 <a id="conf-fc-a"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes|list|---|---|
-|21|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>|map|---|---|
-|22|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
-|23 <a id="conf-fc-a-c"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.column|str|*|"egris_egrid"|
-|24 <a id="conf-fc-p"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties|list|---|---|
-|25|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>|map|---|---|
-|26|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|*|"Property"|
-|27|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set|str|*|"PropertySet"|
-|28 <a id="conf-fc-p-c"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|*|"property_column"|
-|29 <a id="conf-fc-ss"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure|map|---|---|
-|30|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|[SpatialStructureEntityType](src/cs2bim/ifc/enum/spatial_structure_entity_type.py)|IFC_SITE|IFC_SITE|
-|31|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes|list|---|---|
-|32|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>|map|---|---|
-|33|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
-|34|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.value|str|*|"Site"|
-|35 <a id="conf-fc-gc"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns|list|---|---|
-|36 <a id="conf-fc-gc-c"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns.<em>ListElementX</em>|str|*|"group_column"|
-|37 <a id="conf-fc-cd"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition|map|---|---|
-|38|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.r|float|0.0 - 1.0|0.1|
-|39|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.g|float|0.0 - 1.0|0.5|
-|40|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.b|float|0.0 - 1.0|0.5|
-|41|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.a|float|0.0 - 1.0|0.3|
-|42|ifc.groups|map|---|---|
-|43 <a id="conf-g-k"></a>|ifc.groups.<em>IfcGroupKey</em>|map|---|---|
-|44|ifc.groups.<em>IfcGroupKey</em>.entity_type|[GroupEntityType](src/cs2bim/ifc/enum/group_entity_type.py)|IFC_DISTRIBUTION_SYSTEM, IFC_DISTRIBUTION_CIRCUIT, IFC_BUILDING_SYSTEM, IFC_STRUCTURAL_ANALYSIS_MODEL, IFC_ZONE|IFC_DISTRIBUTION_SYSTEM|
-|45|ifc.groups.<em>IfcGroupKey</em>.attributes|list|---|---|
-|46|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>|map|---|---|
-|47|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
-|48|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.value|str|*|"Group"|
+|9|ifc.author|str|*|"author"|
+|10|ifc.version|str|*|"1.0"|
+|11|ifc.application_name|str|*|"cs2bim"|
+|12|ifc.project_name|str|*|"Project A"|
+|13 <a id="conf-fc-gr"></a>|ifc.geo_referencing|[GeoReferencing](src/cs2bim/ifc/enum/geo_referencing.py)|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
+|14 <a id="conf-fc-trt"></a>|ifc.triangulation_representation_type|[TriangulationRepresentationType](src/cs2bim/ifc/enum/triangulation_representation_type.py)|TESSELLATION; BREP|BREP|
+|15|ifc.feature_classes|map|---|---|
+|16|ifc.feature_classes.<em>FeatureClassKeyX</em>|map|---|---|
+|17 <a id="conf-fc-s"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.sql|str|<em>Path to sql file</em>|"sql/parcels.sql"|
+|18 <a id="conf-fc-et"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|[ElementEntityType](src/cs2bim/ifc/enum/element_entity_type.py)|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
+|19 <a id="conf-fc-a"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes|list|---|---|
+|20|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>|map|---|---|
+|21|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
+|22 <a id="conf-fc-a-c"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.column|str|*|"egris_egrid"|
+|23 <a id="conf-fc-p"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties|list|---|---|
+|24|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>|map|---|---|
+|25|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|*|"Property"|
+|26|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set|str|*|"PropertySet"|
+|27 <a id="conf-fc-p-c"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|*|"property_column"|
+|28 <a id="conf-fc-ss"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure|map|---|---|
+|29|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|[SpatialStructureEntityType](src/cs2bim/ifc/enum/spatial_structure_entity_type.py)|IFC_SITE|IFC_SITE|
+|30|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes|list|---|---|
+|31|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>|map|---|---|
+|32|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
+|33|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.value|str|*|"Site"|
+|34 <a id="conf-fc-gc"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns|list|---|---|
+|35 <a id="conf-fc-gc-c"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns.<em>ListElementX</em>|str|*|"group_column"|
+|36 <a id="conf-fc-cd"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition|map|---|---|
+|37|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.r|float|0.0 - 1.0|0.1|
+|38|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.g|float|0.0 - 1.0|0.5|
+|39|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.b|float|0.0 - 1.0|0.5|
+|40|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.a|float|0.0 - 1.0|0.3|
+|41|ifc.groups|map|---|---|
+|42 <a id="conf-g-k"></a>|ifc.groups.<em>IfcGroupKey</em>|map|---|---|
+|43|ifc.groups.<em>IfcGroupKey</em>.entity_type|[GroupEntityType](src/cs2bim/ifc/enum/group_entity_type.py)|IFC_DISTRIBUTION_SYSTEM, IFC_DISTRIBUTION_CIRCUIT, IFC_BUILDING_SYSTEM, IFC_STRUCTURAL_ANALYSIS_MODEL, IFC_ZONE|IFC_DISTRIBUTION_SYSTEM|
+|44|ifc.groups.<em>IfcGroupKey</em>.attributes|list|---|---|
+|45|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>|map|---|---|
+|46|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
+|47|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.value|str|*|"Group"|
 
 - [x] don't use ? if no value list is defined
 - [ ] what's up with the TODO?
