@@ -21,29 +21,31 @@
 
 # Project description
 
-The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launched a research project Cadastral Surveying Data to Building Information Modelling (CS2BIM). The Institute of Virtual Design and Construction and the Institute of Geomatics at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed a service based on open source libraries. The service transforms GIS based cadastral survey data with area geometries (2D) to IFC instances with 3D surface geometries. The geometry transformation is based on a projection of the 2D geometries onto the digital terrain model.  
+The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launched a research project *Cadastral Surveying Data to Building Information Modelling (CS2BIM)*. The _Institute of Virtual Design and Construction_ and the _Institute of Geomatics_ at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed a service based on open source libraries. The service transforms GIS based cadastral survey (CS) data with area geometries (2D) to IFC instances with 3D surface geometries. The geometry transformation is based on a projection of the 2D geometries onto the digital terrain model. 
 
 The service contains the following major components:
-- Import and processing of Interlis data by the ili2pg components and storage in a PostGIS database. The vector data is read from WKT format.
-- Processing of the terrain model data and creation of the resulting 3D surfaces
-- Export of the objects to IFC format using the IfcOpenShell component
+- Importing and processing of Interlis data by the ili2pg component and storing in a PostGIS database. The vector data is read from [WKT](http://giswiki.org/wiki/Well_Known_Text) format.
+- Processing of the terrain model data and creating the resulting 3D surfaces
+- Exporting of the objects to IFC format using the IfcOpenShell component
 
 ![CS2BIM System Architecture](./uploads/CS2BIM_system_architecture.jpg){width=600}
 
-The diagram shows the system architecture and all major components of the implementation. Description of the compontens:
+The diagram shows the system architecture and all major components of the implementation. Description of the components:
 | component | name | description |
 | ------ |----- | ------ |
-|   1     | database |   The cadastral data is imported in INTERLIS (.xtf or itf) format via the standard component ili2pg (swisstopo) and made available in a PostGIS database for further processing. The component database is not covered within the code   |
-|   2     | swisstopo database | The digital terrain model (DTM) is loaded with the API service to swissalti3d data. |
+|   1     | PostGIS database |   The cadastral data is imported from INTERLIS (.xtf or itf) format via the standard component ili2pg (swisstopo) and made available in a PostGIS database for further processing. The component database is not covered within the code   |
+|   2     | DTM database | The digital terrain model (DTM) is loaded with the API service to swissALTI3D data. |
 |   3     | wkt2tin | Component for creating 3D surfaces by projecting 2D vector objects (usually polygons) onto a terrain model. As a result of this component, mesh surface geometries are available for each object instance (of the cadastral information).      | 
 |   4     | tin2ifc | This component writes the resulting IFC file. The open library IfcOpenShell is used for this purpose. |
-|   5     |  API & configuration   |In this service package, control the individual components into a ‘CS2BIM’ service. The service is build in an docker container. |
+|   5     |  API & configuration   | This service package combines the individual components with their configuration into a ‘CS2BIM’ service. The service is built in a docker container. |
 
 ## Resulting IFC Files
 
 ![CS2BIM test data](./uploads/CS2BIM_testdata.JPG){width=1000}
 
 Example files can be downloaded with the following links.
+
+- [ ] add some description to understand what's the difference between .ifc, _con.ifc, _int.ifc
 
 | ID | name | link |
 | ------ | ------ | ----- |
@@ -76,7 +78,9 @@ The run parameters are:
 - IFC_VERSION: Ifc version of the resulting ifc file (supported versions/values see src\cs2bim\ifc\enum\ifc_version.py).
 - NAME: Name of the resulting ifc file.
 - POLYGON : The area in which the data is treated. The polygon must be a valid wkt string in LV95.
-- PROJECT_ORIGIN (optional) : The project origin in LV95 coordinates "East,North,Height"
+- PROJECT_ORIGIN (optional) : The project origin in LV95 coordinates "Easting,Northing,Height"
+
+- [ ] if project origin is set, are all other geometry values in the ifc calculated relative to the origin? i.e. the heigh in this example will be absolute, but the first point of the polygon would be 89114 instead of 2689114?
 
 Example:
 - docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e POLYGON="POLYGON((2689114 1285136,2689143 1285192,2689170 1285159,2689114 1285136))" -e PROJECT_ORIGIN=2600000,1200000,0 -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
@@ -86,6 +90,8 @@ After you run the docker container successfully there will be a new output ifc f
 Important: If you change the config.yml, the container must be rebuilt to make it work.
 
 ## Getting started dev
+
+- [ ] should this be setting up the def environent? 
 
 Build and run docker container or build and open container with your IDE (e.g. VSCode)
 ```console
@@ -100,9 +106,11 @@ pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 Some properties of this python project can be configured using the config.yml file.  
 The configuration has different sections/topics:
 - postgis configuration: Connection to the database with the cadastral data.
-- swiss topo configuration: Connection to the service that provides terrain data.
+- DTM configuration: Connection to the service that provides terrain data.
 - tin configuration: Configurations for the creation and treatment of tins.
 - ifc configuration: Configurations of the resulting ifc file.
+
+- [ ] - as it should be possible to use different terrain data models, keep this generic (DTM configuration), so that a canton could connect their own model if they so wish
 
 ## Configuration parameters (overview)
 
@@ -153,6 +161,11 @@ The configuration has different sections/topics:
 |38|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.attributes.<em>ListElementX</em>.attribute|str|?|"Name"|
 |39|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.attributes.<em>ListElementX</em>.value|str|?|"Group"|
 
+- [ ] don't use ? if no value list is defined
+- [ ] what's up with the TODO?
+- [ ] how to read 0.0 - 1-0 ? is that supposed to be '0.0 - 1.0'?
+- [ ] are the Types the ifc enumerations?
+
 ## Types
 Some parameters can only be configured with predefined values (types), because these values are referenced in the code. To guarantee a proper configuration and execution of the code, these predefined values (types) are defined as constants in different modules/classes in the python code.
 
@@ -175,17 +188,19 @@ Supported values are LO_GEO_REF_30, LO_GEO_REF_40, LO_GEO_REF_50.
 
 ![Levels of Georeferencing LoGeoRef](./uploads/LoGeoRef.png){width=400}
 
+- [ ] what's a sensible value here?
+
 **Coordinates and Offets**  
-You can provide a project origin in LV95 coordinates (East, North, Height). The project origin can also be set to (0,0,0).  
+You can provide a project origin in LV95 coordinates (Easting, Northing, Height). The project origin can also be set to (0,0,0).  
 If not provided, the system sets a project origin calculated on a minimum bounding box of the perimeter.  
 
 
 ### Triangulation Representation Type
 You can define the IFC geometry type that is used to represent the TIN geometry.  
-Supported values are TESSELLATION, BREP (TESSELATION is recommended).
+Supported values are TESSELLATION or BREP. TESSELATION is recommended because **it is faster/more accurate/more awesome/...**.
 
 ### Feature Classes
-A "Feature Class" is the definition of a set of  objects that are exported in an IFC entity with common definitions.  
+A "Feature Class" is the definition of a set of objects that are exported in an IFC entity with common definitions.  
 The main configurations of a feature class include:
 - sql: A SQL query that selects objects in the GIS database, returning a geometry (must be an area) and some other attributes for each object.
 - entity_type: The IFC entity, to which all selected objects of the feature class are exported to.
@@ -195,16 +210,25 @@ The main configurations of a feature class include:
 - spatial_structure: The IFC spatial structure, to which all objects of the feature class are appended.
 - colour_definition: An IFC colour definition
 
+- [ ] where/how is the feature class used? Is this something that is used in the code to group things? 
+
 ### SQL
-For each feature class you have to provide a sql for querying the data(17). With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be multiple columns for attributes(21), properties(25) or groups(30).
+For each feature class you have to provide a sql query (?) for querying the data(17). With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be multiple columns for attributes(21), properties(25) or groups(30).
 
 The following schema shows the relationship between the attributes defined by the sql query and their linking to the configuration.  
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
+
+- [ ] what are the numbers? e.g. data(17)?
+- [ ] in the image: is that [fc name] or [ifc name] ?
 
 ### Spatial Structure
 All objects of a feature class are assigned to one common spatial structure. The spatial structure instance can be configured with its entity type and attributes.
 
 If the specification of the spatial structure instance in different feature class definitions is identical, then only one spatial structure instance is created (and all objects of the feature classes are assigned to the same spatial structure).
+
+- [ ] this is not shown in the image above?
+- [ ] Buildings as IFC_BUILDING_SYSTEM, not as building?
+- [ ] what if I don't want to group at all?
 
 ### Groups
 Every exported object can be assigned to a group (zero to multiple). The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a group configuration.  
