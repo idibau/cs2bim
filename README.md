@@ -230,7 +230,8 @@ For each feature class you have to provide a [sql file](#conf-fc-s) for querying
 The following schema shows the relationship between the attributes defined by the sql query and their linking to the configuration.  
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
 
-- [x] what are the numbers? e.g. data(17)?
+- [x] what are the numbers? e.g. data(17)? 
+- [ ] what are the numbers? e.g. data(17)? -> New linking does not seem to work in GitLab. But it works in VSCode preview and in pdf exports.
 - [x] in the image: is that [fc name] or [ifc name] ?
 
 #### Spatial Structure
