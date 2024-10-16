@@ -197,7 +197,7 @@ Supported values are:
   - Suited for large-scale and linear project expansions 
   - IFC 4.0
 
-![Levels of Georeferencing LoGeoRef](./uploads/LoGeoRef.png){width=400}
+![Levels of Georeferencing LoGeoRef](./uploads/LoGeoRef.png){width=600}
 
 - [ ] what's a sensible value here?
 
@@ -205,7 +205,7 @@ Supported values are:
 You can provide a project origin in LV95 coordinates (Easting, Northing, Height). The project origin can also be set to (0,0,0).  
 If not provided, the system sets a project origin calculated on a minimum bounding box of the perimeter. 
 
-![Levels of Georeferencing LoGeoRef](./uploads/project_origin.png){width=400}
+![Levels of Georeferencing LoGeoRef](./uploads/project_origin.png){width=600}
 
 ### Triangulation Representation Type
 You can define the [representation type](#conf-fc-trt) that is used to represent the TIN geometry in the ifc.  
