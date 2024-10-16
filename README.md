@@ -45,14 +45,14 @@ The diagram shows the system architecture and all major components of the implem
 
 Example files can be downloaded with the following links.
 
-- [ ] add some description to understand what's the difference between .ifc, _con.ifc, _int.ifc
+- [x] add some description to understand what's the difference between .ifc, _con.ifc, _int.ifc
 
-| ID | name | link |
-| ------ | ------ | ----- |
-|  1  |    200mx200m.ifc    |   https://drive.switch.ch/index.php/s/YOgygwb3ZqmG44v   |
-|  2  |    200mx200m_con.ifc   | https://drive.switch.ch/index.php/s/2pivcwXtneYqSdY |
-|  3  |    200mx200m_int.ifc    |  https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf  |
-|  4  |    500mx500m.ifc   |   https://drive.switch.ch/index.php/s/Bcq40YjOljKZ2oa |
+| ID | name | link | description |
+| ------ | ------ | ------ | ------ |
+|  1  |    200mx200m.ifc    |   https://drive.switch.ch/index.php/s/YOgygwb3ZqmG44v   | All areas (parcel, landcover etc.) that intersect with the 200m x 200m polygon are included | 
+|  2  |    200mx200m_con.ifc   | https://drive.switch.ch/index.php/s/2pivcwXtneYqSdY |  All areas (parcel, landcover etc.) that are fully contained by the 200m x 200m polygon are included |
+|  3  |    200mx200m_int.ifc    |  https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf  | All areas (parcel, landcover etc.) are cut off at the border of the 200m x 200m polygon |
+|  4  |    500mx500m.ifc   |   https://drive.switch.ch/index.php/s/Bcq40YjOljKZ2oa | All areas (parcel, landcover etc.) that intersect with the 500m x 500m polygon are included | 
 
 # Concepts
 The cs2bim service supports different central IFC concepts and allows a relatively dynamic (configurable) transformation between the geodata and the IFC data model. The main IFC concepts and principles of data transformation and processing are briefly explained on the [Concepts](concepts.md) page.
@@ -89,9 +89,9 @@ After you run the docker container successfully there will be a new output ifc f
 
 Important: If you change the config.yml, the container must be rebuilt to make it work.
 
-## Getting started dev
+## Getting started (Development)
 
-- [ ] should this be setting up the def environent? 
+- [x] should this be setting up the def environent? 
 
 Build and run docker container or build and open container with your IDE (e.g. VSCode)
 ```console
@@ -118,63 +118,62 @@ The configuration has different sections/topics:
 |---|---|---|---|---|
 |0|logging_level|str|NOTSET; DEBUG; INFO; WARN; ERROR; CRITICAL|"cs2bim"|
 |---|---|---|---|---|
-|1|db.dbname|str|?|"cs2bim"|
-|2|db.user|str|?|"postgres"|
-|3|db.host|str|?|"host.docker.internal"|
-|4|db.port|int|?|5432|
-|5|db.password|str|?|"xxx"|
-|6|db.schema|str|?|"cs2bim"|
+|1|db.dbname|str|*|"cs2bim"|
+|2|db.user|str|*|"postgres"|
+|3|db.host|str|*|"host.docker.internal"|
+|4|db.port|int|*|5432|
+|5|db.password|str|*|"xxx"|
+|6|db.schema|str|*|"cs2bim"|
 |---|---|---|---|---|
-|7|dtm.stac_api|str|?|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
+|7|dtm.stac_api|str|*|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
 |---|---|---|---|---|
 |8|tin.grid_size|float|0.5;2|0.5|
 |9|tin.max_height_error|float|TODO|0.05|
 |---|---|---|---|---|
-|10|ifc.author|str|?|"author"|
-|11|ifc.version|str|?|"1.0"|
-|12|ifc.application_name|str|?|"cs2bim"|
-|13|ifc.project_name|str|?|"Project A"|
-|14|ifc.geo_referencing|GeoReferencing|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
-|15|ifc.triangulation_representation_type|TriangulationRepresentationType|TESSELLATION; BREP|BREP|
+|10|ifc.author|str|*|"author"|
+|11|ifc.version|str|*|"1.0"|
+|12|ifc.application_name|str|*|"cs2bim"|
+|13|ifc.project_name|str|*|"Project A"|
+|14 <a id="conf-fc-gr"></a>|ifc.geo_referencing|[GeoReferencing](src/cs2bim/ifc/enum/geo_referencing.py)|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
+|15 <a id="conf-fc-trt"></a>|ifc.triangulation_representation_type|[TriangulationRepresentationType](src/cs2bim/ifc/enum/triangulation_representation_type.py)|TESSELLATION; BREP|BREP|
 |16|ifc.feature_classes|map|---|---|
-|17|ifc.feature_classes.<em>FeatureClassKeyX</em>.sql|str|<em>Path to sql file</em>|"sql/parcels.sql"|
-|18|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|ElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
-|19|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes|list|---|---|
-|20|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.attribute|str|?|"Name"|
-|21|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.column|str|?|"egris_egrid"|
-|22|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties|list|---|---|
-|23|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|?|"Property"|
-|24|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set|str|?|"PropertySet"|
-|25|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|?|"property_column"|
-|26|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|SpatialStructureEntityType|IFC_SITE|IFC_SITE|
-|27|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes|list|---|---|
-|28|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.attribute|str|?|"Name"|
-|29|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.value|str|?|"Site"|
-|30|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns|list[str]|?|"group_column"|
-|31|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.r|float|0.0 - 1-0|0.1|
-|32|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.g|float|0.0 - 1-0|0.5|
-|33|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.b|float|0.0 - 1-0|0.5|
-|34|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.a|float|0.0 - 1-0|0.3|
-|35|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups|map|---|---|
-|36|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.entity_type|GroupEntityType|IFC_DISTRIBUTION_SYSTEM, IFC_DISTRIBUTION_CIRCUIT, IFC_BUILDING_SYSTEM, IFC_STRUCTURAL_ANALYSIS_MODEL, IFC_ZONE|IFC_DISTRIBUTION_SYSTEM|
-|37|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.attributes|list|---|---|
-|38|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.attributes.<em>ListElementX</em>.attribute|str|?|"Name"|
-|39|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.attributes.<em>ListElementX</em>.value|str|?|"Group"|
+|17|ifc.feature_classes.<em>FeatureClassKeyX</em>|map|---|---|
+|18 <a id="conf-fc-s"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.sql|str|<em>Path to sql file</em>|"sql/parcels.sql"|
+|19 <a id="conf-fc-et"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|[ElementEntityType](src/cs2bim/ifc/enum/element_entity_type.py)|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
+|20 <a id="conf-fc-a"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes|list|---|---|
+|21|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>|map|---|---|
+|22|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
+|23 <a id="conf-fc-a-c"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.column|str|*|"egris_egrid"|
+|24 <a id="conf-fc-p"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties|list|---|---|
+|25|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>|map|---|---|
+|26|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|*|"Property"|
+|27|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set|str|*|"PropertySet"|
+|28 <a id="conf-fc-p-c"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|*|"property_column"|
+|29 <a id="conf-fc-ss"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure|map|---|---|
+|30|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|[SpatialStructureEntityType](src/cs2bim/ifc/enum/spatial_structure_entity_type.py)|IFC_SITE|IFC_SITE|
+|31|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes|list|---|---|
+|32|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>|map|---|---|
+|33|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
+|34|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.value|str|*|"Site"|
+|35 <a id="conf-fc-gc"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns|list|---|---|
+|36 <a id="conf-fc-gc-c"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns.<em>ListElementX</em>|str|*|"group_column"|
+|37 <a id="conf-fc-cd"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition|map|---|---|
+|38|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.r|float|0.0 - 1.0|0.1|
+|39|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.g|float|0.0 - 1.0|0.5|
+|40|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.b|float|0.0 - 1.0|0.5|
+|41|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.a|float|0.0 - 1.0|0.3|
+|42|ifc.groups|map|---|---|
+|43 <a id="conf-g-k"></a>|ifc.groups.<em>IfcGroupKey</em>|map|---|---|
+|44|ifc.groups.<em>IfcGroupKey</em>.entity_type|[GroupEntityType](src/cs2bim/ifc/enum/group_entity_type.py)|IFC_DISTRIBUTION_SYSTEM, IFC_DISTRIBUTION_CIRCUIT, IFC_BUILDING_SYSTEM, IFC_STRUCTURAL_ANALYSIS_MODEL, IFC_ZONE|IFC_DISTRIBUTION_SYSTEM|
+|45|ifc.groups.<em>IfcGroupKey</em>.attributes|list|---|---|
+|46|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>|map|---|---|
+|47|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
+|48|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.value|str|*|"Group"|
 
-- [ ] don't use ? if no value list is defined
+- [x] don't use ? if no value list is defined
 - [ ] what's up with the TODO?
-- [ ] how to read 0.0 - 1-0 ? is that supposed to be '0.0 - 1.0'?
-- [ ] are the Types the ifc enumerations?
-
-## Types
-Some parameters can only be configured with predefined values (types), because these values are referenced in the code. To guarantee a proper configuration and execution of the code, these predefined values (types) are defined as constants in different modules/classes in the python code.
-
-The following types are defined:
-- GeoReferencing -> cs2bim.ifc.enum.geo_referencing.py\
-- TriangulationRepresentationType -> cs2bim.ifc.enum.triangulation_representation_type.py\
-- ElementEntityType -> cs2bim.ifc.enum.element_entity_type.py\
-- SpatialStructureEntityType -> cs2bim.ifc.enum.spatial_structure_entity_type.py\
-- GroupEntityType -> cs2bim.ifc.enum.group_entity_type.py
+- [x] how to read 0.0 - 1-0 ? is that supposed to be '0.0 - 1.0'?
+- [x] are the Types the ifc enumerations?
 
 ## IFC configuration
 In this section of the configuration you can make some general definitions about the resulting ifc file and you can define the feature classes that are generated and exported as ifc entities.  
@@ -182,7 +181,7 @@ In this section of the configuration you can make some general definitions about
 Below some of the parameters are explained.
 
 ### Geo referencing
-You can provide the so called "Level of Georeferencing" (LoGeoRef), according to (Clemen&Görne, 2019) [^LoGeoRef].  
+You can provide the so called "Level of Georeferencing" ([LoGeoRef](#conf-fc-gr)), according to (Clemen&Görne, 2019) [^LoGeoRef].  
 The different levels represent different methods of defining informations about georeferencing in IFC.  
 Supported values are LO_GEO_REF_30, LO_GEO_REF_40, LO_GEO_REF_50.
 
@@ -196,33 +195,33 @@ If not provided, the system sets a project origin calculated on a minimum boundi
 
 
 ### Triangulation Representation Type
-You can define the IFC geometry type that is used to represent the TIN geometry.  
-Supported values are TESSELLATION or BREP. TESSELATION is recommended because **it is faster/more accurate/more awesome/...**.
+You can define the [representation type](#conf-fc-trt) that is used to represent the TIN geometry in the ifc.  
+Supported values are TESSELLATION or BREP. TESSELATION is recommended because it needs less storage space.
 
 ### Feature Classes
-A "Feature Class" is the definition of a set of objects that are exported in an IFC entity with common definitions.  
+A "Feature Class" is the definition of a set of objects that are exported in an IFC entity with common definitions.
 The main configurations of a feature class include:
-- sql: A SQL query that selects objects in the GIS database, returning a geometry (must be an area) and some other attributes for each object.
-- entity_type: The IFC entity, to which all selected objects of the feature class are exported to.
-- attributes: All attributes that are set on the objects.
-- properties: Any number of property definitions that are exported as IFC properties/property sets.
-- group_columns: Any number of IFC group assignments.
-- spatial_structure: The IFC spatial structure, to which all objects of the feature class are appended.
-- colour_definition: An IFC colour definition
+- [sql](#conf-fc-s): A SQL query that selects objects in the GIS database, returning a geometry (must be an area) and some other attributes for each object.
+- [entity_type](#conf-fc-et): The IFC entity, to which all selected objects of the feature class are exported to.
+- [attributes](#conf-fc-a): All attributes that are set on the objects.
+- [properties](#conf-fc-p): Any number of property definitions that are exported as IFC properties/property sets.
+- [group_columns](#conf-fc-gc): Any number of IFC group assignments.
+- [spatial_structure](#conf-fc-ss): The IFC spatial structure, to which all objects of the feature class are appended.
+- [colour_definition](#conf-fc-cd): An IFC colour definition
 
 - [ ] where/how is the feature class used? Is this something that is used in the code to group things? 
 
-### SQL
-For each feature class you have to provide a sql query (?) for querying the data(17). With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be multiple columns for attributes(21), properties(25) or groups(30).
+#### SQL
+For each feature class you have to provide a [sql file](#conf-fc-s) for querying the data. With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be multiple columns for [attributes](#conf-fc-a-c), [properties](#conf-fc-p-c) or [groups](#conf-fc-gc-c).
 
 The following schema shows the relationship between the attributes defined by the sql query and their linking to the configuration.  
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
 
-- [ ] what are the numbers? e.g. data(17)?
-- [ ] in the image: is that [fc name] or [ifc name] ?
+- [x] what are the numbers? e.g. data(17)?
+- [x] in the image: is that [fc name] or [ifc name] ?
 
-### Spatial Structure
-All objects of a feature class are assigned to one common spatial structure. The spatial structure instance can be configured with its entity type and attributes.
+#### Spatial Structure
+All objects of a feature class are assigned to one common [spatial structure](#conf-fc-ss). The spatial structure instance can be configured with its entity type and attributes.
 
 If the specification of the spatial structure instance in different feature class definitions is identical, then only one spatial structure instance is created (and all objects of the feature classes are assigned to the same spatial structure).
 
@@ -231,12 +230,11 @@ If the specification of the spatial structure instance in different feature clas
 - [ ] what if I don't want to group at all?
 
 ### Groups
-Every exported object can be assigned to a group (zero to multiple). The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a group configuration.  
+Every exported object can be assigned to a [group](#conf-fc-gc) (zero to multiple). The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a [group configuration](#conf-g-k).  
 For each group configuration the system is creating an ifc group according to the configured parameters (entity_type and any number of attributes).  
 When there is no group configuration for an assigned value, the system will create a simple ifc group entity without any special attributes.
 
-When defining a group you can use "." to create nested group structures. (IfcGroupKey)\
-By default all IfcGroups are generated using the IfcGroup entity type. Defining other types of groups can be done by creating a new group config referencing the IfcGroupKey in the configuration file(32).
+When defining a group you can use "." to create nested group structures. (IfcGroupKey)
 
 ### Example
 config.yml
