@@ -40,7 +40,7 @@ class IfcBuilder:
     def build(self, model: Model) -> file:
         """Builds an ifcopenshell ifc file based on a model object"""
         logger.info(f"initialize new ifc writer for ifc '{model.file_name}'")
-        ifc_file = file(schema=model.schema)
+        ifc_file = file(schema=model.schema.value)
         ifc_file.wrapped_data.header.file_name.name = model.file_name
 
         logger.info(f"build ifc")
