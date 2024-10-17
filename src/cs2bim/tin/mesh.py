@@ -93,7 +93,8 @@ class Mesh(object):
 
     def _resort_pts_2d(self, pts_sorted: np.ndarray, pts_unsorted: np.ndarray) -> np.ndarray:
         """Resorts points based on 2D coordinates to have the same order"""
-        assert pts_sorted.ndim == 2 & pts_unsorted.ndim == 2
+        assert pts_sorted.ndim == 2 & pts_unsorted.ndim == 2 
+        assert pts_sorted.shape[0] == pts_unsorted.shape[0] 
 
         # add index to sorted points
         pts_sorted_ind = np.hstack((pts_sorted, np.arange(pts_sorted.shape[0]).reshape(pts_sorted.shape[0], 1)))
@@ -126,6 +127,16 @@ class Mesh(object):
             np.array([[0, 0, 1]] * pts_2d.shape[0]),
             first_point=True,
         )[0]
+
+        if pts_3d.shape[0] != pts_2d.shape[0]:
+            pts_2d_approx = pts_2d + 0.00001
+            pts_3d = self.mesh.multi_ray_trace(
+                np.hstack((pts_2d_approx, np.zeros((pts_2d_approx.shape[0], 1)))),
+                np.array([[0, 0, 1]] * pts_2d_approx.shape[0]),
+                first_point=True,
+            )[0]
+
+
         return self._resort_pts_2d(pts_2d, pts_3d)
 
     def calculate_edge_segment(self, p_start: np.ndarray, p_end: np.ndarray, th_line_p: float = 1e-8) -> list:

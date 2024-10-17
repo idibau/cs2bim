@@ -24,6 +24,7 @@ class PostgisService:
         result = []
         for row in rows:
             result.append(dict(zip(column_names, row)))
+        cur.close()
         return result
 
     def get_bounding_box(self, wkts: list[str]) -> BoundingBox:
@@ -38,4 +39,5 @@ class PostgisService:
         coordinates = []
         for points in wkt[9:-2].split(","):
             coordinates.append((float(points.split(" ")[0]), float(points.split(" ")[1])))
+        cur.close()
         return BoundingBox(coordinates[0][1], coordinates[0][0], coordinates[2][1], coordinates[2][0])
