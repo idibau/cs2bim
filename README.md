@@ -78,9 +78,9 @@ The run parameters are:
 - IFC_VERSION: Ifc version of the resulting ifc file (supported versions/values see src\cs2bim\ifc\enum\ifc_version.py).
 - NAME: Name of the resulting ifc file.
 - POLYGON : The area in which the data is treated. The polygon must be a valid wkt string in LV95.
-- PROJECT_ORIGIN (optional) : The project origin in LV95 coordinates "Easting,Northing,Height"
+- PROJECT_ORIGIN (optional) : The project origin in LV95 coordinates "Easting,Northing,Height". If project origin is set, all other geometry values in the ifc are calculated relative to the origin.
 
-- [ ] if project origin is set, are all other geometry values in the ifc calculated relative to the origin? i.e. the heigh in this example will be absolute, but the first point of the polygon would be 89114 instead of 2689114?
+- [x] if project origin is set, are all other geometry values in the ifc calculated relative to the origin? i.e. the heigh in this example will be absolute, but the first point of the polygon would be 89114 instead of 2689114?
 
 Example:
 - docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e POLYGON="POLYGON((2689114 1285136,2689143 1285192,2689170 1285159,2689114 1285136))" -e PROJECT_ORIGIN=2600000,1200000,0 -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
