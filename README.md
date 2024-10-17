@@ -133,36 +133,36 @@ The configuration has different sections/topics:
 |10|ifc.version|str|*|"1.0"|
 |11|ifc.application_name|str|*|"cs2bim"|
 |12|ifc.project_name|str|*|"Project A"|
-|13 <a id="conf-fc-gr name="conf-fc-gr"></a><a href="#conf-fc-gr"></a>|ifc.geo_referencing|[GeoReferencing](src/cs2bim/ifc/enum/geo_referencing.py)|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
-|14 <a id="conf-fc-trt"></a>|ifc.triangulation_representation_type|[TriangulationRepresentationType](src/cs2bim/ifc/enum/triangulation_representation_type.py)|TESSELLATION; BREP|BREP|
+|13|ifc.geo_referencing|[GeoReferencing](src/cs2bim/ifc/enum/geo_referencing.py)|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
+|14|ifc.triangulation_representation_type|[TriangulationRepresentationType](src/cs2bim/ifc/enum/triangulation_representation_type.py)|TESSELLATION; BREP|BREP|
 |15|ifc.feature_classes|map|---|---|
 |16|ifc.feature_classes.<em>FeatureClassKeyX</em>|map|---|---|
-|17 <a id="conf-fc-s"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.sql|str|<em>Path to sql file</em>|"sql/parcels.sql"|
-|18 <a id="conf-fc-et"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|[ElementEntityType](src/cs2bim/ifc/enum/element_entity_type.py)|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
-|19 <a id="conf-fc-a"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes|list|---|---|
+|17|ifc.feature_classes.<em>FeatureClassKeyX</em>.sql|str|<em>Path to sql file</em>|"sql/parcels.sql"|
+|18|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|[ElementEntityType](src/cs2bim/ifc/enum/element_entity_type.py)|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
+|19|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes|list|---|---|
 |20|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>|map|---|---|
 |21|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
-|22 <a id="conf-fc-a-c"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.column|str|*|"egris_egrid"|
-|23 <a id="conf-fc-p"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties|list|---|---|
+|22|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.column|str|*|"egris_egrid"|
+|23|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties|list|---|---|
 |24|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>|map|---|---|
 |25|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|*|"Property"|
 |26|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set|str|*|"PropertySet"|
-|27 <a id="conf-fc-p-c"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|*|"property_column"|
-|28 <a id="conf-fc-ss"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure|map|---|---|
+|27|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|*|"property_column"|
+|28|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure|map|---|---|
 |29|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|[SpatialStructureEntityType](src/cs2bim/ifc/enum/spatial_structure_entity_type.py)|IFC_SITE|IFC_SITE|
 |30|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes|list|---|---|
 |31|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>|map|---|---|
 |32|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
 |33|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.value|str|*|"Site"|
-|34 <a id="conf-fc-gc"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns|list|---|---|
-|35 <a id="conf-fc-gc-c"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns.<em>ListElementX</em>|str|*|"group_column"|
-|36 <a id="conf-fc-cd"></a>|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition|map|---|---|
+|34|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns|list|---|---|
+|35|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns.<em>ListElementX</em>|str|*|"group_column"|
+|36|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition|map|---|---|
 |37|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.r|float|0.0 - 1.0|0.1|
 |38|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.g|float|0.0 - 1.0|0.5|
 |39|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.b|float|0.0 - 1.0|0.5|
 |40|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.a|float|0.0 - 1.0|0.3|
 |41|ifc.groups|map|---|---|
-|42 <a id="conf-g-k"></a>|ifc.groups.<em>IfcGroupKey</em>|map|---|---|
+|42|ifc.groups.<em>IfcGroupKey</em>|map|---|---|
 |43|ifc.groups.<em>IfcGroupKey</em>.entity_type|[GroupEntityType](src/cs2bim/ifc/enum/group_entity_type.py)|IFC_DISTRIBUTION_SYSTEM, IFC_DISTRIBUTION_CIRCUIT, IFC_BUILDING_SYSTEM, IFC_STRUCTURAL_ANALYSIS_MODEL, IFC_ZONE|IFC_DISTRIBUTION_SYSTEM|
 |44|ifc.groups.<em>IfcGroupKey</em>.attributes|list|---|---|
 |45|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>|map|---|---|
@@ -180,7 +180,7 @@ In this section of the configuration you can make some general definitions about
 Below some of the parameters are explained.
 
 ### Geo referencing
-You can provide the so called "Level of Georeferencing" ([LoGeoRef](#conf-fc-gr)), according to (Clemen&Görne, 2019) [^LoGeoRef].  
+You can provide the so called "Level of Georeferencing" (LoGeoRef), according to (Clemen&Görne, 2019) [^LoGeoRef].  
 The different levels represent different methods of defining informations about georeferencing in IFC.  
 Supported values are:
 - LO_GEO_REF_30
@@ -207,24 +207,24 @@ If not provided, the system sets a project origin calculated on a minimum boundi
 ![Levels of Georeferencing LoGeoRef](./uploads/project_origin.png){width=600}
 
 ### Triangulation Representation Type
-You can define the [representation type](#conf-fc-trt) that is used to represent the TIN geometry in the ifc.  
+You can define the representation type that is used to represent the TIN geometry in the ifc.  
 Supported values are TESSELLATION or BREP. TESSELATION is recommended because it needs less storage space.
 
 ### Feature Classes
 A "Feature Class" is the definition of a set of objects that are exported in an IFC entity with common definitions.
 The main configurations of a feature class include:
-- [sql](#conf-fc-s): A SQL query that selects objects in the GIS database, returning a geometry (must be an area) and some other attributes for each object.
-- [entity_type](#conf-fc-et): The IFC entity, to which all selected objects of the feature class are exported to.
-- [attributes](#conf-fc-a): All attributes that are set on the objects.
-- [properties](#conf-fc-p): Any number of property definitions that are exported as IFC properties/property sets.
-- [group_columns](#conf-fc-gc): Any number of IFC group assignments.
-- [spatial_structure](#conf-fc-ss): The IFC spatial structure, to which all objects of the feature class are appended.
-- [colour_definition](#conf-fc-cd): An IFC colour definition
+- sql: A SQL query that selects objects in the GIS database, returning a geometry (must be an area) and some other attributes for each object.
+- entity_type: The IFC entity, to which all selected objects of the feature class are exported to.
+- attributes: All attributes that are set on the objects.
+- properties: Any number of property definitions that are exported as IFC properties/property sets.
+- group_columns: Any number of IFC group assignments.
+- spatial_structure: The IFC spatial structure, to which all objects of the feature class are appended.
+- colour_definition: An IFC colour definition
 
 - [ ] where/how is the feature class used? Is this something that is used in the code to group things? 
 
 #### SQL
-For each feature class you have to provide a [sql file](#conf-fc-s) for querying the data. With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be multiple columns for [attributes](#conf-fc-a-c), [properties](#conf-fc-p-c) or [groups](#conf-fc-gc-c).
+For each feature class you have to provide a sql file for querying the data. With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be multiple columns for attributes, properties or groups.
 
 The following schema shows the relationship between the attributes defined by the sql query and their linking to the configuration.  
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
@@ -234,7 +234,7 @@ The following schema shows the relationship between the attributes defined by th
 - [x] in the image: is that [fc name] or [ifc name] ?
 
 #### Spatial Structure
-All objects of a feature class are assigned to one common [spatial structure](#conf-fc-ss). The spatial structure instance can be configured with its entity type and attributes.
+All objects of a feature class are assigned to one common spatial structure. The spatial structure instance can be configured with its entity type and attributes.
 
 If the specification of the spatial structure instance in different feature class definitions is identical, then only one spatial structure instance is created (and all objects of the feature classes are assigned to the same spatial structure).
 
@@ -243,7 +243,7 @@ If the specification of the spatial structure instance in different feature clas
 - [ ] what if I don't want to group at all?
 
 ### Groups
-Every exported object can be assigned to a [group](#conf-fc-gc) (zero to multiple). The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a [group configuration](#conf-g-k).  
+Every exported object can be assigned to a group (zero to multiple). The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a group configuration.  
 For each group configuration the system is creating an ifc group according to the configured parameters (entity_type and any number of attributes).  
 When there is no group configuration for an assigned value, the system will create a simple ifc group entity without any special attributes.
 
