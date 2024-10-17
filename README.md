@@ -133,7 +133,7 @@ The configuration has different sections/topics:
 |10|ifc.version|str|*|"1.0"|
 |11|ifc.application_name|str|*|"cs2bim"|
 |12|ifc.project_name|str|*|"Project A"|
-|13 <a id="conf-fc-gr name="conf-fc-gr"></a>|ifc.geo_referencing|[GeoReferencing](src/cs2bim/ifc/enum/geo_referencing.py)|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
+|13 <a id="conf-fc-gr name="conf-fc-gr"></a><a href="#conf-fc-gr"></a>|ifc.geo_referencing|[GeoReferencing](src/cs2bim/ifc/enum/geo_referencing.py)|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
 |14 <a id="conf-fc-trt"></a>|ifc.triangulation_representation_type|[TriangulationRepresentationType](src/cs2bim/ifc/enum/triangulation_representation_type.py)|TESSELLATION; BREP|BREP|
 |15|ifc.feature_classes|map|---|---|
 |16|ifc.feature_classes.<em>FeatureClassKeyX</em>|map|---|---|
