@@ -1,3 +1,4 @@
+from cs2bim.ifc.enum.ifc_version import IfcVersion
 from cs2bim.ifc.model.element import Element
 
 
@@ -17,7 +18,7 @@ class Model:
         List of all elements that should be added
     """
 
-    def __init__(self, file_name: str, schema: str, origin: tuple[float, float, float]) -> None:
+    def __init__(self, file_name: str, schema: IfcVersion, origin: tuple[float, float, float]) -> None:
         self.file_name = file_name
         self.schema = schema
         self.origin = origin

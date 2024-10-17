@@ -8,7 +8,7 @@ class Element:
 
     Attributes
     ----------
-    attributes : str
+    attributes : dict[str, str]
         Attributes of the element
     geometry : Geometry
         The geometry of the element

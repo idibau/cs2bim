@@ -74,7 +74,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple
 
     dtm_points = RasterPoints(p_raster, origin=origin)
 
-    model = Model(name, ifc_version.value, project_origin)
+    model = Model(name, ifc_version, project_origin)
 
     for feature_class_key, feature_class in config.feature_classes.items():
         logger.info(f"create {feature_class_key} feature class")
