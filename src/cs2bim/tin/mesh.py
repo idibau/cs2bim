@@ -136,7 +136,7 @@ class Mesh(object):
                 np.array([[0, 0, 1]] * pts_2d_approx.shape[0]),
                 first_point=True,
             )[0]
-            pts_3d = pts_3d[:,:2] - offset
+            pts_3d[:,:2] -= offset
 
         return self._resort_pts_2d(pts_2d, pts_3d)
 
