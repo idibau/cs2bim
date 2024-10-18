@@ -25,7 +25,7 @@ class DTMService:
         if items_response.status_code == 200:
             for feature in items_response.json()["features"]:
                 assets = feature["assets"].values()
-                asset_filter = lambda asset: asset["type"] == "application/x.ascii-xyz+zip" and asset["eo:gsd"] == 0.5
+                asset_filter = lambda asset: asset["type"] == "application/x.ascii-xyz+zip" and asset["eo:gsd"] == config.grid_size
                 filtered_assets = list(filter(asset_filter, assets))
                 if len(filtered_assets) != 1:
                     raise Exception("filtering assets returned more than one result")
