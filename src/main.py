@@ -61,10 +61,12 @@ def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple
     dtm_files = dmt_service.fetch_dtm_files(bounding_box)
     logger.info(f"fetched {len(dtm_files)} dtm files")
 
+    log_memory_usage()
     logger.info("load raster")
-    p_raster_parts = list((np.loadtxt(dtm_file, delimiter=" ", skiprows=1) for dtm_file in dtm_files))
-    p_raster = np.concatenate(p_raster_parts)
-    if (project_origin is None):
+    # p_raster_parts = list((np.loadtxt(dtm_file, delimiter=" ", skiprows=1) for dtm_file in dtm_files))
+    # p_raster = np.concatenate(p_raster_parts)
+    p_raster = load_and_concatenate_rasters(dtm_files)
+    if project_origin is None:
         origin = p_raster.min(axis=0)
         project_origin = (float(origin[0]), float(origin[1]), float(origin[2]))
     else:
@@ -73,6 +75,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple
     logger.info(f"fetched {len(dtm_files)} dtm files")
 
     dtm_points = RasterPoints(p_raster, origin=origin)
+    log_memory_usage()
 
     model = Model(name, ifc_version, project_origin)
 
@@ -80,39 +83,6 @@ def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple
         logger.info(f"create {feature_class_key} feature class")
         elements = feature_class_elements[feature_class_key]
         for index, element_data in enumerate(elements):
-            attributes = {}
-            for attribute, column in feature_class.attributes.items():
-                attributes[attribute] = element_data[column]
-            logger.info(f"create {feature_class_key} {index + 1}/{len(elements)}")
-            logger.debug("create area")
-            wkt_str = element_data["wkt"]
-            if isinstance(shapely.from_wkt(wkt_str), shapely.MultiPolygon):
-                logger.warn("Multipolygons are not supported at the moment. Skipping element...")
-                continue
-            area = Area(wkt_str=wkt_str, origin=origin[:2])
-            logger.debug("calculate raster points buffer")
-            raster_points_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
-            logger.debug("calculate raster points within")
-            raster_points_within = dtm_points.within(area.get_geometry, buffer_dist=0)
-            logger.debug("create mesh")
-            mesh = Mesh(raster_points_buffer)
-            logger.debug("clip mesh")
-            mesh_clipped = mesh.clip_mesh_by_area(area, raster_points_within)
-            logger.debug("decimate clipped mesh")
-            mesh_clipped_decimated = mesh_clipped.decimate(
-                max_height_error=config.max_height_error, grid_size=config.grid_size
-            )
-            logger.info(
-                f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}"
-            )
-            triangulation = Triangulation()
-            triangulation.load_from_points_and_faces(mesh_clipped_decimated.get_data())
-            groups = [element_data[group_column] for group_column in feature_class.group_columns]
-            element = Element(attributes, groups, triangulation)
-            for property in feature_class.properties:
-                element.add_property(property.set, property.name, element_data[property.column])
-            model.add_element(feature_class_key, element)
-
     ifc_builder = IfcBuilder(
         config.author,
         config.version,
@@ -128,7 +98,35 @@ def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple
     ifc_file.write(f"output/{name}.ifc")
 
 
+def load_and_concatenate_rasters(dtm_files):
+    """Loads multiple raster files and concatenates them into a single array.
+
+    Args:
+        dtm_files: A list of filenames for the raster files.
+
+    Returns:
+        A concatenated numpy array of all the raster data.
+    """
+    raster_data = [np.loadtxt(dtm_file, delimiter=" ", skiprows=1) for dtm_file in dtm_files]
+    total_size = sum(raster.shape[0] for raster in raster_data)
+    concatenated_array = np.empty((total_size, 3))
+
+    offset = 0
+    for raster in raster_data:
+        concatenated_array[offset : offset + raster.shape[0]] = raster
+        offset += raster.shape[0]
+
+    return concatenated_array
+
+
+def log_memory_usage() -> None:
+    logger.debug(
+        f"Current Memory usage: {tracemalloc.get_traced_memory()[0] / 1000000}mb, Peak memory usage: {tracemalloc.get_traced_memory()[1]/1000000}mb"
+    )
+
+
 if __name__ == "__main__":
+    tracemalloc.start()
     MANDATORY_ENV_VARS = ["IFC_VERSION", "NAME", "POLYGON"]
     for var in MANDATORY_ENV_VARS:
         if var not in os.environ:
@@ -139,7 +137,7 @@ if __name__ == "__main__":
     if "PROJECT_ORIGIN" in os.environ:
         try:
             string_values = os.environ["PROJECT_ORIGIN"].split(",")
-            project_origin = (float(string_values[0]),float(string_values[1]),float(string_values[2]))
+            project_origin = (float(string_values[0]), float(string_values[1]), float(string_values[2]))
         except:
             raise EnvironmentError(f"PROJECT_ORIGIN need to be of format float,float,float")
     else:
@@ -148,3 +146,5 @@ if __name__ == "__main__":
         f"IFC_VERSION: {ifc_version.name}, NAME: {name}, POLYGON: {polygon}, PROJECT_ORIGIN: {project_origin if not project_origin is None else 'calculated'}"
     )
     main(ifc_version, name, polygon, project_origin)
+    log_memory_usage()
+    tracemalloc.stop()
