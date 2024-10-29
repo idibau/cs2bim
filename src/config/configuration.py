@@ -34,7 +34,6 @@ class Configuration:
         self.host = db_config["host"]
         self.port = db_config["port"]
         self.password = db_config["password"]
-        self.schema = db_config["schema"]
 
         # init dtm configuration
         dtm_config = self.config_file["dtm"]
