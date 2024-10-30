@@ -221,7 +221,9 @@ The main configurations of a feature class include:
 - spatial_structure: The IFC spatial structure, to which all objects of the feature class are appended.
 - colour_definition: An IFC colour definition
 
-- [ ] where/how is the feature class used? Is this something that is used in the code to group things? 
+![Example of Feature Classes](./uploads/feature-classes.jpg){width=300}
+
+- [x] where/how is the feature class used? Is this something that is used in the code to group things? 
 
 #### SQL
 For each feature class you have to provide a sql file for querying the data. With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be multiple columns for attributes, properties or groups.
