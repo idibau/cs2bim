@@ -127,7 +127,7 @@ The configuration has different sections/topics:
 |6|dtm.stac_api|str|*|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
 |---|---|---|---|---|
 |7|tin.grid_size|float|0.5;2|0.5|
-|8|tin.max_height_error|float|TODO|0.05|
+|8|tin.max_height_error|float|0.05|0.05|
 |---|---|---|---|---|
 |9|ifc.author|str|*|"author"|
 |10|ifc.version|str|*|"1.0"|
@@ -170,7 +170,7 @@ The configuration has different sections/topics:
 |47|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.value|str|*|"Group"|
 
 - [x] don't use ? if no value list is defined
-- [ ] what's up with the TODO?
+- [x] what's up with the TODO?
 - [x] how to read 0.0 - 1-0 ? is that supposed to be '0.0 - 1.0'?
 - [x] are the Types the ifc enumerations?
 
@@ -198,7 +198,7 @@ Supported values are:
 
 ![Levels of Georeferencing LoGeoRef](./uploads/LoGeoRef.png){width=600}
 
-- [ ] what's a sensible value here?
+- [x] what's a sensible value here?
 
 **Coordinates and Offets**  
 You can provide a project origin in LV95 coordinates (Easting, Northing, Height). The project origin can also be set to (0,0,0).  
@@ -230,7 +230,6 @@ The following schema shows the relationship between the attributes defined by th
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
 
 - [x] what are the numbers? e.g. data(17)? 
-- [ ] what are the numbers? e.g. data(17)? -> New linking does not seem to work in GitLab. But it works in VSCode preview and in pdf exports.
 - [x] in the image: is that [fc name] or [ifc name] ?
 
 #### Spatial Structure
@@ -238,14 +237,13 @@ All objects of a feature class are assigned to one common spatial structure. The
 
 If the specification of the spatial structure instance in different feature class definitions is identical, then only one spatial structure instance is created (and all objects of the feature classes are assigned to the same spatial structure).
 
-- [ ] this is not shown in the image above?
-- [ ] Buildings as IFC_BUILDING_SYSTEM, not as building?
-- [ ] what if I don't want to group at all?
+- [x] this is not shown in the image above?
+- [x] Buildings as IFC_BUILDING_SYSTEM, not as building?
+- [x] what if I don't want to group at all?
 
 ### Groups
-Every exported object can be assigned to a group (zero to multiple). The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a group configuration.  
-For each group configuration the system is creating an ifc group according to the configured parameters (entity_type and any number of attributes).  
-When there is no group configuration for an assigned value, the system will create a simple ifc group entity without any special attributes.
+Every exported object can be assigned to a group (zero to multiple). If defined empty (groups: []), no groups are created. The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a group configuration. 
+For each group assignment the system is creating an ifc group according to the group configuration with its parameters (entity_type and any number of attributes). When there is no group configuration for an assigned value, the system will create a simple ifc group entity without any special attributes.
 
 When defining a group you can use "." to create nested group structures. (IfcGroupKey)
 
