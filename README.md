@@ -21,23 +21,23 @@
 
 # Project description
 
-The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launched a research project Cadastral Surveying Data to Building Information Modelling (CS2BIM). The Institute of Virtual Design and Construction and the Institute of Geomatics at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed a service based on open source libraries. The service transforms GIS based cadastral survey data with area geometries (2D) to IFC instances with 3D surface geometries. The geometry transformation is based on a projection of the 2D geometries onto the digital terrain model.  
+The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launched a research project *Cadastral Surveying Data to Building Information Modelling (CS2BIM)*. The _Institute of Virtual Design and Construction_ and the _Institute of Geomatics_ at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed a service based on open source libraries. The service transforms GIS based cadastral survey (CS) data with area geometries (2D) to IFC instances with 3D surface geometries. The geometry transformation is based on a projection of the 2D geometries onto the digital terrain model. 
 
 The service contains the following major components:
-- Import and processing of Interlis data by the ili2pg components and storage in a PostGIS database. The vector data is read from WKT format.
-- Processing of the terrain model data and creation of the resulting 3D surfaces
-- Export of the objects to IFC format using the IfcOpenShell component
+- Importing and processing of Interlis data by the ili2pg component and storing in a PostGIS database. The vector data is read from [WKT](http://giswiki.org/wiki/Well_Known_Text) format.
+- Processing of the terrain model data and creating the resulting 3D surfaces
+- Exporting of the objects to IFC format using the IfcOpenShell component
 
 ![CS2BIM System Architecture](./uploads/CS2BIM_system_architecture.jpg){width=600}
 
-The diagram shows the system architecture and all major components of the implementation. Description of the compontens:
+The diagram shows the system architecture and all major components of the implementation. Description of the components:
 | component | name | description |
 | ------ |----- | ------ |
-|   1     | database |   The cadastral data is imported in INTERLIS (.xtf or itf) format via the standard component ili2pg (swisstopo) and made available in a PostGIS database for further processing. The component database is not covered within the code   |
-|   2     | swisstopo database | The digital terrain model (DTM) is loaded with the API service to swissalti3d data. |
+|   1     | PostGIS database |   The cadastral data is imported from INTERLIS (.xtf or itf) format via the standard component ili2pg (swisstopo) and made available in a PostGIS database for further processing. The component database is not covered within the code   |
+|   2     | DTM database | The digital terrain model (DTM) is loaded with the API service to swissALTI3D data. |
 |   3     | wkt2tin | Component for creating 3D surfaces by projecting 2D vector objects (usually polygons) onto a terrain model. As a result of this component, mesh surface geometries are available for each object instance (of the cadastral information).      | 
 |   4     | tin2ifc | This component writes the resulting IFC file. The open library IfcOpenShell is used for this purpose. |
-|   5     |  API & configuration   |In this service package, control the individual components into a ‘CS2BIM’ service. The service is build in an docker container. |
+|   5     |  API & configuration   | This service package combines the individual components with their configuration into a ‘CS2BIM’ service. The service is built in a docker container. |
 
 ## Resulting IFC Files
 
@@ -45,12 +45,14 @@ The diagram shows the system architecture and all major components of the implem
 
 Example files can be downloaded with the following links.
 
-| ID | name | link |
-| ------ | ------ | ----- |
-|  1  |    200mx200m.ifc    |   https://drive.switch.ch/index.php/s/YOgygwb3ZqmG44v   |
-|  2  |    200mx200m_con.ifc   | https://drive.switch.ch/index.php/s/2pivcwXtneYqSdY |
-|  3  |    200mx200m_int.ifc    |  https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf  |
-|  4  |    500mx500m.ifc   |   https://drive.switch.ch/index.php/s/Bcq40YjOljKZ2oa |
+- [x] add some description to understand what's the difference between .ifc, _con.ifc, _int.ifc
+
+| ID | name | link | description |
+| ------ | ------ | ------ | ------ |
+|  1  |    200mx200m.ifc    |   https://drive.switch.ch/index.php/s/YOgygwb3ZqmG44v   | All areas (parcel, landcover etc.) that intersect with the 200m x 200m polygon are included | 
+|  2  |    200mx200m_con.ifc   | https://drive.switch.ch/index.php/s/2pivcwXtneYqSdY |  All areas (parcel, landcover etc.) that are fully contained by the 200m x 200m polygon are included |
+|  3  |    200mx200m_int.ifc    |  https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf  | All areas (parcel, landcover etc.) are cut off at the border of the 200m x 200m polygon |
+|  4  |    500mx500m.ifc   |   https://drive.switch.ch/index.php/s/Bcq40YjOljKZ2oa | All areas (parcel, landcover etc.) that intersect with the 500m x 500m polygon are included | 
 
 # Concepts
 The cs2bim service supports different central IFC concepts and allows a relatively dynamic (configurable) transformation between the geodata and the IFC data model. The main IFC concepts and principles of data transformation and processing are briefly explained on the [Concepts](concepts.md) page.
@@ -76,7 +78,9 @@ The run parameters are:
 - IFC_VERSION: Ifc version of the resulting ifc file (supported versions/values see src\cs2bim\ifc\enum\ifc_version.py).
 - NAME: Name of the resulting ifc file.
 - POLYGON : The area in which the data is treated. The polygon must be a valid wkt string in LV95.
-- PROJECT_ORIGIN (optional) : The project origin in LV95 coordinates "East,North,Height"
+- PROJECT_ORIGIN (optional) : The project origin in LV95 coordinates "Easting,Northing,Height". If project origin is set, all other geometry values in the ifc are calculated relative to the origin.
+
+- [x] if project origin is set, are all other geometry values in the ifc calculated relative to the origin? i.e. the heigh in this example will be absolute, but the first point of the polygon would be 89114 instead of 2689114?
 
 Example:
 - docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e POLYGON="POLYGON((2689114 1285136,2689143 1285192,2689170 1285159,2689114 1285136))" -e PROJECT_ORIGIN=2600000,1200000,0 -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
@@ -85,7 +89,9 @@ After you run the docker container successfully there will be a new output ifc f
 
 Important: If you change the config.yml, the container must be rebuilt to make it work.
 
-## Getting started dev
+## Getting started (Development)
+
+- [x] should this be setting up the def environent? 
 
 Build and run docker container or build and open container with your IDE (e.g. VSCode)
 ```console
@@ -100,9 +106,11 @@ pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 Some properties of this python project can be configured using the config.yml file.  
 The configuration has different sections/topics:
 - postgis configuration: Connection to the database with the cadastral data.
-- swiss topo configuration: Connection to the service that provides terrain data.
+- DTM configuration: Connection to the service that provides terrain data.
 - tin configuration: Configurations for the creation and treatment of tins.
 - ifc configuration: Configurations of the resulting ifc file.
+
+- [ ] - as it should be possible to use different terrain data models, keep this generic (DTM configuration), so that a canton could connect their own model if they so wish
 
 ## Configuration parameters (overview)
 
@@ -110,58 +118,61 @@ The configuration has different sections/topics:
 |---|---|---|---|---|
 |0|logging_level|str|NOTSET; DEBUG; INFO; WARN; ERROR; CRITICAL|"cs2bim"|
 |---|---|---|---|---|
-|1|db.dbname|str|?|"cs2bim"|
-|2|db.user|str|?|"postgres"|
-|3|db.host|str|?|"host.docker.internal"|
-|4|db.port|int|?|5432|
-|5|db.password|str|?|"xxx"|
-|6|db.schema|str|?|"cs2bim"|
+|1|db.dbname|str|*|"cs2bim"|
+|2|db.user|str|*|"postgres"|
+|3|db.host|str|*|"host.docker.internal"|
+|4|db.port|int|*|5432|
+|5|db.password|str|*|"xxx"|
 |---|---|---|---|---|
-|7|dtm.stac_api|str|?|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
+|6|dtm.stac_api|str|*|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
 |---|---|---|---|---|
-|8|tin.grid_size|float|0.5;2|0.5|
-|9|tin.max_height_error|float|TODO|0.05|
+|7|tin.grid_size|float|0.5;2|0.5|
+|8|tin.max_height_error|float|0.05|0.05|
 |---|---|---|---|---|
-|10|ifc.author|str|?|"author"|
-|11|ifc.version|str|?|"1.0"|
-|12|ifc.application_name|str|?|"cs2bim"|
-|13|ifc.project_name|str|?|"Project A"|
-|14|ifc.geo_referencing|GeoReferencing|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
-|15|ifc.triangulation_representation_type|TriangulationRepresentationType|TESSELLATION; BREP|BREP|
-|16|ifc.feature_classes|map|---|---|
+|9|ifc.author|str|*|"author"|
+|10|ifc.version|str|*|"1.0"|
+|11|ifc.application_name|str|*|"cs2bim"|
+|12|ifc.project_name|str|*|"Project A"|
+|13|ifc.geo_referencing|[GeoReferencing](src/cs2bim/ifc/enum/geo_referencing.py)|LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50|LO_GEO_REF_30|
+|14|ifc.triangulation_representation_type|[TriangulationRepresentationType](src/cs2bim/ifc/enum/triangulation_representation_type.py)|TESSELLATION; BREP|BREP|
+|15|ifc.feature_classes|map|---|---|
+|16|ifc.feature_classes.<em>FeatureClassKeyX</em>|map|---|---|
 |17|ifc.feature_classes.<em>FeatureClassKeyX</em>.sql|str|<em>Path to sql file</em>|"sql/parcels.sql"|
-|18|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|ElementEntityType|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
+|18|ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type|[ElementEntityType](src/cs2bim/ifc/enum/element_entity_type.py)|IFC_GEOGRAPHIC_ELEMENT|IFC_GEOGRAPHIC_ELEMENT|
 |19|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes|list|---|---|
-|20|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.attribute|str|?|"Name"|
-|21|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.column|str|?|"egris_egrid"|
-|22|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties|list|---|---|
-|23|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|?|"Property"|
-|24|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set|str|?|"PropertySet"|
-|25|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|?|"property_column"|
-|26|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|SpatialStructureEntityType|IFC_SITE|IFC_SITE|
-|27|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes|list|---|---|
-|28|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.attribute|str|?|"Name"|
-|29|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.value|str|?|"Site"|
-|30|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns|list[str]|?|"group_column"|
-|31|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.r|float|0.0 - 1-0|0.1|
-|32|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.g|float|0.0 - 1-0|0.5|
-|33|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.b|float|0.0 - 1-0|0.5|
-|34|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.a|float|0.0 - 1-0|0.3|
-|35|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups|map|---|---|
-|36|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.entity_type|GroupEntityType|IFC_DISTRIBUTION_SYSTEM, IFC_DISTRIBUTION_CIRCUIT, IFC_BUILDING_SYSTEM, IFC_STRUCTURAL_ANALYSIS_MODEL, IFC_ZONE|IFC_DISTRIBUTION_SYSTEM|
-|37|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.attributes|list|---|---|
-|38|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.attributes.<em>ListElementX</em>.attribute|str|?|"Name"|
-|39|ifc.feature_classes.<em>FeatureClassKeyX</em>.groups.<em>IfcGroupKeyX</em>.attributes.<em>ListElementX</em>.value|str|?|"Group"|
+|20|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>|map|---|---|
+|21|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
+|22|ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.column|str|*|"egris_egrid"|
+|23|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties|list|---|---|
+|24|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>|map|---|---|
+|25|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name|str|*|"Property"|
+|26|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set|str|*|"PropertySet"|
+|27|ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column|str|*|"property_column"|
+|28|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure|map|---|---|
+|29|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type|[SpatialStructureEntityType](src/cs2bim/ifc/enum/spatial_structure_entity_type.py)|IFC_SITE|IFC_SITE|
+|30|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes|list|---|---|
+|31|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>|map|---|---|
+|32|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
+|33|ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.value|str|*|"Site"|
+|34|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns|list|---|---|
+|35|ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns.<em>ListElementX</em>|str|*|"group_column"|
+|36|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition|map|---|---|
+|37|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.r|float|0.0 - 1.0|0.1|
+|38|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.g|float|0.0 - 1.0|0.5|
+|39|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.b|float|0.0 - 1.0|0.5|
+|40|ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.a|float|0.0 - 1.0|0.3|
+|41|ifc.groups|map|---|---|
+|42|ifc.groups.<em>IfcGroupKey</em>|map|---|---|
+|43|ifc.groups.<em>IfcGroupKey</em>.entity_type|[GroupEntityType](src/cs2bim/ifc/enum/group_entity_type.py)|IFC_DISTRIBUTION_SYSTEM, IFC_DISTRIBUTION_CIRCUIT, IFC_BUILDING_SYSTEM, IFC_STRUCTURAL_ANALYSIS_MODEL, IFC_ZONE|IFC_DISTRIBUTION_SYSTEM|
+|44|ifc.groups.<em>IfcGroupKey</em>.attributes|list|---|---|
+|45|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>|map|---|---|
+|46|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
+|47|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.value|str|*|"Group"|
 
-## Types
-Some parameters can only be configured with predefined values (types), because these values are referenced in the code. To guarantee a proper configuration and execution of the code, these predefined values (types) are defined as constants in different modules/classes in the python code.
-
-The following types are defined:
-- GeoReferencing -> cs2bim.ifc.enum.geo_referencing.py\
-- TriangulationRepresentationType -> cs2bim.ifc.enum.triangulation_representation_type.py\
-- ElementEntityType -> cs2bim.ifc.enum.element_entity_type.py\
-- SpatialStructureEntityType -> cs2bim.ifc.enum.spatial_structure_entity_type.py\
-- GroupEntityType -> cs2bim.ifc.enum.group_entity_type.py
+- [x] don't use ? if no value list is defined
+- [x] what's up with the TODO?
+- [x] how to read 0.0 - 1-0 ? is that supposed to be '0.0 - 1.0'?
+- [x] are the Types the ifc enumerations?
 
 ## IFC configuration
 In this section of the configuration you can make some general definitions about the resulting ifc file and you can define the feature classes that are generated and exported as ifc entities.  
@@ -171,21 +182,36 @@ Below some of the parameters are explained.
 ### Geo referencing
 You can provide the so called "Level of Georeferencing" (LoGeoRef), according to (Clemen&Görne, 2019) [^LoGeoRef].  
 The different levels represent different methods of defining informations about georeferencing in IFC.  
-Supported values are LO_GEO_REF_30, LO_GEO_REF_40, LO_GEO_REF_50.
+Supported values are:
+- LO_GEO_REF_30
+  - IfcObjectPlacement of an IfcSpatialStructureElement contains georeferencing 
+  - Suitability for local projects on a smaller scale 
+  - IFC 2.3
+- LO_GEO_REF_40
+  - IfcGeometricRepresentation context of IfcProject contains georeferencing 
+  - Suited for larger infrastructure projects 
+  - IFC 2.3
+- LO_GEO_REF_50
+  - IfcMapConversion defines georeferencing of the "SurveyPoint", including coordinate system parameters 
+  - Suited for large-scale and linear project expansions 
+  - IFC 4.0
 
-![Levels of Georeferencing LoGeoRef](./uploads/LoGeoRef.png){width=400}
+![Levels of Georeferencing LoGeoRef](./uploads/LoGeoRef.png){width=600}
+
+- [x] what's a sensible value here?
 
 **Coordinates and Offets**  
-You can provide a project origin in LV95 coordinates (East, North, Height). The project origin can also be set to (0,0,0).  
-If not provided, the system sets a project origin calculated on a minimum bounding box of the perimeter.  
+You can provide a project origin in LV95 coordinates (Easting, Northing, Height). The project origin can also be set to (0,0,0).  
+If not provided, the system sets a project origin calculated on a minimum bounding box of the perimeter. 
 
+![Levels of Georeferencing LoGeoRef](./uploads/project_origin.png){width=600}
 
 ### Triangulation Representation Type
-You can define the IFC geometry type that is used to represent the TIN geometry.  
-Supported values are TESSELLATION, BREP (TESSELATION is recommended).
+You can define the representation type that is used to represent the TIN geometry in the ifc.  
+Supported values are TESSELLATION or BREP. TESSELATION is recommended because it needs less storage space.
 
 ### Feature Classes
-A "Feature Class" is the definition of a set of  objects that are exported in an IFC entity with common definitions.  
+A "Feature Class" is the definition of a set of objects that are exported in an IFC entity with common definitions.
 The main configurations of a feature class include:
 - sql: A SQL query that selects objects in the GIS database, returning a geometry (must be an area) and some other attributes for each object.
 - entity_type: The IFC entity, to which all selected objects of the feature class are exported to.
@@ -195,24 +221,33 @@ The main configurations of a feature class include:
 - spatial_structure: The IFC spatial structure, to which all objects of the feature class are appended.
 - colour_definition: An IFC colour definition
 
-### SQL
-For each feature class you have to provide a sql for querying the data(17). With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee a correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be multiple columns for attributes(21), properties(25) or groups(30).
+![Example of Feature Classes](./uploads/feature-classes.jpg){width=300}
+
+- [x] where/how is the feature class used? Is this something that is used in the code to group things? 
+
+#### SQL
+For each feature class you have to provide a sql file for querying the data. With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be multiple columns for attributes, properties or groups.
 
 The following schema shows the relationship between the attributes defined by the sql query and their linking to the configuration.  
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
 
-### Spatial Structure
+- [x] what are the numbers? e.g. data(17)? 
+- [x] in the image: is that [fc name] or [ifc name] ?
+
+#### Spatial Structure
 All objects of a feature class are assigned to one common spatial structure. The spatial structure instance can be configured with its entity type and attributes.
 
 If the specification of the spatial structure instance in different feature class definitions is identical, then only one spatial structure instance is created (and all objects of the feature classes are assigned to the same spatial structure).
 
-### Groups
-Every exported object can be assigned to a group (zero to multiple). The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a group configuration.  
-For each group configuration the system is creating an ifc group according to the configured parameters (entity_type and any number of attributes).  
-When there is no group configuration for an assigned value, the system will create a simple ifc group entity without any special attributes.
+- [x] this is not shown in the image above?
+- [x] Buildings as IFC_BUILDING_SYSTEM, not as building?
+- [x] what if I don't want to group at all?
 
-When defining a group you can use "." to create nested group structures. (IfcGroupKey)\
-By default all IfcGroups are generated using the IfcGroup entity type. Defining other types of groups can be done by creating a new group config referencing the IfcGroupKey in the configuration file(32).
+### Groups
+Every exported object can be assigned to a group (zero to multiple). If defined empty (groups: []), no groups are created. The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a group configuration. 
+For each group assignment the system is creating an ifc group according to the group configuration with its parameters (entity_type and any number of attributes). When there is no group configuration for an assigned value, the system will create a simple ifc group entity without any special attributes.
+
+When defining a group you can use "." to create nested group structures. (IfcGroupKey)
 
 ### Example
 config.yml
