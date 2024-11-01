@@ -51,14 +51,10 @@ The GIS geometry is expected to be in WKT format ([ISO 19125-1])[^ISO19125-1]. I
 
 # Internal object model
 
-- [ ] --> to be verified
-
 ![Internal object model](./uploads/internal-class-model.png){width=600}
-
 
 # Projection and triangulation
 - [ ] --> Jonas ?
-
 
 [Here](examples/wkt2tin.slides.html) you can find a detailled explanaition of the code.
 
