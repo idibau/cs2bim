@@ -45,8 +45,6 @@ The diagram shows the system architecture and all major components of the implem
 
 Example files can be downloaded with the following links.
 
-- [x] add some description to understand what's the difference between .ifc, _con.ifc, _int.ifc
-
 | ID | name | link | description |
 | ------ | ------ | ------ | ------ |
 |  1  |    200mx200m.ifc    |   https://drive.switch.ch/index.php/s/YOgygwb3ZqmG44v   | All areas (parcel, landcover etc.) that intersect with the 200m x 200m polygon are included | 
@@ -80,8 +78,6 @@ The run parameters are:
 - POLYGON : The area in which the data is treated. The polygon must be a valid wkt string in LV95.
 - PROJECT_ORIGIN (optional) : The project origin in LV95 coordinates "Easting,Northing,Height". If project origin is set, all other geometry values in the ifc are calculated relative to the origin.
 
-- [x] if project origin is set, are all other geometry values in the ifc calculated relative to the origin? i.e. the heigh in this example will be absolute, but the first point of the polygon would be 89114 instead of 2689114?
-
 Example:
 - docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e POLYGON="POLYGON((2689114 1285136,2689143 1285192,2689170 1285159,2689114 1285136))" -e PROJECT_ORIGIN=2600000,1200000,0 -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
 
@@ -90,8 +86,6 @@ After you run the docker container successfully there will be a new output ifc f
 Important: If you change the config.yml, the container must be rebuilt to make it work.
 
 ## Getting started (Development)
-
-- [x] should this be setting up the def environent? 
 
 Build and run docker container or build and open container with your IDE (e.g. VSCode)
 ```console
@@ -109,8 +103,6 @@ The configuration has different sections/topics:
 - DTM configuration: Connection to the service that provides terrain data.
 - tin configuration: Configurations for the creation and treatment of tins.
 - ifc configuration: Configurations of the resulting ifc file.
-
-- [ ] - as it should be possible to use different terrain data models, keep this generic (DTM configuration), so that a canton could connect their own model if they so wish
 
 ## Configuration parameters (overview)
 
@@ -169,11 +161,6 @@ The configuration has different sections/topics:
 |46|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.attribute|str|*|"Name"|
 |47|ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.value|str|*|"Group"|
 
-- [x] don't use ? if no value list is defined
-- [x] what's up with the TODO?
-- [x] how to read 0.0 - 1-0 ? is that supposed to be '0.0 - 1.0'?
-- [x] are the Types the ifc enumerations?
-
 ## IFC configuration
 In this section of the configuration you can make some general definitions about the resulting ifc file and you can define the feature classes that are generated and exported as ifc entities.  
 
@@ -198,8 +185,6 @@ Supported values are:
 
 ![Levels of Georeferencing LoGeoRef](./uploads/LoGeoRef.png){width=600}
 
-- [x] what's a sensible value here?
-
 **Coordinates and Offets**  
 You can provide a project origin in LV95 coordinates (Easting, Northing, Height). The project origin can also be set to (0,0,0).  
 If not provided, the system sets a project origin calculated on a minimum bounding box of the perimeter. 
@@ -223,25 +208,16 @@ The main configurations of a feature class include:
 
 ![Example of Feature Classes](./uploads/feature-classes.jpg){width=300}
 
-- [x] where/how is the feature class used? Is this something that is used in the code to group things? 
-
 #### SQL
 For each feature class you have to provide a sql file for querying the data. With the query you are selecting the cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and return a column named "wkt" with wkt string values. To guarantee correct processing it is important to check that the sql also delivers all columns that are additionally configured for the according feature class. This can be multiple columns for attributes, properties or groups.
 
 The following schema shows the relationship between the attributes defined by the sql query and their linking to the configuration.  
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
 
-- [x] what are the numbers? e.g. data(17)? 
-- [x] in the image: is that [fc name] or [ifc name] ?
-
 #### Spatial Structure
 All objects of a feature class are assigned to one common spatial structure. The spatial structure instance can be configured with its entity type and attributes.
 
 If the specification of the spatial structure instance in different feature class definitions is identical, then only one spatial structure instance is created (and all objects of the feature classes are assigned to the same spatial structure).
-
-- [x] this is not shown in the image above?
-- [x] Buildings as IFC_BUILDING_SYSTEM, not as building?
-- [x] what if I don't want to group at all?
 
 ### Groups
 Every exported object can be assigned to a group (zero to multiple). If defined empty (groups: []), no groups are created. The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a group assignment, there should be a group configuration. 
