@@ -26,7 +26,7 @@ class RasterPoints(object):
     def _to_gpd(self, data: np.ndarray):
         """Converts points to GeoDataFrame"""
         p = pd.DataFrame(data, columns=["x", "y", "z"])
-        return gpd.GeoDataFrame(p, geometry=gpd.points_from_xy(p.x, p.y))
+        return gpd.GeoDataFrame(p, geometry=gpd.points_from_xy(p.x, p.y), copy=False)
 
     def get_all_points(self):
         """Returns all points stored in this object"""
@@ -53,7 +53,7 @@ class RasterPoints(object):
             filter_geom = polygon
         gdf_points_within = gpd.sjoin(
             self.data,
-            gpd.GeoDataFrame(index=[0], geometry=[filter_geom]),
+            gpd.GeoDataFrame(index=[0], geometry=[filter_geom], copy=False),
             how="inner",
             predicate="within",
         )
