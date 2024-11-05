@@ -8,7 +8,6 @@ db:
   host: "host.docker.internal"
   port: 5432
   password: ???
-  schema: "cs2bim"
 
 ########## dtm api configuration ############
 dtm:
