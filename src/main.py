@@ -1,6 +1,7 @@
 import os
 import sys
 import logging
+import tracemalloc
 import numpy as np
 import shapely
 from datetime import datetime
@@ -83,6 +84,39 @@ def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple
         logger.info(f"create {feature_class_key} feature class")
         elements = feature_class_elements[feature_class_key]
         for index, element_data in enumerate(elements):
+            attributes = {}
+            for attribute, column in feature_class.attributes.items():
+                attributes[attribute] = element_data[column]
+            logger.info(f"create {feature_class_key} {index + 1}/{len(elements)}")
+            logger.debug("create area")
+            wkt_str = element_data["wkt"]
+            if isinstance(shapely.from_wkt(wkt_str), shapely.MultiPolygon):
+                logger.warn("Multipolygons are not supported at the moment. Skipping element...")
+                continue
+            area = Area(wkt_str=wkt_str, origin=origin[:2])
+            logger.debug("calculate raster points buffer")
+            raster_points_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
+            logger.debug("calculate raster points within")
+            raster_points_within = dtm_points.within(area.get_geometry, buffer_dist=0)
+            logger.debug("create mesh")
+            mesh = Mesh(raster_points_buffer)
+            logger.debug("clip mesh")
+            mesh_clipped = mesh.clip_mesh_by_area(area, raster_points_within)
+            logger.debug("decimate clipped mesh")
+            mesh_clipped_decimated = mesh_clipped.decimate(
+                max_height_error=config.max_height_error, grid_size=config.grid_size
+            )
+            logger.info(
+                f"area consistensy: {mesh_clipped_decimated.check_area_consistency(area.get_area, treshold=0.1)}"
+            )
+            triangulation = Triangulation()
+            triangulation.load_from_points_and_faces(mesh_clipped_decimated.get_data())
+            groups = [element_data[group_column] for group_column in feature_class.group_columns]
+            element = Element(attributes, groups, triangulation)
+            for property in feature_class.properties:
+                element.add_property(property.set, property.name, element_data[property.column])
+            model.add_element(feature_class_key, element)
+
     ifc_builder = IfcBuilder(
         config.author,
         config.version,
