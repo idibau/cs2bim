@@ -128,8 +128,8 @@ class Mesh(object):
             first_point=True,
         )[0]
 
-        if pts_3d.shape[0] != pts_2d.shape[0]:
-            offset = 0.00001
+        offset = 0.00001
+        while pts_3d.shape[0] != pts_2d.shape[0] and offset < 0.0001:
             pts_2d_approx = pts_2d + offset
             pts_3d = self.mesh.multi_ray_trace(
                 np.hstack((pts_2d_approx, np.zeros((pts_2d_approx.shape[0], 1)))),
@@ -137,6 +137,7 @@ class Mesh(object):
                 first_point=True,
             )[0]
             pts_3d[:,:2] -= offset
+            offset = offset + 0.00001
 
         return self._resort_pts_2d(pts_2d, pts_3d)
 
