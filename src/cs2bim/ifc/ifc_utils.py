@@ -26,6 +26,7 @@ def add_ifc_owner_history(ifc_file: file, name: str, version: str, application_f
         ApplicationDeveloper=the_organization,
         Version=version,
         ApplicationFullName=application_full_name,
+        ApplicationIdentifier=application_full_name,
     )
     timestamp = int(datetime.datetime.now().timestamp())
     return ifc_file.create_entity(
@@ -89,6 +90,18 @@ def add_ifc_geometric_representation_context(
     )
 
 
+def add_ifc_geometric_representation_sub_context(
+    ifc_file: file, geometric_representation_context: entity_instance
+) -> entity_instance:
+    return ifc_file.create_entity(
+        "IfcGeometricRepresentationSubContext",
+        ContextIdentifier="Body",
+        ContextType="Model",
+        ParentContext=geometric_representation_context,
+        TargetView="MODEL_VIEW",
+    )
+
+
 def add_ifc_map_conversion(
     ifc_file: file,
     map_unit: entity_instance,
@@ -141,13 +154,10 @@ def add_ifc_local_placement(ifc_file: file, location_coordinates: tuple[float, f
 
 def add_ifc_site(
     ifc_file: file,
-    owner_history: entity_instance,
     object_placement: entity_instance,
     project: entity_instance,
 ) -> entity_instance:
-    site = ifc_file.create_entity(
-        "IfcSite", GlobalId=guid.new(), OwnerHistory=owner_history, ObjectPlacement=object_placement
-    )
+    site = ifc_file.create_entity("IfcSite", GlobalId=guid.new(), ObjectPlacement=object_placement)
     add_ifc_rel_aggregates(ifc_file, project, [site])
     return site
 
@@ -160,6 +170,16 @@ def add_ifc_rel_aggregates(
         GlobalId=guid.new(),
         RelatingObject=relating_object,
         RelatedObjects=related_objects,
+    )
+
+def add_ifc_rel_contained_in_spatial_structure(
+    ifc_file: file, related_elements: list[entity_instance], relating_structure: entity_instance
+) -> entity_instance:
+    return ifc_file.create_entity(
+        "IfcRelContainedInSpatialStructure",
+        GlobalId=guid.new(),
+        RelatedElements=related_elements,
+        RelatingStructure=relating_structure,
     )
 
 
@@ -226,8 +246,12 @@ def add_ifc_triangulated_face_set(
     return ifc_file.create_entity("IfcTriangulatedFaceSet", Coordinates=coordinates, CoordIndex=coord_index)
 
 
-def add_ifc_geographic_element(ifc_file: file, representaion: entity_instance) -> entity_instance:
-    return ifc_file.create_entity("IfcGeographicElement", GlobalId=guid.new(), Representation=representaion)
+def add_ifc_geographic_element(
+    ifc_file: file, object_placement: entity_instance, representaion: entity_instance
+) -> entity_instance:
+    return ifc_file.create_entity(
+        "IfcGeographicElement", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representaion
+    )
 
 
 def add_ifc_surface_style(ifc_file: file, color: Color) -> entity_instance:
