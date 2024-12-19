@@ -300,10 +300,6 @@ ST_Contains -> Returns true if the first geometry contains the second.
 - Potential code optimization not yet done (parallelize computational tasks with threads, cache dtm data, load only needed dtm data in memory, process the point cloud only once and then derive feature class geometries from TIN instead of point clouds)
 - No support of ifc classification concept. Could be done the same way as the already implemented group concept.
 
-
-# References
-[^LoGeoRef]: "Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408" .  
-
 # Contact
 
 ![Example of Feature Classes](./uploads/fhnw-logo.svg){width=250}
@@ -317,3 +313,6 @@ Project head
 
 Project staff
 - Joel Gschwind
+
+# References
+[^LoGeoRef]: "Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408" .  
