@@ -303,3 +303,17 @@ ST_Contains -> Returns true if the first geometry contains the second.
 
 # References
 [^LoGeoRef]: "Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408" .  
+
+# Contact
+
+![Example of Feature Classes](./uploads/fhnw-logo.svg){width=300}
+
+Fachhochschule Nordwestschweiz, Institut Digitales Bauen, 4132 Muttenz \
+University of Applied Sciences and Arts Northwestern Switzerland, Institute of Virtual Design and Construction
+
+Project head
+- Oliver Schneider
+- Prof. Lukas Schildknecht
+
+Project staff
+- Joel Gschwind
