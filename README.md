@@ -306,7 +306,7 @@ ST_Contains -> Returns true if the first geometry contains the second.
 
 # Contact
 
-![Example of Feature Classes](./uploads/fhnw-logo.svg){width=300}
+![Example of Feature Classes](./uploads/fhnw-logo.svg){width=250}
 
 Fachhochschule Nordwestschweiz, Institut Digitales Bauen, 4132 Muttenz \
 University of Applied Sciences and Arts Northwestern Switzerland, Institute of Virtual Design and Construction
