@@ -119,7 +119,7 @@ The configuration has different sections/topics:
 |6|dtm.stac_api|str|*|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
 |---|---|---|---|---|
 |7|tin.grid_size|float|0.5;2|0.5|
-|8|tin.max_height_error|float|0.05|0.05|
+|8|tin.max_height_error|float|≤ 0.05|0.05|
 |---|---|---|---|---|
 |9|ifc.author|str|*|"author"|
 |10|ifc.version|str|*|"1.0"|
@@ -312,7 +312,9 @@ Project head
 - Prof. Lukas Schildknecht
 
 Project staff
+- Prof. Christian Gamma
 - Joel Gschwind
+- Jonas Meyer
 
 # References
 [^LoGeoRef]: "Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408" .  
