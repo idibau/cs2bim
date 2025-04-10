@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  development:
+    container_name: development_cs2bim
+    image: python:3.10
+    command: sleep infinity
+    networks:
+      - backend
+    volumes:
+      - .:/workspace:cached
+
+networks:
+  backend:
+    driver: bridge

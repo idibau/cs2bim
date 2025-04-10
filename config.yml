@@ -1,0 +1,136 @@
+################# general ###################
+logging_level: DEBUG
+
+########## postgis configuration ############
+db:
+  dbname: "cs2bim"
+  user: "postgres"
+  host: "host.docker.internal"
+  port: 5432
+  password: ???
+
+########## dtm api configuration ############
+dtm:
+  stac_api: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
+
+############# tin configuration #############
+tin:
+  grid_size: 0.5
+  max_height_error: 0.05
+
+############# ifc configuration #############
+ifc:
+  author: "FHNW"
+  version: "1.0"
+  application_name: "cs2bim"
+  project_name: "cs2bim"
+  geo_referencing: LO_GEO_REF_50
+  triangulation_representation_type: TESSELLATION
+  feature_classes:
+    parcel:
+      sql: "sql/parcels.sql"
+      entity_type: IFC_GEOGRAPHIC_ELEMENT
+      attributes:
+        - attribute: "PredefinedType"
+          column: "predefined_type"
+        - attribute: "ObjectType"
+          column: "object_type"
+        - attribute: "Name"
+          column: "egris_egrid"
+      properties:
+        - name: "NBIdent"
+          set: "CHKGK_CS"
+          column: "nbident"
+        - name: "Nummer"
+          set: "CHKGK_CS"
+          column: "nummer"
+        - name: "EGRIS_EGRID"
+          set: "CHKGK_CS"
+          column: "egris_egrid"
+      spatial_structure:
+        entity_type: IFC_SITE
+        attributes:
+        - attribute: "CompositionType"
+          value: "COMPLEX"
+        - attribute: "PredefinedType"
+          value: "USERDEFINED"
+        - attribute: "ObjectType"
+          value: "Liegenschaften"
+        - attribute: "Name"
+          value: "Liegenschaften"
+      group_columns:
+        - "group"
+      color_definition:
+        r: 0.31
+        g: 0.67
+        b: 0.04
+        a: 0.85
+    land_cover:
+      sql: "sql/land_covers.sql"
+      entity_type: IFC_GEOGRAPHIC_ELEMENT
+      attributes:
+        - attribute: "PredefinedType"
+          column: "predefined_type"
+        - attribute: "ObjectType"
+          column: "art"
+        - attribute: "Name"
+          column: "art"
+      properties: []
+      spatial_structure:
+        entity_type: IFC_SITE
+        attributes:
+        - attribute: "CompositionType"
+          value: "COMPLEX"
+        - attribute: "PredefinedType"
+          value: "USERDEFINED"
+        - attribute: "ObjectType"
+          value: "Bodenbedeckung"
+        - attribute: "Name"
+          value: "Bodenbedeckung"
+      group_columns: 
+        - "group"
+      color_definition:  
+        r: 0.52
+        g: 0.42
+        b: 0.04
+        a: 0.85
+    buildings:
+      sql: "sql/land_covers_buildings.sql"
+      entity_type: IFC_GEOGRAPHIC_ELEMENT
+      attributes:
+        - attribute: "PredefinedType"
+          column: "predefined_type"
+        - attribute: "ObjectType"
+          column: "art"
+        - attribute: "Name"
+          column: "gwr_egid"
+      properties:
+        - name: "GWR-EGID"
+          set: "CHKGK_CS"
+          column: "gwr_egid"
+      spatial_structure:
+        entity_type: IFC_SITE
+        attributes:
+        - attribute: "CompositionType"
+          value: "COMPLEX"
+        - attribute: "PredefinedType"
+          value: "USERDEFINED"
+        - attribute: "ObjectType"
+          value: "Gebäude"
+        - attribute: "Name"
+          value: "Gebäude"
+      group_columns: 
+        - "group"
+      color_definition:  
+        r: 1.00
+        g: 0.00
+        b: 0.00
+        a: 0.85
+  groups:
+    Amtliche Vermessung.Gebaeude:
+      entity_type: IFC_BUILDING_SYSTEM
+      attributes:
+        - attribute: "PredefinedType"
+          value: "USERDEFINED"
+        - attribute: "ObjectType"
+          value: "Gebaeude"

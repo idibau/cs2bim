@@ -1,0 +1,10 @@
+# folder
+__pycache__
+.vscode
+files
+dist
+output
+
+# file
+*.stl
+*.ifc

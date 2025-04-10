@@ -1,0 +1,16 @@
+{
+    "initializeCommand": "dir",
+    "name": "cs2bim",
+    "dockerComposeFile": "docker-compose-dev.yml",
+    "service": "development",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.black-formatter"
+            ]
+        }
+    }
+}
