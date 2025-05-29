@@ -91,20 +91,6 @@ class Mesh(object):
             mesh_deci = mesh_deci.subdivide_adaptive(max_edge_len=max_edge_len)
         return Mesh(mesh_deci)
 
-    def _sort_pts_2d(self, pts) -> np.ndarray:
-        """Sorts points based on their 2D coordinates"""
-
-        return pts[np.lexsort((pts[:, 0], pts[:, 1]))]
-
-    def _resort_pts_2d(self, pts_sorted: np.ndarray, pts_unsorted: np.ndarray) -> np.ndarray:
-        """Resorts points based on 2D coordinates to have the same order"""
-        assert pts_sorted.ndim == 2 & pts_unsorted.ndim == 2 
-        assert pts_sorted.shape[0] == pts_unsorted.shape[0] 
-
-        # add index to sorted points
-        pts_sorted_ind = np.hstack((pts_sorted, np.arange(pts_sorted.shape[0]).reshape(pts_sorted.shape[0], 1)))
-        return self._sort_pts_2d(pts_unsorted)[np.argsort(self._sort_pts_2d(pts_sorted_ind)[:, -1].astype(int))]
-
     def project_points_on_surface(self, pts_2d: np.ndarray | list) -> np.ndarray:
         """
         Projects 2d points on to surface
@@ -150,7 +136,7 @@ class Mesh(object):
             pts_3d[:,:2] -= offset
             offset = offset + 0.00001
 
-        return self._resort_pts_2d(pts_2d, pts_3d)
+        return pts_3d
 
     def calculate_edge_segment(self, p_start: np.ndarray, p_end: np.ndarray, th_line_p: float = 1e-8) -> list:
         """Slice surface along axis and return all intersection points points in correct order"""
