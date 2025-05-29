@@ -319,18 +319,20 @@ Project staff
 
 If you use this project for your research, please cite:
 
-@inproceedings{schildknecht2025cs2bim,
-  author={Schildknecht, Lukas and Schneider, Oliver and Meyer, Jonas, and Gamma, Christian and Gwschind, Joel},
-  title={Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data},
-  year={2025},
-  booktitle={Dreiländertagung der DGPF, der OVG und der SGPF in Muttenz, Schweiz},
-  series={Publikationen der DGPF},
-  volume={Band 33},
-  editor={Kersten, Thomas P. and Tilly, Nora},
-  publisher={Deutsche Gesellschaft für Photogrammetrie, Fernerkundung und Geoinformation (DGPF) e.V.},
-  address={Stuttgart, Germany},
-  pages={294--310}
-}
+```
+  @inproceedings{schildknecht2025cs2bim,
+    author={Schildknecht, Lukas and Schneider, Oliver and Meyer, Jonas, and Gamma, Christian and Gwschind, Joel},
+    title={Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data},
+    year={2025},
+    booktitle={Dreiländertagung der DGPF, der OVG und der SGPF in Muttenz, Schweiz},
+    series={Publikationen der DGPF},
+    volume={Band 33},
+    editor={Kersten, Thomas P. and Tilly, Nora},
+    publisher={Deutsche Gesellschaft für Photogrammetrie, Fernerkundung und Geoinformation (DGPF) e.V.},
+    address={Stuttgart, Germany},
+    pages={294--310}
+  }
+```
 
 # References
 [^LoGeoRef]: "Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408" .  
