@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class Mesh(object):
     """
-    Class representing a surface triangle mesh
+    Class representing a surface as mesh (TIN)
 
     Parameters
     ----------
@@ -54,7 +54,7 @@ class Mesh(object):
 
         Note:
         -----
-        If angle between the normals of two neighboring triangles > max_normal_angle, then
+        If angle between the normals of adjacent triangles > max_normal_angle, then
         an edge exists.
 
         max_normal_angle = min(2 * np.rad2deg(np.arctan(max_height_error / grid_size)), 45)
@@ -63,12 +63,17 @@ class Mesh(object):
         ----------
         max_height_error : float
             Maximum allowed height error in metres
-            Is used to calculate the max allowed angle between neighboring triangles.
+            Is used to calculate the max allowed angle between adjacent triangles.
         grid_size : float
             Grid size of raster points.
-            Is used to calculate the max allowed angle between neighboring triangles.
+            Is used to calculate the max allowed angle between adjacent triangles.
         max_edge_len : float; default = 0
-            If specified, edges longer than this parameter are split in half.
+            If specified, edges longer than this length are split in half.
+
+        Returns
+        -------
+        _ : Mesh
+            Decimated mesh. Creates a new instance of Mesh
         """
         # calcualte max normal angle between to neighbouring triangles.
         # if normal angle > max normal angle an edge exists
@@ -104,6 +109,9 @@ class Mesh(object):
         """
         Projects 2d points on to surface
 
+        This function uses pyvista.PolyDataFilters.multi_ray_trace to obtain 3d coodrinates on surface of
+        provided 2d coodrinates.
+
         Parameters
         ----------
         pts_2d: np.ndarray | list
@@ -112,6 +120,7 @@ class Mesh(object):
         Returns
         -------
         _ : np.ndarray
+            3d coordinates on surface of provided 2d points
         """
         assert isinstance(pts_2d, (np.ndarray, list))
 
@@ -128,6 +137,8 @@ class Mesh(object):
             first_point=True,
         )[0]
 
+        # pyvista.PolyDataFilters.multi_ray_trace fails if projected 3D coordinates are too close to a triangle edge or vertex
+        # therefore an offset is added to prevent failing.
         offset = 0.00001
         while pts_3d.shape[0] != pts_2d.shape[0] and offset < 0.0001:
             pts_2d_approx = pts_2d + offset
@@ -142,7 +153,7 @@ class Mesh(object):
         return self._resort_pts_2d(pts_2d, pts_3d)
 
     def calculate_edge_segment(self, p_start: np.ndarray, p_end: np.ndarray, th_line_p: float = 1e-8) -> list:
-        """Slice surface along axis and return all edge points in correct order"""
+        """Slice surface along axis and return all intersection points points in correct order"""
         assert p_start.ndim == 1 and p_end.ndim == 1
 
         vec = p_end - p_start
@@ -164,7 +175,7 @@ class Mesh(object):
         return pts_on_edge[np.argsort(np.linalg.norm(pts_on_edge[:, :2] - p_start[:2], axis=1))].tolist()
 
     def slice_along_boundary(self, vertices_2d: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-        """Slices along boundary"""
+        """Slices along boundary and computes all intersection points in correct order to construct a 3d line"""
         vertices_3d = self.project_points_on_surface(vertices_2d)
 
         edge_points = []
@@ -229,7 +240,7 @@ class Mesh(object):
 
         For each boundary (extrior and interior) the following calculations are performed:
         1. Vertices are projected on to 3d surface of the mesh
-        2. For each line segment a vertical plane is defined and the surface is sliced along it
+        2. For each line segment of the Area object a vertical plane is defined and the surface is sliced along it
             2.1. Intersection points between vertices of the line segment are filtered and ordered
         3. Intersection points and line definition are added to the surface
         4. Surface is retriangulated
@@ -245,7 +256,7 @@ class Mesh(object):
         Returns
         -------
         _ : Mesh
-            Clipped mesh
+            Clipped surface. A new Mesh object is created.
         """
         boundaries = [area.get_exterior_points(exclude_last_point=True)]
 

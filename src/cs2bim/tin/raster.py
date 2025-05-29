@@ -11,7 +11,7 @@ class RasterPoints(object):
     Attributes
     ----------
     data : geopandas.GeoDataFrame
-        Raster points as GeoDataFrame
+        Raster points as geopandas.GeoDataFrame
     """
 
     def __init__(self, data: np.ndarray, origin: np.ndarray = np.zeros((3,))) -> None:
