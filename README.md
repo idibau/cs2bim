@@ -1,22 +1,23 @@
 # cs2bim
 
+- [cs2bim](#cs2bim)
 - [Project description](#project-description)
   - [Resulting IFC Files](#resulting-ifc-files)
 - [Concepts](#concepts)
 - [Getting started](#getting-started)
-  - [Getting started dev](#getting-started-dev)
+  - [Getting started (Development)](#getting-started-development)
 - [Configuration](#configuration)
-  - [Configuration parameters (overview)](#configuration-parameters-(overview))
-  - [Types](#types)
+  - [Configuration parameters (overview)](#configuration-parameters-overview)
   - [IFC configuration](#ifc-configuration)
     - [Geo referencing](#geo-referencing)
     - [Triangulation Representation Type](#triangulation-representation-type)
     - [Feature Classes](#feature-classes)
-    - [SQL](#sql)
-    - [Spatial Structure](#spatial-structure)
+      - [SQL](#sql)
+      - [Spatial Structure](#spatial-structure)
     - [Groups](#groups)
     - [Example](#example)
 - [Known Issues](#known-issues)
+- [Contact](#contact)
 - [References](#references)
 
 # Project description
@@ -315,6 +316,21 @@ Project staff
 - Prof. Christian Gamma
 - Joel Gschwind
 - Jonas Meyer
+
+If you use this project for your research, please cite:
+
+@inproceedings{schildknecht2025cs2bim,
+  author={Schildknecht, Lukas and Schneider, Oliver and Meyer, Jonas, and Gamma, Christian and Gwschind, Joel},
+  title={Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data},
+  year={2025},
+  booktitle={Dreiländertagung der DGPF, der OVG und der SGPF in Muttenz, Schweiz},
+  series={Publikationen der DGPF},
+  volume={Band 33},
+  editor={Kersten, Thomas P. and Tilly, Nora},
+  publisher={Deutsche Gesellschaft für Photogrammetrie, Fernerkundung und Geoinformation (DGPF) e.V.},
+  address={Stuttgart, Germany},
+  pages={294--310}
+}
 
 # References
 [^LoGeoRef]: "Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408" .  
