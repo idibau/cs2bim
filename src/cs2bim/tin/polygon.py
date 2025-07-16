@@ -72,7 +72,7 @@ class Area(object):
         return shapely.Polygon(shell=shell, holes=holes)
 
     def _reduce(self, origin):
-        """Reduce coordinates by origin"""
+        """Reduces coordinates by origin"""
 
         shell = (np.stack(self._geometry.exterior.coords.xy).T - origin).tolist()
 

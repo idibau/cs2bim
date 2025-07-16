@@ -58,6 +58,7 @@ class IfcBuilder:
         else:
             location = (0.0, 0.0, 0.0)
         ifc_representation_context = add_ifc_geometric_representation_context(ifc_file, location)
+        ifc_representation_sub_context = add_ifc_geometric_representation_sub_context(ifc_file, ifc_representation_context)
 
         if self.geo_referencing == GeoReferencing.LO_GEO_REF_50:
             add_ifc_map_conversion(ifc_file, ifc_length_unit, ifc_representation_context, model.origin)
@@ -80,7 +81,7 @@ class IfcBuilder:
             spatial_structure_config = feature_class.spatial_structure
             if not spatial_structure_config.get_key() in ifc_spatial_structures:
                 if spatial_structure_config.type == SpatialStructureEntityType.IFC_SITE:
-                    ifc_site = add_ifc_site(ifc_file, ifc_owner_history, ifc_local_placement, ifc_project)
+                    ifc_site = add_ifc_site(ifc_file, ifc_local_placement, ifc_project)
                     ifc_spatial_structures[spatial_structure_config.get_key()] = ifc_site
                 else:
                     raise Exception(
@@ -133,10 +134,11 @@ class IfcBuilder:
                 add_ifc_styled_item(ifc_file, ifc_face_set, ifc_style)
 
                 product_definition_shape = add_ifc_product_definition_shape(
-                    ifc_file, ifc_representation_context, representation_type.value, ifc_face_set
+                    ifc_file, ifc_representation_sub_context, representation_type.value, ifc_face_set
                 )
+                ifc_local_placement = add_ifc_local_placement(ifc_file, (0.0, 0.0, 0.0))
                 if feature_class.entity_type == ElementEntityType.IFC_GEOGRAPHIC_ELEMENT:
-                    ifc_element = add_ifc_geographic_element(ifc_file, product_definition_shape)
+                    ifc_element = add_ifc_geographic_element(ifc_file, ifc_local_placement, product_definition_shape)
                 else:
                     raise Exception(
                         f"builing step for feature class entity type {feature_class.entity_type.name} not implemented"
@@ -158,7 +160,7 @@ class IfcBuilder:
                         groups[group] = []
                     groups[group].append(ifc_element)
 
-            add_ifc_rel_aggregates(ifc_file, ifc_spatial_structures[spatial_structure_config.get_key()], ifc_elements)
+            add_ifc_rel_contained_in_spatial_structure(ifc_file, ifc_elements, ifc_spatial_structures[spatial_structure_config.get_key()])
 
             logger.info(f"FeatureClass {feature_class_key}: build ifc groups")
             for group_definition, ifc_group_elements in groups.items():

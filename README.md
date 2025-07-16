@@ -1,22 +1,23 @@
 # cs2bim
 
+- [cs2bim](#cs2bim)
 - [Project description](#project-description)
   - [Resulting IFC Files](#resulting-ifc-files)
 - [Concepts](#concepts)
 - [Getting started](#getting-started)
-  - [Getting started dev](#getting-started-dev)
+  - [Getting started (Development)](#getting-started-development)
 - [Configuration](#configuration)
-  - [Configuration parameters (overview)](#configuration-parameters-(overview))
-  - [Types](#types)
+  - [Configuration parameters (overview)](#configuration-parameters-overview)
   - [IFC configuration](#ifc-configuration)
     - [Geo referencing](#geo-referencing)
     - [Triangulation Representation Type](#triangulation-representation-type)
     - [Feature Classes](#feature-classes)
-    - [SQL](#sql)
-    - [Spatial Structure](#spatial-structure)
+      - [SQL](#sql)
+      - [Spatial Structure](#spatial-structure)
     - [Groups](#groups)
     - [Example](#example)
 - [Known Issues](#known-issues)
+- [Contact](#contact)
 - [References](#references)
 
 # Project description
@@ -119,7 +120,7 @@ The configuration has different sections/topics:
 |6|dtm.stac_api|str|*|"https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"|
 |---|---|---|---|---|
 |7|tin.grid_size|float|0.5;2|0.5|
-|8|tin.max_height_error|float|0.05|0.05|
+|8|tin.max_height_error|float|≤ 0.05|0.05|
 |---|---|---|---|---|
 |9|ifc.author|str|*|"author"|
 |10|ifc.version|str|*|"1.0"|
@@ -300,6 +301,38 @@ ST_Contains -> Returns true if the first geometry contains the second.
 - Potential code optimization not yet done (parallelize computational tasks with threads, cache dtm data, load only needed dtm data in memory, process the point cloud only once and then derive feature class geometries from TIN instead of point clouds)
 - No support of ifc classification concept. Could be done the same way as the already implemented group concept.
 
+# Contact
+
+![Example of Feature Classes](./uploads/fhnw-logo.svg){width=250}
+
+Fachhochschule Nordwestschweiz, Institut Digitales Bauen, 4132 Muttenz \
+University of Applied Sciences and Arts Northwestern Switzerland, Institute of Virtual Design and Construction
+
+Project head
+- Oliver Schneider
+- Prof. Lukas Schildknecht
+
+Project staff
+- Prof. Christian Gamma
+- Joel Gschwind
+- Jonas Meyer
+
+If you use this project for your research, please cite:
+
+```
+  @inproceedings{schildknecht2025cs2bim,
+    author={Schildknecht, Lukas and Schneider, Oliver and Meyer, Jonas, and Gamma, Christian and Gwschind, Joel},
+    title={Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data},
+    year={2025},
+    booktitle={Dreiländertagung der DGPF, der OVG und der SGPF in Muttenz, Schweiz},
+    series={Publikationen der DGPF},
+    volume={Band 33},
+    editor={Kersten, Thomas P. and Tilly, Nora},
+    publisher={Deutsche Gesellschaft für Photogrammetrie, Fernerkundung und Geoinformation (DGPF) e.V.},
+    address={Stuttgart, Germany},
+    pages={294--310}
+  }
+```
 
 # References
 [^LoGeoRef]: "Clemen, C., Görne, H., 2019. Level of Georeferencing (LoGeoRef) using IFC for BIM. Journal of Geodesy, Cartography and Cadastre, 10/2019, S. 15-20. ISSN: 1454-1408" .  
