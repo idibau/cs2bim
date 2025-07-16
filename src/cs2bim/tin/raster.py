@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import geopandas as gpd
 import shapely
+from shapely.geometry import Point
 
 
 class RasterPoints(object):
@@ -14,47 +15,40 @@ class RasterPoints(object):
         Raster points as geopandas.GeoDataFrame
     """
 
-    def __init__(self, data: np.ndarray, origin: np.ndarray = np.zeros((3,))) -> None:
-        if not np.allclose(origin, np.zeros((3,))):
-            data = self._reduce(data, origin)
-        self.data = self._to_gpd(data)
+    def __init__(self, xyz_filepaths: list[str], origin: np.ndarray = np.zeros((3,))) -> None:
+        self.xyz_filepaths = xyz_filepaths
+        self.origin = origin
 
-    def _reduce(self, data: np.ndarray, origin: np.ndarray):
-        """Reduces raster points by origin"""
-        return data - origin
-
-    def _to_gpd(self, data: np.ndarray):
-        """Converts points to GeoDataFrame"""
-        p = pd.DataFrame(data, columns=["x", "y", "z"])
-        return gpd.GeoDataFrame(p, geometry=gpd.points_from_xy(p.x, p.y), copy=False)
-
-    def get_all_points(self):
-        """Returns all points stored in this object"""
-        return pd.DataFrame(self.data.drop(columns=["geometry"])).to_numpy()
-
-    def within(self, polygon: shapely.geometry.Polygon, buffer_dist: float | int = 0) -> np.ndarray:
+    def within(
+            self,
+            polygon: shapely.geometry.Polygon,
+            buffer_dist: float = 0,
+    ) -> np.ndarray:
         """
-        Filters points data by geometry with option to add buffer.
-        Returns all points which lie within this polygon.
-
-        Parameters
-        ----------
-        polygon : shapely.geometry.Polygon
-            Geometry to filter points with.
-
-        Returns
-        -------
-        _ : np.ndarray
-            Array with all points within polygon.
+        Efficiently load and filter points within a (possibly buffered) polygon from multiple xyz files.
+        Assumes xyz files have at least three columns: x, y, z (plus any others you want to retain).
         """
-        if buffer_dist > 0:
-            filter_geom = polygon.buffer(distance=buffer_dist)
+        geom = polygon.buffer(buffer_dist) if buffer_dist > 0 else polygon
+        results = []
+        for xyz_filepath in self.xyz_filepaths:
+            try:
+                data = np.loadtxt(xyz_filepath, delimiter=" ", skiprows=1)
+                if not np.allclose(self.origin, np.zeros((3,))):
+                    data = self._reduce(data, self.origin)
+                data = data - self.origin
+            except Exception:
+                continue  # Skip corrupted/bad file
+            if data.ndim == 1:
+                data = data.reshape((1, -1))
+            x = data[:, 0]
+            y = data[:, 1]
+            # Create array of shapely Points
+            points = shapely.points(np.column_stack([x, y]))
+            mask = geom.contains(points)
+            if np.any(mask):
+                results.append(data[mask])
+        if results:
+            return np.vstack(results)
         else:
-            filter_geom = polygon
-        gdf_points_within = gpd.sjoin(
-            self.data,
-            gpd.GeoDataFrame(index=[0], geometry=[filter_geom], copy=False),
-            how="inner",
-            predicate="within",
-        )
-        return pd.DataFrame(gdf_points_within.drop(columns=["geometry", "index_right"])).to_numpy()
+            return np.empty((0, 3))  # Adjust column count as needed
+
