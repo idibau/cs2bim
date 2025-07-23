@@ -1,7 +1,7 @@
 import os
 import sys
 import logging
-import numpy as np
+import tracemalloc
 import shapely
 from datetime import datetime
 
@@ -34,9 +34,27 @@ root_logger.addHandler(file_handler)
 
 logger = logging.getLogger(__name__)
 
-
 dmt_service = DTMService()
 postgis_service = PostgisService()
+
+import numpy as np
+from shapely import wkt
+
+
+def first_coord(wkt_polygon: str) -> np.ndarray:
+    """
+    Extrahiert die erste Koordinate eines WKT-Polygons als NumPy-Array [x, y].
+
+    Parameter:
+        wkt_polygon (str): Das Polygon im WKT-Format.
+
+    Rückgabe:
+        np.ndarray: Die erste Koordinate als Array [x, y].
+    """
+    geo = wkt.loads(wkt_polygon)
+    first_coord = geo.exterior.coords[0]
+    first_coord += (0,)
+    return first_coord
 
 
 def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple[float, float, float] | None):
@@ -49,31 +67,13 @@ def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple
         for element_data in elements:
             wkts.append(element_data["wkt"])
 
-    logger.info("calculate bounding box for fetching dtm files")
-    # ensures that parcels that exceed the bounding box are also included in the dtm files
-    if len(wkts) == 0:
-        logger.warning("No content found for this polygon")
-        bounding_box = postgis_service.get_bounding_box([polygon])
-    else:
-        bounding_box = postgis_service.get_bounding_box(wkts)
-
-    logger.info("fetch dtm files")
-    dtm_files = dmt_service.fetch_dtm_files(bounding_box)
-    logger.info(f"fetched {len(dtm_files)} dtm files")
-
+    log_memory_usage()
     logger.info("load raster")
-    p_raster_parts = list((np.loadtxt(dtm_file, delimiter=" ", skiprows=1) for dtm_file in dtm_files))
-    p_raster = np.concatenate(p_raster_parts)
-    if (project_origin is None):
-        origin = p_raster.min(axis=0)
-        project_origin = (float(origin[0]), float(origin[1]), float(origin[2]))
-    else:
-        origin = np.array(project_origin)
+    if project_origin is None:
+        project_origin = first_coord(polygon)
 
-    logger.info(f"fetched {len(dtm_files)} dtm files")
-
-    dtm_points = RasterPoints(p_raster, origin=origin)
-
+    origin = np.array(project_origin)
+    log_memory_usage()
     model = Model(name, ifc_version, project_origin)
 
     for feature_class_key, feature_class in config.feature_classes.items():
@@ -90,6 +90,11 @@ def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple
                 logger.warn("Multipolygons are not supported at the moment. Skipping element...")
                 continue
             area = Area(wkt_str=wkt_str, origin=origin[:2])
+
+            bounding_box = postgis_service.get_bounding_box([wkt_str])
+            dtm_files = dmt_service.fetch_dtm_files(bounding_box)
+            dtm_points = RasterPoints(dtm_files, origin=origin)
+
             logger.debug("calculate raster points buffer")
             raster_points_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
             logger.debug("calculate raster points within")
@@ -99,6 +104,7 @@ def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple
             logger.debug("clip mesh")
             mesh_clipped = mesh.clip_mesh_by_area(area, raster_points_within)
             logger.debug("decimate clipped mesh")
+            log_memory_usage()
             mesh_clipped_decimated = mesh_clipped.decimate(
                 max_height_error=config.max_height_error, grid_size=config.grid_size
             )
@@ -128,7 +134,14 @@ def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple
     ifc_file.write(f"output/{name}.ifc")
 
 
+def log_memory_usage() -> None:
+    logger.debug(
+        f"Current Memory usage: {tracemalloc.get_traced_memory()[0] / 1000000}mb, Peak memory usage: {tracemalloc.get_traced_memory()[1] / 1000000}mb"
+    )
+
+
 if __name__ == "__main__":
+    tracemalloc.start()
     MANDATORY_ENV_VARS = ["IFC_VERSION", "NAME", "POLYGON"]
     for var in MANDATORY_ENV_VARS:
         if var not in os.environ:
@@ -139,7 +152,7 @@ if __name__ == "__main__":
     if "PROJECT_ORIGIN" in os.environ:
         try:
             string_values = os.environ["PROJECT_ORIGIN"].split(",")
-            project_origin = (float(string_values[0]),float(string_values[1]),float(string_values[2]))
+            project_origin = (float(string_values[0]), float(string_values[1]), float(string_values[2]))
         except:
             raise EnvironmentError(f"PROJECT_ORIGIN need to be of format float,float,float")
     else:
@@ -148,3 +161,5 @@ if __name__ == "__main__":
         f"IFC_VERSION: {ifc_version.name}, NAME: {name}, POLYGON: {polygon}, PROJECT_ORIGIN: {project_origin if not project_origin is None else 'calculated'}"
     )
     main(ifc_version, name, polygon, project_origin)
+    log_memory_usage()
+    tracemalloc.stop()
