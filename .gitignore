@@ -2,9 +2,9 @@
 __pycache__
 .vscode
 files
+dist
 output
 .idea
-
 
 # file
 *.stl
