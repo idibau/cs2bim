@@ -67,30 +67,13 @@ def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple
         for element_data in elements:
             wkts.append(element_data["wkt"])
 
-    logger.info("calculate bounding box for fetching dtm files")
-    # ensures that parcels that exceed the bounding box are also included in the dtm files
-    if len(wkts) == 0:
-        logger.warning("No content found for this polygon")
-        bounding_box = postgis_service.get_bounding_box([polygon])
-    else:
-        bounding_box = postgis_service.get_bounding_box(wkts)
-
-    logger.info("fetch dtm files")
-    dtm_files = dmt_service.fetch_dtm_files(bounding_box)
-    logger.info(f"fetched {len(dtm_files)} dtm files")
-
     log_memory_usage()
     logger.info("load raster")
     if project_origin is None:
         project_origin = first_coord(polygon)
 
     origin = np.array(project_origin)
-
-    logger.info(f"fetched {len(dtm_files)} dtm files")
-
-    dtm_points = RasterPoints(dtm_files, origin=origin)
     log_memory_usage()
-
     model = Model(name, ifc_version, project_origin)
 
     for feature_class_key, feature_class in config.feature_classes.items():
@@ -107,6 +90,11 @@ def main(ifc_version: IfcVersion, name: str, polygon: str, project_origin: tuple
                 logger.warn("Multipolygons are not supported at the moment. Skipping element...")
                 continue
             area = Area(wkt_str=wkt_str, origin=origin[:2])
+
+            bounding_box = postgis_service.get_bounding_box([wkt_str])
+            dtm_files = dmt_service.fetch_dtm_files(bounding_box)
+            dtm_points = RasterPoints(dtm_files, origin=origin)
+
             logger.debug("calculate raster points buffer")
             raster_points_buffer = dtm_points.within(area.get_geometry, buffer_dist=3 * config.grid_size)
             logger.debug("calculate raster points within")

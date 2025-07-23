@@ -1,6 +1,6 @@
+import geopandas as gpd
 import numpy as np
 import pandas as pd
-import geopandas as gpd
 import shapely
 from shapely.geometry import Point
 
@@ -51,4 +51,3 @@ class RasterPoints(object):
             return np.vstack(results)
         else:
             return np.empty((0, 3))  # Adjust column count as needed
-
