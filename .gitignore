@@ -4,6 +4,7 @@ __pycache__
 files
 dist
 output
+.idea
 
 # file
 *.stl
