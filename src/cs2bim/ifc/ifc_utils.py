@@ -6,7 +6,8 @@ import logging
 import datetime
 from ifcopenshell import file, entity_instance, guid
 
-from cs2bim.ifc.model.color import Color
+from config.configuration import Color
+from cs2bim.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
 
 logger = logging.getLogger(__name__)
 
@@ -247,10 +248,10 @@ def add_ifc_triangulated_face_set(
 
 
 def add_ifc_geographic_element(
-    ifc_file: file, object_placement: entity_instance, representaion: entity_instance
+    ifc_file: file, object_placement: entity_instance, representation: entity_instance
 ) -> entity_instance:
     return ifc_file.create_entity(
-        "IfcGeographicElement", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representaion
+        "IfcGeographicElement", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
     )
 
 

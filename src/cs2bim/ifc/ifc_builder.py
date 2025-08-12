@@ -1,5 +1,4 @@
-from ifcopenshell import file
-
+from config.configuration import FeatureClass, GroupConfig
 from cs2bim.ifc.ifc_utils import *
 from cs2bim.ifc.model.model import Model
 from cs2bim.ifc.enum.geo_referencing import GeoReferencing
@@ -8,9 +7,6 @@ from cs2bim.ifc.enum.element_entity_type import ElementEntityType
 from cs2bim.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
 from cs2bim.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
 from cs2bim.ifc.geometry.triangulation import Triangulation
-from cs2bim.ifc.config.feature_class import FeatureClass
-from cs2bim.ifc.config.group_config import GroupConfig
-
 
 logger = logging.getLogger(__name__)
 
@@ -18,15 +14,15 @@ logger = logging.getLogger(__name__)
 class IfcBuilder:
 
     def __init__(
-        self,
-        author: str,
-        version: str,
-        application_name: str,
-        project_name: str,
-        geo_referencing: GeoReferencing,
-        triangulation_representation_type: TriangulationRepresentationType,
-        feature_classes: dict[str, FeatureClass],
-        groups: dict[str, GroupConfig],
+            self,
+            author: str,
+            version: str,
+            application_name: str,
+            project_name: str,
+            geo_referencing: GeoReferencing,
+            triangulation_representation_type: TriangulationRepresentationType,
+            feature_classes: dict[str, FeatureClass],
+            groups: dict[str, GroupConfig],
     ):
         self.author = author
         self.version = version
@@ -58,7 +54,8 @@ class IfcBuilder:
         else:
             location = (0.0, 0.0, 0.0)
         ifc_representation_context = add_ifc_geometric_representation_context(ifc_file, location)
-        ifc_representation_sub_context = add_ifc_geometric_representation_sub_context(ifc_file, ifc_representation_context)
+        ifc_representation_sub_context = add_ifc_geometric_representation_sub_context(ifc_file,
+                                                                                      ifc_representation_context)
 
         if self.geo_referencing == GeoReferencing.LO_GEO_REF_50:
             add_ifc_map_conversion(ifc_file, ifc_length_unit, ifc_representation_context, model.origin)
@@ -80,17 +77,17 @@ class IfcBuilder:
             logger.info(f"FeatureClass {feature_class_key}: build ifc spatial structure")
             spatial_structure_config = feature_class.spatial_structure
             if not spatial_structure_config.get_key() in ifc_spatial_structures:
-                if spatial_structure_config.type == SpatialStructureEntityType.IFC_SITE:
+                if spatial_structure_config.entity_type == SpatialStructureEntityType.IFC_SITE:
                     ifc_site = add_ifc_site(ifc_file, ifc_local_placement, ifc_project)
                     ifc_spatial_structures[spatial_structure_config.get_key()] = ifc_site
                 else:
                     raise Exception(
-                        f"builing step for structure entity type {spatial_structure_config.type.name} not implemented"
+                        f"builing step for structure entity type {spatial_structure_config.entity_type} not implemented"
                     )
                 ifc_spatial_structure = ifc_spatial_structures[spatial_structure_config.get_key()]
-                for attribute, value in spatial_structure_config.attributes.items():
-                    if hasattr(ifc_spatial_structure, attribute):
-                        setattr(ifc_spatial_structure, attribute, value)
+                for attribute in spatial_structure_config.attributes:
+                    if hasattr(ifc_spatial_structure, attribute.name):
+                        setattr(ifc_spatial_structure, attribute.name, attribute.value)
 
             logger.info(f"FeatureClass {feature_class_key}: build ifc elements")
             ifc_style = add_ifc_surface_style(ifc_file, feature_class.color)
@@ -112,6 +109,10 @@ class IfcBuilder:
                             tuple(vertices_dict[v] for v in triangle) for triangle in element.geometry.triangles
                         ]
                         ifc_face_set = add_ifc_triangulated_face_set(ifc_file, vertices, point_index_list)
+                        add_ifc_styled_item(ifc_file, ifc_face_set, ifc_style)
+                        product_definition_shape = add_ifc_product_definition_shape(
+                            ifc_file, ifc_representation_sub_context, "Tesselation", ifc_face_set
+                        )
                     elif representation_type == TriangulationRepresentationType.BREP:
                         vertex_dict = {}
                         faces = []
@@ -124,6 +125,10 @@ class IfcBuilder:
                             ifc_face = add_ifc_face(ifc_file, vertices)
                             faces.append(ifc_face)
                         ifc_face_set = add_ifc_faceted_brep(ifc_file, faces)
+                        add_ifc_styled_item(ifc_file, ifc_face_set, ifc_style)
+                        product_definition_shape = add_ifc_product_definition_shape(
+                            ifc_file, ifc_representation_sub_context, "Brep", ifc_face_set
+                        )
                     else:
                         raise Exception(
                             f"builing step for triangulation representation type {representation_type.name} not implemented"
@@ -131,11 +136,6 @@ class IfcBuilder:
                 else:
                     raise Exception(f"builing step for geometry class {type(element.geometry)} not implemented")
 
-                add_ifc_styled_item(ifc_file, ifc_face_set, ifc_style)
-
-                product_definition_shape = add_ifc_product_definition_shape(
-                    ifc_file, ifc_representation_sub_context, representation_type.value, ifc_face_set
-                )
                 ifc_local_placement = add_ifc_local_placement(ifc_file, (0.0, 0.0, 0.0))
                 if feature_class.entity_type == ElementEntityType.IFC_GEOGRAPHIC_ELEMENT:
                     ifc_element = add_ifc_geographic_element(ifc_file, ifc_local_placement, product_definition_shape)
@@ -160,7 +160,8 @@ class IfcBuilder:
                         groups[group] = []
                     groups[group].append(ifc_element)
 
-            add_ifc_rel_contained_in_spatial_structure(ifc_file, ifc_elements, ifc_spatial_structures[spatial_structure_config.get_key()])
+            add_ifc_rel_contained_in_spatial_structure(ifc_file, ifc_elements,
+                                                       ifc_spatial_structures[spatial_structure_config.get_key()])
 
             logger.info(f"FeatureClass {feature_class_key}: build ifc groups")
             for group_definition, ifc_group_elements in groups.items():
@@ -187,9 +188,9 @@ class IfcBuilder:
                                     f"builing step for ifc group entity {type(group_config.entity_type)} not implemented"
                                 )
                             ifc_group = ifc_groups[group_path]
-                            for attribute, value in group_config.attributes.items():
-                                if hasattr(ifc_group, attribute):
-                                    setattr(ifc_group, attribute, value)
+                            for attribute in group_config.attributes:
+                                if hasattr(ifc_group, attribute.name):
+                                    setattr(ifc_group, attribute.name, attribute.value)
                         else:
                             ifc_groups[group_path] = add_ifc_group(ifc_file, group)
 
