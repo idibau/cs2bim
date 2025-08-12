@@ -1,0 +1,60 @@
+version: "3.7"
+
+services:
+
+  redis:
+    image: redis:7
+    container_name: redis
+    command: [ "redis-server", "--appendonly", "yes" ]
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+    volumes:
+      - redis-data:/data
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /workspace/src
+    command: uvicorn run:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    networks:
+      - backend
+    environment:
+      - ENVIRONMENT=production
+    volumes:
+      - ./config.yml:/workspace/config.yml
+      - ./sql:/workspace/sql
+      - ifc_storage:/workspace/ifc_storage
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: celery
+    working_dir: /workspace/src
+    command: celery -A api.tasks.celery.celery_app worker --concurrency=2
+    depends_on:
+      - redis
+    networks:
+      - backend
+    environment:
+      - ENVIRONMENT=production
+    volumes:
+      - ./config.yml:/workspace/config.yml
+      - ./sql:/workspace/sql
+      - ifc_storage:/workspace/ifc_storage
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  redis-data:
+  ifc_storage:

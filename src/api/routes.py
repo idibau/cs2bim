@@ -1,0 +1,93 @@
+import logging
+import os
+
+from celery.result import AsyncResult
+from fastapi import HTTPException, APIRouter
+from fastapi.responses import FileResponse
+
+from api.generate_model_request import GenerateModelRequest
+from api.tasks.celery import celery_app, model_generation_task
+
+logger = logging.getLogger(__name__)
+
+router = APIRouter()
+
+"""
+Example
+{
+  "IFC_VERSION": "IFC4x3",
+  "NAME": "API Test",
+  "POLYGON": "POLYGON((2615610.59 1264657.53, 2615782.92 1264674.74, 2615747.00 1264604.23, 2615610.59 1264657.53))",
+  "PROJECT_ORIGIN": "0,0,0"
+}
+"""
+
+
+
+
+@router.post("/generate-model/")
+async def generate_model(request_data: GenerateModelRequest):
+    try:
+        ifc_version = request_data.IFC_VERSION
+        name = request_data.NAME
+        polygon = request_data.POLYGON
+
+        project_origin = None
+        if request_data.PROJECT_ORIGIN:
+            try:
+                string_values = request_data.PROJECT_ORIGIN.split(",")
+                project_origin = tuple(map(float, string_values))
+            except ValueError:
+                raise HTTPException(status_code=400, detail="PROJECT_ORIGIN must be in format float,float,float")
+
+        logger.info(
+            f"Received generate-model request: IFC_VERSION={ifc_version}, NAME={name}, POLYGON={polygon}, PROJECT_ORIGIN={project_origin if project_origin else 'calculated'}"
+        )
+
+        task = model_generation_task.delay(ifc_version.value, name, polygon, project_origin)
+
+        return {"task_id": task.id}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+
+@router.get("/generation-state/{task_id}")
+async def get_generation_state(task_id: str):
+    result = AsyncResult(task_id, app=celery_app)
+
+    state = result.state
+
+    response = {"state": state}
+
+    if state == "FAILURE":
+        response["error"] = str(result.result)
+
+    return response
+
+
+@router.get("/generated-file/{task_id}")
+async def get_generated_file(task_id: str):
+    result = AsyncResult(task_id, app=celery_app)
+
+    state = result.state
+
+    if state in ["PENDING", "STARTED", "RETRY"]:
+        raise HTTPException(
+            status_code=202,
+            detail=f"Model generation is {state.lower()}"
+        )
+
+    if state == "FAILURE":
+        raise HTTPException(
+            status_code=400,
+            detail=f"Model generation failed: {str(result.result)}"
+        )
+
+    output_path = result.result
+
+    if not output_path or not os.path.exists(output_path):
+        raise HTTPException(status_code=500, detail="Generated file not found on disk")
+
+    return FileResponse(path=output_path, filename=os.path.basename(output_path), media_type='application/octet-stream')

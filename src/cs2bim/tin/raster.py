@@ -31,18 +31,14 @@ class RasterPoints(object):
         geom = polygon.buffer(buffer_dist) if buffer_dist > 0 else polygon
         results = []
         for xyz_filepath in self.xyz_filepaths:
-            try:
-                data = np.loadtxt(xyz_filepath, delimiter=" ", skiprows=1)
-                if not np.allclose(self.origin, np.zeros((3,))):
-                    data = self._reduce(data, self.origin)
-                data = data - self.origin
-            except Exception:
-                continue  # Skip corrupted/bad file
+            data = np.loadtxt(xyz_filepath, delimiter=" ", skiprows=1)
+            if not np.allclose(self.origin, np.zeros((3,))):
+                data = self._reduce(data, self.origin)
+            data = data - self.origin
             if data.ndim == 1:
                 data = data.reshape((1, -1))
             x = data[:, 0]
             y = data[:, 1]
-            # Create array of shapely Points
             points = shapely.points(np.column_stack([x, y]))
             mask = geom.contains(points)
             if np.any(mask):
@@ -50,4 +46,4 @@ class RasterPoints(object):
         if results:
             return np.vstack(results)
         else:
-            return np.empty((0, 3))  # Adjust column count as needed
+            return np.empty((0, 3))
