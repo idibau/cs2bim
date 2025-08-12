@@ -1,8 +1,8 @@
 {
     "initializeCommand": ["docker", "buildx", "bake", "--load"],
-    "name": "cs2bim",
+    "name": "cs2bim_dev",
     "dockerComposeFile": "docker-compose-dev.yml",
-    "service": "development",
+    "service": "app_dev",
     "workspaceFolder": "/workspace",
     "customizations": {
         "vscode": {
