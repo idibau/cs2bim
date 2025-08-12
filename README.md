@@ -64,15 +64,11 @@ Prerequisites:
 - The PostGIS database with the cadastral data is available (connection with psychopg is possible)
 - The service to get terrain data is available
 
-Build docker image
+Build and run docker image
 ```console
-docker build -t cs2bim-run -f Dockerfile . --rm
+docker-compose up
 ```
 
-Run docker image
-```console
-docker run -e IFC_VERSION=[enum.ifc_version.IfcVersion] -e NAME=[str] -e POLYGON=[wkt] -e PROJECT_ORIGIN=[float,float,float] -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
-```
 The run parameters are:
 - IFC_VERSION: Ifc version of the resulting ifc file (supported versions/values see src\cs2bim\ifc\enum\ifc_version.py).
 - NAME: Name of the resulting ifc file.
@@ -80,15 +76,28 @@ The run parameters are:
 - PROJECT_ORIGIN (optional) : The project origin in LV95 coordinates "Easting,Northing,Height". If project origin is set, all other geometry values in the ifc are calculated relative to the origin.
 
 Example:
-- docker run -e IFC_VERSION="IFC4" -e NAME="Test" -e POLYGON="POLYGON((2689114 1285136,2689143 1285192,2689170 1285159,2689114 1285136))" -e PROJECT_ORIGIN=2600000,1200000,0 -v .:/workspace/output --name cs2bim-run --rm cs2bim-run
+```
+curl -X 'POST' \
+  'http://localhost:8000/generate-model/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "IFC_VERSION": "IFC4x3",
+  "NAME": "API Test",
+  "POLYGON": "POLYGON((2689114 1285136,2689143 1285192,2689170 1285159,2689114 1285136))",
+  "PROJECT_ORIGIN": "2600000,1200000,0"
+}
+```
 
-After you run the docker container successfully there will be a new output ifc file inside the folder from where you started the container.
+config file and sqls are mounted from starting point (where docker is started)
 
-Important: If you change the config.yml, the container must be rebuilt to make it work.
+for logs -> 
+docker logs celery
+docker logs app
 
 ## Getting started (Development)
 
-Build and run docker container or build and open container with your IDE (e.g. VSCode)
+Build and run docker container or build and open container with your IDE (e.g. VSCode, PyCharm)
 ```console
 docker-compose -f docker-compose-dev.yml up 
 ```
@@ -96,6 +105,35 @@ Install pip packages (Run in container at /workspace)
 ```console
 pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 ```
+
+The application can be run in two modes: via the API server or by executing the standalone script with execute parameters (run_locally.py).
+
+### API
+Run the Celery worker with 2 concurrent processes:
+```console
+cd /workspace/src
+celery -A api.tasks.celery.celery_app worker --concurrency=2
+```
+Launch the FastAPI development server with hot reload:
+```console
+cd /workspace/src
+python -m uvicorn run:app --reload
+```
+
+### Standalone script
+To run the application locally:
+```console
+cd /workspace/src
+python run_locally.py \
+  --IFC_VERSION=<version> \
+  --NAME=<name> \
+  --POLYGON=<polygon> \
+  --PROJECT_ORIGIN=<origin>
+```
+
+# API
+
+## Endpoints
 
 # Configuration
 Some properties of this python project can be configured using the config.yml file.  
