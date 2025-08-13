@@ -1,5 +1,5 @@
-from cs2bim.ifc.geometry.geometry import Geometry
-from cs2bim.ifc.model.property_set import PropertySet
+from core.ifc.geometry.geometry import Geometry
+from core.ifc.model.property_set import PropertySet
 
 
 class Element:

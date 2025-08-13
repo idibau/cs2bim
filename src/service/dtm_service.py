@@ -4,12 +4,10 @@ from io import BytesIO
 from zipfile import ZipFile
 import os
 from pathlib import Path
-import json
 
-import redis
 import time
 
-from api.file_cache import FileCache, CacheEntry
+from service.file_cache import FileCache
 from config.configuration import config
 from service.bounding_box import BoundingBox
 
@@ -92,4 +90,3 @@ class DTMService:
 
         logger.info(f"Cached new DTM file {file_id}")
         return file_path
-

@@ -7,7 +7,6 @@ import datetime
 from ifcopenshell import file, entity_instance, guid
 
 from config.configuration import Color
-from cs2bim.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
 
 logger = logging.getLogger(__name__)
 

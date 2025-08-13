@@ -1,12 +1,11 @@
 import logging
 import os
-
 from celery.result import AsyncResult
 from fastapi import HTTPException, APIRouter
 from fastapi.responses import FileResponse
 
 from api.generate_model_request import GenerateModelRequest
-from api.tasks.celery import celery_app, model_generation_task
+from worker.app import celery_app, model_generation_task
 
 logger = logging.getLogger(__name__)
 
@@ -21,8 +20,6 @@ Example
   "PROJECT_ORIGIN": "0,0,0"
 }
 """
-
-
 
 
 @router.post("/generate-model/")
@@ -50,7 +47,6 @@ async def generate_model(request_data: GenerateModelRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
 
 
 @router.get("/generation-state/{task_id}")

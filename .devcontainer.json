@@ -1,5 +1,4 @@
 {
-    "initializeCommand": ["docker", "buildx", "bake", "--load"],
     "name": "cs2bim_dev",
     "dockerComposeFile": "docker-compose-dev.yml",
     "service": "app_dev",

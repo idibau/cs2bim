@@ -1,7 +1,7 @@
 import logging
 from stl import mesh
 
-from cs2bim.ifc.geometry.geometry import Geometry
+from core.ifc.geometry.geometry import Geometry
 
 logger = logging.getLogger(__name__)
 

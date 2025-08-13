@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from cs2bim.ifc.enum.ifc_version import IfcVersion
+from core.ifc.enum.ifc_version import IfcVersion
 
 
 class GenerateModelRequest(BaseModel):

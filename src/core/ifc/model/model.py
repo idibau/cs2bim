@@ -1,5 +1,5 @@
-from cs2bim.ifc.enum.ifc_version import IfcVersion
-from cs2bim.ifc.model.element import Element
+from core.ifc.enum.ifc_version import IfcVersion
+from core.ifc.model.element import Element
 
 
 class Model:

@@ -7,7 +7,7 @@ db:
   user: "postgres"
   host: "host.docker.internal"
   port: 5432
-  password: ???
+  password: "postgres"
 
 ########## dtm api configuration ############
 dtm:

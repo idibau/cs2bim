@@ -1,16 +1,15 @@
 import json
 
-from ifcopenshell.validate import entity_type
 from pydantic import BaseModel
 from pydantic_yaml import parse_yaml_file_as
 from typing import Dict, List
 from pathlib import Path
 
-from cs2bim.ifc.enum.geo_referencing import GeoReferencing
-from cs2bim.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
-from cs2bim.ifc.enum.element_entity_type import ElementEntityType
-from cs2bim.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
-from cs2bim.ifc.enum.group_entity_type import GroupEntityType
+from core.ifc.enum.geo_referencing import GeoReferencing
+from core.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
+from core.ifc.enum.element_entity_type import ElementEntityType
+from core.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
+from core.ifc.enum.group_entity_type import GroupEntityType
 
 
 class PropertyConfig(BaseModel):

@@ -1,12 +1,12 @@
 from config.configuration import FeatureClass, GroupConfig
-from cs2bim.ifc.ifc_utils import *
-from cs2bim.ifc.model.model import Model
-from cs2bim.ifc.enum.geo_referencing import GeoReferencing
-from cs2bim.ifc.enum.group_entity_type import GroupEntityType
-from cs2bim.ifc.enum.element_entity_type import ElementEntityType
-from cs2bim.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
-from cs2bim.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
-from cs2bim.ifc.geometry.triangulation import Triangulation
+from core.ifc.ifc_utils import *
+from core.ifc.model.model import Model
+from core.ifc.enum.geo_referencing import GeoReferencing
+from core.ifc.enum.group_entity_type import GroupEntityType
+from core.ifc.enum.element_entity_type import ElementEntityType
+from core.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
+from core.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
+from core.ifc.geometry.triangulation import Triangulation
 
 logger = logging.getLogger(__name__)
 

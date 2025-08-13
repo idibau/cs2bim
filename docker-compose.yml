@@ -11,7 +11,7 @@ services:
     networks:
       - backend
     volumes:
-      - redis-data:/data
+      - redis_data:/data
 
   app:
     container_name: app
@@ -19,7 +19,7 @@ services:
       context: .
       dockerfile: Dockerfile
     working_dir: /workspace/src
-    command: uvicorn run:app --host 0.0.0.0 --port 8000
+    command: uvicorn api.app:app --host 0.0.0.0 --port 8000
     ports:
       - "8000:8000"
     depends_on:
@@ -39,7 +39,7 @@ services:
       dockerfile: Dockerfile
     container_name: celery
     working_dir: /workspace/src
-    command: celery -A api.tasks.celery.celery_app worker --concurrency=2
+    command: celery -A worker.app.app worker --concurrency=2
     depends_on:
       - redis
     networks:
@@ -56,5 +56,5 @@ networks:
     driver: bridge
 
 volumes:
-  redis-data:
+  redis_data:
   ifc_storage:
