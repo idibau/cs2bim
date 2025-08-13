@@ -3,8 +3,8 @@ version: "3.7"
 services:
 
   redis:
-    image: redis:7
     container_name: redis
+    image: redis:7
     command: [ "redis-server", "--appendonly", "yes" ]
     ports:
       - "6379:6379"
@@ -34,10 +34,10 @@ services:
       - ifc_storage:/workspace/ifc_storage
 
   celery:
+    container_name: celery
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: celery
     working_dir: /workspace/src
     command: celery -A worker.app.app worker --concurrency=2
     depends_on:

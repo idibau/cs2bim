@@ -112,7 +112,7 @@ The application can be run in two modes: via the API server or by executing the 
 Run the Celery worker with 2 concurrent processes:
 ```console
 cd /workspace/src
-celery -A api.tasks.celery.celery_app worker --concurrency=2
+celery -A worker.app.app worker --concurrency=2
 ```
 Launch the FastAPI development server with hot reload:
 ```console

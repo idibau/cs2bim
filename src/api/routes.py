@@ -5,7 +5,7 @@ from fastapi import HTTPException, APIRouter
 from fastapi.responses import FileResponse
 
 from api.generate_model_request import GenerateModelRequest
-from worker.app import celery_app, model_generation_task
+from worker.app import app, model_generation_task
 
 logger = logging.getLogger(__name__)
 
@@ -51,7 +51,7 @@ async def generate_model(request_data: GenerateModelRequest):
 
 @router.get("/generation-state/{task_id}")
 async def get_generation_state(task_id: str):
-    result = AsyncResult(task_id, app=celery_app)
+    result = AsyncResult(task_id, app=app)
 
     state = result.state
 
@@ -65,7 +65,7 @@ async def get_generation_state(task_id: str):
 
 @router.get("/generated-file/{task_id}")
 async def get_generated_file(task_id: str):
-    result = AsyncResult(task_id, app=celery_app)
+    result = AsyncResult(task_id, app=app)
 
     state = result.state
 
