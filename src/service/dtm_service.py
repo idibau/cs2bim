@@ -1,15 +1,14 @@
 import logging
-import requests
-from io import BytesIO
-from zipfile import ZipFile
 import os
-from pathlib import Path
-
+import requests
 import time
+from io import BytesIO
+from pathlib import Path
+from zipfile import ZipFile
 
-from service.file_cache import FileCache
 from config.configuration import config
 from service.bounding_box import BoundingBox
+from service.file_cache import FileCache
 
 logger = logging.getLogger(__name__)
 

@@ -1,12 +1,12 @@
 from config.configuration import FeatureClass, GroupConfig
-from core.ifc.ifc_utils import *
-from core.ifc.model.model import Model
+from core.ifc.enum.element_entity_type import ElementEntityType
 from core.ifc.enum.geo_referencing import GeoReferencing
 from core.ifc.enum.group_entity_type import GroupEntityType
-from core.ifc.enum.element_entity_type import ElementEntityType
 from core.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
 from core.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
 from core.ifc.geometry.triangulation import Triangulation
+from core.ifc.ifc_utils import *
+from core.ifc.model.model import Model
 
 logger = logging.getLogger(__name__)
 

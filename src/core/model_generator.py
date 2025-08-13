@@ -1,5 +1,4 @@
 import logging
-
 import shapely
 
 from config.configuration import config

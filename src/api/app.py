@@ -1,7 +1,6 @@
 import logging
 import os
 from datetime import datetime
-
 from fastapi import FastAPI
 
 from api.routes import router

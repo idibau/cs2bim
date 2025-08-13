@@ -2,8 +2,8 @@
 This module contains wrapper funcitons to simplify the process of building an ifc using ifcopenshells "create_entity" function.
 """
 
-import logging
 import datetime
+import logging
 from ifcopenshell import file, entity_instance, guid
 
 from config.configuration import Color
@@ -44,11 +44,11 @@ def add_ifc_si_unit(ifc_file: file, unit_type: str, name: str) -> entity_instanc
 
 
 def add_ifc_unit_assignment(
-    ifc_file: file,
-    length_unit: entity_instance,
-    area_unit: entity_instance,
-    volume_unit: entity_instance,
-    degree_unit: entity_instance,
+        ifc_file: file,
+        length_unit: entity_instance,
+        area_unit: entity_instance,
+        volume_unit: entity_instance,
+        degree_unit: entity_instance,
 ) -> entity_instance:
     plane_angle_measure = ifc_file.create_entity("IfcPlaneAngleMeasure", 0.017453292519943295)
     conversion_factor = ifc_file.create_entity(
@@ -77,7 +77,7 @@ def add_ifc_unit_assignment(
 
 
 def add_ifc_geometric_representation_context(
-    ifc_file: file, location_coordinates: tuple[float, float, float]
+        ifc_file: file, location_coordinates: tuple[float, float, float]
 ) -> entity_instance:
     location = add_ifc_cartesian_point(ifc_file, location_coordinates)
     world_coordinate_system = ifc_file.create_entity("IfcAxis2Placement3D", Location=location)
@@ -91,7 +91,7 @@ def add_ifc_geometric_representation_context(
 
 
 def add_ifc_geometric_representation_sub_context(
-    ifc_file: file, geometric_representation_context: entity_instance
+        ifc_file: file, geometric_representation_context: entity_instance
 ) -> entity_instance:
     return ifc_file.create_entity(
         "IfcGeometricRepresentationSubContext",
@@ -103,10 +103,10 @@ def add_ifc_geometric_representation_sub_context(
 
 
 def add_ifc_map_conversion(
-    ifc_file: file,
-    map_unit: entity_instance,
-    source_crs: entity_instance,
-    origin: tuple[float, float, float],
+        ifc_file: file,
+        map_unit: entity_instance,
+        source_crs: entity_instance,
+        origin: tuple[float, float, float],
 ) -> entity_instance:
     target_crs = ifc_file.create_entity(
         "IfcProjectedCRS",
@@ -130,11 +130,11 @@ def add_ifc_map_conversion(
 
 
 def add_ifc_project(
-    ifc_file: file,
-    name: str,
-    owner_history: entity_instance,
-    representation_context: entity_instance,
-    units_in_context: entity_instance,
+        ifc_file: file,
+        name: str,
+        owner_history: entity_instance,
+        representation_context: entity_instance,
+        units_in_context: entity_instance,
 ) -> entity_instance:
     return ifc_file.create_entity(
         "IfcProject",
@@ -153,9 +153,9 @@ def add_ifc_local_placement(ifc_file: file, location_coordinates: tuple[float, f
 
 
 def add_ifc_site(
-    ifc_file: file,
-    object_placement: entity_instance,
-    project: entity_instance,
+        ifc_file: file,
+        object_placement: entity_instance,
+        project: entity_instance,
 ) -> entity_instance:
     site = ifc_file.create_entity("IfcSite", GlobalId=guid.new(), ObjectPlacement=object_placement)
     add_ifc_rel_aggregates(ifc_file, project, [site])
@@ -163,7 +163,7 @@ def add_ifc_site(
 
 
 def add_ifc_rel_aggregates(
-    ifc_file: file, relating_object: entity_instance, related_objects: list[entity_instance]
+        ifc_file: file, relating_object: entity_instance, related_objects: list[entity_instance]
 ) -> entity_instance:
     return ifc_file.create_entity(
         "IfcRelAggregates",
@@ -172,8 +172,9 @@ def add_ifc_rel_aggregates(
         RelatedObjects=related_objects,
     )
 
+
 def add_ifc_rel_contained_in_spatial_structure(
-    ifc_file: file, related_elements: list[entity_instance], relating_structure: entity_instance
+        ifc_file: file, related_elements: list[entity_instance], relating_structure: entity_instance
 ) -> entity_instance:
     return ifc_file.create_entity(
         "IfcRelContainedInSpatialStructure",
@@ -208,7 +209,7 @@ def add_ifc_zone(ifc_file: file, name: str) -> entity_instance:
 
 
 def add_ifc_rel_assigns_to_group(
-    ifc_file: file, related_objects: list[entity_instance], group: entity_instance
+        ifc_file: file, related_objects: list[entity_instance], group: entity_instance
 ) -> entity_instance:
     return ifc_file.create_entity(
         "IfcRelAssignsToGroup", GlobalId=guid.new(), RelatedObjects=related_objects, RelatingGroup=group
@@ -227,7 +228,7 @@ def add_ifc_faceted_brep(ifc_file: file, cfs_faces: list[entity_instance]) -> en
 
 
 def add_ifc_product_definition_shape(
-    ifc_file: file, context_of_items: entity_instance, representation_type: str, item: entity_instance
+        ifc_file: file, context_of_items: entity_instance, representation_type: str, item: entity_instance
 ) -> entity_instance:
     representation = ifc_file.create_entity(
         "IfcShapeRepresentation",
@@ -240,14 +241,14 @@ def add_ifc_product_definition_shape(
 
 
 def add_ifc_triangulated_face_set(
-    ifc_file: file, coord_list: list[tuple[float, float, float]], coord_index: list[tuple[int, int, int]]
+        ifc_file: file, coord_list: list[tuple[float, float, float]], coord_index: list[tuple[int, int, int]]
 ) -> entity_instance:
     coordinates = ifc_file.create_entity("IfcCartesianPointList3D", CoordList=coord_list)
     return ifc_file.create_entity("IfcTriangulatedFaceSet", Coordinates=coordinates, CoordIndex=coord_index)
 
 
 def add_ifc_geographic_element(
-    ifc_file: file, object_placement: entity_instance, representation: entity_instance
+        ifc_file: file, object_placement: entity_instance, representation: entity_instance
 ) -> entity_instance:
     return ifc_file.create_entity(
         "IfcGeographicElement", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
@@ -270,7 +271,7 @@ def add_ifc_property_single_value(ifc_file: file, name: str, text: str) -> entit
 
 
 def add_ifc_property_set(
-    ifc_file: file, name: str, has_properties: list[entity_instance], related_object: entity_instance
+        ifc_file: file, name: str, has_properties: list[entity_instance], related_object: entity_instance
 ) -> entity_instance:
     relating_property_definition = ifc_file.create_entity(
         "IfcPropertySet", GlobalId=guid.new(), Name=name, HasProperties=has_properties

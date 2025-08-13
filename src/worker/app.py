@@ -1,6 +1,5 @@
 import logging
 import os
-
 from celery import Celery
 
 from core.ifc.enum.ifc_version import IfcVersion

@@ -1,5 +1,5 @@
-from typing import Any
 import psycopg2
+from typing import Any
 
 from config.configuration import config
 from service.bounding_box import BoundingBox

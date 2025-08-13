@@ -1,15 +1,14 @@
 import json
-
+from pathlib import Path
 from pydantic import BaseModel
 from pydantic_yaml import parse_yaml_file_as
 from typing import Dict, List
-from pathlib import Path
 
-from core.ifc.enum.geo_referencing import GeoReferencing
-from core.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
 from core.ifc.enum.element_entity_type import ElementEntityType
-from core.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
+from core.ifc.enum.geo_referencing import GeoReferencing
 from core.ifc.enum.group_entity_type import GroupEntityType
+from core.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
+from core.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
 
 
 class PropertyConfig(BaseModel):

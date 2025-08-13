@@ -1,9 +1,9 @@
-import logging
-import pyvista as pv
-import pandas as pd
-import numpy as np
-import shapely
 import itertools
+import logging
+import numpy as np
+import pandas as pd
+import pyvista as pv
+import shapely
 
 from .polygon import Area
 
@@ -133,7 +133,7 @@ class Mesh(object):
                 np.array([[0, 0, 1]] * pts_2d_approx.shape[0]),
                 first_point=True,
             )[0]
-            pts_3d[:,:2] -= offset
+            pts_3d[:, :2] -= offset
             offset = offset + 0.00001
 
         return pts_3d

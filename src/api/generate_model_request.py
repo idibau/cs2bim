@@ -1,6 +1,5 @@
-from typing import Optional
-
 from pydantic import BaseModel, Field
+from typing import Optional
 
 from core.ifc.enum.ifc_version import IfcVersion
 

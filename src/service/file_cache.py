@@ -1,6 +1,7 @@
 import json
-import time
 import redis
+import time
+
 
 class FileCache:
 
