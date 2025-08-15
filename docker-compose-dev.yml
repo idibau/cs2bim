@@ -18,6 +18,8 @@ services:
     command: sleep infinity
     environment:
       - ENVIRONMENT=development
+    ports:
+      - "8000:8000"
     networks:
       - backend
     depends_on:
