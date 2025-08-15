@@ -15,9 +15,13 @@ class RasterPoints(object):
         Raster points as geopandas.GeoDataFrame
     """
 
-    def __init__(self, xyz_filepaths: list[str], origin: np.ndarray = np.zeros((3,))) -> None:
-        self.xyz_filepaths = xyz_filepaths
-        self.origin = origin
+    def __init__(self, xyz_filepath: str, origin: np.ndarray = np.zeros((3,))) -> None:
+        self.data = np.loadtxt(xyz_filepath, delimiter=" ", skiprows=1)
+        if not np.allclose(origin, np.zeros((3,))):
+            self.data = self.data - origin
+        if self.data.ndim == 1:
+            self.data = self.data.reshape((1, -1))
+        self.xy = self.data[:, :2]
 
     def within(
             self,
@@ -25,25 +29,27 @@ class RasterPoints(object):
             buffer_dist: float = 0,
     ) -> np.ndarray:
         """
-        Efficiently load and filter points within a (possibly buffered) polygon from multiple xyz files.
-        Assumes xyz files have at least three columns: x, y, z (plus any others you want to retain).
+        Return points within (or within buffer of) polygon.
+        First filters by polygon bounding box for speed.
         """
         geom = polygon.buffer(buffer_dist) if buffer_dist > 0 else polygon
-        results = []
-        for xyz_filepath in self.xyz_filepaths:
-            data = np.loadtxt(xyz_filepath, delimiter=" ", skiprows=1)
-            if not np.allclose(self.origin, np.zeros((3,))):
-                data = self._reduce(data, self.origin)
-            data = data - self.origin
-            if data.ndim == 1:
-                data = data.reshape((1, -1))
-            x = data[:, 0]
-            y = data[:, 1]
-            points = shapely.points(np.column_stack([x, y]))
-            mask = geom.contains(points)
-            if np.any(mask):
-                results.append(data[mask])
-        if results:
-            return np.vstack(results)
+
+        minx, miny, maxx, maxy = geom.bounds
+        in_bbox = (
+                (self.xy[:, 0] >= minx) &
+                (self.xy[:, 0] <= maxx) &
+                (self.xy[:, 1] >= miny) &
+                (self.xy[:, 1] <= maxy)
+        )
+
+        if not np.any(in_bbox):
+            return None
+
+        candidate_points = shapely.points(self.xy[in_bbox])
+        mask = geom.contains(candidate_points)
+
+        if np.any(mask):
+            return self.data[in_bbox][mask]
         else:
-            return np.empty((0, 3))
+            return None
+

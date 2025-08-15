@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional
 
-from core.ifc.enum.ifc_version import IfcVersion
+from core.ifc.model.ifc_version import IfcVersion
 
 
 class GenerateModelRequest(BaseModel):

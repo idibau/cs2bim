@@ -1,4 +1,4 @@
-from core.ifc.enum.ifc_version import IfcVersion
+from core.ifc.model.ifc_version import IfcVersion
 from core.ifc.model.element import Element
 
 

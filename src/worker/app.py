@@ -2,7 +2,7 @@ import logging
 import os
 from celery import Celery
 
-from core.ifc.enum.ifc_version import IfcVersion
+from core.ifc.model.ifc_version import IfcVersion
 from core.model_generator import ModelGenerator
 from utils.utils import get_output_path, setup_logger
 

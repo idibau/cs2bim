@@ -9,9 +9,10 @@ db:
   port: 5432
   password: "postgres"
 
-########## dtm api configuration ############
-dtm:
-  stac_api: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
+########## stac configuration ############
+stac:
+  dtm_items_url: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
+  building_items_url: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissbuildings3d_3_0/items"
 
 ############# tin configuration #############
 tin:
@@ -26,8 +27,9 @@ ifc:
   project_name: "cs2bim"
   geo_referencing: LO_GEO_REF_50
   triangulation_representation_type: TESSELLATION
-  feature_classes:
+  clipped_terrain:
     parcel:
+      type: CLIPPED_TERRAIN
       sql_path: "/workspace/sql/parcels.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       attributes:
@@ -65,67 +67,70 @@ ifc:
         g: 0.67
         b: 0.04
         a: 0.85
-  #    land_cover:
-  #      sql_path: "/workspace/sql/land_covers.sql"
-  #      entity_type: IFC_GEOGRAPHIC_ELEMENT
-  #      attributes:
-  #        - name: "PredefinedType"
-  #          column: "predefined_type"
-  #        - name: "ObjectType"
-  #          column: "art"
-  #        - name: "Name"
-  #          column: "art"
-  #      properties: []
-  #      spatial_structure:
-  #        entity_type: IFC_SITE
-  #        attributes:
-  #        - name: "CompositionType"
-  #          value: "COMPLEX"
-  #        - name: "PredefinedType"
-  #          value: "USERDEFINED"
-  #        - name: "ObjectType"
-  #          value: "Bodenbedeckung"
-  #        - name: "Name"
-  #          value: "Bodenbedeckung"
-  #      group_columns:
-  #        - "group"
-  #      color:
-  #        r: 0.52
-  #        g: 0.42
-  #        b: 0.04
-  #        a: 0.85
-  #    buildings:
-  #      sql_path: "/workspace/sql/land_covers_buildings.sql"
-  #      entity_type: IFC_GEOGRAPHIC_ELEMENT
-  #      attributes:
-  #        - name: "PredefinedType"
-  #          column: "predefined_type"
-  #        - name: "ObjectType"
-  #          column: "art"
-  #        - name: "Name"
-  #          column: "gwr_egid"
-  #      properties:
-  #        - name: "GWR-EGID"
-  #          set: "CHKGK_CS"
-  #          column: "gwr_egid"
-  #      spatial_structure:
-  #        entity_type: IFC_SITE
-  #        attributes:
-  #        - name: "CompositionType"
-  #          value: "COMPLEX"
-  #        - name: "PredefinedType"
-  #          value: "USERDEFINED"
-  #        - name: "ObjectType"
-  #          value: "Gebäude"
-  #        - name: "Name"
-  #          value: "Gebäude"
-  #      group_columns:
-  #        - "group"
-  #      color:
-  #        r: 1.00
-  #        g: 0.00
-  #        b: 0.00
-  #        a: 0.85
+    land_cover:
+      type: CLIPPED_TERRAIN
+      sql_path: "/workspace/sql/land_covers.sql"
+      entity_type: IFC_GEOGRAPHIC_ELEMENT
+      attributes:
+        - name: "PredefinedType"
+          column: "predefined_type"
+        - name: "ObjectType"
+          column: "art"
+        - name: "Name"
+          column: "art"
+      properties: []
+      spatial_structure:
+        entity_type: IFC_SITE
+        attributes:
+        - name: "CompositionType"
+          value: "COMPLEX"
+        - name: "PredefinedType"
+          value: "USERDEFINED"
+        - name: "ObjectType"
+          value: "Bodenbedeckung"
+        - name: "Name"
+          value: "Bodenbedeckung"
+      group_columns:
+        - "group"
+      color:
+        r: 0.52
+        g: 0.42
+        b: 0.04
+        a: 0.85
+    buildings:
+      type: CLIPPED_TERRAIN
+      sql_path: "/workspace/sql/land_covers_buildings.sql"
+      entity_type: IFC_GEOGRAPHIC_ELEMENT
+      attributes:
+        - name: "PredefinedType"
+          column: "predefined_type"
+        - name: "ObjectType"
+          column: "art"
+        - name: "Name"
+          column: "gwr_egid"
+      properties:
+        - name: "GWR-EGID"
+          set: "CHKGK_CS"
+          column: "gwr_egid"
+      spatial_structure:
+        entity_type: IFC_SITE
+        attributes:
+        - name: "CompositionType"
+          value: "COMPLEX"
+        - name: "PredefinedType"
+          value: "USERDEFINED"
+        - name: "ObjectType"
+          value: "Gebäude"
+        - name: "Name"
+          value: "Gebäude"
+      group_columns:
+        - "group"
+      color:
+        r: 1.00
+        g: 0.00
+        b: 0.00
+        a: 0.85
+  buildings: {}
   groups:
     Amtliche Vermessung.Gebaeude:
       entity_type: IFC_BUILDING_SYSTEM

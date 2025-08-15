@@ -3,7 +3,7 @@ __pycache__
 .vscode
 dist
 .idea
-dtm_cache
+cache
 ifc_storage
 logs
 

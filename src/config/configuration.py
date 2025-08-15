@@ -1,14 +1,15 @@
 import json
 from pathlib import Path
-from pydantic import BaseModel
-from pydantic_yaml import parse_yaml_file_as
 from typing import Dict, List
 
-from core.ifc.enum.element_entity_type import ElementEntityType
-from core.ifc.enum.geo_referencing import GeoReferencing
-from core.ifc.enum.group_entity_type import GroupEntityType
-from core.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
-from core.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
+from pydantic import BaseModel
+from pydantic_yaml import parse_yaml_file_as
+
+from config.element_entity_type import ElementEntityType
+from config.geo_referencing import GeoReferencing
+from config.group_entity_type import GroupEntityType
+from config.spatial_structure_entity_type import SpatialStructureEntityType
+from config.triangulation_representation_type import TriangulationRepresentationType
 
 
 class PropertyConfig(BaseModel):
@@ -42,7 +43,7 @@ class Attribute(BaseModel):
     column: str
 
 
-class FeatureClass(BaseModel):
+class ClippedTerrainFeatureClass(BaseModel):
     sql_path: str
     entity_type: ElementEntityType
     attributes: List[Attribute]
@@ -50,6 +51,10 @@ class FeatureClass(BaseModel):
     spatial_structure: SpatialStructureConfig
     group_columns: List[str]
     color: Color
+
+
+class BuildingFeatureClass(BaseModel):
+    entity_type: ElementEntityType
 
 
 class GroupConfig(BaseModel):
@@ -65,8 +70,9 @@ class DBConfig(BaseModel):
     password: str
 
 
-class DTMConfig(BaseModel):
-    stac_api: str
+class STACConfig(BaseModel):
+    dtm_items_url: str
+    building_items_url: str
 
 
 class TINConfig(BaseModel):
@@ -81,14 +87,15 @@ class IFCConfig(BaseModel):
     project_name: str
     geo_referencing: GeoReferencing
     triangulation_representation_type: TriangulationRepresentationType
-    feature_classes: Dict[str, FeatureClass]
+    clipped_terrain: Dict[str, ClippedTerrainFeatureClass]
+    buildings: Dict[str, BuildingFeatureClass]
     groups: Dict[str, GroupConfig]
 
 
 class Configuration(BaseModel):
     logging_level: str
     db: DBConfig
-    dtm: DTMConfig
+    stac: STACConfig
     tin: TINConfig
     ifc: IFCConfig
 

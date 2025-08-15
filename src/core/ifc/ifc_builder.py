@@ -1,9 +1,9 @@
-from config.configuration import FeatureClass, GroupConfig
-from core.ifc.enum.element_entity_type import ElementEntityType
-from core.ifc.enum.geo_referencing import GeoReferencing
-from core.ifc.enum.group_entity_type import GroupEntityType
-from core.ifc.enum.spatial_structure_entity_type import SpatialStructureEntityType
-from core.ifc.enum.triangulation_representation_type import TriangulationRepresentationType
+from config.configuration import ClippedTerrainFeatureClass, GroupConfig
+from config.element_entity_type import ElementEntityType
+from config.geo_referencing import GeoReferencing
+from config.group_entity_type import GroupEntityType
+from config.spatial_structure_entity_type import SpatialStructureEntityType
+from config.triangulation_representation_type import TriangulationRepresentationType
 from core.ifc.geometry.triangulation import Triangulation
 from core.ifc.ifc_utils import *
 from core.ifc.model.model import Model
@@ -21,7 +21,7 @@ class IfcBuilder:
             project_name: str,
             geo_referencing: GeoReferencing,
             triangulation_representation_type: TriangulationRepresentationType,
-            feature_classes: dict[str, FeatureClass],
+            feature_classes: dict[str, ClippedTerrainFeatureClass],
             groups: dict[str, GroupConfig],
     ):
         self.author = author
