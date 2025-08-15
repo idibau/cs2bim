@@ -1,8 +1,9 @@
 import json
 from pathlib import Path
-from typing import Dict, List
+from typing import List
+from typing import Optional, Dict
 
-from pydantic import BaseModel
+from pydantic import BaseModel, model_validator
 from pydantic_yaml import parse_yaml_file_as
 
 from config.element_entity_type import ElementEntityType
@@ -71,8 +72,8 @@ class DBConfig(BaseModel):
 
 
 class STACConfig(BaseModel):
-    dtm_items_url: str
-    building_items_url: str
+    dtm_items_url: Optional[str] = None
+    building_items_url: Optional[str] = None
 
 
 class TINConfig(BaseModel):
@@ -102,6 +103,14 @@ class Configuration(BaseModel):
     @classmethod
     def load(cls, path: str | Path) -> "Configuration":
         return parse_yaml_file_as(cls, path)
+
+    @model_validator(mode="after")
+    def check_conditional_configs(self):
+        if self.ifc.clipped_terrain and self.stac.dtm_items_url is None:
+            raise ValueError("stac.dtm_items_url is required when ifc.clipped_terrain is not empty")
+        if self.ifc.buildings and self.stac.building_items_url is None:
+            raise ValueError("stac.building_items_url is required when ifc.buildings is not empty")
+        return self
 
 
 config = Configuration.load("/workspace/config.yml")
