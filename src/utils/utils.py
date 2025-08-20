@@ -1,6 +1,6 @@
 import logging
 import sys
-from datetime import datetime
+from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 from config.configuration import config
@@ -15,12 +15,16 @@ def setup_logger(log_file_name: str = None):
     root_logger.setLevel(config.logging_level)
     root_logger.addHandler(stream_handler)
 
-    if log_file_name is not None:
-        logs_path = "/workspace/logs"
-        Path(logs_path).mkdir(parents=True, exist_ok=True)
-        file_handler = logging.FileHandler(f"{logs_path}/{log_file_name}.log")
-        file_handler.setFormatter(logging.Formatter(logging_format))
-        root_logger.addHandler(file_handler)
+    logs_path = "/workspace/logs"
+    Path(logs_path).mkdir(parents=True, exist_ok=True)
+    file_handler = RotatingFileHandler(
+        f"{logs_path}/{log_file_name}.log",
+        maxBytes=10 * 1024 * 1024,
+        backupCount=3
+    )
+    file_handler.setFormatter(logging.Formatter(logging_format))
+
+    root_logger.addHandler(file_handler)
 
 
 def get_output_path(generation_id):

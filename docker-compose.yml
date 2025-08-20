@@ -26,12 +26,11 @@ services:
       - redis
     networks:
       - backend
-    environment:
-      - ENVIRONMENT=production
     volumes:
       - ./config.yml:/workspace/config.yml
       - ./sql:/workspace/sql
       - ifc_storage:/workspace/ifc_storage
+      - logs:/workspace/logs
 
   celery:
     container_name: celery
@@ -44,12 +43,12 @@ services:
       - redis
     networks:
       - backend
-    environment:
-      - ENVIRONMENT=production
     volumes:
       - ./config.yml:/workspace/config.yml
       - ./sql:/workspace/sql
       - ifc_storage:/workspace/ifc_storage
+      - logs:/workspace/logs
+      - cache:/workspace/cache
 
 networks:
   backend:
@@ -58,3 +57,5 @@ networks:
 volumes:
   redis_data:
   ifc_storage:
+  logs:
+  cache:

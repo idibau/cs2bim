@@ -16,8 +16,6 @@ services:
     container_name: app_dev
     image: python:3.10
     command: sleep infinity
-    environment:
-      - ENVIRONMENT=development
     ports:
       - "8000:8000"
     networks:
