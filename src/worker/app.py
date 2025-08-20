@@ -18,11 +18,7 @@ app.conf.result_expires = 86400
 
 @app.task(bind=True)
 def model_generation_task(self, ifc_version, name, polygon, project_origin):
-    log_file_name = None
-    if os.getenv("ENVIRONMENT") == "development":
-        log_file_name = f"task_{self.request.id}"
-    setup_logger(log_file_name)
-
+    setup_logger(f"task_{self.request.id}")
     logger = logging.getLogger(__name__)
 
     try:
@@ -34,5 +30,5 @@ def model_generation_task(self, ifc_version, name, polygon, project_origin):
         logger.info(f"Task {self.request.id}: Model generation completed, file saved to {output_path}")
         return output_path
     except Exception as e:
-        logger.error(f"Task {self.request.id}: Model generation failed: {str(e)}")
+        logger.error(f"Task {self.request.id}: Model generation failed: {str(e)}", exc_info=True)
         raise
