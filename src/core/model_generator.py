@@ -4,6 +4,7 @@ from config.configuration import config
 from core.ifc.ifc_builder import IfcBuilder
 from core.ifc.model.ifc_version import IfcVersion
 from core.ifc.model.model import Model
+from core.processors.building_processor import BuildingProcessor
 from core.processors.clipped_terrain_processor import ClippedTerrainProcessor
 from service.stac_service import STACService
 from service.postgis_service import PostgisService
@@ -25,6 +26,7 @@ class ModelGenerator:
             config.ifc.geo_referencing,
             config.ifc.triangulation_representation_type,
             config.ifc.clipped_terrain,
+            config.ifc.building,
             config.ifc.groups,
         )
         self.postgis_service = PostgisService()
@@ -48,6 +50,9 @@ class ModelGenerator:
 
         clipped_terrain_processor =  ClippedTerrainProcessor()
         clipped_terrain_processor.process(polygon, origin, model)
+
+        building_processor = BuildingProcessor()
+        building_processor.process(polygon, origin, model)
 
         ifc_file = self.ifc_builder.build(model)
         return ifc_file

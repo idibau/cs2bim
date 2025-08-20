@@ -55,7 +55,8 @@ class ClippedTerrainFeatureClass(BaseModel):
 
 
 class BuildingFeatureClass(BaseModel):
-    entity_type: ElementEntityType
+    sql_path: str
+    color: Color
 
 
 class GroupConfig(BaseModel):
@@ -89,7 +90,7 @@ class IFCConfig(BaseModel):
     geo_referencing: GeoReferencing
     triangulation_representation_type: TriangulationRepresentationType
     clipped_terrain: Dict[str, ClippedTerrainFeatureClass]
-    buildings: Dict[str, BuildingFeatureClass]
+    building: Dict[str, BuildingFeatureClass]
     groups: Dict[str, GroupConfig]
 
 
@@ -108,7 +109,7 @@ class Configuration(BaseModel):
     def check_conditional_configs(self):
         if self.ifc.clipped_terrain and self.stac.dtm_items_url is None:
             raise ValueError("stac.dtm_items_url is required when ifc.clipped_terrain is not empty")
-        if self.ifc.buildings and self.stac.building_items_url is None:
+        if self.ifc.building and self.stac.building_items_url is None:
             raise ValueError("stac.building_items_url is required when ifc.buildings is not empty")
         return self
 

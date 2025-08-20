@@ -1,10 +1,9 @@
-from config.configuration import ClippedTerrainFeatureClass, GroupConfig
+from config.configuration import ClippedTerrainFeatureClass, GroupConfig, BuildingFeatureClass
 from config.element_entity_type import ElementEntityType
 from config.geo_referencing import GeoReferencing
 from config.group_entity_type import GroupEntityType
 from config.spatial_structure_entity_type import SpatialStructureEntityType
 from config.triangulation_representation_type import TriangulationRepresentationType
-from core.ifc.geometry.triangulation import Triangulation
 from core.ifc.ifc_utils import *
 from core.ifc.model.model import Model
 
@@ -21,7 +20,8 @@ class IfcBuilder:
             project_name: str,
             geo_referencing: GeoReferencing,
             triangulation_representation_type: TriangulationRepresentationType,
-            feature_classes: dict[str, ClippedTerrainFeatureClass],
+            clipped_terrain_feature_classes: dict[str, ClippedTerrainFeatureClass],
+            building_feature_classes: dict[str, BuildingFeatureClass],
             groups: dict[str, GroupConfig],
     ):
         self.author = author
@@ -30,7 +30,8 @@ class IfcBuilder:
         self.project_name = project_name
         self.geo_referencing = geo_referencing
         self.triangulation_representation_type = triangulation_representation_type
-        self.feature_classes = feature_classes
+        self.clipped_terrain_feature_classes = clipped_terrain_feature_classes
+        self.building_feature_classes = building_feature_classes
         self.groups = groups
 
     def build(self, model: Model) -> file:
@@ -72,8 +73,36 @@ class IfcBuilder:
 
         ifc_groups = {}
         ifc_spatial_structures = {}
-        for feature_class_key, elements in model.feature_classes.items():
-            feature_class = self.feature_classes[feature_class_key]
+
+        ifc_site_buildings = add_ifc_site(ifc_file, ifc_local_placement, ifc_project)
+        buildings = []
+        for feature_class_key, elements in model.buildings.items():
+            feature_class = self.building_feature_classes[feature_class_key]
+            ifc_style = add_ifc_surface_style(ifc_file, feature_class.color)
+            for element in elements:
+                vertex_dict = {}
+                faces = []
+                vertices = []
+                for vertex in element.points:
+                    if vertex not in vertex_dict:
+                        vertex_dict[vertex] = add_ifc_cartesian_point(ifc_file, vertex)
+                    vertices.append(vertex_dict[vertex])
+                ifc_face = add_ifc_face(ifc_file, vertices)
+                faces.append(ifc_face)
+                ifc_face_set = add_ifc_faceted_brep(ifc_file, faces)
+                add_ifc_styled_item(ifc_file, ifc_face_set, ifc_style)
+                product_definition_shape = add_ifc_product_definition_shape(
+                    ifc_file, ifc_representation_sub_context, "Brep", ifc_face_set
+                )
+                ifc_local_placement = add_ifc_local_placement(ifc_file, (0.0, 0.0, 0.0))
+                ifc_element = add_ifc_geographic_element(ifc_file, ifc_local_placement, product_definition_shape)
+
+                buildings.append(ifc_element)
+
+        add_ifc_rel_contained_in_spatial_structure(ifc_file, buildings, ifc_site_buildings)
+
+        for feature_class_key, elements in model.clipped_terrains.items():
+            feature_class = self.clipped_terrain_feature_classes[feature_class_key]
             logger.info(f"FeatureClass {feature_class_key}: build ifc spatial structure")
             spatial_structure_config = feature_class.spatial_structure
             if not spatial_structure_config.get_key() in ifc_spatial_structures:
@@ -95,46 +124,41 @@ class IfcBuilder:
             groups = {}
             ifc_elements = []
             for element in elements:
-                if isinstance(element.geometry, Triangulation):
-                    representation_type = self.triangulation_representation_type
-                    if representation_type == TriangulationRepresentationType.TESSELLATION:
-                        vertices_dict = {}
+                representation_type = self.triangulation_representation_type
+                if representation_type == TriangulationRepresentationType.TESSELLATION:
+                    vertices_dict = {}
+                    vertices = []
+                    for triangle in element.triangles:
+                        for vertex in triangle:
+                            if not vertex in vertices_dict:
+                                vertices_dict[vertex] = len(vertices) + 1
+                                vertices.append(vertex)
+                    point_index_list = [
+                        tuple(vertices_dict[v] for v in triangle) for triangle in element.triangles
+                    ]
+                    ifc_face_set = add_ifc_triangulated_face_set(ifc_file, vertices, point_index_list)
+                    add_ifc_styled_item(ifc_file, ifc_face_set, ifc_style)
+                    product_definition_shape = add_ifc_product_definition_shape(
+                        ifc_file, ifc_representation_sub_context, "Tesselation", ifc_face_set
+                    )
+                elif representation_type == TriangulationRepresentationType.BREP:
+                    vertex_dict = {}
+                    faces = []
+                    for triangle in element.triangles:
                         vertices = []
-                        for triangle in element.geometry.triangles:
-                            for vertex in triangle:
-                                if not vertex in vertices_dict:
-                                    vertices_dict[vertex] = len(vertices) + 1
-                                    vertices.append(vertex)
-                        point_index_list = [
-                            tuple(vertices_dict[v] for v in triangle) for triangle in element.geometry.triangles
-                        ]
-                        ifc_face_set = add_ifc_triangulated_face_set(ifc_file, vertices, point_index_list)
-                        add_ifc_styled_item(ifc_file, ifc_face_set, ifc_style)
-                        product_definition_shape = add_ifc_product_definition_shape(
-                            ifc_file, ifc_representation_sub_context, "Tesselation", ifc_face_set
-                        )
-                    elif representation_type == TriangulationRepresentationType.BREP:
-                        vertex_dict = {}
-                        faces = []
-                        for triangle in element.geometry.triangles:
-                            vertices = []
-                            for vertex in triangle:
-                                if vertex not in vertex_dict:
-                                    vertex_dict[vertex] = add_ifc_cartesian_point(ifc_file, vertex)
-                                vertices.append(vertex_dict[vertex])
-                            ifc_face = add_ifc_face(ifc_file, vertices)
-                            faces.append(ifc_face)
-                        ifc_face_set = add_ifc_faceted_brep(ifc_file, faces)
-                        add_ifc_styled_item(ifc_file, ifc_face_set, ifc_style)
-                        product_definition_shape = add_ifc_product_definition_shape(
-                            ifc_file, ifc_representation_sub_context, "Brep", ifc_face_set
-                        )
-                    else:
-                        raise Exception(
-                            f"builing step for triangulation representation type {representation_type.name} not implemented"
-                        )
+                        for vertex in triangle:
+                            if vertex not in vertex_dict:
+                                vertex_dict[vertex] = add_ifc_cartesian_point(ifc_file, vertex)
+                            vertices.append(vertex_dict[vertex])
+                        ifc_face = add_ifc_face(ifc_file, vertices)
+                        faces.append(ifc_face)
+                    ifc_face_set = add_ifc_faceted_brep(ifc_file, faces)
+                    add_ifc_styled_item(ifc_file, ifc_face_set, ifc_style)
+                    product_definition_shape = add_ifc_product_definition_shape(
+                        ifc_file, ifc_representation_sub_context, "Brep", ifc_face_set
+                    )
                 else:
-                    raise Exception(f"builing step for geometry class {type(element.geometry)} not implemented")
+                    raise Exception(f"builing step for representation type {type(representation_type)} not implemented")
 
                 ifc_local_placement = add_ifc_local_placement(ifc_file, (0.0, 0.0, 0.0))
                 if feature_class.entity_type == ElementEntityType.IFC_GEOGRAPHIC_ELEMENT:

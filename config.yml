@@ -130,7 +130,15 @@ ifc:
         g: 0.00
         b: 0.00
         a: 0.85
-  buildings: {}
+  building:
+    all:
+      sql_path: "/workspace/sql/egid.sql"
+      color:
+        r: 1.00
+        g: 1.00
+        b: 1.00
+        a: 0.00
+
   groups:
     Amtliche Vermessung.Gebaeude:
       entity_type: IFC_BUILDING_SYSTEM

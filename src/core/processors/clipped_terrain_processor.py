@@ -4,13 +4,12 @@ import numpy as np
 import shapely
 
 from config.configuration import config
-from core.ifc.geometry.triangulation import Triangulation
-from core.ifc.model.element import Element
+from core.ifc.model.clipped_terrain import ClippedTerrain
 from core.tin.mesh import Mesh
 from core.tin.polygon import Area
 from core.tin.raster import RasterPoints
-from service.stac_service import STACService
 from service.postgis_service import PostgisService
+from service.stac_service import STACService
 
 logger = logging.getLogger(__name__)
 
@@ -69,8 +68,7 @@ class ClippedTerrainProcessor:
                     areas[index] = Area(wkt_str=wkt_str, origin=origin[:2])
 
                     logger.debug("calculate raster points buffer")
-                    raster_points_buffer = dtm_points.within(areas[index].get_geometry,
-                                                             buffer_dist=3 * tin_config.grid_size)
+                    raster_points_buffer = dtm_points.within(areas[index].get_geometry, buffer_dist=3 * tin_config.grid_size)
                     if index not in rp_buffer:
                         rp_buffer[index] = []
                     if raster_points_buffer is not None:
@@ -83,14 +81,14 @@ class ClippedTerrainProcessor:
                     if raster_points_within is not None:
                         rp_within[index].append(raster_points_within)
 
-                    logger.debug("create mesh")
-
             for index, element_data in enumerate(elements):
                 attributes = {}
                 for attribute in feature_class.attributes:
                     attributes[attribute.name] = element_data[attribute.column]
 
-                if rp_buffer[index]:
+                logger.info(f"create mesh {index + 1}/{len(elements)}")
+
+                if index in rp_buffer and rp_buffer[index]:
                     raster_points_buffer = np.vstack(rp_buffer[index])
                 else:
                     raster_points_buffer = np.empty((0, 3))
@@ -109,11 +107,8 @@ class ClippedTerrainProcessor:
                 logger.info(
                     f"area consistensy: {mesh_clipped_decimated.check_area_consistency(areas[index].get_area, treshold=0.1)}"
                 )
-                triangulation = Triangulation()
-                triangulation.load_from_points_and_faces(mesh_clipped_decimated.get_data())
                 groups = [element_data[group_column] for group_column in feature_class.group_columns]
-                element = Element(attributes, groups, triangulation)
-                for property in feature_class.properties:
-                    element.add_property(property.set, property.name, element_data[property.column])
-                model.add_element(feature_class_key, element)
-
+                element = ClippedTerrain(mesh_clipped_decimated.get_data(), attributes, groups)
+                for p in feature_class.properties:
+                    element.add_property(p.set, p.name, element_data[p.column])
+                model.add_clipped_terrain(feature_class_key, element)
