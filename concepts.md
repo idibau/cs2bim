@@ -58,7 +58,7 @@ The GIS geometry is expected to be in WKT format ([ISO 19125-1])[^ISO19125-1]. I
 Based on the available digital terrain model (DTM) represented as uniformly sampled grid points any 2D polygon object is converted into a 3D surface object. The 2D polygon object is assumed to be represented as WKT-string and to have no circular arcs.
 First, all grid points within a specific buffer (user-definable argument) around the 2D polygon object are extracted. A 2D Delaunay triangulation is applied to the retrieved subset of grid points to obtain a triangulated irregular network (TIN). Then, the vertices of the polygon object are projected onto the surface by using raytracing along the z-unit vector (0,0,1). For each line segment of the polygon object a vertical plane is defined and intersection points of all triangle edges are calculated. The new surface object with all grid points within the polygon object and a boundary consisting of all vertices and intersection point is defined. The new surface is again triangulated using a 2D Delaunay triangulation. To reduce the number of triangles it is possible to apply a simplification of the TIN by specifying the maximum acceptable height error (user-definable argument). The following figure shows the geometry conversion schematically.
 
-![Schematic illustration of geometry conversion](./uploads/CS_2d_to_3d.jpg){width=600}
+![Schematic illustration of geometry conversion](./uploads/cs-2d-t2-3d.jpg){width=600}
 
 A more detailled description of the conversion can be found in our publication mentioned in [README.md](README.md)
 

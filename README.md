@@ -36,7 +36,7 @@ The service contains the following major components:
 - Processing of the terrain model data and creating the resulting 3D surfaces
 - Exporting of the objects to IFC format using the IfcOpenShell component
 
-![CS2BIM System Architecture](./uploads/CS2BIM_system_architecture.jpg){width=600}
+![CS2BIM System Architecture](uploads/system-architecture.jpg){width=600}
 
 The diagram shows the system architecture and all major components of the implementation. Description of the components:
 | component | name | description |
@@ -54,7 +54,7 @@ information). |
 
 ## Resulting IFC Files
 
-![CS2BIM test data](./uploads/CS2BIM_testdata.JPG){width=1000}
+![CS2BIM test data](uploads/testdata.jpg){width=1000}
 
 Example files can be downloaded with the following links.
 
@@ -278,14 +278,14 @@ Supported values are:
     - Suited for large-scale and linear project expansions
     - IFC 4.0
 
-![Levels of Georeferencing LoGeoRef](./uploads/LoGeoRef.png){width=600}
+![Levels of Georeferencing LoGeoRef](uploads/lo-geo-ref.png){width=600}
 
 **Coordinates and Offets**  
 You can provide a project origin in LV95 coordinates (Easting, Northing, Height). The project origin can also be set
 to (0,0,0).  
 If not provided, the system sets a project origin calculated on a minimum bounding box of the perimeter.
 
-![Levels of Georeferencing LoGeoRef](./uploads/project_origin.png){width=600}
+![Levels of Georeferencing LoGeoRef](uploads/project-origin.png){width=600}
 
 ### Triangulation Representation Type
 
