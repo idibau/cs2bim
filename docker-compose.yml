@@ -29,7 +29,7 @@ services:
     volumes:
       - ./config.yml:/workspace/config.yml
       - ./sql:/workspace/sql
-      - ifc_storage:/workspace/ifc_storage
+      - ifc:/workspace/ifc
       - logs:/workspace/logs
 
   celery:
@@ -46,7 +46,7 @@ services:
     volumes:
       - ./config.yml:/workspace/config.yml
       - ./sql:/workspace/sql
-      - ifc_storage:/workspace/ifc_storage
+      - ifc:/workspace/ifc
       - logs:/workspace/logs
       - cache:/workspace/cache
 
@@ -56,6 +56,6 @@ networks:
 
 volumes:
   redis_data:
-  ifc_storage:
+  ifc:
   logs:
   cache:

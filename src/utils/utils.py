@@ -28,4 +28,4 @@ def setup_logger(log_file_name: str = None):
 
 
 def get_output_path(generation_id):
-    return f"/workspace/ifc_storage/{generation_id}.ifc"
+    return f"/workspace/ifc/{generation_id}.ifc"
