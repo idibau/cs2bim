@@ -25,7 +25,7 @@ class Model:
         self.schema = schema
         self.origin = origin
         self.clipped_terrains = {}
-        self.buildings = {}
+        self.buildings: dict[str, list[Building]] = {}
 
     def add_clipped_terrain(self, feature_class_key: str, clipped_terrain: ClippedTerrain) -> None:
         if not feature_class_key in self.clipped_terrains:

@@ -3,8 +3,8 @@ from core.ifc.model.element import Element
 
 class ClippedTerrain(Element):
 
-    def __init__(self, data: tuple[list[list[float]], list[list[int]]], attributes: dict[str, str] = None, groups: list[str] = None) -> None:
-        super().__init__(attributes, groups)
+    def __init__(self, data: tuple[list[list[float]], list[list[int]]], groups: list[str] = None) -> None:
+        super().__init__(groups)
         self.triangles = []
         point_list = data[0]
         index_list = data[1]

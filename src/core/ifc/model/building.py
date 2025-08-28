@@ -1,8 +1,21 @@
+from config.element_entity_type import ElementEntityType
 from core.ifc.model.element import Element
+
+
+class BuildingPart(Element):
+
+    def __init__(self, entity_type: ElementEntityType, points, color, attributes: dict[str, str] = None):
+        super().__init__(attributes)
+        self.color = color
+        self.points = points
+        self.entity_type = entity_type
 
 
 class Building(Element):
 
-    def __init__(self, points, attributes: dict[str, str] = None, groups: list[str] = None) -> None:
-        super().__init__(attributes, groups)
-        self.points = points
+    def __init__(self, groups: list[str] = None) -> None:
+        super().__init__(groups)
+        self.building_parts: list[BuildingPart] = []
+
+    def add_building_part(self, building_part: BuildingPart):
+        self.building_parts.append(building_part)

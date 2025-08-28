@@ -30,9 +30,9 @@ class STACService:
         hrefs = self.fetch_latest_assets(config.stac.building_items_url, bounding_box, asset_filter)
         return [self.fetch_and_extract_zip(href) for href in hrefs]
 
-    def fetch_dtm_assets(self, bounding_box: BoundingBox):
+    def fetch_dtm_assets(self, bounding_box: BoundingBox, grid_size: float):
         asset_filter = lambda asset: asset["type"] == "application/x.ascii-xyz+zip" and asset[
-            "eo:gsd"] == config.tin.grid_size
+            "eo:gsd"] == grid_size
         hrefs = self.fetch_latest_assets(config.stac.dtm_items_url, bounding_box, asset_filter)
         return [self.fetch_and_extract_zip(href) for href in hrefs]
 

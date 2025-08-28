@@ -13,20 +13,36 @@ from config.spatial_structure_entity_type import SpatialStructureEntityType
 from config.triangulation_representation_type import TriangulationRepresentationType
 
 
-class PropertyConfig(BaseModel):
+class SqlToPropertyConfig(BaseModel):
     name: str
     set: str
     column: str
 
 
-class ValueAttribute(BaseModel):
+class XmlToPropertyConfig(BaseModel):
+    name: str
+    set: str
+    xpath: str
+
+
+class Attribute(BaseModel):
     name: str
     value: str
 
 
+class SqlToAttributeConfig(BaseModel):
+    name: str
+    column: str
+
+
+class XmlToAttributeConfig(BaseModel):
+    name: str
+    xpath: str
+
+
 class SpatialStructureConfig(BaseModel):
     entity_type: SpatialStructureEntityType
-    attributes: List[ValueAttribute]
+    attributes: Optional[List[Attribute]] = []
 
     def get_key(self) -> str:
         return f"{json.dumps([attribute.model_dump_json() for attribute in self.attributes], sort_keys=True)}-{self.entity_type.name}"
@@ -36,32 +52,40 @@ class Color(BaseModel):
     r: float
     g: float
     b: float
-    a: float
-
-
-class Attribute(BaseModel):
-    name: str
-    column: str
+    a: Optional[float] = 0.00
 
 
 class ClippedTerrainFeatureClass(BaseModel):
     sql_path: str
     entity_type: ElementEntityType
-    attributes: List[Attribute]
-    properties: List[PropertyConfig]
     spatial_structure: SpatialStructureConfig
-    group_columns: List[str]
+    attributes: Optional[List[SqlToAttributeConfig]] = []
+    properties: Optional[List[SqlToPropertyConfig]] = []
+    group_columns: Optional[List[str]] = []
+    color: Color
+
+
+class BuildingPartConfig(BaseModel):
+    xpath: str
+    entity_type: ElementEntityType
+    attributes: Optional[List[XmlToAttributeConfig]] = []
+    properties: Optional[List[XmlToPropertyConfig]] = []
     color: Color
 
 
 class BuildingFeatureClass(BaseModel):
     sql_path: str
-    color: Color
+    egid_xpath: str
+    spatial_structure: SpatialStructureConfig
+    attributes: Optional[List[XmlToAttributeConfig]] = []
+    properties: Optional[List[XmlToPropertyConfig]] = []
+    building_parts: Optional[List[BuildingPartConfig]] = []
+    group_columns: Optional[List[str]] = []
 
 
 class GroupConfig(BaseModel):
     entity_type: GroupEntityType
-    attributes: List[ValueAttribute]
+    attributes: Optional[List[Attribute]] = []
 
 
 class DBConfig(BaseModel):

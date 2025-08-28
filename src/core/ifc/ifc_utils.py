@@ -254,6 +254,46 @@ def add_ifc_geographic_element(
         "IfcGeographicElement", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
     )
 
+def add_ifc_building(
+        ifc_file: file, object_placement: entity_instance
+) -> entity_instance:
+    return ifc_file.create_entity(
+        "IfcBuilding", GlobalId=guid.new(), ObjectPlacement=object_placement
+    )
+
+def add_ifc_space(
+        ifc_file: file, object_placement: entity_instance, representation: entity_instance
+) -> entity_instance:
+    return ifc_file.create_entity(
+        "IfcSpace", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+    )
+
+def add_ifc_wall(
+        ifc_file: file, object_placement: entity_instance, representation: entity_instance
+) -> entity_instance:
+    return ifc_file.create_entity(
+        "IfcWall", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+    )
+
+def add_ifc_roof(
+        ifc_file: file, object_placement: entity_instance, representation: entity_instance
+) -> entity_instance:
+    return ifc_file.create_entity(
+        "IfcRoof", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+    )
+
+def add_ifc_slab(
+        ifc_file: file, object_placement: entity_instance, representation: entity_instance
+) -> entity_instance:
+    return ifc_file.create_entity(
+        "IfcSlab", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+    )
+
+
+
+
+
+
 
 def add_ifc_surface_style(ifc_file: file, color: Color) -> entity_instance:
     surface_colour = ifc_file.create_entity("IfcColourRgb", Red=color.r, Green=color.g, Blue=color.b)

@@ -16,8 +16,8 @@ class Element(ABC):
         A map of all property sets identified by their name
     """
 
-    def __init__(self, attributes: dict[str, str] = None, groups: list[str] = None) -> None:
-        self.attributes = attributes if attributes is not None else {}
+    def __init__(self, groups: list[str] = None) -> None:
+        self.attributes = {}
         self.groups = groups if groups is not None else []
         self.property_sets = {}
 
@@ -26,3 +26,11 @@ class Element(ABC):
         if not property_set in self.property_sets:
             self.property_sets[property_set] = PropertySet(property_set)
         self.property_sets[property_set].add_property(key, value)
+
+    def add_attribute(self, name, value):
+        """Adds a new attribute to the element"""
+        if not name in self.attributes:
+            self.attributes[name] = value
+        else:
+            raise Exception(f"Attribute {name} already exists")
+
