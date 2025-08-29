@@ -81,7 +81,6 @@ class IfcBuilder:
 
             logger.info(f"FeatureClass {feature_class_key}: build ifc elements")
             ifc_style = add_ifc_surface_style(ifc_file, feature_class.color)
-
             ifc_elements = []
             for element in elements:
                 representation_type = self.triangulation_representation_type
@@ -126,8 +125,9 @@ class IfcBuilder:
             for element in elements:
                 ifc_building_parts = []
                 for building_part in element.building_parts:
+                    ifc_style = add_ifc_surface_style(ifc_file, building_part.color)
                     product_definition_shape = self.create_brep(ifc_file, ifc_representation_sub_context,
-                                                                ifc_style, element.triangles)
+                                                                ifc_style, building_part.faces)
                     ifc_local_placement = add_ifc_local_placement(ifc_file, (0.0, 0.0, 0.0))
                     if building_part.entity_type == ElementEntityType.IFC_GEOGRAPHIC_ELEMENT:
                         ifc_element = add_ifc_geographic_element(ifc_file, ifc_local_placement,

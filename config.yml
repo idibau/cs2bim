@@ -136,63 +136,62 @@ ifc:
         attributes:
           - name: "Name"
             value: "Gebäude"
-      building:
-        attributes:
-          - name: "Name"
-            xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
-        properties:
-          - name: "Erstellung Jahr"
-            set: "Erstellung"
-            xpath: ".//gen:intAttribute[@name='ERSTELLUNG_JAHR']/gen:value"
-          - name: "Erstellung Monat"
-            set: "Erstellung"
-            xpath: ".//gen:intAttribute[@name='ERSTELLUNG_MONAT']/gen:value"
-        building_parts:
-          - xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
-            entity_type: IFC_SPACE
-            attributes: [ ]
-            properties: [ ]
-            color:
-              r: 1.00
-              g: 1.00
-              b: 1.00
-              a: 0.8
-          - xpath: ".//bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
-            entity_type: IFC_WALL
-            attributes: [ ]
-            properties:
-              - name: "Herkunft Monat"
-                set: "Herkunft"
-                xpath: ".//bldg:boundedBy/bldg:WallSurface/gen:intAttribute[@name='HERKUNFT_MONAT']/gen:value"
-              - name: "Herkunft Jahr"
-                set: "Herkunft"
-                xpath: ".//bldg:boundedBy/bldg:WallSurface/gen:intAttribute[@name='HERKUNFT_JAHR']/gen:value"
-              - name: "Original Herkunft"
-                set: "Herkunft"
-                xpath: ".//bldg:boundedBy/bldg:WallSurface/gen:stringAttribute[@name='HERKUNFT']/gen:value"
-            color:
-              r: 1.00
-              g: 1.00
-              b: 1.00
-              a: 0.00
-          - xpath: ".//bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
-            entity_type: IFC_ROOF
-            attributes: [ ]
-            properties: [ ]
-            color:
-              r: 1.00
-              g: 0.8
-              b: 0.8
-              a: 0.00
-          - xpath: ".//bldg:boundedBy/bldg:GroundSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
-            entity_type: IFC_SLAB
-            attributes: [ ]
-            properties: [ ]
-            color:
-              r: 0.8
-              g: 0.8
-              b: 1.00
-              a: 0.00
+      attributes:
+        - name: "Name"
+          xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
+      properties:
+        - name: "Erstellung Jahr"
+          set: "Erstellung"
+          xpath: ".//gen:intAttribute[@name='ERSTELLUNG_JAHR']/gen:value"
+        - name: "Erstellung Monat"
+          set: "Erstellung"
+          xpath: ".//gen:intAttribute[@name='ERSTELLUNG_MONAT']/gen:value"
+      building_parts:
+        - xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+          entity_type: IFC_SPACE
+          attributes: [ ]
+          properties: [ ]
+          color:
+            r: 1.00
+            g: 1.00
+            b: 1.00
+            a: 0.8
+        - xpath: ".//bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+          entity_type: IFC_WALL
+          attributes: [ ]
+          properties:
+            - name: "Herkunft Monat"
+              set: "Herkunft"
+              xpath: ".//bldg:boundedBy/bldg:WallSurface/gen:intAttribute[@name='HERKUNFT_MONAT']/gen:value"
+            - name: "Herkunft Jahr"
+              set: "Herkunft"
+              xpath: ".//bldg:boundedBy/bldg:WallSurface/gen:intAttribute[@name='HERKUNFT_JAHR']/gen:value"
+            - name: "Original Herkunft"
+              set: "Herkunft"
+              xpath: ".//bldg:boundedBy/bldg:WallSurface/gen:stringAttribute[@name='HERKUNFT']/gen:value"
+          color:
+            r: 1.00
+            g: 1.00
+            b: 1.00
+            a: 0.00
+        - xpath: ".//bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+          entity_type: IFC_ROOF
+          attributes: [ ]
+          properties: [ ]
+          color:
+            r: 1.00
+            g: 0.8
+            b: 0.8
+            a: 0.00
+        - xpath: ".//bldg:boundedBy/bldg:GroundSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+          entity_type: IFC_SLAB
+          attributes: [ ]
+          properties: [ ]
+          color:
+            r: 0.8
+            g: 0.8
+            b: 1.00
+            a: 0.00
   groups:
     Amtliche Vermessung.Gebaeude:
       entity_type: IFC_BUILDING_SYSTEM

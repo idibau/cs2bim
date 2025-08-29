@@ -72,16 +72,16 @@ class BuildingProcessor:
                                 float(coords[i + 2] - origin[2])) for i in
                                range(0, len(coords), 3)])
             building_part = BuildingPart(building_part_config.entity_type, points, building_part_config.color)
-            self.add_attributes_and_properties(building, building_part_config, building_model)
+            self.add_attributes_and_properties(building, building_part_config, building_part)
             building_model.add_building_part(building_part)
         return building_model
 
-    def add_attributes_and_properties(self, building, element_config, building_model):
+    def add_attributes_and_properties(self, building, element_config, element):
         for attribute in element_config.attributes:
             value_elem = building.find(attribute.xpath, namespaces=self.ns)
             if value_elem is not None:
-                building_model.add_attribute(attribute.name, value_elem.text.strip())
+                element.add_attribute(attribute.name, value_elem.text.strip())
         for property in element_config.properties:
             value_elem = building.find(property.xpath, namespaces=self.ns)
             if value_elem is not None:
-                building_model.add_property(property.set, property.name, value_elem.text.strip())
+                element.add_property(property.set, property.name, value_elem.text.strip())
