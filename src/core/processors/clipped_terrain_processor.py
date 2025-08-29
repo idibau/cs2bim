@@ -109,9 +109,10 @@ class ClippedTerrainProcessor:
                 groups = [element_data[group_column] for group_column in feature_class.group_columns]
                 element = ClippedTerrain(mesh_clipped_decimated.get_data(), groups)
                 for attribute in feature_class.attributes:
-                    element.add_attribute(attribute.name, element_data[attribute.column])
-
+                    if attribute.column in element_data:
+                        element.add_attribute(attribute.name, element_data[attribute.column])
                 for p in feature_class.properties:
-                    element.add_property(p.set, p.name, element_data[p.column])
+                    if p.column in element_data:
+                        element.add_property(p.set, p.name, element_data[p.column])
                 model.add_clipped_terrain(feature_class_key, element)
             logger.info("finished creating meshes")

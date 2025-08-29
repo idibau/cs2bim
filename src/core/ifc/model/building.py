@@ -4,8 +4,8 @@ from core.ifc.model.element import Element
 
 class BuildingPart(Element):
 
-    def __init__(self, entity_type: ElementEntityType, points, color, attributes: dict[str, str] = None):
-        super().__init__(attributes)
+    def __init__(self, entity_type: ElementEntityType, points, color):
+        super().__init__()
         self.color = color
         self.points = points
         self.entity_type = entity_type

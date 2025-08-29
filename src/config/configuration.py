@@ -44,7 +44,7 @@ class SpatialStructureConfig(BaseModel):
     entity_type: SpatialStructureEntityType
     attributes: Optional[List[Attribute]] = []
 
-    def get_key(self) -> str:
+    def get_id(self) -> str:
         return f"{json.dumps([attribute.model_dump_json() for attribute in self.attributes], sort_keys=True)}-{self.entity_type.name}"
 
 
@@ -80,7 +80,7 @@ class BuildingFeatureClass(BaseModel):
     attributes: Optional[List[XmlToAttributeConfig]] = []
     properties: Optional[List[XmlToPropertyConfig]] = []
     building_parts: Optional[List[BuildingPartConfig]] = []
-    group_columns: Optional[List[str]] = []
+    group_columns: Optional[List[str]] = [] #TODO: Implement
 
 
 class GroupConfig(BaseModel):

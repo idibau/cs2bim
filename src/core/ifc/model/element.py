@@ -1,5 +1,6 @@
-from core.ifc.model.property_set import PropertySet
 from abc import ABC
+
+from core.ifc.model.property_set import PropertySet
 
 
 class Element(ABC):
@@ -17,8 +18,8 @@ class Element(ABC):
     """
 
     def __init__(self, groups: list[str] = None) -> None:
-        self.attributes = {}
         self.groups = groups if groups is not None else []
+        self.attributes = {}
         self.property_sets = {}
 
     def add_property(self, property_set: str, key: str, value: str):
@@ -33,4 +34,3 @@ class Element(ABC):
             self.attributes[name] = value
         else:
             raise Exception(f"Attribute {name} already exists")
-

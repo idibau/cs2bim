@@ -1,5 +1,5 @@
 ################# general ###################
-logging_level: DEBUG
+logging_level: INFO
 
 ########## postgis configuration ############
 db:
@@ -193,7 +193,6 @@ ifc:
               g: 0.8
               b: 1.00
               a: 0.00
-      group_columns: [ ]
   groups:
     Amtliche Vermessung.Gebaeude:
       entity_type: IFC_BUILDING_SYSTEM
