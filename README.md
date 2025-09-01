@@ -51,7 +51,7 @@ Example files can be downloaded with the following links.
 |  1  |    200mx200m.ifc    |   https://drive.switch.ch/index.php/s/YOgygwb3ZqmG44v   | All areas (parcel, landcover etc.) that intersect with the 200m x 200m polygon are included | 
 |  2  |    200mx200m_con.ifc   | https://drive.switch.ch/index.php/s/2pivcwXtneYqSdY |  All areas (parcel, landcover etc.) that are fully contained by the 200m x 200m polygon are included |
 |  3  |    200mx200m_int.ifc    |  https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf  | All areas (parcel, landcover etc.) are cut off at the border of the 200m x 200m polygon |
-|  4  |    500mx500m.ifc   |   https://drive.switch.ch/index.php/s/Bcq40YjOljKZ2oa | All areas (parcel, landcover etc.) that intersect with the 500m x 500m polygon are included | 
+|  4  |    500mx500m.ifc   |   https://drive.switch.ch/index.php/s/NlH1WwYj6uC5NPc | All areas (parcel, landcover etc.) that intersect with the 500m x 500m polygon are included | 
 
 # Concepts
 The cs2bim service supports different central IFC concepts and allows a relatively dynamic (configurable) transformation between the geodata and the IFC data model. The main IFC concepts and principles of data transformation and processing are briefly explained on the [Concepts](concepts.md) page.
