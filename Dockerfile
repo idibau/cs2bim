@@ -6,6 +6,13 @@ RUN apt-get update
 RUN useradd -m appuser
 RUN chown -R appuser:appuser /workspace
 
+RUN mkdir /workspace/ifc
+RUN chown -R appuser:appuser /workspace/ifc
+RUN mkdir /workspace/cache
+RUN chown -R appuser:appuser /workspace/cache
+RUN mkdir /workspace/logs
+RUN chown -R appuser:appuser /workspace/logs
+
 COPY src /workspace/src
 COPY requirements.txt /workspace/requirements.txt
 
