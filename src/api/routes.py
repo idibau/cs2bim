@@ -74,7 +74,7 @@ async def get_generated_file(task_id: str):
     if state in ["PENDING", "STARTED", "RETRY"]:
         raise HTTPException(
             status_code=202,
-            detail=f"Model generation is {state.lower()}"
+            detail=f"Model generation state is {state.lower()}"
         )
 
     if state == "FAILURE":

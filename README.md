@@ -89,8 +89,8 @@ The run parameters are:
 
 - IFC_VERSION: Ifc version of the resulting ifc file (supported versions/values see src\cs2bim\ifc\enum\ifc_version.py).
 - NAME: Name of the resulting ifc file.
-- POLYGON : The area in which the data is treated. The polygon must be a valid wkt string in LV95.
-- PROJECT_ORIGIN (optional) : The project origin in LV95 coordinates "Easting,Northing,Height". If project origin is
+- POLYGON: The area in which the data is treated. The polygon must be a valid wkt string in LV95.
+- PROJECT_ORIGIN (optional): The project origin in LV95 coordinates "Easting, Northing, Height". If project origin is
   set, all other geometry values in the ifc are calculated relative to the origin.
 
 Example:
