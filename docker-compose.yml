@@ -13,8 +13,8 @@ services:
     volumes:
       - redis_data:/data
 
-  app:
-    container_name: app
+  api:
+    container_name: api
     build:
       context: .
       dockerfile: Dockerfile
@@ -32,8 +32,8 @@ services:
       - ifc:/workspace/ifc
       - logs:/workspace/logs
 
-  celery:
-    container_name: celery
+  worker:
+    container_name: worker
     build:
       context: .
       dockerfile: Dockerfile
