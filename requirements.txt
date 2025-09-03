@@ -18,4 +18,5 @@ pydantic==2.11.7
 pydantic-yaml==1.5.1
 requests==2.32.4
 celery[redis]==5.5.3
-redis===5.2.1
+redis==5.2.1
+lxml==6.0.0

@@ -13,16 +13,6 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
-"""
-Example
-{
-  "IFC_VERSION": "IFC4x3",
-  "NAME": "API Test",
-  "POLYGON": "POLYGON((2615610.59 1264657.53, 2615782.92 1264674.74, 2615747.00 1264604.23, 2615610.59 1264657.53))",
-  "PROJECT_ORIGIN": "0,0,0"
-}
-"""
-
 
 def log_exceptions(func):
     @functools.wraps(func)
@@ -84,7 +74,7 @@ async def get_generated_file(task_id: str):
     if state in ["PENDING", "STARTED", "RETRY"]:
         raise HTTPException(
             status_code=202,
-            detail=f"Model generation is {state.lower()}"
+            detail=f"Model generation state is {state.lower()}"
         )
 
     if state == "FAILURE":

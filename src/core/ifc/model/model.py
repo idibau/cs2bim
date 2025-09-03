@@ -1,3 +1,5 @@
+from core.ifc.model.building import Building
+from core.ifc.model.clipped_terrain import ClippedTerrain
 from core.ifc.model.ifc_version import IfcVersion
 from core.ifc.model.element import Element
 
@@ -22,9 +24,15 @@ class Model:
         self.file_name = file_name
         self.schema = schema
         self.origin = origin
-        self.feature_classes = {}
+        self.clipped_terrains = {}
+        self.buildings: dict[str, list[Building]] = {}
 
-    def add_element(self, feature_class_key: str, element: Element) -> None:
-        if not feature_class_key in self.feature_classes:
-            self.feature_classes[feature_class_key] = []
-        self.feature_classes[feature_class_key].append(element)
+    def add_clipped_terrain(self, feature_class_key: str, clipped_terrain: ClippedTerrain) -> None:
+        if not feature_class_key in self.clipped_terrains:
+            self.clipped_terrains[feature_class_key] = []
+        self.clipped_terrains[feature_class_key].append(clipped_terrain)
+
+    def add_building(self, feature_class_key: str, element: Building) -> None:
+        if not feature_class_key in self.buildings:
+            self.buildings[feature_class_key] = []
+        self.buildings[feature_class_key].append(element)

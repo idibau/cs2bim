@@ -1,8 +1,9 @@
-from core.ifc.geometry.geometry import Geometry
+from abc import ABC
+
 from core.ifc.model.property_set import PropertySet
 
 
-class Element:
+class Element(ABC):
     """
     Representation of an IfcElement that can be added to a model
 
@@ -10,18 +11,15 @@ class Element:
     ----------
     attributes : dict[str, str]
         Attributes of the element
-    geometry : Geometry
-        The geometry of the element
     groups : list[str]
         A list of all groups that this element is assigned to
     property_sets : dict[str, PropertySet]
         A map of all property sets identified by their name
     """
 
-    def __init__(self, attributes: dict[str, str], groups: list[str], geometry: Geometry) -> None:
-        self.attributes = attributes
-        self.geometry = geometry
-        self.groups = groups
+    def __init__(self, groups: list[str] = None) -> None:
+        self.groups = groups if groups is not None else []
+        self.attributes = {}
         self.property_sets = {}
 
     def add_property(self, property_set: str, key: str, value: str):
@@ -29,3 +27,10 @@ class Element:
         if not property_set in self.property_sets:
             self.property_sets[property_set] = PropertySet(property_set)
         self.property_sets[property_set].add_property(key, value)
+
+    def add_attribute(self, name, value):
+        """Adds a new attribute to the element"""
+        if not name in self.attributes:
+            self.attributes[name] = value
+        else:
+            raise Exception(f"Attribute {name} already exists")

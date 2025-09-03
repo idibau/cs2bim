@@ -10,3 +10,5 @@ select
 from
     cs2bim.boflaeche bb
     join perimeter on ST_Contains(perimeter.geom, bb.geometrie)
+where
+    bb.art <> 'Gebaeude'

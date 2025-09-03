@@ -13,22 +13,38 @@ from config.spatial_structure_entity_type import SpatialStructureEntityType
 from config.triangulation_representation_type import TriangulationRepresentationType
 
 
-class PropertyConfig(BaseModel):
+class SqlToPropertyConfig(BaseModel):
     name: str
     set: str
     column: str
 
 
-class ValueAttribute(BaseModel):
+class XmlToPropertyConfig(BaseModel):
+    name: str
+    set: str
+    xpath: str
+
+
+class Attribute(BaseModel):
     name: str
     value: str
 
 
+class SqlToAttributeConfig(BaseModel):
+    name: str
+    column: str
+
+
+class XmlToAttributeConfig(BaseModel):
+    name: str
+    xpath: str
+
+
 class SpatialStructureConfig(BaseModel):
     entity_type: SpatialStructureEntityType
-    attributes: List[ValueAttribute]
+    attributes: Optional[List[Attribute]] = []
 
-    def get_key(self) -> str:
+    def get_id(self) -> str:
         return f"{json.dumps([attribute.model_dump_json() for attribute in self.attributes], sort_keys=True)}-{self.entity_type.name}"
 
 
@@ -36,31 +52,40 @@ class Color(BaseModel):
     r: float
     g: float
     b: float
-    a: float
-
-
-class Attribute(BaseModel):
-    name: str
-    column: str
+    a: Optional[float] = 0.00
 
 
 class ClippedTerrainFeatureClass(BaseModel):
     sql_path: str
     entity_type: ElementEntityType
-    attributes: List[Attribute]
-    properties: List[PropertyConfig]
     spatial_structure: SpatialStructureConfig
-    group_columns: List[str]
+    attributes: Optional[List[SqlToAttributeConfig]] = []
+    properties: Optional[List[SqlToPropertyConfig]] = []
+    group_columns: Optional[List[str]] = []
+    color: Color
+
+
+class BuildingPartConfig(BaseModel):
+    xpath: str
+    entity_type: ElementEntityType
+    attributes: Optional[List[XmlToAttributeConfig]] = []
+    properties: Optional[List[XmlToPropertyConfig]] = []
     color: Color
 
 
 class BuildingFeatureClass(BaseModel):
-    entity_type: ElementEntityType
+    sql_path: str
+    egid_xpath: str
+    spatial_structure: SpatialStructureConfig
+    attributes: Optional[List[XmlToAttributeConfig]] = []
+    properties: Optional[List[XmlToPropertyConfig]] = []
+    building_parts: Optional[List[BuildingPartConfig]] = []
+    group_columns: Optional[List[str]] = [] #TODO: Implement
 
 
 class GroupConfig(BaseModel):
     entity_type: GroupEntityType
-    attributes: List[ValueAttribute]
+    attributes: Optional[List[Attribute]] = []
 
 
 class DBConfig(BaseModel):
@@ -89,7 +114,7 @@ class IFCConfig(BaseModel):
     geo_referencing: GeoReferencing
     triangulation_representation_type: TriangulationRepresentationType
     clipped_terrain: Dict[str, ClippedTerrainFeatureClass]
-    buildings: Dict[str, BuildingFeatureClass]
+    building: Dict[str, BuildingFeatureClass]
     groups: Dict[str, GroupConfig]
 
 
@@ -108,7 +133,7 @@ class Configuration(BaseModel):
     def check_conditional_configs(self):
         if self.ifc.clipped_terrain and self.stac.dtm_items_url is None:
             raise ValueError("stac.dtm_items_url is required when ifc.clipped_terrain is not empty")
-        if self.ifc.buildings and self.stac.building_items_url is None:
+        if self.ifc.building and self.stac.building_items_url is None:
             raise ValueError("stac.building_items_url is required when ifc.buildings is not empty")
         return self
 
