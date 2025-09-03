@@ -1,3 +1,5 @@
+![status: WIP](https://img.shields.io/badge/status-WIP-yellow)
+
 # cs2bim
 
 - [cs2bim](#cs2bim)
@@ -25,13 +27,13 @@
 The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launched a research project *Cadastral
 Surveying Data to Building Information Modelling (CS2BIM)*. The _Institute of Virtual Design and Construction_ and the
 _Institute of Geomatics_ at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed a service
-based on open source libraries. The service transforms GIS based cadastral survey (CS) data with area geometries (2D) to
+based on open source libraries. The service transforms GIS-based cadastral survey (CS) data with area geometries (2D) to
 IFC instances with 3D surface geometries. The geometry transformation is based on a projection of the 2D geometries onto
 the digital terrain model.
 
 The service contains the following major components:
 
-- Importing and processing of Interlis data by the ili2pg component and storing in a PostGIS database. The vector data
+- Importing and processing of INTERLIS data by the ili2pg component and storing in a PostGIS database. The vector data
   is read from [WKT](http://giswiki.org/wiki/Well_Known_Text) format.
 - Processing of the terrain model data and creating the resulting 3D surfaces
 - Exporting of the objects to IFC format using the IfcOpenShell component
@@ -41,7 +43,7 @@ The service contains the following major components:
 The diagram shows the system architecture and all major components of the implementation. Description of the components:
 | component | name | description |
 | ------ |----- | ------ |
-| 1 | PostGIS database | The cadastral data is imported from INTERLIS (.xtf or itf) format via the standard component
+| 1 | PostGIS database | The cadastral data is imported from an INTERLIS (.xtf or itf) format via the standard component
 ili2pg (swisstopo) and made available in a PostGIS database for further processing. The component database is not
 covered within the code |
 | 2 | DTM database | The digital terrain model (DTM) is loaded with the API service to swissALTI3D data. |
@@ -63,7 +65,7 @@ Example files can be downloaded with the following links.
 | 1  | 200mx200m.ifc     | https://drive.switch.ch/index.php/s/YOgygwb3ZqmG44v | All areas (parcel, landcover etc.) that intersect with the 200m x 200m polygon are included         | 
 | 2  | 200mx200m_con.ifc | https://drive.switch.ch/index.php/s/2pivcwXtneYqSdY | All areas (parcel, landcover etc.) that are fully contained by the 200m x 200m polygon are included |
 | 3  | 200mx200m_int.ifc | https://drive.switch.ch/index.php/s/Us2SHISz1XuMsGf | All areas (parcel, landcover etc.) are cut off at the border of the 200m x 200m polygon             |
-| 4  | 500mx500m.ifc     | https://drive.switch.ch/index.php/s/Bcq40YjOljKZ2oa | All areas (parcel, landcover etc.) that intersect with the 500m x 500m polygon are included         | 
+| 4  | 500mx500m.ifc     | https://drive.switch.ch/index.php/s/NlH1WwYj6uC5NPc | All areas (parcel, landcover etc.) that intersect with the 500m x 500m polygon are included         | 
 
 # Concepts
 
@@ -87,10 +89,10 @@ docker-compose up
 
 The run parameters are:
 
-- IFC_VERSION: Ifc version of the resulting ifc file (supported versions/values see src\cs2bim\ifc\enum\ifc_version.py).
+- IFC_VERSION: Ifc version of the resulting ifc file (supported versions/values, see [IFC version](src/cs2bim/ifc/enum/ifc_version.py)).
 - NAME: Name of the resulting ifc file.
 - POLYGON: The area in which the data is treated. The polygon must be a valid wkt string in LV95.
-- PROJECT_ORIGIN (optional): The project origin in LV95 coordinates "Easting, Northing, Height". If project origin is
+- PROJECT_ORIGIN (optional): The project origin in LV95 coordinates "Easting, Northing, Height". If the project origin is
   set, all other geometry values in the ifc are calculated relative to the origin.
 
 Example:
@@ -108,15 +110,14 @@ curl -X 'POST' \
 }
 ```
 
-config file and sqls are mounted from starting point (where docker is started)
+Important: The config file (./config.yml) and the sqls (./sql/) are mounted from starting point (where docker is started). For the program to work, these files must be provided.
 
-for logs ->
-docker logs celery
-docker logs app
+All generated ifc files are stored inside a docker volume called "ifc".
+All log files are stored inside a docker volume called "ifc".
 
 ## Getting started (Development)
 
-Build and run docker container or build and open container with your IDE (e.g. VSCode, PyCharm)
+Build and run docker container or build and open a container with your IDE (e.g., VSCode, PyCharm)
 
 ```console
 docker-compose -f docker-compose-dev.yml up 
@@ -128,23 +129,22 @@ Install pip packages (Run in container at /workspace)
 pip install --no-cache-dir --upgrade -r /workspace/requirements.txt
 ```
 
-The application can be run in two modes: via the API server or by executing the standalone script with execute
-parameters (run_locally.py).
+The application can be run in two modes: via the API server or by executing the standalone script with parameters (main.py).
 
 ### API
 
-Run the Celery worker with 2 concurrent processes:
+Run the Celery worker with x concurrent processes:
 
 ```console
 cd /workspace/src
-celery -A worker.app.app worker --concurrency=2
+celery -A worker.app.app worker --concurrency=x
 ```
 
 Launch the FastAPI development server with hot reload:
 
 ```console
 cd /workspace/src
-python -m uvicorn run:app --reload
+python -m uvicorn api.app:app --reload
 ```
 
 ### Standalone script
@@ -153,7 +153,7 @@ To run the application locally:
 
 ```console
 cd /workspace/src
-python run_locally.py \
+python main.py \
   --IFC_VERSION=<version> \
   --NAME=<name> \
   --POLYGON=<polygon> \
@@ -170,7 +170,7 @@ Some properties of this python project can be configured using the config.yml fi
 The configuration has different sections/topics:
 
 - postgis configuration: Connection to the database with the cadastral data.
-- DTM configuration: Connection to the service that provides terrain data.
+- stac configuration: Connection to the service that provides terrain data.
 - tin configuration: Configurations for the creation and treatment of tins.
 - ifc configuration: Configurations of the resulting ifc file.
 
@@ -233,7 +233,7 @@ The configuration has different sections/topics:
 
 ## STAC Configuration
 
-There are two stac v0.9 urls that can be provided in the config. There are several conditions that need to be fullfilled:
+There are two stac v0.9 urls that can be provided in the config. There are several conditions that need to be fulfilled:
 - The provided urls must point to the according stac collection items
 - The features / items must set the property: feature.properties.datetime
 
@@ -254,15 +254,15 @@ Expected asset properties:
 
 ## IFC configuration
 
-In this section of the configuration you can make some general definitions about the resulting ifc file and you can
+In this section of the configuration you can make some general definitions about the resulting ifc file, and you can
 define the feature classes that are generated and exported as ifc entities.
 
-Below some of the parameters are explained.
+Below some parameters are explained.
 
 ### Geo referencing
 
-You can provide the so called "Level of Georeferencing" (LoGeoRef), according to (Clemen&Görne, 2019) [^LoGeoRef].  
-The different levels represent different methods of defining informations about georeferencing in IFC.  
+You can provide the so-called "Level of Georeferencing" (LoGeoRef), according to (Clemen&Görne, 2019) [^LoGeoRef].  
+The different levels represent different methods of defining information about georeferencing in IFC.  
 Supported values are:
 
 - LO_GEO_REF_30
@@ -280,7 +280,7 @@ Supported values are:
 
 ![Levels of Georeferencing LoGeoRef](uploads/lo-geo-ref.png){width=600}
 
-**Coordinates and Offets**  
+**Coordinates and Offsets**  
 You can provide a project origin in LV95 coordinates (Easting, Northing, Height). The project origin can also be set
 to (0,0,0).  
 If not provided, the system sets a project origin calculated on a minimum bounding box of the perimeter.
@@ -289,7 +289,7 @@ If not provided, the system sets a project origin calculated on a minimum boundi
 
 ### Triangulation Representation Type
 
-You can define the representation type that is used to represent the TIN geometry in the ifc.  
+You can define the representation type used to represent the TIN geometry in the ifc.  
 Supported values are TESSELLATION or BREP. TESSELATION is recommended because it needs less storage space.
 
 ### Feature Classes
@@ -304,15 +304,15 @@ The main configurations of a feature class include:
 - properties: Any number of property definitions that are exported as IFC properties/property sets.
 - group_columns: Any number of IFC group assignments.
 - spatial_structure: The IFC spatial structure, to which all objects of the feature class are appended.
-- colour_definition: An IFC colour definition
+- color: An IFC color definition
 
 ![Example of Feature Classes](./uploads/feature-classes.jpg){width=300}
 
 #### SQL
 
-For each feature class you have to provide a sql file for querying the data. With the query you are selecting the
-cadastral data (with area geometry type). The sql query requires to take a polygon wkt as parameter "%(polygon)s" and
-return a column named "wkt" with wkt string values. To guarantee correct processing it is important to check that the
+For each feature class you have to provide a SQL file for querying the data. With the query you are selecting the
+cadastral data (with an area geometry type). The SQL query requires taking a polygon wkt as parameter "%(polygon)s" and 
+returning a column named "wkt" with wkt string values. To guarantee correct processing, it is important to check that the
 sql also delivers all columns that are additionally configured for the according feature class. This can be multiple
 columns for attributes, properties or groups.
 
@@ -332,13 +332,13 @@ structure).
 ### Groups
 
 Every exported object can be assigned to a group (zero to multiple). If defined empty (groups: []), no groups are
-created. The assignment is defined by an attribute value (of the sql query). For each attribute value, that is used as a
+created. The assignment is defined by an attribute value (of the SQL query). For each attribute value used as a
 group assignment, there should be a group configuration.
-For each group assignment the system is creating an ifc group according to the group configuration with its parameters (
-entity_type and any number of attributes). When there is no group configuration for an assigned value, the system will
+For each group assignment the system is creating an ifc group according to the group configuration with its parameters 
+(entity_type and any number of attributes). When there is no group configuration for an assigned value, the system will
 create a simple ifc group entity without any special attributes.
 
-When defining a group you can use "." to create nested group structures. (IfcGroupKey)
+When defining a group, you can use "." to create nested group structures. (IfcGroupKey)
 
 ### Example
 
@@ -405,23 +405,23 @@ on (l.liegenschaft_von = g.t_id)
 
 Useful postgis functions:
 
-ST_GeomFromText -> Constructs a PostGIS ST_Geometry object \
-ST_AsText -> Returns the OGC WKT representation of the geometry\
-ST_CurveToLine ->  Converts a given geometry to a linear geometry\
-ST_Intersects -> Returns true if two geometries intersect. Geometries intersect if they have any point in common.
-ST_Contains -> Returns true if the first geometry contains the second.
+ST_GeomFromText → Constructs a PostGIS ST_Geometry object \
+ST_AsText → Returns the OGC WKT representation of the geometry\
+ST_CurveToLine → Converts a given geometry to a linear geometry\
+ST_Intersects → Returns true if two geometries intersect. Geometries intersect if they have any point in common.
+ST_Contains → Returns true if the first geometry contains the second.
 
 # Known Issues
 
 - Only one supported geometry type: All feature classes are processed the same way and are implemented to represent a
-  surface that is projected to the terrain. Until now no support of e.g. points, lines or parametrised geometries.
-- Entity types that are only supported in one of the two allowed ifc versions (4, 4x3) are not supported (e.g.
-  IfcBuiltSystem). Explanation: There is no switch in the code that could deal with different cases based on different
+  surface that is projected to the terrain. Until now no support of e.g. points, lines or parametrized geometries.
+- Entity types that are only supported in one of the two allowed ifc versions (4, 4x3) are not supported (e.g.,
+  IfcBuiltSystem). Explanation: There is no switch in the code that could deal with different cases based on a different
   ifc version, neither are there parameters in the configuration to support different ifc versions.
 - Potential code optimization not yet done (parallelize computational tasks with threads, cache dtm data, load only
-  needed dtm data in memory, process the point cloud only once and then derive feature class geometries from TIN instead
+  necessary dtm data in memory, process the point cloud only once and then derive feature class geometries from TIN instead
   of point clouds)
-- No support of ifc classification concept. Could be done the same way as the already implemented group concept.
+- No support for the ifc classification concept. Could be done the same way as the already implemented group concept.
 
 # Contact
 
