@@ -56,8 +56,8 @@ class ClippedTerrainProcessor:
             mesh_datas = []
             for element_data in elements:
                 try:
-                    MeshData(element_data, origin)
-                    mesh_datas.append(element_data)
+                    mesh_data = MeshData(element_data, origin)
+                    mesh_datas.append(mesh_data)
                 except Exception as e:
                     logger.error(f"Error in element data: {e}. Skipping element...")
 
