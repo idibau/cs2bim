@@ -93,9 +93,9 @@ class MeshData:
         self.raster_points_buffer = []
 
     def add_raster_points(self, raster_points):
-        raster_points_buffer = raster_points.within(areas[index].get_geometry, buffer_dist=3 * self.grid_size)
+        raster_points_buffer = raster_points.within(self.area.get_geometry, buffer_dist=3 * self.grid_size)
         self.raster_points_buffer.append(raster_points_buffer)
-        raster_points_within = raster_points.within(areas[index].get_geometry, buffer_dist=0)
+        raster_points_within = raster_points.within(self.area.get_geometry, buffer_dist=0)
         self.raster_points_within.append(raster_points_within)
 
     def create_mesh(self):
