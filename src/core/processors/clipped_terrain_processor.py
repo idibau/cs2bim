@@ -18,7 +18,6 @@ class ClippedTerrainProcessor:
 
     def __init__(self):
         self.feature_classes = config.ifc.clipped_terrain
-        self.grid_size = config.tin.grid_size
         self.postgis_service = PostgisService()
         self.stac_service = STACService()
 
@@ -46,7 +45,7 @@ class ClippedTerrainProcessor:
             bounding_box = self.postgis_service.get_bounding_box(wkts)
 
         logger.info("fetch dtm files")
-        dtm_files = self.stac_service.fetch_dtm_assets(bounding_box, self.grid_size)
+        dtm_files = self.stac_service.fetch_dtm_assets(bounding_box, config.tin.grid_size)
         logger.info(f"fetched {len(dtm_files)} dtm files")
 
         for feature_class_key, feature_class in self.feature_classes.items():
@@ -93,20 +92,22 @@ class MeshData:
         self.raster_points_buffer = []
 
     def add_raster_points(self, raster_points):
-        raster_points_buffer = raster_points.within(self.area.get_geometry, buffer_dist=3 * self.grid_size)
-        self.raster_points_buffer.append(raster_points_buffer)
-        raster_points_within = raster_points.within(self.area.get_geometry, buffer_dist=0)
-        self.raster_points_within.append(raster_points_within)
+        rpb = raster_points.within(self.area.get_geometry, buffer_dist=3 * config.tin.grid_size)
+        if rpb is not None:
+            self.raster_points_buffer.append(rpb)
+        rpw = raster_points.within(self.area.get_geometry, buffer_dist=0)
+        if rpw is not None:
+            self.raster_points_within.append(rpw)
 
     def create_mesh(self):
-        if not raster_points_buffer:
-            mesh = Mesh(np.empty((0, 3)))
-        else:
+        if self.raster_points_buffer:
             mesh = Mesh(np.vstack(self.raster_points_buffer))
-        if not raster_points_within:
-            mesh_clipped = mesh.clip_mesh_by_area(self.area, np.empty((0, 3)))
         else:
+            mesh = Mesh(np.empty((0, 3)))
+        if self.raster_points_within:
             mesh_clipped = mesh.clip_mesh_by_area(self.area, np.vstack(self.raster_points_within))
+        else:
+            mesh_clipped = mesh.clip_mesh_by_area(self.area, np.empty((0, 3)))
         mesh_clipped_decimated = mesh_clipped.decimate(
             max_height_error=config.tin.max_height_error, grid_size=config.tin.grid_size
         )
