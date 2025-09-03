@@ -1,4 +1,7 @@
 FROM python:3.10
+
+LABEL org.opencontainers.image.source="https://github.com/idibau/cs2bim"
+
 WORKDIR /workspace
 
 RUN apt-get update
