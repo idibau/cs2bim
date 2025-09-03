@@ -25,6 +25,9 @@ class Area(object):
     def __init__(self, wkt_str: str, origin: np.ndarray = np.zeros((2,))) -> None:
         assert isinstance(wkt_str, str)
 
+        if isinstance(shapely.from_wkt(wkt_str), shapely.MultiPolygon):
+            raise ValueError("multi polygon not supported")
+
         self._geometry = self._check_polygon_definition(shapely.from_wkt(wkt_str))
 
         assert origin.shape == (2,)

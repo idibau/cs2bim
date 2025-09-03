@@ -53,66 +53,64 @@ class ClippedTerrainProcessor:
             logger.info(f"create {feature_class_key} feature class")
             elements = feature_class_elements[feature_class_key]
 
-            areas = {}
-            rp_buffer = {}
-            rp_within = {}
+            mesh_datas = []
+            for element_data in elements:
+                try:
+                    MeshData(element_data, origin)
+                    mesh_datas.append(element_data)
+                except Exception as e:
+                    logger.error(f"Error in element data: {e}. Skipping element...")
+
             for dtm_file in dtm_files:
                 logger.info(f"load and process dtm file: {dtm_file}")
                 dtm_points = RasterPoints(dtm_file, origin=origin)
-                for index, element_data in enumerate(elements):
-                    logger.debug(f"calculate points for element {index + 1}/{len(elements)}")
-
-                    wkt_str = element_data["wkt"]
-                    if isinstance(shapely.from_wkt(wkt_str), shapely.MultiPolygon):
-                        logger.warning("multipolygons are not supported at the moment. Skipping element...")
-                        continue
-                    areas[index] = Area(wkt_str=wkt_str, origin=origin[:2])
-
-                    logger.debug("calculate raster points buffer")
-                    raster_points_buffer = dtm_points.within(areas[index].get_geometry, buffer_dist=3 * self.grid_size)
-                    if index not in rp_buffer:
-                        rp_buffer[index] = []
-                    if raster_points_buffer is not None:
-                        rp_buffer[index].append(raster_points_buffer)
-
-                    logger.debug("calculate raster points within")
-                    raster_points_within = dtm_points.within(areas[index].get_geometry, buffer_dist=0)
-                    if index not in rp_within:
-                        rp_within[index] = []
-                    if raster_points_within is not None:
-                        rp_within[index].append(raster_points_within)
+                for index, mesh_data in enumerate(mesh_datas):
+                    logger.debug(f"calculate raster points for element {index + 1}/{len(elements)}")
+                    mesh_data.add_raster_points(dtm_points)
             logger.info(f"finished processing dtm files")
 
             logger.info(f"create meshes for {feature_class_key} elements")
-            for index, element_data in enumerate(elements):
+            for index, mesh_data in enumerate(mesh_datas):
                 logger.debug(f"create mesh for element {index + 1}/{len(elements)}")
-
-                if index in rp_buffer and rp_buffer[index]:
-                    raster_points_buffer = np.vstack(rp_buffer[index])
-                else:
-                    raster_points_buffer = np.empty((0, 3))
-                if rp_buffer[index]:
-                    raster_points_within = np.vstack(rp_within[index])
-                else:
-                    raster_points_within = np.empty((0, 3))
-
-                mesh = Mesh(raster_points_buffer)
-                logger.debug("clip mesh")
-                mesh_clipped = mesh.clip_mesh_by_area(areas[index], raster_points_within)
-                logger.debug("decimate clipped mesh")
-                mesh_clipped_decimated = mesh_clipped.decimate(
-                    max_height_error=config.tin.max_height_error, grid_size=config.tin.grid_size
-                )
-                logger.debug(
-                    f"area consistensy: {mesh_clipped_decimated.check_area_consistency(areas[index].get_area, treshold=0.1)}"
-                )
-                groups = [element_data[group_column] for group_column in feature_class.group_columns]
-                element = ClippedTerrain(mesh_clipped_decimated.get_data(), groups)
+                mesh = mesh_data.create_mesh()
+                groups = [mesh_data.element_data[group_column] for group_column in feature_class.group_columns]
+                element = ClippedTerrain(mesh.get_data(), groups)
                 for attribute in feature_class.attributes:
-                    if attribute.column in element_data:
-                        element.add_attribute(attribute.name, element_data[attribute.column])
+                    if attribute.column in mesh_data.element_data:
+                        element.add_attribute(attribute.name, mesh_data.element_data[attribute.column])
                 for p in feature_class.properties:
-                    if p.column in element_data:
-                        element.add_property(p.set, p.name, element_data[p.column])
+                    if p.column in mesh_data.element_data:
+                        element.add_property(p.set, p.name, mesh_data.element_data[p.column])
                 model.add_clipped_terrain(feature_class_key, element)
             logger.info("finished creating meshes")
+
+class MeshData:
+
+    def __init__(self, element_data, origin):
+        self.element_data = element_data
+        self.area = Area(wkt_str=element_data["wkt"], origin=origin[:2])
+        self.raster_points_within = []
+        self.raster_points_buffer = []
+
+    def add_raster_points(self, raster_points):
+        raster_points_buffer = raster_points.within(areas[index].get_geometry, buffer_dist=3 * self.grid_size)
+        self.raster_points_buffer.append(raster_points_buffer)
+        raster_points_within = raster_points.within(areas[index].get_geometry, buffer_dist=0)
+        self.raster_points_within.append(raster_points_within)
+
+    def create_mesh(self):
+        if not raster_points_buffer:
+            mesh = Mesh(np.empty((0, 3)))
+        else:
+            mesh = Mesh(np.vstack(self.raster_points_buffer))
+        if not raster_points_within:
+            mesh_clipped = mesh.clip_mesh_by_area(self.area, np.empty((0, 3)))
+        else:
+            mesh_clipped = mesh.clip_mesh_by_area(self.area, np.vstack(self.raster_points_within))
+        mesh_clipped_decimated = mesh_clipped.decimate(
+            max_height_error=config.tin.max_height_error, grid_size=config.tin.grid_size
+        )
+        logger.debug(
+            f"area consistency: {mesh_clipped_decimated.check_area_consistency(self.area.get_area, treshold=0.1)}"
+        )
+        return mesh_clipped_decimated
