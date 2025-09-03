@@ -1,5 +1,5 @@
-from typing import Any
 import psycopg2
+from typing import Any
 
 from config.configuration import config
 from service.bounding_box import BoundingBox
@@ -10,7 +10,7 @@ class PostgisService:
 
     def __init__(self) -> None:
         self.connection = psycopg2.connect(
-            f"dbname = {config.dbname} user = {config.user} host = {config.host} password = {config.password} port = {config.port}"
+            f"dbname = {config.db.dbname} user = {config.db.user} host = {config.db.host} password = {config.db.password} port = {config.db.port}"
         )
 
     def fetch_feature_class_elements(self, sql: str, polygon: str) -> list[dict[str, Any]]:

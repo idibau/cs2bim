@@ -1,10 +1,12 @@
-# folder
+# folders
 __pycache__
 .vscode
-files
 dist
-output
+.idea
+cache
+ifc
+logs
 
-# file
+# files
 *.stl
 *.ifc

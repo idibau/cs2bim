@@ -1,5 +1,5 @@
 ################# general ###################
-logging_level: DEBUG
+logging_level: INFO
 
 ########## postgis configuration ############
 db:
@@ -7,11 +7,12 @@ db:
   user: "postgres"
   host: "host.docker.internal"
   port: 5432
-  password: ???
+  password: "?"
 
-########## dtm api configuration ############
-dtm:
-  stac_api: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
+########## stac configuration ############
+stac:
+  dtm_items_url: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
+  building_items_url: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissbuildings3d_3_0/items"
 
 ############# tin configuration #############
 tin:
@@ -26,16 +27,16 @@ ifc:
   project_name: "cs2bim"
   geo_referencing: LO_GEO_REF_50
   triangulation_representation_type: TESSELLATION
-  feature_classes:
+  clipped_terrain:
     parcel:
-      sql: "sql/parcels.sql"
+      sql_path: "/workspace/sql/parcels.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       attributes:
-        - attribute: "PredefinedType"
+        - name: "PredefinedType"
           column: "predefined_type"
-        - attribute: "ObjectType"
+        - name: "ObjectType"
           column: "object_type"
-        - attribute: "Name"
+        - name: "Name"
           column: "egris_egrid"
       properties:
         - name: "NBIdent"
@@ -50,59 +51,59 @@ ifc:
       spatial_structure:
         entity_type: IFC_SITE
         attributes:
-        - attribute: "CompositionType"
-          value: "COMPLEX"
-        - attribute: "PredefinedType"
-          value: "USERDEFINED"
-        - attribute: "ObjectType"
-          value: "Liegenschaften"
-        - attribute: "Name"
-          value: "Liegenschaften"
+          - name: "CompositionType"
+            value: "COMPLEX"
+          - name: "PredefinedType"
+            value: "USERDEFINED"
+          - name: "ObjectType"
+            value: "Liegenschaften"
+          - name: "Name"
+            value: "Liegenschaften"
       group_columns:
         - "group"
-      color_definition:
+      color:
         r: 0.31
         g: 0.67
         b: 0.04
         a: 0.85
     land_cover:
-      sql: "sql/land_covers.sql"
+      sql_path: "/workspace/sql/land_covers.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       attributes:
-        - attribute: "PredefinedType"
+        - name: "PredefinedType"
           column: "predefined_type"
-        - attribute: "ObjectType"
+        - name: "ObjectType"
           column: "art"
-        - attribute: "Name"
+        - name: "Name"
           column: "art"
-      properties: []
+      properties: [ ]
       spatial_structure:
         entity_type: IFC_SITE
         attributes:
-        - attribute: "CompositionType"
-          value: "COMPLEX"
-        - attribute: "PredefinedType"
-          value: "USERDEFINED"
-        - attribute: "ObjectType"
-          value: "Bodenbedeckung"
-        - attribute: "Name"
-          value: "Bodenbedeckung"
-      group_columns: 
+          - name: "CompositionType"
+            value: "COMPLEX"
+          - name: "PredefinedType"
+            value: "USERDEFINED"
+          - name: "ObjectType"
+            value: "Bodenbedeckung"
+          - name: "Name"
+            value: "Bodenbedeckung"
+      group_columns:
         - "group"
-      color_definition:  
+      color:
         r: 0.52
         g: 0.42
         b: 0.04
         a: 0.85
-    buildings:
-      sql: "sql/land_covers_buildings.sql"
+    land_covers_buildings:
+      sql_path: "/workspace/sql/land_covers_buildings.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       attributes:
-        - attribute: "PredefinedType"
+        - name: "PredefinedType"
           column: "predefined_type"
-        - attribute: "ObjectType"
+        - name: "ObjectType"
           column: "art"
-        - attribute: "Name"
+        - name: "Name"
           column: "gwr_egid"
       properties:
         - name: "GWR-EGID"
@@ -111,26 +112,91 @@ ifc:
       spatial_structure:
         entity_type: IFC_SITE
         attributes:
-        - attribute: "CompositionType"
-          value: "COMPLEX"
-        - attribute: "PredefinedType"
-          value: "USERDEFINED"
-        - attribute: "ObjectType"
-          value: "Gebäude"
-        - attribute: "Name"
-          value: "Gebäude"
-      group_columns: 
+          - name: "CompositionType"
+            value: "COMPLEX"
+          - name: "PredefinedType"
+            value: "USERDEFINED"
+          - name: "ObjectType"
+            value: "Gebäude"
+          - name: "Name"
+            value: "Gebäudegrundflächen"
+      group_columns:
         - "group"
-      color_definition:  
+      color:
         r: 1.00
         g: 0.00
         b: 0.00
         a: 0.85
+  building:
+    all:
+      sql_path: "/workspace/sql/egid.sql"
+      egid_xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
+      spatial_structure:
+        entity_type: IFC_SITE
+        attributes:
+          - name: "Name"
+            value: "Gebäude"
+      attributes:
+        - name: "Name"
+          xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
+      properties:
+        - name: "Erstellung Jahr"
+          set: "Erstellung"
+          xpath: ".//gen:intAttribute[@name='ERSTELLUNG_JAHR']/gen:value"
+        - name: "Erstellung Monat"
+          set: "Erstellung"
+          xpath: ".//gen:intAttribute[@name='ERSTELLUNG_MONAT']/gen:value"
+      building_parts:
+        - xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+          entity_type: IFC_SPACE
+          attributes: [ ]
+          properties: [ ]
+          color:
+            r: 1.00
+            g: 1.00
+            b: 1.00
+            a: 0.8
+        - xpath: ".//bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+          entity_type: IFC_WALL
+          attributes: [ ]
+          properties:
+            - name: "Herkunft Monat"
+              set: "Herkunft"
+              xpath: ".//bldg:boundedBy/bldg:WallSurface/gen:intAttribute[@name='HERKUNFT_MONAT']/gen:value"
+            - name: "Herkunft Jahr"
+              set: "Herkunft"
+              xpath: ".//bldg:boundedBy/bldg:WallSurface/gen:intAttribute[@name='HERKUNFT_JAHR']/gen:value"
+            - name: "Original Herkunft"
+              set: "Herkunft"
+              xpath: ".//bldg:boundedBy/bldg:WallSurface/gen:stringAttribute[@name='HERKUNFT']/gen:value"
+          color:
+            r: 1.00
+            g: 1.00
+            b: 1.00
+            a: 0.00
+        - xpath: ".//bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+          entity_type: IFC_ROOF
+          attributes: [ ]
+          properties: [ ]
+          color:
+            r: 1.00
+            g: 0.8
+            b: 0.8
+            a: 0.00
+        - xpath: ".//bldg:boundedBy/bldg:GroundSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+          entity_type: IFC_SLAB
+          attributes: [ ]
+          properties: [ ]
+          color:
+            r: 0.8
+            g: 0.8
+            b: 1.00
+            a: 0.00
   groups:
     Amtliche Vermessung.Gebaeude:
       entity_type: IFC_BUILDING_SYSTEM
       attributes:
-        - attribute: "PredefinedType"
+        - name: "PredefinedType"
           value: "USERDEFINED"
-        - attribute: "ObjectType"
+        - name: "ObjectType"
           value: "Gebaeude"

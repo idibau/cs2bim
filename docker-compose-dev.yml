@@ -1,12 +1,27 @@
 version: "3.7"
 
 services:
-  development:
-    container_name: development_cs2bim
+
+  redis_dev:
+    image: redis:7
+    container_name: redis_dev
+    ports:
+      - "6379:6379"
+    networks:
+      backend:
+        aliases:
+          - redis
+
+  app_dev:
+    container_name: app_dev
     image: python:3.10
     command: sleep infinity
+    ports:
+      - "8000:8000"
     networks:
       - backend
+    depends_on:
+      - redis_dev
     volumes:
       - .:/workspace:cached
 
