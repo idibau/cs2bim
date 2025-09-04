@@ -176,7 +176,7 @@ This API provides endpoints to generate IFC models based on polygon input, check
 - `PROJECT_ORIGIN` *(string, optional)*: Origin point as a comma-separated string `[x,y,z]`.
 
 **Responses:**
-- `200`: Model generation started successfully.
+- `200`: Model generation started successfully. Returns task ID.
 - `422`: Validation error in the input data.
 - `500`: Error.
 
