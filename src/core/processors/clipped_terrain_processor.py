@@ -1,7 +1,6 @@
 import logging
 
 import numpy as np
-import shapely
 
 from config.configuration import config
 from core.ifc.model.clipped_terrain import ClippedTerrain
