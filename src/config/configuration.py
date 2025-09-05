@@ -1,11 +1,12 @@
 import json
 from pathlib import Path
-from typing import List
+from typing import List, Annotated
 from typing import Optional, Dict
 
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, model_validator, Field, confloat
 from pydantic_yaml import parse_yaml_file_as
 
+from config.element_attribute import ElementAttribute
 from config.element_entity_type import ElementEntityType
 from config.geo_referencing import GeoReferencing
 from config.group_entity_type import GroupEntityType
@@ -25,51 +26,51 @@ class XmlToPropertyConfig(BaseModel):
     xpath: str
 
 
-class Attribute(BaseModel):
-    name: str
+class AttributeConfig(BaseModel):
+    attribute: ElementAttribute
     value: str
 
 
 class SqlToAttributeConfig(BaseModel):
-    name: str
+    attribute: ElementAttribute
     column: str
 
 
 class XmlToAttributeConfig(BaseModel):
-    name: str
+    attribute: ElementAttribute
     xpath: str
 
 
 class SpatialStructureConfig(BaseModel):
     entity_type: SpatialStructureEntityType
-    attributes: Optional[List[Attribute]] = []
+    attributes: Optional[List[AttributeConfig]] = Field(default_factory=list)
 
     def get_id(self) -> str:
-        return f"{json.dumps([attribute.model_dump_json() for attribute in self.attributes], sort_keys=True)}-{self.entity_type.name}"
+        return f"{json.dumps([attribute.model_dump() for attribute in self.attributes], sort_keys=True)}-{self.entity_type.name}"
 
 
 class Color(BaseModel):
-    r: float
-    g: float
-    b: float
-    a: Optional[float] = 0.00
+    r: Annotated[float, Field(ge=0.0, le=1.0)]
+    g: Annotated[float, Field(ge=0.0, le=1.0)]
+    b: Annotated[float, Field(ge=0.0, le=1.0)]
+    a: Annotated[float, Field(ge=0.0, le=1.0)] = 0.0
 
 
 class ClippedTerrainFeatureClass(BaseModel):
     sql_path: str
     entity_type: ElementEntityType
     spatial_structure: SpatialStructureConfig
-    attributes: Optional[List[SqlToAttributeConfig]] = []
-    properties: Optional[List[SqlToPropertyConfig]] = []
-    group_columns: Optional[List[str]] = []
+    attributes: Optional[List[SqlToAttributeConfig]] = Field(default_factory=list)
+    properties: Optional[List[SqlToPropertyConfig]] = Field(default_factory=list)
+    group_columns: Optional[List[str]] = Field(default_factory=list)
     color: Color
 
 
 class BuildingPartConfig(BaseModel):
     xpath: str
     entity_type: ElementEntityType
-    attributes: Optional[List[XmlToAttributeConfig]] = []
-    properties: Optional[List[XmlToPropertyConfig]] = []
+    attributes: Optional[List[XmlToAttributeConfig]] = Field(default_factory=list)
+    properties: Optional[List[XmlToPropertyConfig]] = Field(default_factory=list)
     color: Color
 
 
@@ -77,15 +78,15 @@ class BuildingFeatureClass(BaseModel):
     sql_path: str
     egid_xpath: str
     spatial_structure: SpatialStructureConfig
-    attributes: Optional[List[XmlToAttributeConfig]] = []
-    properties: Optional[List[XmlToPropertyConfig]] = []
-    building_parts: Optional[List[BuildingPartConfig]] = []
-    group_columns: Optional[List[str]] = [] #TODO: Implement
+    attributes: Optional[List[XmlToAttributeConfig]] = Field(default_factory=list)
+    properties: Optional[List[XmlToPropertyConfig]] = Field(default_factory=list)
+    building_parts: Optional[List[BuildingPartConfig]] = Field(default_factory=list)
+    group_columns: Optional[List[str]] = Field(default_factory=list)  # TODO: Implement
 
 
 class GroupConfig(BaseModel):
     entity_type: GroupEntityType
-    attributes: Optional[List[Attribute]] = []
+    attributes: Optional[List[AttributeConfig]] = Field(default_factory=list)
 
 
 class DBConfig(BaseModel):
@@ -134,7 +135,7 @@ class Configuration(BaseModel):
         if self.ifc.clipped_terrain and self.stac.dtm_items_url is None:
             raise ValueError("stac.dtm_items_url is required when ifc.clipped_terrain is not empty")
         if self.ifc.building and self.stac.building_items_url is None:
-            raise ValueError("stac.building_items_url is required when ifc.buildings is not empty")
+            raise ValueError("stac.building_items_url is required when ifc.building is not empty")
         return self
 
 

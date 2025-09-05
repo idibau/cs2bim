@@ -32,11 +32,11 @@ ifc:
       sql_path: "/workspace/sql/parcels.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       attributes:
-        - name: "PredefinedType"
+        - attribute: PREDEFINED_TYPE
           column: "predefined_type"
-        - name: "ObjectType"
+        - attribute: OBJECT_TYPE
           column: "object_type"
-        - name: "Name"
+        - attribute: NAME
           column: "egris_egrid"
       properties:
         - name: "NBIdent"
@@ -51,13 +51,13 @@ ifc:
       spatial_structure:
         entity_type: IFC_SITE
         attributes:
-          - name: "CompositionType"
+          - attribute: COMPOSITION_TYPE
             value: "COMPLEX"
-          - name: "PredefinedType"
+          - attribute: PREDEFINED_TYPE
             value: "USERDEFINED"
-          - name: "ObjectType"
+          - attribute: OBJECT_TYPE
             value: "Liegenschaften"
-          - name: "Name"
+          - attribute: NAME
             value: "Liegenschaften"
       group_columns:
         - "group"
@@ -70,23 +70,23 @@ ifc:
       sql_path: "/workspace/sql/land_covers.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       attributes:
-        - name: "PredefinedType"
+        - attribute: PREDEFINED_TYPE
           column: "predefined_type"
-        - name: "ObjectType"
+        - attribute: OBJECT_TYPE
           column: "art"
-        - name: "Name"
+        - attribute: NAME
           column: "art"
       properties: [ ]
       spatial_structure:
         entity_type: IFC_SITE
         attributes:
-          - name: "CompositionType"
+          - attribute: COMPOSITION_TYPE
             value: "COMPLEX"
-          - name: "PredefinedType"
+          - attribute: PREDEFINED_TYPE
             value: "USERDEFINED"
-          - name: "ObjectType"
+          - attribute: OBJECT_TYPE
             value: "Bodenbedeckung"
-          - name: "Name"
+          - attribute: NAME
             value: "Bodenbedeckung"
       group_columns:
         - "group"
@@ -99,11 +99,11 @@ ifc:
       sql_path: "/workspace/sql/land_covers_buildings.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       attributes:
-        - name: "PredefinedType"
+        - attribute: PREDEFINED_TYPE
           column: "predefined_type"
-        - name: "ObjectType"
+        - attribute: OBJECT_TYPE
           column: "art"
-        - name: "Name"
+        - attribute: NAME
           column: "gwr_egid"
       properties:
         - name: "GWR-EGID"
@@ -112,13 +112,13 @@ ifc:
       spatial_structure:
         entity_type: IFC_SITE
         attributes:
-          - name: "CompositionType"
+          - attribute: COMPOSITION_TYPE
             value: "COMPLEX"
-          - name: "PredefinedType"
+          - attribute: PREDEFINED_TYPE
             value: "USERDEFINED"
-          - name: "ObjectType"
+          - attribute: OBJECT_TYPE
             value: "Gebäude"
-          - name: "Name"
+          - attribute: NAME
             value: "Gebäudegrundflächen"
       group_columns:
         - "group"
@@ -134,10 +134,10 @@ ifc:
       spatial_structure:
         entity_type: IFC_SITE
         attributes:
-          - name: "Name"
+          - attribute: NAME
             value: "Gebäude"
       attributes:
-        - name: "Name"
+        - attribute: NAME
           xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
       properties:
         - name: "Erstellung Jahr"
@@ -196,7 +196,7 @@ ifc:
     Amtliche Vermessung.Gebaeude:
       entity_type: IFC_BUILDING_SYSTEM
       attributes:
-        - name: "PredefinedType"
+        - attribute: PREDEFINED_TYPE
           value: "USERDEFINED"
-        - name: "ObjectType"
+        - attribute: OBJECT_TYPE
           value: "Gebaeude"
