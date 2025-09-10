@@ -13,8 +13,8 @@ class BuildingPart(Element):
 
 class Building(Element):
 
-    def __init__(self, groups: list[str] = None) -> None:
-        super().__init__(groups)
+    def __init__(self) -> None:
+        super().__init__()
         self.building_parts: list[BuildingPart] = []
 
     def add_building_part(self, building_part: BuildingPart):

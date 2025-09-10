@@ -3,6 +3,7 @@ import logging
 from lxml import etree
 
 from config.configuration import config
+from config.source_type import SourceType
 from core.ifc.model.building import BuildingPart, Building
 from service.postgis_service import PostgisService
 from service.stac_service import STACService
@@ -34,9 +35,13 @@ class BuildingProcessor:
         logger.info(f"fetched {len(city_gmls)} city gml files")
 
         for feature_class_key, feature_class in self.feature_classes.items():
+            logger.info(f"create {feature_class_key} feature class")
             with open(feature_class.sql_path, "r") as file:
                 sql = file.read()
-            egids = [item["egid"] for item in self.postgis_service.fetch_feature_class_elements(sql, polygon)]
+            result_set = self.postgis_service.fetch_feature_class_elements(sql, polygon)
+            egids = {}
+            for item in result_set:
+                egids[item["egid"]] = item
 
             for index, city_gml in enumerate(city_gmls):
                 logger.info(f"processing city gml {index + 1}/{len(city_gmls)}")
@@ -49,18 +54,20 @@ class BuildingProcessor:
                         if value_elem is not None:
                             egid = value_elem.text.strip()
                             if egid in egids:
-                                logger.info(f"process building {egid}")
-                                building_model = self.create_building_model(building, building_config, origin)
+                                logger.debug(f"process building {egid}")
+                                building_model = self.create_building_model(building, building_config, origin,
+                                                                            egids[egid])
                                 model.add_building(key, building_model)
-                                logger.info(f"finished processing building")
+                                logger.debug(f"finished processing building")
                         building.clear()
 
                         while building.getprevious() is not None:
                             del building.getparent()[0]
 
-    def create_building_model(self, building, building_config, origin):
+    def create_building_model(self, building, building_config, origin, result_set):
         building_model = Building()
-        self.add_attributes_and_properties(building, building_config, building_model)
+        self.add_attributes(building, building_config, building_model, result_set)
+        self.add_properties(building, building_config, building_model, result_set)
         logger.debug(f"start processing building parts")
         for building_part_config in building_config.building_parts:
             points = []
@@ -72,16 +79,44 @@ class BuildingProcessor:
                                 float(coords[i + 2] - origin[2])) for i in
                                range(0, len(coords), 3)])
             building_part = BuildingPart(building_part_config.entity_type, points, building_part_config.color)
-            self.add_attributes_and_properties(building, building_part_config, building_part)
+            self.add_attributes(building, building_part_config, building_part, result_set)
+            self.add_properties(building, building_part_config, building_part, result_set)
+            self.add_groups(building, building_part_config, building_part, result_set)
             building_model.add_building_part(building_part)
         return building_model
 
-    def add_attributes_and_properties(self, building, element_config, element):
+    def add_attributes(self, building, element_config, element, result_set):
         for attribute in element_config.attributes:
-            value_elem = building.find(attribute.xpath, namespaces=self.ns)
-            if value_elem is not None:
-                element.add_attribute(attribute.name, value_elem.text.strip())
-        for property in element_config.properties:
-            value_elem = building.find(property.xpath, namespaces=self.ns)
-            if value_elem is not None:
-                element.add_property(property.set, property.name, value_elem.text.strip())
+            if attribute.source.type == SourceType.CITY_GML:
+                value_elem = building.find(attribute.source.expression, namespaces=self.ns)
+                if value_elem is not None:
+                    element.add_attribute(attribute.attribute, value_elem.text.strip())
+            elif attribute.source.type == SourceType.SQL:
+                if attribute.source.expression in result_set:
+                    element.add_attribute(attribute.attribute, result_set[attribute.source.expression])
+            elif attribute.source.type == SourceType.STATIC:
+                element.add_attribute(attribute.attribute, attribute.source.expression)
+
+    def add_properties(self, building, element_config, element, result_set):
+        for p in element_config.properties:
+            if p.source.type == SourceType.CITY_GML:
+                value_elem = building.find(p.source.expression, namespaces=self.ns)
+                if value_elem is not None:
+                    element.add_property(p.property_set, p.property, value_elem.text.strip())
+            elif p.source.type == SourceType.SQL:
+                if p.source.expression in result_set:
+                    element.add_property(p.property_set, p.property, result_set[p.source.expression])
+            elif p.source.type == SourceType.STATIC:
+                element.add_property(p.property_set, p.property, p.source.expression)
+
+    def add_groups(self, building, element_config, element, result_set):
+        for group_assignment in element_config.group_assignments:
+            if group_assignment.type == SourceType.CITY_GML:
+                value_elem = building.find(group_assignment.expression, namespaces=self.ns)
+                if value_elem is not None:
+                    element.add_group(value_elem.text.strip())
+            elif group_assignment.type == SourceType.SQL:
+                if group_assignment.expression in result_set:
+                    element.add_group(result_set[group_assignment.expression])
+            elif group_assignment.type == SourceType.STATIC:
+                element.add_group(group_assignment.expression)

@@ -3,6 +3,7 @@ import logging
 import numpy as np
 
 from config.configuration import config
+from config.source_type import SourceType
 from core.ifc.model.clipped_terrain import ClippedTerrain
 from core.tin.mesh import Mesh
 from core.tin.polygon import Area
@@ -71,14 +72,25 @@ class ClippedTerrainProcessor:
             for index, mesh_data in enumerate(mesh_datas):
                 logger.debug(f"create mesh for element {index + 1}/{len(elements)}")
                 mesh = mesh_data.create_mesh()
-                groups = [mesh_data.element_data[group_column] for group_column in feature_class.group_columns]
-                element = ClippedTerrain(mesh.get_data(), groups)
+                element = ClippedTerrain(mesh.get_data())
                 for attribute in feature_class.attributes:
-                    if attribute.column in mesh_data.element_data:
-                        element.add_attribute(attribute.name, mesh_data.element_data[attribute.column])
+                    if attribute.source.type == SourceType.SQL:
+                        if attribute.source.expression in mesh_data.element_data:
+                            element.add_attribute(attribute.attribute, mesh_data.element_data[attribute.source.expression])
+                    elif attribute.source.type == SourceType.STATIC:
+                        element.add_attribute(attribute.attribute, attribute.source.expression)
                 for p in feature_class.properties:
-                    if p.column in mesh_data.element_data:
-                        element.add_property(p.set, p.name, mesh_data.element_data[p.column])
+                    if p.source.type == SourceType.SQL:
+                        if p.source.expression in mesh_data.element_data:
+                            element.add_property(p.property_set, p.property, mesh_data.element_data[p.source.expression])
+                    elif p.source.type == SourceType.STATIC:
+                        element.add_property(p.property_set, p.property, p.source.expression)
+                for group_assignment in feature_class.group_assignments:
+                    if group_assignment.type == SourceType.SQL:
+                        element.add_group(mesh_data.element_data[group_assignment.expression])
+                    elif group_assignment.type == SourceType.STATIC:
+                        element.add_group(group_assignment.expression)
+
                 model.add_clipped_terrain(feature_class_key, element)
             logger.info("finished creating meshes")
 

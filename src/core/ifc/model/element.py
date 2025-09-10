@@ -1,9 +1,7 @@
-from abc import ABC
-
 from core.ifc.model.property_set import PropertySet
 
 
-class Element(ABC):
+class Element:
     """
     Representation of an IfcElement that can be added to a model
 
@@ -17,8 +15,8 @@ class Element(ABC):
         A map of all property sets identified by their name
     """
 
-    def __init__(self, groups: list[str] = None) -> None:
-        self.groups = groups if groups is not None else []
+    def __init__(self) -> None:
+        self.groups = []
         self.attributes = {}
         self.property_sets = {}
 
@@ -34,3 +32,8 @@ class Element(ABC):
             self.attributes[name] = value
         else:
             raise Exception(f"Attribute {name} already exists")
+
+    def add_group(self, name):
+        """Adds a new group to the element"""
+        if not name in self.groups:
+            self.groups.append(name)

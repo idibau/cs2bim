@@ -44,5 +44,5 @@ class ModelGenerator:
         building_processor = BuildingProcessor()
         building_processor.process(polygon, origin, model)
 
-        ifc_file = self.ifc_builder.build(model)
+        ifc_file = self.ifc_builder.build_ifc(model)
         return ifc_file
