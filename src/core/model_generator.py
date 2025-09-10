@@ -3,7 +3,6 @@ import logging
 import numpy as np
 from shapely import wkt
 
-from core.ifc.ifc_builder import IfcBuilder
 from core.ifc.model.ifc_version import IfcVersion
 from core.ifc.model.model import Model
 from core.processors.building_processor import BuildingProcessor
@@ -15,7 +14,7 @@ logger = logging.getLogger(__name__)
 class ModelGenerator:
 
     def __init__(self):
-        self.ifc_builder = IfcBuilder()
+        pass
 
     @staticmethod
     def calculate_origin_from_polygon(wkt_polygon: str):
@@ -38,11 +37,14 @@ class ModelGenerator:
 
         logger.info("process clipped terrain feature classes")
         clipped_terrain_processor = ClippedTerrainProcessor()
-        clipped_terrain_processor.process(polygon, origin, model)
+        clipped_terrains = clipped_terrain_processor.process(polygon, origin)
+        for key, clipped_terrains in clipped_terrains.items():
+            model.add_clipped_terrains(key, clipped_terrains)
 
         logger.info("process building feature classes")
         building_processor = BuildingProcessor()
-        building_processor.process(polygon, origin, model)
+        buildings = building_processor.process(polygon, origin)
+        for key, buildings in buildings.items():
+            model.add_buildings(key, buildings)
 
-        ifc_file = self.ifc_builder.build_ifc(model)
-        return ifc_file
+        return model

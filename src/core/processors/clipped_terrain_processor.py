@@ -21,10 +21,10 @@ class ClippedTerrainProcessor:
         self.postgis_service = PostgisService()
         self.stac_service = STACService()
 
-    def process(self, polygon, origin, model):
+    def process(self, polygon, origin):
         if not self.feature_classes:
             logger.info("no clipped terrain feature classes configured")
-            return
+            return {}
 
         wkts = []
         feature_class_elements = {}
@@ -48,6 +48,7 @@ class ClippedTerrainProcessor:
         dtm_files = self.stac_service.fetch_dtm_assets(bounding_box, config.tin.grid_size)
         logger.info(f"fetched {len(dtm_files)} dtm files")
 
+        clipped_terrains = {}
         for feature_class_key, feature_class in self.feature_classes.items():
             logger.info(f"create {feature_class_key} feature class")
             elements = feature_class_elements[feature_class_key]
@@ -91,8 +92,11 @@ class ClippedTerrainProcessor:
                     elif group_assignment.type == SourceType.STATIC:
                         element.add_group(group_assignment.expression)
 
-                model.add_clipped_terrain(feature_class_key, element)
+                if not feature_class_key in clipped_terrains:
+                    clipped_terrains[feature_class_key] = []
+                clipped_terrains[feature_class_key].append(element)
             logger.info("finished creating meshes")
+        return clipped_terrains
 
 class MeshData:
 

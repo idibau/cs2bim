@@ -43,7 +43,8 @@ else:
     )
     model_generator = ModelGenerator()
     log_memory_usage()
-    ifc_file = model_generator.generate(ifc_version, args.NAME, args.POLYGON, project_origin)
+    model = model_generator.generate(ifc_version, args.NAME, args.POLYGON, project_origin)
+    ifc_file = model.map_to_ifc()
     ifc_file.write(get_output_path(args.NAME))
     log_memory_usage()
 

@@ -24,16 +24,17 @@ class BuildingProcessor:
             "gen": "http://www.opengis.net/citygml/generics/2.0",
         }
 
-    def process(self, polygon, origin, model):
+    def process(self, polygon, origin):
         if not self.feature_classes:
             logger.info("No building feature classes configured")
-            return
+            return {}
 
         logger.info(f"fetch city gml files")
         bounding_box = self.postgis_service.get_bounding_box([polygon])
         city_gmls = self.stac_service.fetch_city_gml_assets(bounding_box)
         logger.info(f"fetched {len(city_gmls)} city gml files")
 
+        buildings = {}
         for feature_class_key, feature_class in self.feature_classes.items():
             logger.info(f"create {feature_class_key} feature class")
             with open(feature_class.sql_path, "r") as file:
@@ -57,12 +58,15 @@ class BuildingProcessor:
                                 logger.debug(f"process building {egid}")
                                 building_model = self.create_building_model(building, building_config, origin,
                                                                             egids[egid])
-                                model.add_building(key, building_model)
+                                if not feature_class_key in buildings:
+                                    buildings[feature_class_key] = []
+                                buildings[feature_class_key].append(building_model)
                                 logger.debug(f"finished processing building")
                         building.clear()
 
                         while building.getprevious() is not None:
                             del building.getparent()[0]
+        return buildings
 
     def create_building_model(self, building, building_config, origin, result_set):
         building_model = Building()

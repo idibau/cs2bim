@@ -29,7 +29,8 @@ def model_generation_task(self, ifc_version, name, polygon, project_origin):
     try:
         logger.info(f"Task {self.request.id}: Starting model generation")
         model_generator = ModelGenerator()
-        ifc_file = model_generator.generate(IfcVersion(ifc_version), name, polygon, project_origin)
+        model = model_generator.generate(IfcVersion(ifc_version), name, polygon, project_origin)
+        ifc_file = model.map_to_ifc()
         output_path = get_output_path(self.request.id)
         ifc_file.write(output_path)
         logger.info(f"Task {self.request.id}: Model generation completed, file saved to {output_path}")
