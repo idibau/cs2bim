@@ -17,18 +17,18 @@ logger = logging.getLogger(__name__)
 class ClippedTerrainProcessor:
 
     def __init__(self):
-        self.feature_classes = config.ifc.clipped_terrain
         self.postgis_service = PostgisService()
         self.stac_service = STACService()
 
     def process(self, polygon, origin):
-        if not self.feature_classes:
+        feature_classes = {ct.name: ct for ct in config.ifc.clipped_terrain}
+        if not feature_classes:
             logger.info("no clipped terrain feature classes configured")
             return {}
 
         wkts = []
         feature_class_elements = {}
-        for feature_class_key, feature_class in self.feature_classes.items():
+        for feature_class_key, feature_class in feature_classes.items():
             logger.info(f"fetch {feature_class_key}")
             with open(feature_class.sql_path, "r") as file:
                 sql = file.read()
@@ -49,7 +49,7 @@ class ClippedTerrainProcessor:
         logger.info(f"fetched {len(dtm_files)} dtm files")
 
         clipped_terrains = {}
-        for feature_class_key, feature_class in self.feature_classes.items():
+        for feature_class_key, feature_class in feature_classes.items():
             logger.info(f"create {feature_class_key} feature class")
             elements = feature_class_elements[feature_class_key]
 

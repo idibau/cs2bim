@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 class BuildingProcessor:
 
     def __init__(self):
-        self.feature_classes = config.ifc.building
         self.postgis_service = PostgisService()
         self.stac_service = STACService()
 
@@ -25,7 +24,8 @@ class BuildingProcessor:
         }
 
     def process(self, polygon, origin):
-        if not self.feature_classes:
+        feature_classes = {b.name: b for b in config.ifc.building}
+        if not feature_classes:
             logger.info("No building feature classes configured")
             return {}
 
@@ -35,21 +35,19 @@ class BuildingProcessor:
         logger.info(f"fetched {len(city_gmls)} city gml files")
 
         buildings = {}
-        for feature_class_key, feature_class in self.feature_classes.items():
+        for feature_class_key, feature_class in feature_classes.items():
             logger.info(f"create {feature_class_key} feature class")
             with open(feature_class.sql_path, "r") as file:
                 sql = file.read()
             result_set = self.postgis_service.fetch_feature_class_elements(sql, polygon)
-            egids = {}
-            for item in result_set:
-                egids[item["egid"]] = item
+            egids = {item["egid"]: item for item in result_set}
 
             for index, city_gml in enumerate(city_gmls):
                 logger.info(f"processing city gml {index + 1}/{len(city_gmls)}")
                 context_iter = etree.iterparse(city_gml, events=("end",),
                                                tag="{http://www.opengis.net/citygml/building/2.0}Building")
 
-                for key, building_config in self.feature_classes.items():
+                for key, building_config in feature_classes.items():
                     for event, building in context_iter:
                         value_elem = building.find(building_config.egid_xpath, namespaces=self.ns)
                         if value_elem is not None:

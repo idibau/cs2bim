@@ -36,16 +36,6 @@ class Model:
         self.clipped_terrains: dict[str, list[ClippedTerrain]] = {}
         self.buildings: dict[str, list[Building]] = {}
 
-        self.author = config.ifc.author
-        self.version = config.ifc.version
-        self.application_name = config.ifc.application_name
-        self.project_name = config.ifc.project_name
-        self.geo_referencing = config.ifc.geo_referencing
-        self.triangulation_representation_type = config.ifc.triangulation_representation_type
-        self.clipped_terrain_config = config.ifc.clipped_terrain
-        self.building_config = config.ifc.building
-        self.groups_config = config.ifc.groups
-
     def add_clipped_terrains(self, feature_class_key: str, clipped_terrains: list[ClippedTerrain]) -> None:
         if not feature_class_key in self.clipped_terrains:
             self.clipped_terrains[feature_class_key] = []
@@ -58,10 +48,11 @@ class Model:
 
     def map_to_ifc(self):
         logger.info(f"initialize new ifc writer for ifc '{self.file_name}'")
-        ifc_file = IfcFile(self.schema.value,  self.file_name)
+        ifc_file = IfcFile(self.schema.value, self.file_name)
 
         logger.info(f"build ifc")
-        ifc_owner_history = ifc_file.create_ifc_owner_history(self.author, self.version, self.application_name)
+        ifc_owner_history = ifc_file.create_ifc_owner_history(config.ifc.author, config.ifc.version,
+                                                              config.ifc.application_name)
         ifc_length_unit = ifc_file.create_ifc_si_unit("LENGTHUNIT", "METRE")
         ifc_area_unit = ifc_file.create_ifc_si_unit("AREAUNIT", "SQUARE_METRE")
         ifc_volume_unit = ifc_file.create_ifc_si_unit("VOLUMEUNIT", "CUBIC_METRE")
@@ -69,19 +60,20 @@ class Model:
         ifc_unit_assignment = ifc_file.create_ifc_unit_assignment(ifc_length_unit, ifc_area_unit, ifc_volume_unit,
                                                                   ifc_degree_unit)
 
-        if self.geo_referencing == GeoReferencing.LO_GEO_REF_40:
+        geo_referencing = config.ifc.geo_referencing
+        if geo_referencing == GeoReferencing.LO_GEO_REF_40:
             location = self.origin
         else:
             location = (0.0, 0.0, 0.0)
         ifc_representation_context = ifc_file.create_ifc_geometric_representation_context(location)
         ifc_representation_sub_context = ifc_file.create_ifc_geometric_representation_sub_context(
             ifc_representation_context)
-        if self.geo_referencing == GeoReferencing.LO_GEO_REF_50:
+        if geo_referencing == GeoReferencing.LO_GEO_REF_50:
             ifc_file.create_ifc_map_conversion(ifc_length_unit, ifc_representation_context, self.origin)
 
-        ifc_project = ifc_file.create_ifc_project(self.project_name, ifc_owner_history, ifc_representation_context,
-                                                  ifc_unit_assignment)
-        if self.geo_referencing == GeoReferencing.LO_GEO_REF_30:
+        ifc_project = ifc_file.create_ifc_project(config.ifc.project_name, ifc_owner_history,
+                                                  ifc_representation_context, ifc_unit_assignment)
+        if geo_referencing == GeoReferencing.LO_GEO_REF_30:
             location = self.origin
         else:
             location = (0.0, 0.0, 0.0)
@@ -89,9 +81,10 @@ class Model:
 
         group_assignments = {}
         ifc_spatial_structures = {}
+        clipped_terrain_config = {ct.name: ct for ct in config.ifc.clipped_terrain}
         for feature_class_key, elements in self.clipped_terrains.items():
             logger.info(f"build FeatureClass {feature_class_key}")
-            feature_class = self.clipped_terrain_config[feature_class_key]
+            feature_class = clipped_terrain_config[feature_class_key]
             spatial_structure_id = feature_class.spatial_structure.get_id()
             if not spatial_structure_id in ifc_spatial_structures:
                 ifc_spatial_structure = self.build_spatial_structure(ifc_file, ifc_local_placement, ifc_project,
@@ -110,9 +103,10 @@ class Model:
             ifc_file.create_ifc_rel_contained_in_spatial_structure(ifc_elements, ifc_spatial_structures[
                 feature_class.spatial_structure.get_id()])
 
+        building_config = {b.name: b for b in config.ifc.building}
         for feature_class_key, elements in self.buildings.items():
             logger.info(f"build FeatureClass {feature_class_key}")
-            feature_class = self.building_config[feature_class_key]
+            feature_class = building_config[feature_class_key]
             spatial_structure_id = feature_class.spatial_structure.get_id()
             if not spatial_structure_id in ifc_spatial_structures:
                 ifc_spatial_structure = self.build_spatial_structure(ifc_file, ifc_local_placement, ifc_project,
@@ -146,6 +140,7 @@ class Model:
 
     def build_groups(self, ifc_file, groups):
         ifc_groups = {}
+        groups_config = {group.path: group for group in config.ifc.groups}
         for group_definition, ifc_group_elements in groups.items():
             path = []
             for group in group_definition.split("."):
@@ -154,8 +149,8 @@ class Model:
                 group_path = ".".join(path)
                 if group_path in ifc_groups:
                     continue
-                if group_path in self.groups_config:
-                    group_config = self.groups_config[group_definition]
+                if group_path in groups_config:
+                    group_config = groups_config[group_definition]
                     if group_config.entity_type == GroupEntityType.IFC_DISTRIBUTION_SYSTEM:
                         ifc_groups[group_path] = ifc_file.create_ifc_distribution_system(group)
                     elif group_config.entity_type == GroupEntityType.IFC_DISTRIBUTION_CIRCUIT:
