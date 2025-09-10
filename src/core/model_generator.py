@@ -26,23 +26,23 @@ class ModelGenerator:
 
         return min_x, min_y, 0
 
-    def generate(self, config, ifc_version: IfcVersion, name: str, polygon: str,
+    def generate(self, ifc_version: IfcVersion, name: str, polygon: str,
                  project_origin: tuple[float, float, float] | None):
         logger.info("start generating model")
         if project_origin is None:
             project_origin = self.calculate_origin_from_polygon(polygon)
 
         origin = np.array(project_origin)
-        model = Model(config.ifc, name, ifc_version, project_origin)
+        model = Model(name, ifc_version, project_origin)
 
         logger.info("process clipped terrain feature classes")
-        clipped_terrain_processor = ClippedTerrainProcessor(config)
+        clipped_terrain_processor = ClippedTerrainProcessor()
         clipped_terrains = clipped_terrain_processor.process(polygon, origin)
         for key, clipped_terrains in clipped_terrains.items():
             model.add_clipped_terrains(key, clipped_terrains)
 
         logger.info("process building feature classes")
-        building_processor = BuildingProcessor(config)
+        building_processor = BuildingProcessor()
         buildings = building_processor.process(polygon, origin)
         for key, buildings in buildings.items():
             model.add_buildings(key, buildings)

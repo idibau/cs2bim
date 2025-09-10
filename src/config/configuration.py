@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from typing import List, Annotated
-from typing import Optional
+from typing import Optional, Dict
 
 from pydantic import BaseModel, model_validator, Field
 from pydantic_yaml import parse_yaml_file_as
@@ -54,7 +54,6 @@ class Color(BaseModel):
 
 
 class ClippedTerrainFeatureClass(BaseModel):
-    name: str
     sql_path: str
     entity_type: ElementEntityType
     spatial_structure: SpatialStructureConfig
@@ -74,7 +73,6 @@ class BuildingPartConfig(BaseModel):
 
 
 class BuildingFeatureClass(BaseModel):
-    name: str
     sql_path: str
     egid_xpath: str
     spatial_structure: SpatialStructureConfig
@@ -85,7 +83,6 @@ class BuildingFeatureClass(BaseModel):
 
 
 class GroupConfig(BaseModel):
-    path: str
     entity_type: GroupEntityType
     attributes: Optional[List[AttributeConfig]] = Field(default_factory=list)
     properties: Optional[List[PropertyConfig]] = Field(default_factory=list)
@@ -116,9 +113,9 @@ class IFCConfig(BaseModel):
     project_name: str
     geo_referencing: GeoReferencing
     triangulation_representation_type: TriangulationRepresentationType
-    clipped_terrain: List[ClippedTerrainFeatureClass]
-    building: List[BuildingFeatureClass]
-    groups: List[GroupConfig]
+    clipped_terrain: Dict[str, ClippedTerrainFeatureClass]
+    building: Dict[str, BuildingFeatureClass]
+    groups: Dict[str, GroupConfig]
 
 
 class Configuration(BaseModel):
@@ -140,3 +137,6 @@ class Configuration(BaseModel):
         if self.ifc.building and self.stac.building_items_url is None:
             raise ValueError("stac.building_items_url is required when ifc.building is not empty")
         return self
+
+
+config = Configuration.load("/workspace/config.yml")

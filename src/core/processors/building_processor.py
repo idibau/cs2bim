@@ -2,6 +2,7 @@ import logging
 
 from lxml import etree
 
+from config.configuration import config
 from config.source_type import SourceType
 from core.ifc.model.building import BuildingPart, Building
 from service.postgis_service import PostgisService
@@ -12,10 +13,10 @@ logger = logging.getLogger(__name__)
 
 class BuildingProcessor:
 
-    def __init__(self, config):
-        self.feature_classes = {b.name: b for b in config.ifc.building}
-        self.postgis_service = PostgisService(config.db)
-        self.stac_service = STACService(config.stac)
+    def __init__(self):
+        self.feature_classes = config.ifc.building
+        self.postgis_service = PostgisService()
+        self.stac_service = STACService()
 
         self.ns = {
             "bldg": "http://www.opengis.net/citygml/building/2.0",
@@ -39,7 +40,9 @@ class BuildingProcessor:
             with open(feature_class.sql_path, "r") as file:
                 sql = file.read()
             result_set = self.postgis_service.fetch_feature_class_elements(sql, polygon)
-            egids = {item["egid"]: item for item in result_set}
+            egids = {}
+            for item in result_set:
+                egids[item["egid"]] = item
 
             for index, city_gml in enumerate(city_gmls):
                 logger.info(f"processing city gml {index + 1}/{len(city_gmls)}")

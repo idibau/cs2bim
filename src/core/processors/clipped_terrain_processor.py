@@ -2,7 +2,7 @@ import logging
 
 import numpy as np
 
-from config.configuration import Configuration
+from config.configuration import config
 from config.source_type import SourceType
 from core.ifc.model.clipped_terrain import ClippedTerrain
 from core.tin.mesh import Mesh
@@ -16,11 +16,10 @@ logger = logging.getLogger(__name__)
 
 class ClippedTerrainProcessor:
 
-    def __init__(self, config: Configuration):
-        self.tin_config = config.tin
-        self.feature_classes = {ct.name: ct for ct in config.ifc.clipped_terrain}
-        self.postgis_service = PostgisService(config.db)
-        self.stac_service = STACService(config.stac)
+    def __init__(self):
+        self.feature_classes = config.ifc.clipped_terrain
+        self.postgis_service = PostgisService()
+        self.stac_service = STACService()
 
     def process(self, polygon, origin):
         if not self.feature_classes:
@@ -46,7 +45,7 @@ class ClippedTerrainProcessor:
             bounding_box = self.postgis_service.get_bounding_box(wkts)
 
         logger.info("fetch dtm files")
-        dtm_files = self.stac_service.fetch_dtm_assets(bounding_box, self.tin_config.grid_size)
+        dtm_files = self.stac_service.fetch_dtm_assets(bounding_box, config.tin.grid_size)
         logger.info(f"fetched {len(dtm_files)} dtm files")
 
         clipped_terrains = {}
@@ -57,7 +56,7 @@ class ClippedTerrainProcessor:
             mesh_datas = []
             for element_data in elements:
                 try:
-                    mesh_data = MeshData(element_data, origin, self.tin_config)
+                    mesh_data = MeshData(element_data, origin)
                     mesh_datas.append(mesh_data)
                 except Exception as e:
                     logger.error(f"Error in element data: {e}. Skipping element...")
@@ -78,15 +77,13 @@ class ClippedTerrainProcessor:
                 for attribute in feature_class.attributes:
                     if attribute.source.type == SourceType.SQL:
                         if attribute.source.expression in mesh_data.element_data:
-                            element.add_attribute(attribute.attribute,
-                                                  mesh_data.element_data[attribute.source.expression])
+                            element.add_attribute(attribute.attribute, mesh_data.element_data[attribute.source.expression])
                     elif attribute.source.type == SourceType.STATIC:
                         element.add_attribute(attribute.attribute, attribute.source.expression)
                 for p in feature_class.properties:
                     if p.source.type == SourceType.SQL:
                         if p.source.expression in mesh_data.element_data:
-                            element.add_property(p.property_set, p.property,
-                                                 mesh_data.element_data[p.source.expression])
+                            element.add_property(p.property_set, p.property, mesh_data.element_data[p.source.expression])
                     elif p.source.type == SourceType.STATIC:
                         element.add_property(p.property_set, p.property, p.source.expression)
                 for group_assignment in feature_class.group_assignments:
@@ -101,18 +98,16 @@ class ClippedTerrainProcessor:
             logger.info("finished creating meshes")
         return clipped_terrains
 
-
 class MeshData:
 
-    def __init__(self, element_data, origin, tin_config):
+    def __init__(self, element_data, origin):
         self.element_data = element_data
         self.area = Area(wkt_str=element_data["wkt"], origin=origin[:2])
-        self.tin_config = tin_config
         self.raster_points_within = []
         self.raster_points_buffer = []
 
     def add_raster_points(self, raster_points):
-        rpb = raster_points.within(self.area.get_geometry, buffer_dist=3 * self.tin_config.grid_size)
+        rpb = raster_points.within(self.area.get_geometry, buffer_dist=3 * config.tin.grid_size)
         if rpb is not None:
             self.raster_points_buffer.append(rpb)
         rpw = raster_points.within(self.area.get_geometry, buffer_dist=0)
@@ -129,7 +124,7 @@ class MeshData:
         else:
             mesh_clipped = mesh.clip_mesh_by_area(self.area, np.empty((0, 3)))
         mesh_clipped_decimated = mesh_clipped.decimate(
-            max_height_error=self.tin_config.max_height_error, grid_size=self.tin_config.grid_size
+            max_height_error=config.tin.max_height_error, grid_size=config.tin.grid_size
         )
         logger.debug(
             f"area consistency: {mesh_clipped_decimated.check_area_consistency(self.area.get_area, treshold=0.1)}"
