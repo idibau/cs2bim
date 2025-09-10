@@ -1,4 +1,3 @@
-from config.configuration import config
 from config.element_entity_type import ElementEntityType
 from config.triangulation_representation_type import TriangulationRepresentationType
 from core.ifc.model.element import Element
@@ -23,8 +22,7 @@ class ClippedTerrain(Element):
     def _create_tuple(cls, l: list) -> tuple[float, float, float]:
         return float(l[0]), float(l[1]), float(l[2])
 
-    def map_to_ifc(self, ifc_file, entity_type, ifc_representation_sub_context, ifc_style):
-        representation_type = config.ifc.triangulation_representation_type
+    def map_to_ifc(self, ifc_file, entity_type, ifc_representation_sub_context, ifc_style, representation_type):
         if representation_type == TriangulationRepresentationType.TESSELLATION:
             tessellation = Tessellation(self.triangles)
             product_definition_shape = tessellation.map_to_ifc(ifc_file, ifc_representation_sub_context, ifc_style)

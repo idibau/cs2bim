@@ -28,7 +28,7 @@ ifc:
   geo_referencing: LO_GEO_REF_50
   triangulation_representation_type: TESSELLATION
   clipped_terrain:
-    parcel:
+    - name: "parcel"
       sql_path: "/workspace/sql/parcels.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       attributes:
@@ -87,7 +87,7 @@ ifc:
         g: 0.67
         b: 0.04
         a: 0.85
-    land_cover:
+    - name: "land_cover"
       sql_path: "/workspace/sql/land_covers.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       attributes:
@@ -131,7 +131,7 @@ ifc:
         g: 0.42
         b: 0.04
         a: 0.85
-    land_covers_buildings:
+    - name: "land_covers_buildings"
       sql_path: "/workspace/sql/land_covers_buildings.sql"
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       attributes:
@@ -181,7 +181,7 @@ ifc:
         b: 0.00
         a: 0.85
   building:
-    all:
+    - name: "all"
       sql_path: "/workspace/sql/egid.sql"
       egid_xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
       spatial_structure:
@@ -260,7 +260,7 @@ ifc:
             b: 1.00
             a: 0.00
   groups:
-    Amtliche Vermessung.Gebaeude:
+    - path: "Amtliche Vermessung.Gebaeude"
       entity_type: IFC_BUILDING_SYSTEM
       attributes:
         - attribute: PREDEFINED_TYPE

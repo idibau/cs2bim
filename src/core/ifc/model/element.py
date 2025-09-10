@@ -4,18 +4,7 @@ from core.ifc.model.property_set import PropertySet
 
 
 class Element:
-    """
-    Representation of an IfcElement that can be added to a model
-
-    Attributes
-    ----------
-    attributes : dict[str, str]
-        Attributes of the element
-    groups : list[str]
-        A list of all groups that this element is assigned to
-    property_sets : dict[str, PropertySet]
-        A map of all property sets identified by their name
-    """
+    """Representation of an IfcElement that can be added to a model"""
 
     def __init__(self) -> None:
         self.groups = []

@@ -2,12 +2,15 @@ import argparse
 import logging
 import sys
 
+from config.configuration import Configuration
 from core.ifc.model.ifc_version import IfcVersion
 from core.model_generator import ModelGenerator
 from utils.memory_logger import start_measuring_memory_usage, log_memory_usage, stop_measuring_memory_usage
 from utils.utils import setup_logger, get_output_path
 
-setup_logger("script")
+config = Configuration.load("/workspace/config.yml")
+
+setup_logger("script", config.logging_level)
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +46,7 @@ else:
     )
     model_generator = ModelGenerator()
     log_memory_usage()
-    model = model_generator.generate(ifc_version, args.NAME, args.POLYGON, project_origin)
+    model = model_generator.generate(config, ifc_version, args.NAME, args.POLYGON, project_origin)
     ifc_file = model.map_to_ifc()
     ifc_file.write(get_output_path(args.NAME))
     log_memory_usage()
