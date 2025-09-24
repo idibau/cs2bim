@@ -7,11 +7,12 @@ from datetime import datetime
 from core.ifc.model.ifc_version import IfcVersion
 from core.model_generator import ModelGenerator
 from utils.utils import get_output_path, setup_logger
+from config.configuration import config
 
 app = Celery(
     "cs2bim",
-    broker="redis://redis:6379/0",
-    backend="redis://redis:6379/1"
+    broker=f"redis://{config.redis.host}:{config.redis.port}/{config.redis.db.broker}",
+    backend=f"redis://{config.redis.host}:{config.redis.port}/{config.redis.db.backend}"
 )
 
 app.conf.task_track_started = True

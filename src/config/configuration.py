@@ -1,10 +1,9 @@
 import json
 from pathlib import Path
-from typing import List, Annotated
-from typing import Optional
-
 from pydantic import BaseModel, model_validator, Field
 from pydantic_yaml import parse_yaml_raw_as
+from typing import List, Annotated
+from typing import Optional
 
 from config.element_attribute import ElementAttribute
 from config.element_entity_type import ElementEntityType
@@ -91,6 +90,18 @@ class GroupConfig(BaseModel):
     properties: Optional[List[PropertyConfig]] = Field(default_factory=list)
 
 
+class RedisDBConfig(BaseModel):
+    broker: str
+    backend: str
+    file_cache: str
+
+
+class RedisConfig(BaseModel):
+    host: str
+    port: int
+    db: RedisDBConfig
+
+
 class DBConfig(BaseModel):
     dbname: str
     user: str
@@ -124,6 +135,7 @@ class IFCConfig(BaseModel):
 class Configuration(BaseModel):
     logging_level: str
     i18n: Optional[I18nConfig] = None
+    redis: RedisConfig
     db: DBConfig
     stac: STACConfig
     tin: TINConfig

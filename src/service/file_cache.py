@@ -2,11 +2,13 @@ import json
 import redis
 import time
 
+from config.configuration import config
+
 
 class FileCache:
 
     def __init__(self):
-        self.file_cache = redis.Redis(host="redis", port=6379, db=2)
+        self.file_cache = redis.Redis(host=config.redis.host, port=config.redis.port, db=config.redis.db.file_cache)
 
     def add(self, key, file_path: str, ttl: float = 3600):
         cache_entry = CacheEntry(file_path, ttl)

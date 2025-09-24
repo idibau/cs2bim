@@ -1,6 +1,15 @@
 ################# general ###################
 logging_level: INFO
 
+########### redis configuration #############
+redis:
+  host: "redis"
+  port: 6379
+  db:
+    broker: "0"
+    backend: "1"
+    file_cache: "2"
+
 ########## postgis configuration ############
 db:
   dbname: "cs2bim"
