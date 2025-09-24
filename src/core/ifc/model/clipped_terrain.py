@@ -32,16 +32,16 @@ class ClippedTerrain(Element):
             brep = Brep(self.triangles)
             product_definition_shape = brep.map_to_ifc(ifc_file, ifc_representation_sub_context, ifc_style)
         else:
-            raise Exception(f"building step for representation type {type(representation_type)} not implemented")
+            raise NotImplementedError(f"building step for representation type {representation_type.name} not implemented")
 
         ifc_local_placement = ifc_file.create_ifc_local_placement((0.0, 0.0, 0.0))
         if entity_type == ElementEntityType.IFC_GEOGRAPHIC_ELEMENT:
             ifc_element = ifc_file.create_ifc_geographic_element(ifc_local_placement, product_definition_shape)
         else:
-            raise Exception(
+            raise NotImplementedError(
                 f"building step for feature class entity type {entity_type.name} not implemented for clipped terrain feature classes")
 
-        self.set_ifc_attributes(ifc_element)
+        self.set_ifc_attributes(ifc_file, ifc_element)
         self.set_ifc_properties(ifc_file, ifc_element)
 
         return ifc_element

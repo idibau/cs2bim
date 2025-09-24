@@ -3,6 +3,8 @@ import sys
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
+import yaml
+
 from config.configuration import config
 
 
@@ -29,3 +31,20 @@ def setup_logger(log_file_name: str = None):
 
 def get_output_path(generation_id):
     return f"/workspace/ifc/{generation_id}.ifc"
+
+
+def load_yaml_as_flat_dict(path: str) -> dict:
+    with open(path, "r") as f:
+        yaml_data = yaml.safe_load(f)
+
+    def flatten(data, parent_key=""):
+        items = {}
+        for key, value in data.items():
+            new_key = f"{parent_key}.{key}" if parent_key else key
+            if isinstance(value, dict):
+                items.update(flatten(value, new_key))
+            else:
+                items[new_key] = value
+        return items
+
+    return flatten(yaml_data)

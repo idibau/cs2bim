@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field
 from typing import Optional
 
 from core.ifc.model.ifc_version import IfcVersion
+from i18n.language import Language
 
 
 class GenerateModelRequest(BaseModel):
@@ -9,3 +10,4 @@ class GenerateModelRequest(BaseModel):
     NAME: str = Field(..., description="The name of the model")
     POLYGON: str = Field(..., description="The closed WKT string representing the polygon")
     PROJECT_ORIGIN: Optional[str] = Field(None, description="Optional origin as comma-separated string [x,y,z]")
+    LANGUAGE: Optional[Language] = Field(None, description="The language of the model")

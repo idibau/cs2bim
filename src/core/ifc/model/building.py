@@ -29,9 +29,9 @@ class BuildingPart(Element):
         elif self.entity_type == ElementEntityType.IFC_SPACE:
             ifc_element = ifc_file.create_ifc_space(ifc_local_placement, product_definition_shape)
         else:
-            raise Exception(
+            raise NotImplementedError(
                 f"building step for feature class entity type {self.entity_type.name} not implemented for building feature classes")
-        self.set_ifc_attributes(ifc_element)
+        self.set_ifc_attributes(ifc_file, ifc_element)
         self.set_ifc_properties(ifc_file, ifc_element)
         return ifc_element
 
@@ -52,7 +52,7 @@ class Building(Element):
             ifc_building_parts.append(ifc_element)
 
         ifc_building = ifc_file.create_ifc_building(ifc_local_placement)
-        self.set_ifc_attributes(ifc_building)
+        self.set_ifc_attributes(ifc_file, ifc_building)
         self.set_ifc_properties(ifc_file, ifc_building)
 
         ifc_file.create_ifc_rel_contained_in_spatial_structure(ifc_building_parts, ifc_building)

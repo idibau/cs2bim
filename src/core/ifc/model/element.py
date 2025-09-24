@@ -4,18 +4,7 @@ from core.ifc.model.property_set import PropertySet
 
 
 class Element:
-    """
-    Representation of an IfcElement that can be added to a model
-
-    Attributes
-    ----------
-    attributes : dict[str, str]
-        Attributes of the element
-    groups : list[str]
-        A list of all groups that this element is assigned to
-    property_sets : dict[str, PropertySet]
-        A map of all property sets identified by their name
-    """
+    """Representation of an IfcElement that can be added to a model"""
 
     def __init__(self) -> None:
         self.groups = []
@@ -58,7 +47,7 @@ class Element:
                 ifc_property_single_values.append(ifc_file.create_ifc_property_single_value(key, value))
             ifc_file.create_ifc_property_set(property_set.name, ifc_property_single_values, ifc_element)
 
-    def set_ifc_attributes(self, ifc_element):
+    def set_ifc_attributes(self, ifc_file, ifc_element):
         for attribute, value in self.attributes.items():
             if attribute == ElementAttribute.NAME:
                 ifc_attribute = "Name"
@@ -73,6 +62,5 @@ class Element:
             elif attribute == ElementAttribute.LONGNAME:
                 ifc_attribute = "LongName"
             else:
-                raise Exception(f"building step for attribute type {attribute} not implemented")
-            if hasattr(ifc_element, ifc_attribute):
-                setattr(ifc_element, ifc_attribute, value)
+                raise NotImplementedError(f"building step for attribute type {attribute} not implemented")
+            ifc_file.add_attribute(ifc_element, ifc_attribute, value)

@@ -35,6 +35,7 @@ async def generate_model(request_data: GenerateModelRequest):
     ifc_version = request_data.IFC_VERSION
     name = request_data.NAME
     polygon = request_data.POLYGON
+    language = request_data.LANGUAGE
 
     project_origin = None
     if request_data.PROJECT_ORIGIN:
@@ -59,7 +60,8 @@ async def generate_model(request_data: GenerateModelRequest):
         f"Received generate-model request: IFC_VERSION={ifc_version}, NAME={name}, POLYGON={polygon}, PROJECT_ORIGIN={project_origin if project_origin else 'calculated'}"
     )
 
-    task = model_generation_task.delay(ifc_version.value, name, polygon, project_origin)
+    task = model_generation_task.delay(ifc_version.value, name, polygon, project_origin,
+                                       language.value if language else None)
     return {"task_id": task.id}
 
 

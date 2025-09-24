@@ -46,9 +46,9 @@ class Model:
             self.buildings[feature_class_key] = []
         self.buildings[feature_class_key].extend(elements)
 
-    def map_to_ifc(self):
+    def map_to_ifc(self, language):
         logger.info(f"initialize new ifc writer for ifc '{self.file_name}'")
-        ifc_file = IfcFile(self.schema.value, self.file_name)
+        ifc_file = IfcFile(self.schema.value, self.file_name, language)
 
         logger.info(f"build ifc")
         ifc_owner_history = ifc_file.create_ifc_owner_history(config.ifc.author, config.ifc.version,
@@ -131,10 +131,10 @@ class Model:
         if spatial_structure_config.entity_type == SpatialStructureEntityType.IFC_SITE:
             ifc_spatial_structure = ifc_file.create_ifc_site(ifc_local_placement, ifc_project)
         else:
-            raise Exception(
+            raise NotImplementedError(
                 f"building step for structure entity type {spatial_structure_config.entity_type} not implemented")
         spatial_structure_element = Element.from_static_element_config(spatial_structure_config)
-        spatial_structure_element.set_ifc_attributes(ifc_spatial_structure)
+        spatial_structure_element.set_ifc_attributes(ifc_file, ifc_spatial_structure)
         spatial_structure_element.set_ifc_properties(ifc_file, ifc_spatial_structure)
         return ifc_spatial_structure
 
@@ -162,12 +162,12 @@ class Model:
                     elif group_config.entity_type == GroupEntityType.IFC_ZONE:
                         ifc_groups[group_path] = ifc_file.create_ifc_zone(group)
                     else:
-                        raise Exception(
-                            f"building step for ifc group entity {type(group_config.entity_type)} not implemented")
+                        raise NotImplementedError(
+                            f"building step for ifc group entity {group_config.entity_type.name} not implemented")
                     ifc_group = ifc_groups[group_path]
 
                     group_element = Element.from_static_element_config(group_config)
-                    group_element.set_ifc_attributes(ifc_group)
+                    group_element.set_ifc_attributes(ifc_file, ifc_group)
                     group_element.set_ifc_properties(ifc_file, ifc_group)
                 else:
                     ifc_groups[group_path] = ifc_file.create_ifc_group(group)

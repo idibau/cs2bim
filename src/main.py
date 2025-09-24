@@ -4,6 +4,7 @@ import sys
 
 from core.ifc.model.ifc_version import IfcVersion
 from core.model_generator import ModelGenerator
+from i18n.language import Language
 from utils.memory_logger import start_measuring_memory_usage, log_memory_usage, stop_measuring_memory_usage
 from utils.utils import setup_logger, get_output_path
 
@@ -21,6 +22,7 @@ parser.add_argument("--IFC_VERSION", help="IFC version (e.g., IFC4)")
 parser.add_argument("--NAME", help="Project name")
 parser.add_argument("--POLYGON", help="Polygon")
 parser.add_argument("--PROJECT_ORIGIN", help="Project origin 'x,y,z'")
+parser.add_argument("--LANGUAGE", help="Language")
 
 args = parser.parse_args()
 
@@ -37,14 +39,14 @@ else:
             project_origin = tuple(map(float, args.PROJECT_ORIGIN.split(",")))
         except:
             raise ValueError("PROJECT_ORIGIN must be in format float,float,float")
-
+    language = Language(args.LANGUAGE) if args.LANGUAGE else None
     logger.info(
-        f"IFC_VERSION: {ifc_version.name}, NAME: {args.NAME}, POLYGON: {args.POLYGON}, PROJECT_ORIGIN: {project_origin if not project_origin is None else 'calculated'}"
+        f"IFC_VERSION: {ifc_version.name}, NAME: {args.NAME}, POLYGON: {args.POLYGON}, PROJECT_ORIGIN: {project_origin if not project_origin is None else 'calculated'}, LANGUAGE: {language}"
     )
     model_generator = ModelGenerator()
     log_memory_usage()
-    model = model_generator.generate(ifc_version, args.NAME, args.POLYGON, project_origin)
-    ifc_file = model.map_to_ifc()
+    model = model_generator.generate(ifc_version, args.NAME, args.POLYGON, project_origin, language)
+    ifc_file = model.map_to_ifc(language)
     ifc_file.write(get_output_path(args.NAME))
     log_memory_usage()
 

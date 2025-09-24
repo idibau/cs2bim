@@ -24,12 +24,12 @@ def setup_logger_on_worker(**kwargs):
 
 
 @app.task(bind=True)
-def model_generation_task(self, ifc_version, name, polygon, project_origin):
+def model_generation_task(self, ifc_version, name, polygon, project_origin, language):
     logger = logging.getLogger(__name__)
     try:
         logger.info(f"Task {self.request.id}: Starting model generation")
         model_generator = ModelGenerator()
-        model = model_generator.generate(IfcVersion(ifc_version), name, polygon, project_origin)
+        model = model_generator.generate(IfcVersion(ifc_version), name, polygon, project_origin, language)
         ifc_file = model.map_to_ifc()
         output_path = get_output_path(self.request.id)
         ifc_file.write(output_path)

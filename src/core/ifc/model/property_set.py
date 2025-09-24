@@ -1,14 +1,5 @@
 class PropertySet:
-    """
-    Class holding a set of properties
-
-    Attributes
-    ----------
-    name : str
-        Name of the property set
-    properties : dict[str, str]
-        Key/value pairs representing poperties
-    """
+    """Class holding a set of properties"""
 
     def __init__(self, name: str) -> None:
         self.name = name
