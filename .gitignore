@@ -1,7 +1,6 @@
 # folders
 __pycache__
 .vscode
-dist
 .idea
 /cache
 /ifc
