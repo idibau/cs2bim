@@ -3,9 +3,9 @@ __pycache__
 .vscode
 dist
 .idea
-cache
-ifc
-logs
+/cache
+/ifc
+/logs
 
 # files
 *.stl
