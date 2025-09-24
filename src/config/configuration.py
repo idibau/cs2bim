@@ -4,7 +4,7 @@ from typing import List, Annotated
 from typing import Optional
 
 from pydantic import BaseModel, model_validator, Field
-from pydantic_yaml import parse_yaml_file_as
+from pydantic_yaml import parse_yaml_raw_as
 
 from config.element_attribute import ElementAttribute
 from config.element_entity_type import ElementEntityType
@@ -130,8 +130,10 @@ class Configuration(BaseModel):
     ifc: IFCConfig
 
     @classmethod
-    def load(cls, path: str | Path) -> "Configuration":
-        return parse_yaml_file_as(cls, path)
+    def load(cls, path: str) -> "Configuration":
+        text = Path(path).read_text()
+        expanded = os.path.expandvars(text)
+        return parse_yaml_raw_as(cls, expanded)
 
     @model_validator(mode="after")
     def check_conditional_configs(self):
