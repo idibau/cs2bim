@@ -1,0 +1,63 @@
+################# general ###################
+logging_level: INFO
+
+########### redis configuration #############
+redis:
+  host: "redis"
+  port: 6379
+  db:
+    celery_broker: "0"
+    celery_backend: "1"
+    file_cache: "2"
+
+########## postgis configuration ############
+db:
+  dbname: "cs2bim"
+  user: "postgres"
+  host: "host.docker.internal"
+  port: 5432
+  password: "?"
+
+########## stac configuration ############
+stac:
+  dtm_items_url: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
+  building_items_url: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissbuildings3d_3_0/items"
+
+############# tin configuration #############
+tin:
+  grid_size: 0.5
+  max_height_error: 0.05
+
+############# ifc configuration #############
+ifc:
+  author: "FHNW"
+  version: "1.0"
+  application_name: "cs2bim"
+  project_name: "cs2bim"
+  geo_referencing: LO_GEO_REF_50
+  triangulation_representation_type: TESSELLATION
+  clipped_terrain:
+    - name: "parcel"
+      sql_path: "/workspace/sql/parcels.sql"
+      entity_type: IFC_GEOGRAPHIC_ELEMENT
+      spatial_structure:
+        entity_type: IFC_SITE
+      color:
+        r: 0.31
+        g: 0.67
+        b: 0.04
+        a: 0.85
+  building:
+    - name: "all"
+      sql_path: "/workspace/sql/egid.sql"
+      egid_xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
+      spatial_structure:
+        entity_type: IFC_SITE
+      building_parts:
+        - xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+          entity_type: IFC_SPACE
+          color:
+            r: 1.00
+            g: 1.00
+            b: 1.00
+            a: 0.3
