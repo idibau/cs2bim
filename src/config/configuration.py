@@ -1,9 +1,11 @@
 import json
+import os
 from pathlib import Path
-from pydantic import BaseModel, model_validator, Field
-from pydantic_yaml import parse_yaml_raw_as
 from typing import List, Annotated
 from typing import Optional
+
+from pydantic import BaseModel, model_validator, Field
+from pydantic_yaml import parse_yaml_raw_as
 
 from config.element_attribute import ElementAttribute
 from config.element_entity_type import ElementEntityType
@@ -129,7 +131,7 @@ class IFCConfig(BaseModel):
     triangulation_representation_type: TriangulationRepresentationType
     clipped_terrain: List[ClippedTerrainFeatureClass]
     building: List[BuildingFeatureClass]
-    groups: List[GroupConfig]
+    groups: Optional[List[GroupConfig]] = Field(default_factory=list)
 
 
 class Configuration(BaseModel):
