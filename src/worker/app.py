@@ -11,8 +11,8 @@ from config.configuration import config
 
 app = Celery(
     "cs2bim",
-    broker=f"redis://{config.redis.host}:{config.redis.port}/{config.redis.db.broker}",
-    backend=f"redis://{config.redis.host}:{config.redis.port}/{config.redis.db.backend}"
+    broker=f"redis://{config.redis.host}:{config.redis.port}/{config.redis.db.celery_broker}",
+    backend=f"redis://{config.redis.host}:{config.redis.port}/{config.redis.db.celery_backend}"
 )
 
 app.conf.task_track_started = True

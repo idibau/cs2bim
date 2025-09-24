@@ -6,8 +6,8 @@ redis:
   host: "redis"
   port: 6379
   db:
-    broker: "0"
-    backend: "1"
+    celery_broker: "0"
+    celery_backend: "1"
     file_cache: "2"
 
 ########## postgis configuration ############
