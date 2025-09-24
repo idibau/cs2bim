@@ -91,8 +91,8 @@ class GroupConfig(BaseModel):
 
 
 class RedisDBConfig(BaseModel):
-    broker: str
-    backend: str
+    celery_broker: str
+    celery_backend: str
     file_cache: str
 
 
