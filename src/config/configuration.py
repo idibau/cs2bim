@@ -102,6 +102,7 @@ class RedisConfig(BaseModel):
     host: str
     port: int
     db: RedisDBConfig
+    global_keyprefix: Optional[str] = None
 
 
 class DBConfig(BaseModel):

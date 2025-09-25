@@ -9,7 +9,6 @@ redis:
     celery_broker: "0"
     celery_backend: "1"
     file_cache: "2"
-  global_keyprefix: "prefix"
 
 ########## postgis configuration ############
 db:
