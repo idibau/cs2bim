@@ -42,11 +42,6 @@ ifc:
       entity_type: IFC_GEOGRAPHIC_ELEMENT
       spatial_structure:
         entity_type: IFC_SITE
-      color:
-        r: 0.31
-        g: 0.67
-        b: 0.04
-        a: 0.85
   building:
     - name: "all"
       sql_path: "/workspace/sql/egid.sql"
@@ -56,8 +51,3 @@ ifc:
       building_parts:
         - xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
           entity_type: IFC_SPACE
-          color:
-            r: 1.00
-            g: 1.00
-            b: 1.00
-            a: 0.3

@@ -62,7 +62,7 @@ class ClippedTerrainFeatureClass(BaseModel):
     attributes: Optional[List[AttributeConfig]] = Field(default_factory=list)
     properties: Optional[List[PropertyConfig]] = Field(default_factory=list)
     group_assignments: Optional[List[Source]] = Field(default_factory=list)
-    color: Color
+    color: Optional[Color] = Color(r=1.0, g=1.0, b=1.0)
 
 
 class BuildingPartConfig(BaseModel):
@@ -71,7 +71,7 @@ class BuildingPartConfig(BaseModel):
     attributes: Optional[List[AttributeConfig]] = Field(default_factory=list)
     properties: Optional[List[PropertyConfig]] = Field(default_factory=list)
     group_assignments: Optional[List[Source]] = Field(default_factory=list)
-    color: Color
+    color: Optional[Color] = Color(r=1.0, g=1.0, b=1.0)
 
 
 class BuildingFeatureClass(BaseModel):
