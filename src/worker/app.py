@@ -18,7 +18,10 @@ app = Celery(
 
 app.conf.task_track_started = True
 app.conf.result_expires = 86400
-
+if config.redis.global_keyprefix:
+    app.conf.result_backend_transport_options = {
+        "global_keyprefix": config.redis.global_keyprefix
+    }
 
 @worker_process_init.connect
 def setup_logger_on_worker(**kwargs):
