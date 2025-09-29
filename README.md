@@ -13,7 +13,7 @@
     - [IFC configuration](#ifc-configuration)
         - [Geo referencing](#geo-referencing)
         - [Triangulation Representation Type](#triangulation-representation-type)
-        - [Feature Classes](#feature-classes)
+        - [Feature Types](#feature-types)
             - [SQL](#sql)
             - [Spatial Structure](#spatial-structure)
         - [Groups](#groups)
@@ -67,7 +67,7 @@ Example files can be downloaded with the following links.
 
 The cs2bim service supports different central IFC concepts and allows a relatively dynamic (configurable) transformation
 between the geodata and the IFC data model. The main IFC concepts and principles of data transformation and processing
-are briefly explained on the [Concepts](concepts.md) page.
+are briefly explained on the [Concepts](docs/concepts.md) page.
 
 # Getting started
 
@@ -159,6 +159,7 @@ python main.py \
   --NAME=<name> \
   --POLYGON=<polygon> \
   --PROJECT_ORIGIN=<origin>
+  --LANGUAGE=<langugae>
 ```
 
 # API
@@ -217,76 +218,14 @@ There is also a swagger documentation site documenting all endpoints: http://0.0
 # Configuration
 
 Some properties of this python project can be configured using the config.yml file.  
-The configuration has different sections/topics:
-
-- postgis configuration: Connection to the database with the cadastral data.
-- stac configuration: Connection to the service that provides terrain data.
-- tin configuration: Configurations for the creation and treatment of tins.
-- ifc configuration: Configurations of the resulting ifc file.
-
-## Configuration parameters (overview)
-
-| Line Number | Key                                                                                                        | Type                                                                               | Values                                                                                                          | Example                                                                              |
-|-------------|------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| 0           | logging_level                                                                                              | str                                                                                | NOTSET; DEBUG; INFO; WARN; ERROR; CRITICAL                                                                      | "cs2bim"                                                                             |
-| ---         | ---                                                                                                        | ---                                                                                | ---                                                                                                             | ---                                                                                  |
-| 1           | db.dbname                                                                                                  | str                                                                                | *                                                                                                               | "cs2bim"                                                                             |
-| 2           | db.user                                                                                                    | str                                                                                | *                                                                                                               | "postgres"                                                                           |
-| 3           | db.host                                                                                                    | str                                                                                | *                                                                                                               | "host.docker.internal"                                                               |
-| 4           | db.port                                                                                                    | int                                                                                | *                                                                                                               | 5432                                                                                 |
-| 5           | db.password                                                                                                | str                                                                                | *                                                                                                               | "xxx"                                                                                |
-| ---         | ---                                                                                                        | ---                                                                                | ---                                                                                                             | ---                                                                                  |
-| 6           | dtm.stac_api                                                                                               | str                                                                                | *                                                                                                               | "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items" |
-| ---         | ---                                                                                                        | ---                                                                                | ---                                                                                                             | ---                                                                                  |
-| 7           | tin.grid_size                                                                                              | float                                                                              | Depends on available eo:gsd values on dtm assets (Swisstopo: 0.5 / 2)                                           | 0.5                                                                                  |
-| 8           | tin.max_height_error                                                                                       | float                                                                              | ≤ 0.05                                                                                                          | 0.05                                                                                 |
-| ---         | ---                                                                                                        | ---                                                                                | ---                                                                                                             | ---                                                                                  |
-| 9           | ifc.author                                                                                                 | str                                                                                | *                                                                                                               | "author"                                                                             |
-| 10          | ifc.version                                                                                                | str                                                                                | *                                                                                                               | "1.0"                                                                                |
-| 11          | ifc.application_name                                                                                       | str                                                                                | *                                                                                                               | "cs2bim"                                                                             |
-| 12          | ifc.project_name                                                                                           | str                                                                                | *                                                                                                               | "Project A"                                                                          |
-| 13          | ifc.geo_referencing                                                                                        | [GeoReferencing](src/config/geo_referencing.py)                                    | LO_GEO_REF_30; LO_GEO_REF_40; LO_GEO_REF_50                                                                     | LO_GEO_REF_30                                                                        |
-| 14          | ifc.triangulation_representation_type                                                                      | [TriangulationRepresentationType](src/config/triangulation_representation_type.py) | TESSELLATION; BREP                                                                                              | BREP                                                                                 |
-| 15          | ifc.feature_classes                                                                                        | map                                                                                | ---                                                                                                             | ---                                                                                  |
-| 16          | ifc.feature_classes.<em>FeatureClassKeyX</em>                                                              | map                                                                                | ---                                                                                                             | ---                                                                                  |
-| 17          | ifc.feature_classes.<em>FeatureClassKeyX</em>.sql                                                          | str                                                                                | <em>Path to sql file</em>                                                                                       | "sql/parcels.sql"                                                                    |
-| 18          | ifc.feature_classes.<em>FeatureClassKeyX</em>.entity_type                                                  | [ElementEntityType](src/config/element_entity_type.py)                             | IFC_GEOGRAPHIC_ELEMENT                                                                                          | IFC_GEOGRAPHIC_ELEMENT                                                               |
-| 19          | ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes                                                   | list                                                                               | ---                                                                                                             | ---                                                                                  |
-| 20          | ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>                             | map                                                                                | ---                                                                                                             | ---                                                                                  |
-| 21          | ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.attribute                   | str                                                                                | *                                                                                                               | "Name"                                                                               |
-| 22          | ifc.feature_classes.<em>FeatureClassKeyX</em>.attributes.<em>ListElementX</em>.column                      | str                                                                                | *                                                                                                               | "egris_egrid"                                                                        |
-| 23          | ifc.feature_classes.<em>FeatureClassKeyX</em>.properties                                                   | list                                                                               | ---                                                                                                             | ---                                                                                  |
-| 24          | ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>                             | map                                                                                | ---                                                                                                             | ---                                                                                  |
-| 25          | ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.name                        | str                                                                                | *                                                                                                               | "Property"                                                                           |
-| 26          | ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.set                         | str                                                                                | *                                                                                                               | "PropertySet"                                                                        |
-| 27          | ifc.feature_classes.<em>FeatureClassKeyX</em>.properties.<em>ListElementX</em>.column                      | str                                                                                | *                                                                                                               | "property_column"                                                                    |
-| 28          | ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure                                            | map                                                                                | ---                                                                                                             | ---                                                                                  |
-| 29          | ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.entity_type                                | [SpatialStructureEntityType](src/config/spatial_structure_entity_type.py)          | IFC_SITE                                                                                                        | IFC_SITE                                                                             |
-| 30          | ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes                                 | list                                                                               | ---                                                                                                             | ---                                                                                  |
-| 31          | ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>           | map                                                                                | ---                                                                                                             | ---                                                                                  |
-| 32          | ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.attribute | str                                                                                | *                                                                                                               | "Name"                                                                               |
-| 33          | ifc.feature_classes.<em>FeatureClassKeyX</em>.spatial_structure.attributes.<em>ListElementX</em>.value     | str                                                                                | *                                                                                                               | "Site"                                                                               |
-| 34          | ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns                                                | list                                                                               | ---                                                                                                             | ---                                                                                  |
-| 35          | ifc.feature_classes.<em>FeatureClassKeyX</em>.group_columns.<em>ListElementX</em>                          | str                                                                                | *                                                                                                               | "group_column"                                                                       |
-| 36          | ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition                                             | map                                                                                | ---                                                                                                             | ---                                                                                  |
-| 37          | ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.r                                           | float                                                                              | 0.0 - 1.0                                                                                                       | 0.1                                                                                  |
-| 38          | ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.g                                           | float                                                                              | 0.0 - 1.0                                                                                                       | 0.5                                                                                  |
-| 39          | ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.b                                           | float                                                                              | 0.0 - 1.0                                                                                                       | 0.5                                                                                  |
-| 40          | ifc.feature_classes.<em>FeatureClassKeyX</em>.color_definition.a                                           | float                                                                              | 0.0 - 1.0                                                                                                       | 0.3                                                                                  |
-| 41          | ifc.groups                                                                                                 | map                                                                                | ---                                                                                                             | ---                                                                                  |
-| 42          | ifc.groups.<em>IfcGroupKey</em>                                                                            | map                                                                                | ---                                                                                                             | ---                                                                                  |
-| 43          | ifc.groups.<em>IfcGroupKey</em>.entity_type                                                                | [GroupEntityType](src/config/group_entity_type.py)                                 | IFC_DISTRIBUTION_SYSTEM, IFC_DISTRIBUTION_CIRCUIT, IFC_BUILDING_SYSTEM, IFC_STRUCTURAL_ANALYSIS_MODEL, IFC_ZONE | IFC_DISTRIBUTION_SYSTEM                                                              |
-| 44          | ifc.groups.<em>IfcGroupKey</em>.attributes                                                                 | list                                                                               | ---                                                                                                             | ---                                                                                  |
-| 45          | ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>                                           | map                                                                                | ---                                                                                                             | ---                                                                                  |
-| 46          | ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.attribute                                 | str                                                                                | *                                                                                                               | "Name"                                                                               |
-| 47          | ifc.groups.<em>IfcGroupKey</em>.attributes.<em>ListElementX</em>.value                                     | str                                                                                | *                                                                                                               | "Group"                                                                              |
+You can find the full documentation of the configuration file [here](docs/configuration_schema.md).
 
 ## STAC Configuration
 
 There are two stac v0.9 urls that can be provided in the config. There are several conditions that need to be fulfilled:
 
 - The provided urls must point to the according stac collection items
-- The features / items must set the property: feature.properties.datetime
+- The features / items must have the property: feature.properties.datetime
 
 ### DTM
 
@@ -298,7 +237,7 @@ Expected asset properties:
 
 ### Buildings
 
-Needs to be set if there are buildings feature classes configured.
+Needs to be set if there are buildings feature types configured.
 Expected asset properties:
 
 - type = application/x.gml+zip
@@ -306,7 +245,7 @@ Expected asset properties:
 ## IFC configuration
 
 In this section of the configuration you can make some general definitions about the resulting ifc file, and you can
-define the feature classes that are generated and exported as ifc entities.
+define the feature types that are generated and exported as ifc entities.
 
 Below some parameters are explained.
 
@@ -343,42 +282,50 @@ If not provided, the system sets a project origin calculated on a minimum boundi
 You can define the representation type used to represent the TIN geometry in the ifc.  
 Supported values are TESSELLATION or BREP. TESSELATION is recommended because it needs less storage space.
 
-### Feature Classes
+### Feature types
 
-A "Feature Class" is the definition of a set of objects that are exported in an IFC entity with common definitions.
-The main configurations of a feature class include:
+A "feature type" is the definition of a set of objects that are exported in an IFC entity with common definitions.
+The main configurations of a feature type include:
 
 - sql: A SQL query that selects objects in the GIS database, returning a geometry (must be an area) and some other
   attributes for each object.
-- entity_type: The IFC entity, to which all selected objects of the feature class are exported to.
+- entity_type: The IFC entity, to which all selected objects of the feature type are exported to.
 - attributes: All attributes that are set on the objects.
 - properties: Any number of property definitions that are exported as IFC properties/property sets.
 - group_columns: Any number of IFC group assignments.
-- spatial_structure: The IFC spatial structure, to which all objects of the feature class are appended.
+- spatial_structure: The IFC spatial structure, to which all objects of the feature type are appended.
 - color: An IFC color definition
 
-![Example of Feature Classes](./uploads/feature-classes.jpg){width=300}
+![Example of feature type](./uploads/feature type.jpg){width=300}
 
 #### SQL
 
-For each feature class you have to provide a SQL file for querying the data. With the query you are selecting the
+For each feature type you have to provide a SQL file for querying the data. With the query you are selecting the
 cadastral data (with an area geometry type). The SQL query requires taking a polygon wkt as parameter "%(polygon)s" and
 returning a column named "wkt" with wkt string values. To guarantee correct processing, it is important to check that
 the
-sql also delivers all columns that are additionally configured for the according feature class. This can be multiple
+sql also delivers all columns that are additionally configured for the according feature type. This can be multiple
 columns for attributes, properties or groups.
 
 The following schema shows the relationship between the attributes defined by the sql query and their linking to the
 configuration.  
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
 
+Useful postgis functions:
+
+ST_GeomFromText → Constructs a PostGIS ST_Geometry object \
+ST_AsText → Returns the OGC WKT representation of the geometry\
+ST_CurveToLine → Converts a given geometry to a linear geometry\
+ST_Intersects → Returns true if two geometries intersect. Geometries intersect if they have any point in common.
+ST_Contains → Returns true if the first geometry contains the second.
+
 #### Spatial Structure
 
-All objects of a feature class are assigned to one common spatial structure. The spatial structure instance can be
+All objects of a feature type are assigned to one common spatial structure. The spatial structure instance can be
 configured with its entity type and attributes.
 
-If the specification of the spatial structure instance in different feature class definitions is identical, then only
-one spatial structure instance is created (and all objects of the feature classes are assigned to the same spatial
+If the specification of the spatial structure instance in different feature type definitions is identical, then only
+one spatial structure instance is created (and all objects of the feature types are assigned to the same spatial
 structure).
 
 ### Groups
@@ -392,93 +339,25 @@ create a simple ifc group entity without any special attributes.
 
 When defining a group, you can use "." to create nested group structures. (IfcGroupKey)
 
-### Example
+### Examples
 
-config.yml
-
-```yaml
-...
-author: "FHNW"
-version: "1.0"
-application_name: "cs2bim"
-project_name: "cs2bim"
-geo_referencing: LO_GEO_REF_30
-triangulation_representation_type: TESSELLATION
-feature_classes:
-  parcel:
-    sql: "sql/parcels.sql"
-    entity_type: IFC_GEOGRAPHIC_ELEMENT
-    attributes:
-      - attribute: "PredefinedType"
-        column: "predefined_type"
-    properties:
-      - name: "NBIdent"
-        set: "CHKGK_CS"
-        column: "nbident"
-    spatial_structure:
-      entity_type: IFC_SITE
-      attributes:
-        - attribute: "CompositionType"
-          value: "COMPLEX"
-    group_columns:
-      - "group"
-    color_definition:
-      r: 0.31
-      g: 0.67
-      b: 0.04
-      a: 0.85
-groups:
-  Amtliche Vermessung.Gebaeude:
-    entity_type: IFC_BUILDING_SYSTEM
-    attributes:
-      - attribute: "PredefinedType"
-        value: "USERDEFINED"
-...
-```
-
-sql/feature_class_x.sql
-
-```sql
-with perimeter as (select ST_GeomFromText(%(polygon)s, 2056) as geom)
-select ST_AsText(ST_CurveToLine(geometrie, 1)) as wkt,
-       nbident                                 as name_column,
-       nummer                                  as property_column,
-       CASE
-           WHEN x THEN 'Amtliche Vermessung.Feature-Klassen.x'
-           ELSE 'Amtliche Vermessung.Feature-Klassen.y'
-           END as
-group
-from
-    cs2bim.liegenschaft l
-    left join cs2bim.grundstueck g
-on (l.liegenschaft_von = g.t_id)
-    join perimeter on ST_Intersects(geometrie, perimeter.geom)
-```
-
-Useful postgis functions:
-
-ST_GeomFromText → Constructs a PostGIS ST_Geometry object \
-ST_AsText → Returns the OGC WKT representation of the geometry\
-ST_CurveToLine → Converts a given geometry to a linear geometry\
-ST_Intersects → Returns true if two geometries intersect. Geometries intersect if they have any point in common.
-ST_Contains → Returns true if the first geometry contains the second.
+- [Configuration](./config-min.yml)
+- TODO: add examples to other files (SQLs, ...)
 
 # Known Issues
 
-- Only one supported geometry type: All feature classes are processed the same way and are implemented to represent a
-  surface that is projected to the terrain. Until now no support of e.g. points, lines or parametrized geometries.
 - Entity types that are only supported in one of the two allowed ifc versions (4, 4x3) are not supported (e.g.,
   IfcBuiltSystem). Explanation: There is no switch in the code that could deal with different cases based on a different
   ifc version, neither are there parameters in the configuration to support different ifc versions.
 - Potential code optimization not yet done (parallelize computational tasks with threads, cache dtm data, load only
-  necessary dtm data in memory, process the point cloud only once and then derive feature class geometries from TIN
+  necessary dtm data in memory, process the point cloud only once and then derive feature type geometries from TIN
   instead
   of point clouds)
 - No support for the ifc classification concept. Could be done the same way as the already implemented group concept.
 
 # Contact
 
-![Example of Feature Classes](./uploads/fhnw-logo.svg){width=250}
+![Example of feature types](./uploads/fhnw-logo.svg){width=250}
 
 Fachhochschule Nordwestschweiz, Institut Digitales Bauen, 4132 Muttenz \
 University of Applied Sciences and Arts Northwestern Switzerland, Institute of Virtual Design and Construction

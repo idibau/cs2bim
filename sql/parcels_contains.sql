@@ -7,7 +7,7 @@ select
     g.nbident,
     g.nummer,
     g.egris_egrid,
-    'Amtliche Vermessung.Feature-Klassen.Liegenschaften' as group
+    'Amtliche Vermessung.Feature-Typen.Liegenschaften' as group
 from
     cs2bim.liegenschaft l
     left join cs2bim.grundstueck g on (l.liegenschaft_von = g.t_id)

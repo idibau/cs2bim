@@ -1,5 +1,4 @@
-from config.element_attribute import ElementAttribute
-from config.source_type import SourceType
+from config.static_source_type import StaticSourceType
 from core.ifc.model.property_set import PropertySet
 
 
@@ -15,10 +14,10 @@ class Element:
     def from_static_element_config(cls, config):
         element = Element()
         for attribute in config.attributes:
-            if attribute.source.type == SourceType.STATIC:
+            if attribute.source.type == StaticSourceType.STATIC:
                 element.add_attribute(attribute.attribute, attribute.source.expression)
         for p in config.properties:
-            if p.source.type == SourceType.STATIC:
+            if p.source.type == StaticSourceType.STATIC:
                 element.add_property(p.property_set, p.property, p.source.expression)
         return element
 
@@ -49,18 +48,4 @@ class Element:
 
     def set_ifc_attributes(self, ifc_file, ifc_element):
         for attribute, value in self.attributes.items():
-            if attribute == ElementAttribute.NAME:
-                ifc_attribute = "Name"
-            elif attribute == ElementAttribute.DESCRIPTION:
-                ifc_attribute = "Description"
-            elif attribute == ElementAttribute.COMPOSITION_TYPE:
-                ifc_attribute = "CompositionType"
-            elif attribute == ElementAttribute.PREDEFINED_TYPE:
-                ifc_attribute = "PredefinedType"
-            elif attribute == ElementAttribute.OBJECT_TYPE:
-                ifc_attribute = "ObjectType"
-            elif attribute == ElementAttribute.LONGNAME:
-                ifc_attribute = "LongName"
-            else:
-                raise NotImplementedError(f"building step for attribute type {attribute} not implemented")
-            ifc_file.add_attribute(ifc_element, ifc_attribute, value)
+            ifc_file.add_attribute(ifc_element, attribute, value)

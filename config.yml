@@ -37,247 +37,251 @@ ifc:
   project_name: "cs2bim"
   geo_referencing: LO_GEO_REF_50
   triangulation_representation_type: TESSELLATION
-  clipped_terrain:
-    - name: "parcel"
-      sql_path: "/workspace/sql/parcels.sql"
-      entity_type: IFC_GEOGRAPHIC_ELEMENT
-      attributes:
-        - attribute: PREDEFINED_TYPE
-          source:
-            type: SQL
-            expression: "predefined_type"
-        - attribute: OBJECT_TYPE
-          source:
-            type: SQL
-            expression: "object_type"
-        - attribute: NAME
-          source:
-            type: SQL
-            expression: "egris_egrid"
-      properties:
-        - property: "NBIdent"
-          property_set: "CHKGK_CS"
-          source:
-            type: SQL
-            expression: "nbident"
-        - property: "Nummer"
-          property_set: "CHKGK_CS"
-          source:
-            type: SQL
-            expression: "nummer"
-        - property: "EGRIS_EGRID"
-          property_set: "CHKGK_CS"
-          source:
-            type: SQL
-            expression: "egris_egrid"
-      spatial_structure:
-        entity_type: IFC_SITE
-        attributes:
-          - attribute: COMPOSITION_TYPE
-            source:
-              type: STATIC
-              expression: "COMPLEX"
-          - attribute: PREDEFINED_TYPE
-            source:
-              type: STATIC
-              expression: "USERDEFINED"
-          - attribute: OBJECT_TYPE
-            source:
-              type: STATIC
-              expression: "Liegenschaften"
-          - attribute: NAME
-            source:
-              type: STATIC
-              expression: "Liegenschaften"
-      group_assignments:
-        - type: SQL
-          expression: "group"
-      color:
-        r: 0.31
-        g: 0.67
-        b: 0.04
-        a: 0.85
-    - name: "land_cover"
-      sql_path: "/workspace/sql/land_covers.sql"
-      entity_type: IFC_GEOGRAPHIC_ELEMENT
-      attributes:
-        - attribute: PREDEFINED_TYPE
-          source:
-            type: SQL
-            expression: "predefined_type"
-        - attribute: OBJECT_TYPE
-          source:
-            type: SQL
-            expression: "art"
-        - attribute: NAME
-          source:
-            type: SQL
-            expression: "art"
-      properties: [ ]
-      spatial_structure:
-        entity_type: IFC_SITE
-        attributes:
-          - attribute: COMPOSITION_TYPE
-            source:
-              type: STATIC
-              expression: "COMPLEX"
-          - attribute: PREDEFINED_TYPE
-            source:
-              type: STATIC
-              expression: "USERDEFINED"
-          - attribute: OBJECT_TYPE
-            source:
-              type: STATIC
-              expression: "Bodenbedeckung"
-          - attribute: NAME
-            source:
-              type: STATIC
-              expression: "Bodenbedeckung"
-      group_assignments:
-        - type: SQL
-          expression: "group"
-      color:
-        r: 0.52
-        g: 0.42
-        b: 0.04
-        a: 0.85
-    - name: "land_covers_buildings"
-      sql_path: "/workspace/sql/land_covers_buildings.sql"
-      entity_type: IFC_GEOGRAPHIC_ELEMENT
-      attributes:
-        - attribute: PREDEFINED_TYPE
-          source:
-            type: SQL
-            expression: "predefined_type"
-        - attribute: OBJECT_TYPE
-          source:
-            type: SQL
-            expression: "art"
-        - attribute: NAME
-          source:
-            type: SQL
-            expression: "gwr_egid"
-      properties:
-        - property: "GWR-EGID"
-          property_set: "CHKGK_CS"
-          source:
-            type: SQL
-            expression: "gwr_egid"
-      spatial_structure:
-        entity_type: IFC_SITE
-        attributes:
-          - attribute: COMPOSITION_TYPE
-            source:
-              type: STATIC
-              expression: "COMPLEX"
-          - attribute: PREDEFINED_TYPE
-            source:
-              type: STATIC
-              expression: "USERDEFINED"
-          - attribute: OBJECT_TYPE
-            source:
-              type: STATIC
-              expression: "Gebäude"
-          - attribute: NAME
-            source:
-              type: STATIC
-              expression: "Gebäudegrundflächen"
-      group_assignments:
-        - type: SQL
-          expression: "group"
-      color:
-        r: 1.00
-        g: 0.00
-        b: 0.00
-        a: 0.85
-  building:
-    - name: "all"
-      sql_path: "/workspace/sql/egid.sql"
-      egid_xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
-      spatial_structure:
-        entity_type: IFC_SITE
-        attributes:
-          - attribute: NAME
-            source:
-              type: STATIC
-              expression: "Gebäude"
-      attributes:
-        - attribute: NAME
-          source:
-            type: CITY_GML
-            expression: ".//gen:intAttribute[@name='EGID']/gen:value"
-      properties:
-        - property: "Erstellung Jahr"
-          property_set: "Erstellung"
-          source:
-            type: CITY_GML
-            expression: ".//gen:intAttribute[@name='ERSTELLUNG_JAHR']/gen:value"
-        - property: "Erstellung Monat"
-          property_set: "Erstellung"
-          source:
-            type: CITY_GML
-            expression: ".//gen:intAttribute[@name='ERSTELLUNG_MONAT']/gen:value"
-      building_parts:
-        - xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
-          entity_type: IFC_SPACE
-          attributes: [ ]
-          properties: [ ]
-          color:
-            r: 1.00
-            g: 1.00
-            b: 1.00
-            a: 0.8
-        - xpath: ".//bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
-          entity_type: IFC_WALL
-          attributes: [ ]
+  feature_types:
+    projections:
+      - name: "parcel"
+        sql_path: "/workspace/sql/parcels.sql"
+        entity_mapping:
+          entity_type: IFC_GEOGRAPHIC_ELEMENT
+          attributes:
+            - attribute: PREDEFINED_TYPE
+              source:
+                type: SQL
+                expression: "predefined_type"
+            - attribute: OBJECT_TYPE
+              source:
+                type: SQL
+                expression: "object_type"
+            - attribute: NAME
+              source:
+                type: SQL
+                expression: "egris_egrid"
           properties:
-            - property: "Herkunft Monat"
-              property_set: "Herkunft"
+            - property: "NBIdent"
+              property_set: "CHKGK_CS"
               source:
-                type: CITY_GML
-                expression: ".//bldg:boundedBy/bldg:WallSurface/gen:intAttribute[@name='HERKUNFT_MONAT']/gen:value"
-            - property: "Herkunft Jahr"
-              property_set: "Herkunft"
+                type: SQL
+                expression: "nbident"
+            - property: "Nummer"
+              property_set: "CHKGK_CS"
               source:
-                type: CITY_GML
-                expression: ".//bldg:boundedBy/bldg:WallSurface/gen:intAttribute[@name='HERKUNFT_JAHR']/gen:value"
-            - property: "Original Herkunft"
-              property_set: "Herkunft"
+                type: SQL
+                expression: "nummer"
+            - property: "EGRIS_EGRID"
+              property_set: "CHKGK_CS"
               source:
-                type: CITY_GML
-                expression: ".//bldg:boundedBy/bldg:WallSurface/gen:stringAttribute[@name='HERKUNFT']/gen:value"
-          color:
-            r: 1.00
-            g: 1.00
-            b: 1.00
-            a: 0.00
-        - xpath: ".//bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
-          entity_type: IFC_ROOF
-          attributes: [ ]
+                type: SQL
+                expression: "egris_egrid"
+        spatial_structure_mapping:
+          entity_type: IFC_SITE
+          attributes:
+            - attribute: COMPOSITION_TYPE
+              source:
+                type: STATIC
+                expression: "COMPLEX"
+            - attribute: PREDEFINED_TYPE
+              source:
+                type: STATIC
+                expression: "USERDEFINED"
+            - attribute: OBJECT_TYPE
+              source:
+                type: STATIC
+                expression: "Liegenschaften"
+            - attribute: NAME
+              source:
+                type: STATIC
+                expression: "Liegenschaften"
+        group_mapping:
+          - type: SQL
+            expression: "group"
+        color:
+          r: 0.31
+          g: 0.67
+          b: 0.04
+          a: 0.85
+      - name: "land_cover"
+        sql_path: "/workspace/sql/land_covers.sql"
+        entity_mapping:
+          entity_type: IFC_GEOGRAPHIC_ELEMENT
+          attributes:
+            - attribute: PREDEFINED_TYPE
+              source:
+                type: SQL
+                expression: "predefined_type"
+            - attribute: OBJECT_TYPE
+              source:
+                type: SQL
+                expression: "art"
+            - attribute: NAME
+              source:
+                type: SQL
+                expression: "art"
           properties: [ ]
-          color:
-            r: 1.00
-            g: 0.8
-            b: 0.8
-            a: 0.00
-        - xpath: ".//bldg:boundedBy/bldg:GroundSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
-          entity_type: IFC_SLAB
-          attributes: [ ]
-          properties: [ ]
-          color:
-            r: 0.8
-            g: 0.8
-            b: 1.00
-            a: 0.00
+        spatial_structure_mapping:
+          entity_type: IFC_SITE
+          attributes:
+            - attribute: COMPOSITION_TYPE
+              source:
+                type: STATIC
+                expression: "COMPLEX"
+            - attribute: PREDEFINED_TYPE
+              source:
+                type: STATIC
+                expression: "USERDEFINED"
+            - attribute: OBJECT_TYPE
+              source:
+                type: STATIC
+                expression: "Bodenbedeckung"
+            - attribute: NAME
+              source:
+                type: STATIC
+                expression: "Bodenbedeckung"
+        group_mapping:
+          - type: SQL
+            expression: "group"
+        color:
+          r: 0.52
+          g: 0.42
+          b: 0.04
+          a: 0.85
+      - name: "land_covers_buildings"
+        sql_path: "/workspace/sql/land_covers_buildings.sql"
+        entity_mapping:
+          entity_type: IFC_GEOGRAPHIC_ELEMENT
+          attributes:
+            - attribute: PREDEFINED_TYPE
+              source:
+                type: SQL
+                expression: "predefined_type"
+            - attribute: OBJECT_TYPE
+              source:
+                type: SQL
+                expression: "art"
+            - attribute: NAME
+              source:
+                type: SQL
+                expression: "gwr_egid"
+          properties:
+            - property: "GWR-EGID"
+              property_set: "CHKGK_CS"
+              source:
+                type: SQL
+                expression: "gwr_egid"
+        spatial_structure_mapping:
+          entity_type: IFC_SITE
+          attributes:
+            - attribute: COMPOSITION_TYPE
+              source:
+                type: STATIC
+                expression: "COMPLEX"
+            - attribute: PREDEFINED_TYPE
+              source:
+                type: STATIC
+                expression: "USERDEFINED"
+            - attribute: OBJECT_TYPE
+              source:
+                type: STATIC
+                expression: "Gebäude"
+            - attribute: NAME
+              source:
+                type: STATIC
+                expression: "Gebäudegrundflächen"
+        group_mapping:
+          - type: SQL
+            expression: "group"
+        color:
+          r: 1.00
+          g: 0.00
+          b: 0.00
+          a: 0.85
+    buildings:
+      - name: "all"
+        sql_path: "/workspace/sql/egid.sql"
+        egid_xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
+        entity_mapping:
+          entity_type: IFC_BUILDING
+          attributes:
+            - attribute: NAME
+              source:
+                type: CITY_GML
+                expression: ".//gen:intAttribute[@name='EGID']/gen:value"
+          properties:
+            - property: "Erstellung Jahr"
+              property_set: "Erstellung"
+              source:
+                type: CITY_GML
+                expression: ".//gen:intAttribute[@name='ERSTELLUNG_JAHR']/gen:value"
+            - property: "Erstellung Monat"
+              property_set: "Erstellung"
+              source:
+                type: CITY_GML
+                expression: ".//gen:intAttribute[@name='ERSTELLUNG_MONAT']/gen:value"
+          building_parts:
+            - xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+              entity_mapping:
+                entity_type: IFC_SPACE
+              color:
+                r: 1.00
+                g: 1.00
+                b: 1.00
+                a: 0.8
+            - xpath: ".//bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+              entity_mapping:
+                entity_type: IFC_WALL
+                properties:
+                  - property: "Herkunft Monat"
+                    property_set: "Herkunft"
+                    source:
+                      type: CITY_GML
+                      expression: ".//bldg:boundedBy/bldg:WallSurface/gen:intAttribute[@name='HERKUNFT_MONAT']/gen:value"
+                  - property: "Herkunft Jahr"
+                    property_set: "Herkunft"
+                    source:
+                      type: CITY_GML
+                      expression: ".//bldg:boundedBy/bldg:WallSurface/gen:intAttribute[@name='HERKUNFT_JAHR']/gen:value"
+                  - property: "Original Herkunft"
+                    property_set: "Herkunft"
+                    source:
+                      type: CITY_GML
+                      expression: ".//bldg:boundedBy/bldg:WallSurface/gen:stringAttribute[@name='HERKUNFT']/gen:value"
+              color:
+                r: 1.00
+                g: 1.00
+                b: 1.00
+                a: 0.00
+            - xpath: ".//bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+              entity_mapping:
+                entity_type: IFC_ROOF
+              color:
+                r: 1.00
+                g: 0.8
+                b: 0.8
+                a: 0.00
+            - xpath: ".//bldg:boundedBy/bldg:GroundSurface/bldg:lod2MultiSurface/gml:MultiSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+              entity_mapping:
+                entity_type: IFC_SLAB
+              color:
+                r: 0.8
+                g: 0.8
+                b: 1.00
+                a: 0.00
+        spatial_structure_mapping:
+          entity_type: IFC_SITE
+          attributes:
+            - attribute: NAME
+              source:
+                type: STATIC
+                expression: "Gebäude"
   groups:
     - path: "Amtliche Vermessung.Gebaeude"
-      entity_type: IFC_BUILDING_SYSTEM
-      attributes:
-        - attribute: PREDEFINED_TYPE
-          source:
-            type: STATIC
-            expression: "USERDEFINED"
-        - attribute: OBJECT_TYPE
-          source:
-            type: STATIC
-            expression: "Gebaeude"
+      entity_mapping:
+        entity_type: IFC_BUILDING_SYSTEM
+        attributes:
+          - attribute: PREDEFINED_TYPE
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: OBJECT_TYPE
+            source:
+              type: STATIC
+              expression: "Gebaeude"

@@ -6,9 +6,9 @@ redis:
   host: "redis"
   port: 6379
   db:
-    celery_broker: "0"
-    celery_backend: "1"
-    file_cache: "2"
+    celery_broker: 0
+    celery_backend: 1
+    file_cache: 2
 
 ########## postgis configuration ############
 db:
@@ -36,18 +36,23 @@ ifc:
   project_name: "cs2bim"
   geo_referencing: LO_GEO_REF_50
   triangulation_representation_type: TESSELLATION
-  clipped_terrain:
-    - name: "parcel"
-      sql_path: "/workspace/sql/parcels.sql"
-      entity_type: IFC_GEOGRAPHIC_ELEMENT
-      spatial_structure:
-        entity_type: IFC_SITE
-  building:
-    - name: "all"
-      sql_path: "/workspace/sql/egid.sql"
-      egid_xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
-      spatial_structure:
-        entity_type: IFC_SITE
-      building_parts:
-        - xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
-          entity_type: IFC_SPACE
+  feature_types:
+    projections:
+      - name: "parcel"
+        sql_path: "/workspace/sql/parcels.sql"
+        entity_mapping:
+          entity_type: IFC_GEOGRAPHIC_ELEMENT
+        spatial_structure_mapping:
+          entity_type: IFC_SITE
+    buildings:
+      - name: "all"
+        sql_path: "/workspace/sql/egid.sql"
+        egid_xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
+        entity_mapping:
+          entity_type: IFC_BUILDING
+          building_parts:
+            - xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
+              entity_mapping:
+                entity_type: IFC_SPACE
+        spatial_structure_mapping:
+          entity_type: IFC_SITE

@@ -1,12 +1,12 @@
 from config.configuration import config
-from config.element_entity_type import ElementEntityType
+from config.projection_entity_type import ProjectionEntityType
 from config.triangulation_representation_type import TriangulationRepresentationType
 from core.ifc.model.element import Element
 from core.ifc.model.geometry.brep import Brep
 from core.ifc.model.geometry.tessellation import Tessellation
 
 
-class ClippedTerrain(Element):
+class Projection(Element):
 
     def __init__(self, data: tuple[list[list[float]], list[list[int]]]) -> None:
         super().__init__()
@@ -35,11 +35,11 @@ class ClippedTerrain(Element):
             raise NotImplementedError(f"building step for representation type {representation_type.name} not implemented")
 
         ifc_local_placement = ifc_file.create_ifc_local_placement((0.0, 0.0, 0.0))
-        if entity_type == ElementEntityType.IFC_GEOGRAPHIC_ELEMENT:
+        if entity_type == ProjectionEntityType.IFC_GEOGRAPHIC_ELEMENT:
             ifc_element = ifc_file.create_ifc_geographic_element(ifc_local_placement, product_definition_shape)
         else:
             raise NotImplementedError(
-                f"building step for feature class entity type {entity_type.name} not implemented for clipped terrain feature classes")
+                f"building step for feature type entity type {entity_type.name} not implemented for clipped terrain feature typees")
 
         self.set_ifc_attributes(ifc_file, ifc_element)
         self.set_ifc_properties(ifc_file, ifc_element)

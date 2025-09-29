@@ -1,14 +1,13 @@
 import logging
-import os
-from celery import Celery, signals
+from celery import Celery
 from celery.signals import worker_process_init
-
 from datetime import datetime
+
+from config.configuration import config
 from core.ifc.model.ifc_version import IfcVersion
 from core.model_generator import ModelGenerator
 from i18n.language import Language
 from utils.utils import get_output_path, setup_logger
-from config.configuration import config
 
 app = Celery(
     "cs2bim",
@@ -22,6 +21,7 @@ if config.redis.global_keyprefix:
     app.conf.result_backend_transport_options = {
         "global_keyprefix": config.redis.global_keyprefix
     }
+
 
 @worker_process_init.connect
 def setup_logger_on_worker(**kwargs):

@@ -1,11 +1,11 @@
-from config.element_entity_type import ElementEntityType
+from config.building_part_entity_type import BuildingPartEntityType
 from core.ifc.model.element import Element
 from core.ifc.model.geometry.brep import Brep
 
 
 class BuildingPart(Element):
 
-    def __init__(self, entity_type: ElementEntityType, faces, color):
+    def __init__(self, entity_type: BuildingPartEntityType, faces, color):
         super().__init__()
         self.color = color
         self.faces = faces
@@ -17,20 +17,17 @@ class BuildingPart(Element):
         product_definition_shape = brep.map_to_ifc(ifc_file, ifc_representation_sub_context, ifc_style)
 
         ifc_local_placement = ifc_file.create_ifc_local_placement((0.0, 0.0, 0.0))
-        if self.entity_type == ElementEntityType.IFC_GEOGRAPHIC_ELEMENT:
-            ifc_element = ifc_file.create_ifc_geographic_element(ifc_local_placement,
-                                                                 product_definition_shape)
-        elif self.entity_type == ElementEntityType.IFC_ROOF:
+        if self.entity_type == BuildingPartEntityType.IFC_ROOF:
             ifc_element = ifc_file.create_ifc_roof(ifc_local_placement, product_definition_shape)
-        elif self.entity_type == ElementEntityType.IFC_SLAB:
+        elif self.entity_type == BuildingPartEntityType.IFC_SLAB:
             ifc_element = ifc_file.create_ifc_slab(ifc_local_placement, product_definition_shape)
-        elif self.entity_type == ElementEntityType.IFC_WALL:
+        elif self.entity_type == BuildingPartEntityType.IFC_WALL:
             ifc_element = ifc_file.create_ifc_wall(ifc_local_placement, product_definition_shape)
-        elif self.entity_type == ElementEntityType.IFC_SPACE:
+        elif self.entity_type == BuildingPartEntityType.IFC_SPACE:
             ifc_element = ifc_file.create_ifc_space(ifc_local_placement, product_definition_shape)
         else:
             raise NotImplementedError(
-                f"building step for feature class entity type {self.entity_type.name} not implemented for building feature classes")
+                f"building step for feature type entity type {self.entity_type.name} not implemented for building feature typees")
         self.set_ifc_attributes(ifc_file, ifc_element)
         self.set_ifc_properties(ifc_file, ifc_element)
         return ifc_element

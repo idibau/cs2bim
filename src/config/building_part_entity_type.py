@@ -1,0 +1,10 @@
+from enum import Enum
+
+
+class BuildingPartEntityType(Enum):
+    """Supported ifc entity types for building part entities"""
+
+    IFC_WALL = "IFC_WALL"
+    IFC_SLAB = "IFC_SLAB"
+    IFC_ROOF = "IFC_ROOF"
+    IFC_SPACE = "IFC_SPACE"

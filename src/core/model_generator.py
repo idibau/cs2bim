@@ -6,7 +6,7 @@ from shapely import wkt
 from core.ifc.model.ifc_version import IfcVersion
 from core.ifc.model.model import Model
 from core.processors.building_processor import BuildingProcessor
-from core.processors.clipped_terrain_processor import ClippedTerrainProcessor
+from core.processors.projection_processor import ProjectionProcessor
 
 logger = logging.getLogger(__name__)
 
@@ -35,13 +35,13 @@ class ModelGenerator:
         origin = np.array(project_origin)
         model = Model(name, ifc_version, project_origin)
 
-        logger.info("process clipped terrain feature classes")
-        clipped_terrain_processor = ClippedTerrainProcessor()
+        logger.info("process clipped terrain feature types")
+        clipped_terrain_processor = ProjectionProcessor()
         clipped_terrains = clipped_terrain_processor.process(polygon, origin)
         for key, clipped_terrains in clipped_terrains.items():
-            model.add_clipped_terrains(key, clipped_terrains)
+            model.add_projections(key, clipped_terrains)
 
-        logger.info("process building feature classes")
+        logger.info("process building feature types")
         building_processor = BuildingProcessor()
         buildings = building_processor.process(polygon, origin)
         for key, buildings in buildings.items():

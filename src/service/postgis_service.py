@@ -13,7 +13,7 @@ class PostgisService:
             f"dbname = {config.db.dbname} user = {config.db.user} host = {config.db.host} password = {config.db.password} port = {config.db.port}"
         )
 
-    def fetch_feature_class_elements(self, sql: str, polygon: str) -> list[dict[str, Any]]:
+    def fetch_feature_type_elements(self, sql: str, polygon: str) -> list[dict[str, Any]]:
         cur = self.connection.cursor()
         cur.execute(sql, {"polygon": polygon})
         rows = cur.fetchall()
