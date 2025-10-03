@@ -1,8 +1,6 @@
 from config.configuration import config
 from config.projection_entity_type import ProjectionEntityType
-from config.triangulation_representation_type import TriangulationRepresentationType
 from core.ifc.model.element import Element
-from core.ifc.model.brep import Brep
 from core.ifc.model.tessellation import Tessellation
 
 
@@ -24,20 +22,10 @@ class Projection(Element):
         return float(l[0]), float(l[1]), float(l[2])
 
     def map_to_ifc(self, ifc_file, entity_type, ifc_representation_sub_context, ifc_style):
-        representation_type = config.ifc.triangulation_representation_type
-        if representation_type == TriangulationRepresentationType.TESSELLATION:
-            tessellation = Tessellation(self.triangles)
-            ifc_face_set = tessellation.map_to_ifc(ifc_file)
-            ifc_product_definition_shape = ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context,
-                                                                                    "Tessellation", [ifc_face_set])
-        elif representation_type == TriangulationRepresentationType.BREP:
-            brep = Brep(self.triangles)
-            ifc_face_set = brep.map_to_ifc(ifc_file)
-            ifc_product_definition_shape = ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context,
-                                                                                    "Brep", [ifc_face_set])
-        else:
-            raise NotImplementedError(
-                f"building step for representation type {representation_type.name} not implemented")
+        tessellation = Tessellation(self.triangles)
+        ifc_face_set = tessellation.map_to_ifc(ifc_file)
+        ifc_product_definition_shape = ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context,
+                                                                                "Tessellation", [ifc_face_set])
         ifc_file.create_ifc_styled_item(ifc_face_set, ifc_style)
         ifc_local_placement = ifc_file.create_ifc_local_placement((0.0, 0.0, 0.0))
         if entity_type == ProjectionEntityType.IFC_GEOGRAPHIC_ELEMENT:

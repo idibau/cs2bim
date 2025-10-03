@@ -1,10 +1,9 @@
 import json
 import os
 from pathlib import Path
-from typing import List, Optional, Generic, TypeVar
-
 from pydantic import BaseModel, model_validator, Field
 from pydantic_yaml import parse_yaml_raw_as
+from typing import List, Optional, Generic, TypeVar
 
 from config.building_entity_type import BuildingEntityType
 from config.building_part_entity_type import BuildingPartEntityType
@@ -17,7 +16,6 @@ from config.projection_entity_type import ProjectionEntityType
 from config.projection_source_type import ProjectionSourceType
 from config.spatial_entity_type import SpatialEntityType
 from config.static_source_type import StaticSourceType
-from config.triangulation_representation_type import TriangulationRepresentationType
 
 
 class Color(BaseModel):
@@ -151,8 +149,6 @@ class IFCConfig(BaseModel):
     application_name: str = Field(..., description="Name of the application generating IFC")
     project_name: str = Field(..., description="Project name in IFC")
     geo_referencing: GeoReferencing = Field(..., description="Georeferencing configuration for IFC")
-    triangulation_representation_type: TriangulationRepresentationType = Field(...,
-                                                                               description="Triangulation representation type to use")
     feature_types: FeatureTypesConfig = Field(..., description="Configured feature types for IFC")
     groups: List[GroupConfig] = Field(default_factory=list, json_schema_extra={"default": []},
                                       description="List of group configurations for IFC")

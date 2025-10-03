@@ -259,7 +259,6 @@ No description provided for this model.
 | application_name | `string` | ✅ | string |  | Name of the application generating IFC |
 | project_name | `string` | ✅ | string |  | Project name in IFC |
 | geo_referencing | `string` | ✅ | [GeoReferencing](#georeferencing) |  | Georeferencing configuration for IFC |
-| triangulation_representation_type | `string` | ✅ | [TriangulationRepresentationType](#triangulationrepresentationtype) |  | Triangulation representation type to use |
 | feature_types | `object` | ✅ | [FeatureTypesConfig](#featuretypesconfig) |  | Configured feature types for IFC |
 | groups | `array` |  | [GroupConfig](#groupconfig) | `[]` | List of group configurations for IFC |
 
@@ -425,14 +424,6 @@ No description provided for this model.
 | -------- | ---- | -------- | --------------- | ----------- |
 | grid_size | `number` | ✅ | [GridSize](#gridsize) | TIN grid size |
 | max_height_error | `number` | ✅ | `0.0 <= x <= 0.05` | Maximum allowed height error for TIN generation |
-
-## TriangulationRepresentationType
-
-Supported build methods for the triangulations in the ifc
-
-#### Type: `string`
-
-**Possible Values:** `TESSELLATION` or `BREP`
 
 
 ---
