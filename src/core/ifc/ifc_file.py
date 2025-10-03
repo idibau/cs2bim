@@ -185,22 +185,28 @@ class IfcFile:
         )
 
     def create_ifc_group(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcGroup", GlobalId=guid.new(), Name=self.translator.translate(name, self.language))
+        return self.file.create_entity("IfcGroup", GlobalId=guid.new(),
+                                       Name=self.translator.translate(name, self.language))
 
     def create_ifc_distribution_system(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcDistributionSystem", GlobalId=guid.new(), Name=self.translator.translate(name, self.language))
+        return self.file.create_entity("IfcDistributionSystem", GlobalId=guid.new(),
+                                       Name=self.translator.translate(name, self.language))
 
     def create_ifc_distribution_circuit(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcDistributionCircuit", GlobalId=guid.new(), Name=self.translator.translate(name, self.language))
+        return self.file.create_entity("IfcDistributionCircuit", GlobalId=guid.new(),
+                                       Name=self.translator.translate(name, self.language))
 
     def create_ifc_building_system(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcBuildingSystem", GlobalId=guid.new(), Name=self.translator.translate(name, self.language))
+        return self.file.create_entity("IfcBuildingSystem", GlobalId=guid.new(),
+                                       Name=self.translator.translate(name, self.language))
 
     def create_ifc_structural_analysis_model(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcStructuralAnalysisModel", GlobalId=guid.new(), Name=self.translator.translate(name, self.language))
+        return self.file.create_entity("IfcStructuralAnalysisModel", GlobalId=guid.new(),
+                                       Name=self.translator.translate(name, self.language))
 
     def create_ifc_zone(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcZone", GlobalId=guid.new(), Name=self.translator.translate(name, self.language))
+        return self.file.create_entity("IfcZone", GlobalId=guid.new(),
+                                       Name=self.translator.translate(name, self.language))
 
     def create_ifc_rel_assigns_to_group(
             self, related_objects: list[entity_instance], group: entity_instance
@@ -209,24 +215,41 @@ class IfcFile:
             "IfcRelAssignsToGroup", GlobalId=guid.new(), RelatedObjects=related_objects, RelatingGroup=group
         )
 
-    def create_ifc_face(self, polygon: list[tuple[float, float, float]]) -> entity_instance:
-        poly_loop = self.file.create_entity("IfcPolyLoop", Polygon=polygon)
-        bound = self.file.create_entity("IfcFaceOuterBound", Bound=poly_loop, Orientation=True)
-        return self.file.create_entity("IfcFace", Bounds=[bound])
+    def create_ifc_poly_loop(self, polygon: list[entity_instance]) -> entity_instance:
+        return self.file.create_entity("IfcPolyLoop", Polygon=polygon)
+
+    def create_ifc_face(self, exterior_poly_loop: entity_instance,
+                        interior_poly_loops: list[entity_instance]) -> entity_instance:
+        outer_bound = self.file.create_entity("IfcFaceOuterBound", Bound=exterior_poly_loop, Orientation=True)
+        inner_bounds = []
+        if interior_poly_loops:
+            for interior_poly_loop in interior_poly_loops:
+                inner_bound = self.file.create_entity("IfcFaceBound", Bound=interior_poly_loop, Orientation=False)
+                inner_bounds.append(inner_bound)
+        return self.file.create_entity("IfcFace", Bounds=[outer_bound] + inner_bounds)
 
     def create_ifc_faceted_brep(self, cfs_faces: list[entity_instance]) -> entity_instance:
         outer = self.file.create_entity("IfcClosedShell", CfsFaces=cfs_faces)
         return self.file.create_entity("IfcFacetedBrep", Outer=outer)
 
+    def create_ifc_faceted_brep_with_voids(self, outer_faces: list[entity_instance], void_faces_list: list[list[entity_instance]]) -> entity_instance:
+        outer = self.file.create_entity("IfcClosedShell", CfsFaces=outer_faces)
+        voids = [self.file.create_entity("IfcClosedShell", CfsFaces=void_faces) for void_faces in void_faces_list]
+        return self.file.create_entity("IfcFacetedBrepWithVoids", Outer=outer, Voids=voids)
+
+    def create_ifc_face_based_surface_model(self, faces: list[entity_instance]) -> entity_instance:
+        connected_face_set = self.file.create_entity("IfcConnectedFaceSet", CfsFaces=faces)
+        return self.file.create_entity("IfcFaceBasedSurfaceModel", FbsmFaces=[connected_face_set])
+
     def create_ifc_product_definition_shape(
-            self, context_of_items: entity_instance, representation_type: str, item: entity_instance
+            self, context_of_items: entity_instance, representation_type: str, items: list[entity_instance]
     ) -> entity_instance:
         representation = self.file.create_entity(
             "IfcShapeRepresentation",
             ContextOfItems=context_of_items,
             RepresentationIdentifier="Body",
             RepresentationType=representation_type,
-            Items=[item],
+            Items=items
         )
         return self.file.create_entity("IfcProductDefinitionShape", Representations=[representation])
 
@@ -288,13 +311,15 @@ class IfcFile:
 
     def create_ifc_property_single_value(self, name: str, text: str) -> entity_instance:
         nominal_value = self.file.create_entity("IfcText", self.translator.translate(text, self.language))
-        return self.file.create_entity("IfcPropertySingleValue", Name=self.translator.translate(name, self.language), NominalValue=nominal_value)
+        return self.file.create_entity("IfcPropertySingleValue", Name=self.translator.translate(name, self.language),
+                                       NominalValue=nominal_value)
 
     def create_ifc_property_set(
             self, name: str, has_properties: list[entity_instance], related_object: entity_instance
     ) -> entity_instance:
         relating_property_definition = self.file.create_entity(
-            "IfcPropertySet", GlobalId=guid.new(), Name=self.translator.translate(name, self.language), HasProperties=has_properties
+            "IfcPropertySet", GlobalId=guid.new(), Name=self.translator.translate(name, self.language),
+            HasProperties=has_properties
         )
         self.file.create_entity(
             "IfcRelDefinesByProperties",

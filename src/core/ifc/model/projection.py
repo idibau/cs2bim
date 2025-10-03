@@ -2,8 +2,8 @@ from config.configuration import config
 from config.projection_entity_type import ProjectionEntityType
 from config.triangulation_representation_type import TriangulationRepresentationType
 from core.ifc.model.element import Element
-from core.ifc.model.geometry.brep import Brep
-from core.ifc.model.geometry.tessellation import Tessellation
+from core.ifc.model.brep import Brep
+from core.ifc.model.tessellation import Tessellation
 
 
 class Projection(Element):
@@ -27,16 +27,21 @@ class Projection(Element):
         representation_type = config.ifc.triangulation_representation_type
         if representation_type == TriangulationRepresentationType.TESSELLATION:
             tessellation = Tessellation(self.triangles)
-            product_definition_shape = tessellation.map_to_ifc(ifc_file, ifc_representation_sub_context, ifc_style)
+            ifc_face_set = tessellation.map_to_ifc(ifc_file)
+            ifc_product_definition_shape = ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context,
+                                                                                    "Tessellation", [ifc_face_set])
         elif representation_type == TriangulationRepresentationType.BREP:
             brep = Brep(self.triangles)
-            product_definition_shape = brep.map_to_ifc(ifc_file, ifc_representation_sub_context, ifc_style)
+            ifc_face_set = brep.map_to_ifc(ifc_file)
+            ifc_product_definition_shape = ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context,
+                                                                                    "Brep", [ifc_face_set])
         else:
-            raise NotImplementedError(f"building step for representation type {representation_type.name} not implemented")
-
+            raise NotImplementedError(
+                f"building step for representation type {representation_type.name} not implemented")
+        ifc_file.create_ifc_styled_item(ifc_face_set, ifc_style)
         ifc_local_placement = ifc_file.create_ifc_local_placement((0.0, 0.0, 0.0))
         if entity_type == ProjectionEntityType.IFC_GEOGRAPHIC_ELEMENT:
-            ifc_element = ifc_file.create_ifc_geographic_element(ifc_local_placement, product_definition_shape)
+            ifc_element = ifc_file.create_ifc_geographic_element(ifc_local_placement, ifc_product_definition_shape)
         else:
             raise NotImplementedError(
                 f"building step for feature type entity type {entity_type.name} not implemented for clipped terrain feature typees")

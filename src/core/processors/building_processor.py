@@ -4,7 +4,12 @@ from lxml import etree
 
 from config.building_source_type import BuildingSourceType
 from config.configuration import config
+from config.gml_geometry_type import GmlGeometryType
 from core.ifc.model.building import BuildingPart, Building
+from core.ifc.model.gml.composite_solid import CompositeSolid
+from core.ifc.model.gml.multi_surface import MultiSurface
+from core.ifc.model.gml.namespace import namespace
+from core.ifc.model.gml.solid import Solid
 from service.postgis_service import PostgisService
 from service.stac_service import STACService
 
@@ -16,12 +21,6 @@ class BuildingProcessor:
     def __init__(self):
         self.postgis_service = PostgisService()
         self.stac_service = STACService()
-
-        self.ns = {
-            "bldg": "http://www.opengis.net/citygml/building/2.0",
-            "gml": "http://www.opengis.net/gml",
-            "gen": "http://www.opengis.net/citygml/generics/2.0",
-        }
 
     def process(self, polygon, origin):
         feature_types = {b.name: b for b in config.ifc.feature_types.buildings}
@@ -49,7 +48,7 @@ class BuildingProcessor:
 
                 for key, building_config in feature_types.items():
                     for event, building in context_iter:
-                        value_elem = building.find(building_config.egid_xpath, namespaces=self.ns)
+                        value_elem = building.find(building_config.egid_xpath, namespaces=namespace)
                         if value_elem is not None:
                             egid = value_elem.text.strip()
                             if egid in egids:
@@ -73,24 +72,26 @@ class BuildingProcessor:
         self.add_groups(building, building_config, building_model, result_set)
         logger.debug(f"start processing building parts")
         for building_part_config in building_config.entity_mapping.building_parts:
-            points = []
-            for pos_list in building.xpath(building_part_config.xpath, namespaces=self.ns):
-                if pos_list is None:
-                    continue
-                coords = list(map(float, pos_list.text.split()))
-                points.append([(float(coords[i] - origin[0]), float(coords[i + 1] - origin[1]),
-                                float(coords[i + 2] - origin[2])) for i in
-                               range(0, len(coords), 3)])
-            building_part = BuildingPart(building_part_config.entity_mapping.entity_type, points, building_part_config.color)
-            self.add_attributes(building, building_part_config.entity_mapping, building_part, result_set)
-            self.add_properties(building, building_part_config.entity_mapping, building_part, result_set)
-            building_model.add_building_part(building_part)
+            geometry_gmls = building.xpath(building_part_config.xpath, namespaces=namespace)
+            if building_part_config.type == GmlGeometryType.SOLID:
+                geometry = Solid()
+            elif building_part_config.type == GmlGeometryType.COMPOSITE_SOLID:
+                geometry = CompositeSolid()
+            elif building_part_config.type == GmlGeometryType.MULTI_SURFACE:
+                geometry = MultiSurface()
+            else:
+                raise NotImplementedError(
+                    f"building step for gml geometry type {building_part_config.type} not implemented")
+            for geometry_gml in geometry_gmls:
+                geometry.from_gml(geometry_gml, origin)
+                building_part = BuildingPart(building_part_config.entity_type, geometry, building_part_config.color)
+                building_model.add_building_part(building_part)
         return building_model
 
     def add_attributes(self, building, entity_mapping_config, element, result_set):
         for attribute in entity_mapping_config.attributes:
             if attribute.source.type == BuildingSourceType.CITY_GML:
-                value_elem = building.find(attribute.source.expression, namespaces=self.ns)
+                value_elem = building.find(attribute.source.expression, namespaces=namespace)
                 if value_elem is not None:
                     element.add_attribute(attribute.attribute, value_elem.text.strip())
             elif attribute.source.type == BuildingSourceType.SQL:
@@ -102,7 +103,7 @@ class BuildingProcessor:
     def add_properties(self, building, entity_mapping_config, element, result_set):
         for p in entity_mapping_config.properties:
             if p.source.type == BuildingSourceType.CITY_GML:
-                value_elem = building.find(p.source.expression, namespaces=self.ns)
+                value_elem = building.find(p.source.expression, namespaces=namespace)
                 if value_elem is not None:
                     element.add_property(p.property_set, p.property, value_elem.text.strip())
             elif p.source.type == BuildingSourceType.SQL:
@@ -114,7 +115,7 @@ class BuildingProcessor:
     def add_groups(self, building, building_config, element, result_set):
         for group_mapping in building_config.group_mapping:
             if group_mapping.type == BuildingSourceType.CITY_GML:
-                value_elem = building.find(group_mapping.expression, namespaces=self.ns)
+                value_elem = building.find(group_mapping.expression, namespaces=namespace)
                 if value_elem is not None:
                     element.add_group(value_elem.text.strip())
             elif group_mapping.type == BuildingSourceType.SQL:

@@ -51,8 +51,8 @@ ifc:
         entity_mapping:
           entity_type: IFC_BUILDING
           building_parts:
-            - xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']/gml:exterior/gml:CompositeSurface/gml:surfaceMember/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList"
-              entity_mapping:
-                entity_type: IFC_SPACE
+            - xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']"
+              type: SOLID
+              entity_type: IFC_SPACE
         spatial_structure_mapping:
           entity_type: IFC_SITE

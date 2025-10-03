@@ -1,8 +1,5 @@
-import geopandas as gpd
 import numpy as np
-import pandas as pd
 import shapely
-from shapely.geometry import Point
 
 
 class RasterPoints(object):
@@ -52,4 +49,3 @@ class RasterPoints(object):
             return self.data[in_bbox][mask]
         else:
             return None
-

@@ -10,6 +10,7 @@ from config.building_entity_type import BuildingEntityType
 from config.building_part_entity_type import BuildingPartEntityType
 from config.building_source_type import BuildingSourceType
 from config.geo_referencing import GeoReferencing
+from config.gml_geometry_type import GmlGeometryType
 from config.grid_size import GridSize
 from config.group_entity_type import GroupEntityType
 from config.projection_entity_type import ProjectionEntityType
@@ -109,9 +110,9 @@ class ProjectionFeatureType(BaseModel):
 
 
 class BuildingPartConfig(BaseModel):
-    xpath: str = Field(..., description="XPath to locate the building part element in source data")
-    entity_mapping: EntityConfig[BuildingPartEntityType, BuildingSourceType] = Field(...,
-                                                                                     description="Entity mapping configuration for the building part")
+    entity_type: BuildingPartEntityType = Field(..., description="Type of entity")
+    type: GmlGeometryType = Field(..., description="Referenced geometry type of the building part")
+    xpath: str = Field(..., description="XPath expression to locate the building part geometry in source data")
     color: "Color" = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0),
                            description="Color assigned to the building part")
 
@@ -124,7 +125,8 @@ class BuildingEntityConfig(EntityConfig[BuildingEntityType, BuildingSourceType])
 class BuildingFeatureType(BaseModel):
     name: str = Field(..., description="Feature type name for the building")
     sql_path: str = Field(..., description="Path to SQL definition for the building feature type")
-    egid_xpath: str = Field(..., description="XPath expression to extract EGID identifier")
+    egid_xpath: str = Field(...,
+                            description="XPath expression to extract EGID identifier from city gml building entities")
     entity_mapping: BuildingEntityConfig = Field(..., description="Entity mapping configuration for the building")
     spatial_structure_mapping: EntityConfig[SpatialEntityType, StaticSourceType] = Field(...,
                                                                                          description="Spatial structure mapping for the building")

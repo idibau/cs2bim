@@ -83,7 +83,7 @@ No description provided for this model.
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
 | name | `string` | ✅ | string |  | Feature type name for the building |
 | sql_path | `string` | ✅ | string |  | Path to SQL definition for the building feature type |
-| egid_xpath | `string` | ✅ | string |  | XPath expression to extract EGID identifier |
+| egid_xpath | `string` | ✅ | string |  | XPath expression to extract EGID identifier from city gml building entities |
 | entity_mapping | `object` | ✅ | [BuildingEntityConfig](#buildingentityconfig) |  | Entity mapping configuration for the building |
 | spatial_structure_mapping | `object` | ✅ | [EntityConfig_SpatialEntityType_StaticSourceType_](#entityconfig_spatialentitytype_staticsourcetype_) |  | Spatial structure mapping for the building |
 | group_mapping | `array` |  | [Source_BuildingSourceType_](#source_buildingsourcetype_) | `[]` | Group mappings for the building feature type |
@@ -96,8 +96,9 @@ No description provided for this model.
 
 | Property | Type | Required | Possible values | Description |
 | -------- | ---- | -------- | --------------- | ----------- |
-| xpath | `string` | ✅ | string | XPath to locate the building part element in source data |
-| entity_mapping | `object` | ✅ | [EntityConfig_BuildingPartEntityType_BuildingSourceType_](#entityconfig_buildingpartentitytype_buildingsourcetype_) | Entity mapping configuration for the building part |
+| entity_type | `string` | ✅ | [BuildingPartEntityType](#buildingpartentitytype) | Type of entity |
+| type | `string` | ✅ | [GmlGeometryType](#gmlgeometrytype) | Referenced geometry type of the building part |
+| xpath | `string` | ✅ | string | XPath expression to locate the building part geometry in source data |
 | color | `object` |  | [Color](#color) | Color assigned to the building part |
 
 ## BuildingPartEntityType
@@ -142,18 +143,6 @@ No description provided for this model.
 | host | `string` | ✅ | string | Database host address |
 | port | `integer` | ✅ | integer | Database port number |
 | password | `string` | ✅ | string | Database password |
-
-## EntityConfig_BuildingPartEntityType_BuildingSourceType_
-
-No description provided for this model.
-
-#### Type: `object`
-
-| Property | Type | Required | Possible values | Default | Description |
-| -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity_type | `string` | ✅ | [BuildingPartEntityType](#buildingpartentitytype) |  | Type of entity |
-| attributes | `array` |  | [AttributeConfig_BuildingSourceType_](#attributeconfig_buildingsourcetype_) | `[]` | List of attribute mappings |
-| properties | `array` |  | [PropertyConfig_BuildingSourceType_](#propertyconfig_buildingsourcetype_) | `[]` | List of property mappings |
 
 ## EntityConfig_GroupEntityType_StaticSourceType_
 
@@ -209,6 +198,14 @@ Supported geo referencing methods
 #### Type: `string`
 
 **Possible Values:** `LO_GEO_REF_30` or `LO_GEO_REF_40` or `LO_GEO_REF_50`
+
+## GmlGeometryType
+
+Supported gml geometry types
+
+#### Type: `string`
+
+**Possible Values:** `MULTI_SURFACE` or `SOLID` or `COMPOSITE_SOLID`
 
 ## GridSize
 

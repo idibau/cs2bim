@@ -285,26 +285,29 @@ Supported values are TESSELLATION or BREP. TESSELATION is recommended because it
 ### Feature types
 
 A "feature type" is the definition of a set of objects that are exported in an IFC entity with common definitions.
-The main configurations of a feature type include:
+There are currently two feature types supported.
 
+#### Projection
+
+The main configurations of a projection include:
 - sql: A SQL query that selects objects in the GIS database, returning a geometry (must be an area) and some other
   attributes for each object.
-- entity_type: The IFC entity, to which all selected objects of the feature type are exported to.
-- attributes: All attributes that are set on the objects.
-- properties: Any number of property definitions that are exported as IFC properties/property sets.
-- group_columns: Any number of IFC group assignments.
-- spatial_structure: The IFC spatial structure, to which all objects of the feature type are appended.
+- entity_mapping: The IFC entity, to which all selected objects of the projection are exported to.
+  - attributes: All attributes that are set on the objects.
+  - properties: Any number of property definitions that are exported as IFC properties/property sets.
+- spatial_structure_mapping: The IFC spatial structure, to which all objects of the projection are appended.
+- group_mapping: Any number of IFC group assignments.
 - color: An IFC color definition
 
-![Example of feature type](./uploads/feature type.jpg){width=300}
+![Example of feature type](./uploads/feature-classes.jpg){width=300}
 
-#### SQL
+##### SQL
 
-For each feature type you have to provide a SQL file for querying the data. With the query you are selecting the
+For each projection you have to provide a SQL file for querying the data. With the query you are selecting the
 cadastral data (with an area geometry type). The SQL query requires taking a polygon wkt as parameter "%(polygon)s" and
 returning a column named "wkt" with wkt string values. To guarantee correct processing, it is important to check that
 the
-sql also delivers all columns that are additionally configured for the according feature type. This can be multiple
+sql also delivers all columns that are additionally configured for the according projection. This can be multiple
 columns for attributes, properties or groups.
 
 The following schema shows the relationship between the attributes defined by the sql query and their linking to the
@@ -319,7 +322,13 @@ ST_CurveToLine → Converts a given geometry to a linear geometry\
 ST_Intersects → Returns true if two geometries intersect. Geometries intersect if they have any point in common.
 ST_Contains → Returns true if the first geometry contains the second.
 
-#### Spatial Structure
+#### Building
+
+#### Entity Mapping
+
+#### Entity Type Mapping
+
+#### Spatial Structure Mapping
 
 All objects of a feature type are assigned to one common spatial structure. The spatial structure instance can be
 configured with its entity type and attributes.
@@ -327,6 +336,8 @@ configured with its entity type and attributes.
 If the specification of the spatial structure instance in different feature type definitions is identical, then only
 one spatial structure instance is created (and all objects of the feature types are assigned to the same spatial
 structure).
+
+#### Group Mapping
 
 ### Groups
 
