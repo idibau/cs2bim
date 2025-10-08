@@ -245,10 +245,6 @@ class IfcFile:
         voids = [self.file.create_entity("IfcClosedShell", CfsFaces=void_faces) for void_faces in void_faces_list]
         return self.file.create_entity("IfcFacetedBrepWithVoids", Outer=outer, Voids=voids)
 
-    def create_ifc_face_based_surface_model(self, faces: list[entity_instance]) -> entity_instance:
-        connected_face_set = self.file.create_entity("IfcConnectedFaceSet", CfsFaces=faces)
-        return self.file.create_entity("IfcFaceBasedSurfaceModel", FbsmFaces=[connected_face_set])
-
     def create_ifc_triangulated_face_set(
             self, coord_list: list[tuple[float, float, float]], coord_index: list[tuple[int, int, int]]
     ) -> entity_instance:
