@@ -18,7 +18,28 @@ class Polygon:
             pos_list.from_gml(pos_list_gml, origin)
             self.interior.append(pos_list)
 
-    def map_to_ifc(self, ifc_file):
+    def create_ifc_indexed_polygonal_face(self, ifc_file, coordinates):
+        exterior_indices = []
+        for vertex in self.exterior.coordinates:
+            if not vertex in coordinates:
+                coordinates[vertex] = len(coordinates) + 1
+            exterior_indices.append(coordinates[vertex])
+
+        interior_indices_list = []
+        for interior in self.interior:
+            polygon_indices = []
+            for vertex in interior.coordinates:
+                if not vertex in coordinates:
+                    coordinates[vertex] = len(coordinates) + 1
+                polygon_indices.append(coordinates[vertex])
+            interior_indices_list.append(polygon_indices)
+
+        if interior_indices_list:
+            return ifc_file.create_ifc_indexed_polygonal_face_with_voids(exterior_indices, interior_indices_list)
+        else:
+            return ifc_file.create_ifc_indexed_polygonal_face(exterior_indices)
+
+    def create_ifc_face(self, ifc_file):
         vertex_dict = {}
         vertices = []
         for vertex in self.exterior.coordinates:

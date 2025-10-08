@@ -80,7 +80,8 @@ class Model:
             ifc_style = ifc_file.create_ifc_surface_style(feature_type.color)
             ifc_elements = []
             for element in elements:
-                ifc_element = element.map_to_ifc(ifc_file, feature_type.entity_mapping.entity_type, ifc_representation_sub_context,
+                ifc_element = element.map_to_ifc(ifc_file, feature_type.entity_mapping.entity_type,
+                                                 ifc_representation_sub_context,
                                                  ifc_style)
                 ifc_elements.append(ifc_element)
                 for group in element.groups:
@@ -101,14 +102,14 @@ class Model:
                 ifc_spatial_structures[spatial_structure_id] = ifc_spatial_structure
             buildings = []
             for element in elements:
-                ifc_building = element.map_to_ifc(ifc_file, ifc_local_placement, ifc_representation_sub_context)
-                buildings.append(ifc_building)
+                ifc_element = element.map_to_ifc(ifc_file, ifc_local_placement, ifc_representation_sub_context)
+                buildings.append(ifc_element)
                 for group in element.groups:
                     if not group in group_mappings:
                         group_mappings[group] = []
-                    group_mappings[group].append(ifc_building)
-            ifc_file.create_ifc_rel_contained_in_spatial_structure(buildings, ifc_spatial_structures[
-                feature_type.spatial_structure_mapping.get_id()])
+                    group_mappings[group].append(ifc_element)
+            ifc_file.create_ifc_rel_aggregates(ifc_spatial_structures[feature_type.spatial_structure_mapping.get_id()],
+                                               buildings)
 
         self.build_groups(ifc_file, group_mappings)
         logger.info("completed ifc build")
@@ -142,8 +143,11 @@ class Model:
                         ifc_groups[group_path] = ifc_file.create_ifc_distribution_system(group)
                     elif group_config.entity_mapping.entity_type == GroupEntityType.IFC_DISTRIBUTION_CIRCUIT:
                         ifc_groups[group_path] = ifc_file.create_ifc_distribution_circuit(group)
-                    elif group_config.entity_mapping.entity_type == GroupEntityType.IFC_BUILDING_SYSTEM:
-                        ifc_groups[group_path] = ifc_file.create_ifc_building_system(group)
+                    elif group_config.entity_mapping.entity_type == GroupEntityType.IFC_BUILDING_BUILT_SYSTEM:
+                        if self.schema == IfcVersion.IFC4:
+                            ifc_groups[group_path] = ifc_file.create_ifc_building_system(group)
+                        else:
+                            ifc_groups[group_path] = ifc_file.create_ifc_built_system(group)
                     elif group_config.entity_mapping.entity_type == GroupEntityType.IFC_STRUCTURAL_ANALYSIS_MODEL:
                         ifc_groups[group_path] = ifc_file.create_ifc_structural_analysis_model(group)
                     elif group_config.entity_mapping.entity_type == GroupEntityType.IFC_ZONE:

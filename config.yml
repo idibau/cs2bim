@@ -216,33 +216,37 @@ ifc:
                 type: CITY_GML
                 expression: ".//gen:intAttribute[@name='ERSTELLUNG_MONAT']/gen:value"
           building_parts:
-            - xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']"
-              type: SOLID
-              entity_type: IFC_SPACE
+            - entity_type: IFC_BUILDING_ELEMENT_PROXY
+              geometry_mapping:
+                xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']"
+                type: SOLID
               color:
                 r: 1.00
                 g: 1.00
                 b: 1.00
-                a: 0.8
-            - xpath: ".//bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface"
-              type: MULTI_SURFACE
-              entity_type: IFC_WALL
+                a: 0.2
+            - entity_type: IFC_WALL
+              geometry_mapping:
+                xpath: ".//bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface"
+                type: MULTI_SURFACE
               color:
                 r: 1.00
                 g: 1.00
                 b: 1.00
                 a: 0.00
-            - xpath: ".//bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface"
-              type: MULTI_SURFACE
-              entity_type: IFC_ROOF
+            - entity_type: IFC_ROOF
+              geometry_mapping:
+                xpath: ".//bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface"
+                type: MULTI_SURFACE
               color:
                 r: 1.00
                 g: 0.8
                 b: 0.8
                 a: 0.00
-            - xpath: ".//bldg:boundedBy/bldg:GroundSurface/bldg:lod2MultiSurface/gml:MultiSurface"
-              type: MULTI_SURFACE
-              entity_type: IFC_SLAB
+            - entity_type: IFC_SLAB
+              geometry_mapping:
+                xpath: ".//bldg:boundedBy/bldg:GroundSurface/bldg:lod2MultiSurface/gml:MultiSurface"
+                type: MULTI_SURFACE
               color:
                 r: 0.8
                 g: 0.8
@@ -258,7 +262,7 @@ ifc:
   groups:
     - path: "Amtliche Vermessung.Gebaeude"
       entity_mapping:
-        entity_type: IFC_BUILDING_SYSTEM
+        entity_type: IFC_BUILDING_BUILT_SYSTEM
         attributes:
           - attribute: "PredefinedType"
             source:

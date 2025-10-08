@@ -22,20 +22,17 @@ class Element:
         return element
 
     def add_property(self, property_set: str, key: str, value: str):
-        """Adds a new property to the element"""
         if not property_set in self.property_sets:
             self.property_sets[property_set] = PropertySet(property_set)
         self.property_sets[property_set].add_property(key, value)
 
     def add_attribute(self, name, value):
-        """Adds a new attribute to the element"""
         if not name in self.attributes:
             self.attributes[name] = value
         else:
             raise Exception(f"Attribute {name} already exists")
 
     def add_group(self, name):
-        """Adds a new group to the element"""
         if not name in self.groups:
             self.groups.append(name)
 

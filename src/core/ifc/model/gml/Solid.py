@@ -23,10 +23,10 @@ class Solid(GmlGeometry):
                 self.interior.append(composite_surface)
 
     def map_to_ifc(self, ifc_file, ifc_style):
-        exterior_ifc_faces = self.exterior.map_to_ifc(ifc_file)
+        exterior_ifc_faces = self.exterior.create_ifc_faces(ifc_file)
         interior_ifc_faces_list = []
         for composite_surface in self.interior:
-            interior_ifc_faces = composite_surface.map_to_ifc(ifc_file)
+            interior_ifc_faces = composite_surface.create_ifc_faces(ifc_file)
             interior_ifc_faces_list.append(interior_ifc_faces)
         if interior_ifc_faces_list:
             ifc_faceted_brep = ifc_file.create_ifc_faceted_brep_with_voids(exterior_ifc_faces, interior_ifc_faces_list)

@@ -32,7 +32,7 @@ class Projection(Element):
             ifc_element = ifc_file.create_ifc_geographic_element(ifc_local_placement, ifc_product_definition_shape)
         else:
             raise NotImplementedError(
-                f"building step for feature type entity type {entity_type.name} not implemented for clipped terrain feature typees")
+                f"building step for feature type entity type {entity_type.name} not implemented for clipped terrain feature types")
 
         self.set_ifc_attributes(ifc_file, ifc_element)
         self.set_ifc_properties(ifc_file, ifc_element)

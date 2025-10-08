@@ -14,8 +14,10 @@ class BuildingPart(Element):
     def map_to_ifc(self, ifc_file, ifc_representation_sub_context):
         ifc_style = ifc_file.create_ifc_surface_style(self.color)
         ifc_representations = self.gml_geometry.map_to_ifc(ifc_file, ifc_style)
-        ifc_product_definition_shape = self.gml_geometry.create_ifc_product_definition_shape(ifc_file, ifc_representation_sub_context, ifc_representations)
-        return [self.create_ifc_element(ifc_file, ifc_product_definition_shape)]
+        ifc_product_definition_shape = self.gml_geometry.create_ifc_product_definition_shape(ifc_file,
+                                                                                             ifc_representation_sub_context,
+                                                                                             ifc_representations)
+        return self.create_ifc_element(ifc_file, ifc_product_definition_shape)
 
     def create_ifc_element(self, ifc_file, product_definition_shape):
         ifc_local_placement = ifc_file.create_ifc_local_placement((0.0, 0.0, 0.0))
@@ -25,8 +27,8 @@ class BuildingPart(Element):
             ifc_element = ifc_file.create_ifc_slab(ifc_local_placement, product_definition_shape)
         elif self.entity_type == BuildingPartEntityType.IFC_WALL:
             ifc_element = ifc_file.create_ifc_wall(ifc_local_placement, product_definition_shape)
-        elif self.entity_type == BuildingPartEntityType.IFC_SPACE:
-            ifc_element = ifc_file.create_ifc_space(ifc_local_placement, product_definition_shape)
+        elif self.entity_type == BuildingPartEntityType.IFC_BUILDING_ELEMENT_PROXY:
+            ifc_element = ifc_file.create_ifc_building_element_proxy(ifc_local_placement, product_definition_shape)
         else:
             raise NotImplementedError(
                 f"building step for feature type entity type {self.entity_type.name} not implemented for building feature types")
@@ -43,14 +45,10 @@ class Building(Element):
         self.building_parts.append(building_part)
 
     def map_to_ifc(self, ifc_file, ifc_local_placement, ifc_representation_sub_context):
-        ifc_building_parts = []
-        for building_part in self.building_parts:
-            ifc_elements = building_part.map_to_ifc(ifc_file, ifc_representation_sub_context)
-            ifc_building_parts.extend(ifc_elements)
-
         ifc_building = ifc_file.create_ifc_building(ifc_local_placement)
         self.set_ifc_attributes(ifc_file, ifc_building)
         self.set_ifc_properties(ifc_file, ifc_building)
-
-        ifc_file.create_ifc_rel_contained_in_spatial_structure(ifc_building_parts, ifc_building)
+        ifc_elements = [building_part.map_to_ifc(ifc_file, ifc_representation_sub_context) for building_part in
+                        self.building_parts]
+        ifc_file.create_ifc_rel_contained_in_spatial_structure(ifc_elements, ifc_building)
         return ifc_building

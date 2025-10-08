@@ -94,12 +94,11 @@ No description provided for this model.
 
 #### Type: `object`
 
-| Property | Type | Required | Possible values | Description |
-| -------- | ---- | -------- | --------------- | ----------- |
-| entity_type | `string` | ✅ | [BuildingPartEntityType](#buildingpartentitytype) | Type of entity |
-| type | `string` | ✅ | [GmlGeometryType](#gmlgeometrytype) | Referenced geometry type of the building part |
-| xpath | `string` | ✅ | string | XPath expression to locate the building part geometry in source data |
-| color | `object` |  | [Color](#color) | Color assigned to the building part |
+| Property | Type | Required | Possible values | Default | Description |
+| -------- | ---- | -------- | --------------- | ------- | ----------- |
+| entity_type | `string` | ✅ | [BuildingPartEntityType](#buildingpartentitytype) |  | Type of entity |
+| geometry_mapping | `object` or `null` |  | [GmlGeometryMapping](#gmlgeometrymapping) | `null` | Geometry mapping for the building part |
+| color | `object` |  | [Color](#color) |  | Color assigned to the building part |
 
 ## BuildingPartEntityType
 
@@ -107,7 +106,7 @@ Supported ifc entity types for building part entities
 
 #### Type: `string`
 
-**Possible Values:** `IFC_WALL` or `IFC_SLAB` or `IFC_ROOF` or `IFC_SPACE`
+**Possible Values:** `IFC_WALL` or `IFC_SLAB` or `IFC_ROOF` or `IFC_BUILDING_ELEMENT_PROXY`
 
 ## BuildingSourceType
 
@@ -199,6 +198,17 @@ Supported geo referencing methods
 
 **Possible Values:** `LO_GEO_REF_30` or `LO_GEO_REF_40` or `LO_GEO_REF_50`
 
+## GmlGeometryMapping
+
+No description provided for this model.
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Description |
+| -------- | ---- | -------- | --------------- | ----------- |
+| type | `string` | ✅ | [GmlGeometryType](#gmlgeometrytype) | Referenced geometry type of the building part |
+| xpath | `string` | ✅ | string | XPath expression to locate the building part geometry in source data |
+
 ## GmlGeometryType
 
 Supported gml geometry types
@@ -232,7 +242,7 @@ Supported ifc entity types for groups
 
 #### Type: `string`
 
-**Possible Values:** `IFC_DISTRIBUTION_SYSTEM` or `IFC_DISTRIBUTION_CIRCUIT` or `IFC_BUILDING_SYSTEM` or `IFC_STRUCTURAL_ANALYSIS_MODEL` or `IFC_ZONE`
+**Possible Values:** `IFC_DISTRIBUTION_SYSTEM` or `IFC_DISTRIBUTION_CIRCUIT` or `IFC_BUILDING_BUILT_SYSTEM` or `IFC_STRUCTURAL_ANALYSIS_MODEL` or `IFC_ZONE`
 
 ## I18nConfig
 

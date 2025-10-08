@@ -7,7 +7,7 @@ import logging
 
 from ifcopenshell import file, entity_instance, guid
 
-from config.configuration import Color
+from config.configuration import Color, config
 from i18n.translator import Translator
 
 logger = logging.getLogger(__name__)
@@ -16,9 +16,13 @@ logger = logging.getLogger(__name__)
 class IfcFile:
     def __init__(self, schema, file_name, language):
         self.file = file(schema=schema)
-        self.file.wrapped_data.header.file_name.name = file_name
+        self.file.header.file_name.name = file_name
+        self.file.header.file_name.author = [config.ifc.author]
+        self.file.header.file_name.organization = [config.ifc.author]
         self.translator = Translator()
         self.language = language
+
+
 
     def write(self, path: str):
         self.file.write(path)
@@ -200,6 +204,10 @@ class IfcFile:
         return self.file.create_entity("IfcBuildingSystem", GlobalId=guid.new(),
                                        Name=self.translator.translate(name, self.language))
 
+    def create_ifc_built_system(self, name: str) -> entity_instance:
+        return self.file.create_entity("IfcBuiltSystem", GlobalId=guid.new(),
+                                       Name=self.translator.translate(name, self.language))
+
     def create_ifc_structural_analysis_model(self, name: str) -> entity_instance:
         return self.file.create_entity("IfcStructuralAnalysisModel", GlobalId=guid.new(),
                                        Name=self.translator.translate(name, self.language))
@@ -241,6 +249,31 @@ class IfcFile:
         connected_face_set = self.file.create_entity("IfcConnectedFaceSet", CfsFaces=faces)
         return self.file.create_entity("IfcFaceBasedSurfaceModel", FbsmFaces=[connected_face_set])
 
+    def create_ifc_triangulated_face_set(
+            self, coord_list: list[tuple[float, float, float]], coord_index: list[tuple[int, int, int]]
+    ) -> entity_instance:
+        coordinates = self.file.create_entity("IfcCartesianPointList3D", CoordList=coord_list)
+        return self.file.create_entity("IfcTriangulatedFaceSet", Coordinates=coordinates, CoordIndex=coord_index)
+
+    def create_ifc_polygonal_face_set(
+            self, coord_list: list[tuple[float, float, float]], faces: list[entity_instance]
+    ) -> entity_instance:
+        coordinates = self.file.create_entity("IfcCartesianPointList3D", CoordList=coord_list)
+        return self.file.create_entity("IfcPolygonalFaceSet", Coordinates=coordinates, Faces=faces)
+
+    def create_ifc_indexed_polygonal_face(
+            self, coord_index: list[tuple[int, int, int]]
+    ) -> entity_instance:
+        return self.file.create_entity("IfcIndexedPolygonalFace", CoordIndex=coord_index)
+
+    def create_ifc_indexed_polygonal_face_with_voids(
+            self, coord_index: list[tuple[int, int, int]], inner_cord_indices: list[list[tuple[int, int, int]]]
+    ) -> entity_instance:
+        return self.file.create_entity("IfcIndexedPolygonalFaceWithVoids", CoordList=coord_index, InnerCoordIndices=inner_cord_indices)
+
+
+
+
     def create_ifc_product_definition_shape(
             self, context_of_items: entity_instance, representation_type: str, items: list[entity_instance]
     ) -> entity_instance:
@@ -252,12 +285,6 @@ class IfcFile:
             Items=items
         )
         return self.file.create_entity("IfcProductDefinitionShape", Representations=[representation])
-
-    def create_ifc_triangulated_face_set(
-            self, coord_list: list[tuple[float, float, float]], coord_index: list[tuple[int, int, int]]
-    ) -> entity_instance:
-        coordinates = self.file.create_entity("IfcCartesianPointList3D", CoordList=coord_list)
-        return self.file.create_entity("IfcTriangulatedFaceSet", Coordinates=coordinates, CoordIndex=coord_index)
 
     def create_ifc_geographic_element(
             self, object_placement: entity_instance, representation: entity_instance
@@ -273,11 +300,11 @@ class IfcFile:
             "IfcBuilding", GlobalId=guid.new(), ObjectPlacement=object_placement
         )
 
-    def create_ifc_space(
+    def create_ifc_building_element_proxy(
             self, object_placement: entity_instance, representation: entity_instance
     ) -> entity_instance:
         return self.file.create_entity(
-            "IfcSpace", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+            "IfcBuildingElementProxy", GlobalId=guid.new(), Name="", ObjectPlacement=object_placement, Representation=representation
         )
 
     def create_ifc_wall(

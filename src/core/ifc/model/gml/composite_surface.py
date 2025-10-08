@@ -1,3 +1,4 @@
+from core.ifc.ifc_file import IfcFile
 from core.ifc.model.gml.namespace import namespace
 from core.ifc.model.gml.polygon import Polygon
 
@@ -13,6 +14,10 @@ class CompositeSurface:
             polygon.from_gml(polygon_gml, origin)
             self.polygons.append(polygon)
 
-    def map_to_ifc(self, ifc_file):
-        ifc_faces = [polygon.map_to_ifc(ifc_file) for polygon in self.polygons]
+    def create_ifc_indexed_polygonal_faces(self, ifc_file: IfcFile, coordinates):
+        ifc_faces = [polygon.create_ifc_indexed_polygonal_face(ifc_file, coordinates) for polygon in self.polygons]
+        return ifc_faces
+
+    def create_ifc_faces(self, ifc_file):
+        ifc_faces = [polygon.create_ifc_face(ifc_file) for polygon in self.polygons]
         return ifc_faces

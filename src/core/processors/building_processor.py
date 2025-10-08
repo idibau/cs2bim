@@ -72,16 +72,17 @@ class BuildingProcessor:
         self.add_groups(building, building_config, building_model, result_set)
         logger.debug(f"start processing building parts")
         for building_part_config in building_config.entity_mapping.building_parts:
-            geometry_gmls = building.xpath(building_part_config.xpath, namespaces=namespace)
-            if building_part_config.type == GmlGeometryType.SOLID:
+            geometry_mapping = building_part_config.geometry_mapping
+            geometry_gmls = building.xpath(geometry_mapping.xpath, namespaces=namespace)
+            if geometry_mapping.type == GmlGeometryType.SOLID:
                 geometry = Solid()
-            elif building_part_config.type == GmlGeometryType.COMPOSITE_SOLID:
+            elif geometry_mapping.type == GmlGeometryType.COMPOSITE_SOLID:
                 geometry = CompositeSolid()
-            elif building_part_config.type == GmlGeometryType.MULTI_SURFACE:
+            elif geometry_mapping.type == GmlGeometryType.MULTI_SURFACE:
                 geometry = MultiSurface()
             else:
                 raise NotImplementedError(
-                    f"building step for gml geometry type {building_part_config.type} not implemented")
+                    f"building step for gml geometry type {geometry_mapping.type} not implemented")
             for geometry_gml in geometry_gmls:
                 geometry.from_gml(geometry_gml, origin)
                 building_part = BuildingPart(building_part_config.entity_type, geometry, building_part_config.color)

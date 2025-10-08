@@ -1,9 +1,10 @@
 import json
 import os
 from pathlib import Path
+from typing import List, Optional, Generic, TypeVar
+
 from pydantic import BaseModel, model_validator, Field
 from pydantic_yaml import parse_yaml_raw_as
-from typing import List, Optional, Generic, TypeVar
 
 from config.building_entity_type import BuildingEntityType
 from config.building_part_entity_type import BuildingPartEntityType
@@ -103,16 +104,20 @@ class ProjectionFeatureType(BaseModel):
     group_mapping: List[Source[ProjectionSourceType]] = Field(default_factory=list,
                                                               json_schema_extra={"default": []},
                                                               description="Group mappings for the projection feature type")
-    color: "Color" = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0),
-                           description="Color assigned to the projection feature type")
+    color: Color = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0),
+                         description="Color assigned to the projection feature type")
+
+
+class GmlGeometryMapping(BaseModel):
+    type: GmlGeometryType = Field(..., description="Referenced geometry type of the building part")
+    xpath: str = Field(..., description="XPath expression to locate the building part geometry in source data")
 
 
 class BuildingPartConfig(BaseModel):
     entity_type: BuildingPartEntityType = Field(..., description="Type of entity")
-    type: GmlGeometryType = Field(..., description="Referenced geometry type of the building part")
-    xpath: str = Field(..., description="XPath expression to locate the building part geometry in source data")
-    color: "Color" = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0),
-                           description="Color assigned to the building part")
+    geometry_mapping: Optional[GmlGeometryMapping] = Field(None, description="Geometry mapping for the building part")
+    color: Color = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0),
+                         description="Color assigned to the building part")
 
 
 class BuildingEntityConfig(EntityConfig[BuildingEntityType, BuildingSourceType]):
@@ -178,4 +183,8 @@ class Configuration(BaseModel):
         return self
 
 
-config = Configuration.load("/workspace/config.yml")
+# config = Configuration.load("/workspace/config.yml")
+
+# JSON Schema
+with open("../../configuration.json", "w") as stream:
+    json.dump(Configuration.model_json_schema(), stream, indent=4)
