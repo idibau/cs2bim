@@ -6,4 +6,7 @@ class PropertySet:
         self.properties = {}
 
     def add_property(self, key: str, value: str):
-        self.properties[key] = value
+        if not key in self.properties:
+            self.properties[key] = value
+        else:
+            raise Exception(f"Property {key} already exists")

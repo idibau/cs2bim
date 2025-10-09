@@ -4,12 +4,9 @@ with perimeter as (
 )
 select
     ST_AsText(ST_CurveToLine(l.geometrie, 1)) as wkt,
-    g.nbident,
-    g.nummer,
-    g.egris_egrid,
-    'USERDEFINED' as predefined_type,
-    'Liegenschaft' as object_type,
-    'Amtliche Vermessung.Liegenschaften' as group
+    g.nbident as nbident,
+    g.nummer as nummer,
+    g.egris_egrid as egris_egrid
 from
     cs2bim.liegenschaft l
     left join cs2bim.grundstueck g on (l.liegenschaft_von = g.t_id)

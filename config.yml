@@ -45,12 +45,12 @@ ifc:
           attributes:
             - attribute: "PredefinedType"
               source:
-                type: SQL
-                expression: "predefined_type"
+                type: STATIC
+                expression: "USERDEFINED"
             - attribute: "ObjectType"
               source:
-                type: SQL
-                expression: "object_type"
+                type: STATIC
+                expression: "LIEGENSCHAFT"
             - attribute: "Name"
               source:
                 type: SQL
@@ -91,8 +91,8 @@ ifc:
                 type: STATIC
                 expression: "Liegenschaften"
         group_mapping:
-          - type: SQL
-            expression: "group"
+          - type: STATIC
+            expression: "Amtliche Vermessung.Liegenschaften"
         color:
           r: 0.31
           g: 0.67
@@ -105,8 +105,8 @@ ifc:
           attributes:
             - attribute: "PredefinedType"
               source:
-                type: SQL
-                expression: "predefined_type"
+                type: STATIC
+                expression: "USERDEFINED"
             - attribute: "ObjectType"
               source:
                 type: SQL
@@ -115,7 +115,6 @@ ifc:
               source:
                 type: SQL
                 expression: "art"
-          properties: [ ]
         spatial_structure_mapping:
           entity_type: IFC_SITE
           attributes:
@@ -150,8 +149,8 @@ ifc:
           attributes:
             - attribute: "PredefinedType"
               source:
-                type: SQL
-                expression: "predefined_type"
+                type: STATIC
+                expression: "USERDEFINED"
             - attribute: "ObjectType"
               source:
                 type: SQL
@@ -186,8 +185,8 @@ ifc:
                 type: STATIC
                 expression: "Gebäudegrundflächen"
         group_mapping:
-          - type: SQL
-            expression: "group"
+          - type: STATIC
+            expression: "Amtliche Vermessung.Gebaeude"
         color:
           r: 1.00
           g: 0.00

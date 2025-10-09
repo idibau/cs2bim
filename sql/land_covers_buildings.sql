@@ -5,9 +5,7 @@ with perimeter as (
 select
     ST_AsText(ST_CurveToLine(geometrie, 1)) as wkt,
     bb.art,
-    'USERDEFINED' as predefined_type,
-    cast(gbnr.gwr_egid as text) as gwr_egid,
-    'Amtliche Vermessung.Gebaeude' as group
+    cast(gbnr.gwr_egid as text) as gwr_egid
 from
     cs2bim.boflaeche bb
     left join cs2bim.gebaeudenummer gbnr on (gbnr.gebaeudenummer_von = bb.t_id)
