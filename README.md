@@ -277,11 +277,6 @@ If not provided, the system sets a project origin calculated on a minimum boundi
 
 ![Levels of Georeferencing LoGeoRef](uploads/project-origin.png){width=600}
 
-### Triangulation Representation Type
-
-You can define the representation type used to represent the TIN geometry in the ifc.  
-Supported values are TESSELLATION or BREP. TESSELATION is recommended because it needs less storage space.
-
 ### Feature types
 
 A "feature type" is the definition of a set of objects that are exported in an IFC entity with common definitions.
@@ -306,13 +301,22 @@ The main configurations of a projection include:
 For each projection you have to provide a SQL file for querying the data. With the query you are selecting the
 cadastral data (with an area geometry type). The SQL query requires taking a polygon wkt as parameter "%(polygon)s" and
 returning a column named "wkt" with wkt string values. To guarantee correct processing, it is important to check that
-the
-sql also delivers all columns that are additionally configured for the according projection. This can be multiple
-columns for attributes, properties or groups.
+the sql also delivers all columns that are additionally configured for the according projection. This can be multiple
+columns for attributes, properties, or groups.
 
 The following schema shows the relationship between the attributes defined by the sql query and their linking to the
 configuration.  
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
+
+Selecting the cadastral data by SQL is flexible and can be done in various ways. There are some examples in the sql folder:
+
+1. The input polygon
+2. All areas (parcel, landcover etc.) that intersect with the polygon are included (parcels.sql, land_cover.sql, land_cover_buildings.sql)
+3. All areas (parcel, landcover etc.) are cut off at the border of the polygon (parcels_intersection.sql, land_covers_intersection.sql)
+4. All areas (parcel, landcover etc.) that are fully contained by the polygon are included (parcels_contains.sql, land_covers_contains.sql)
+5. The entire area of the input polygon without subdivisions (polygon.sql)
+
+![Polygon](./uploads/sql.jpg){width=600}
 
 Useful postgis functions:
 
@@ -360,10 +364,9 @@ When defining a group, you can use "." to create nested group structures. (IfcGr
 - Entity types that are only supported in one of the two allowed ifc versions (4, 4x3) are not supported (e.g.,
   IfcBuiltSystem). Explanation: There is no switch in the code that could deal with different cases based on a different
   ifc version, neither are there parameters in the configuration to support different ifc versions.
-- Potential code optimization not yet done (parallelize computational tasks with threads, cache dtm data, load only
-  necessary dtm data in memory, process the point cloud only once and then derive feature type geometries from TIN
-  instead
-  of point clouds)
+- Potential code optimization is not yet done.Parallelize computational tasks with threads, cache dtm data, load only
+  necessary dtm data in memory, process the point cloud only once, and then derive feature type geometries from TIN
+  instead of point clouds)
 - No support for the ifc classification concept. Could be done the same way as the already implemented group concept.
 
 # Contact
