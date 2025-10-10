@@ -1,10 +1,11 @@
 import logging
 import os
-import requests
 import time
 from io import BytesIO
 from pathlib import Path
 from zipfile import ZipFile
+
+import requests
 from dateutil import parser
 
 from config.configuration import config
@@ -31,15 +32,12 @@ class STACService:
         return [self.fetch_and_extract_zip(href) for href in hrefs]
 
     def fetch_dtm_assets(self, bounding_box: BoundingBox, grid_size: float):
-        asset_filter = lambda asset: asset["type"] == "application/x.ascii-xyz+zip" and asset[
-            "eo:gsd"] == grid_size
+        asset_filter = lambda asset: (asset["type"] == "application/x.ascii-xyz+zip" and (
+                asset.get("gsd") == grid_size or asset.get("eo:gsd") == grid_size))
         hrefs = self.fetch_latest_assets(config.stac.dtm_items_url, bounding_box, asset_filter)
         return [self.fetch_and_extract_zip(href) for href in hrefs]
 
     def fetch_features(self, stac_collection_items_url: str, bounding_box: BoundingBox) -> list[dict]:
-        """
-        Fetch features metadata for a bounding box.
-        """
         bbox_str = bounding_box.get_wgs84_bounding_box_as_string()
         logger.debug(f"Fetching STAC items for bbox: {bbox_str}")
         resp = requests.get(stac_collection_items_url, params={"bbox": bbox_str}, timeout=10)
