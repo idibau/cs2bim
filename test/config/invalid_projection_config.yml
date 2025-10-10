@@ -1,0 +1,48 @@
+logging_level: INFO
+i18n:
+  languages:
+    de: "de.yml"
+    fr: "fr.yml"
+    it: "it.yml"
+redis:
+  host: "redis"
+  port: 6379
+  db:
+    celery_broker: 0
+    celery_backend: 1
+    file_cache: 2
+  global_keyprefix: "prefix"
+db:
+  dbname: "cs2bim"
+  user: "postgres"
+  host: "localhost"
+  port: 5432
+  password: "test_password"
+stac:
+  dtm_items_url: "https://example.com/dtm"
+  # building_items_url fehlt
+tin:
+  grid_size: 0.5
+  max_height_error: 0.05
+ifc:
+  author: "Test Author"
+  version: "1.0"
+  application_name: "test_app"
+  project_name: "test_project"
+  geo_referencing: LO_GEO_REF_50
+  feature_types:
+    projections: []
+    buildings:
+      - name: "test_building"
+        sql_path: "/test/sql/test.sql"
+        egid_xpath: ".//test"
+        entity_mapping:
+          entity: IFC_BUILDING
+          building_parts:
+            - entity: IFC_BUILDING_ELEMENT_PROXY
+              geometry_mapping:
+                xpath: ".//test/xpath"
+                geometry: SOLID
+        spatial_structure_mapping:
+          entity: IFC_SITE
+  groups: []
