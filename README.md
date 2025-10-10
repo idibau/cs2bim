@@ -332,27 +332,43 @@ ST_Contains → Returns true if the first geometry contains the second.
 
 #### Entity Type Mapping
 
+The objects of a feature type can be associated with an entity type. Each entity type instance can be configured 
+with its own attributes, and properties. These attributes and properties are defined in the same way as those
+of the feature type instance itself.
+
+A spatial structure is reused across all feature type instances that share identical attributes and properties. As a result, 
+the total number of spatial structures ranges from one up to the number of feature type instances.
+
+
 #### Spatial Structure Mapping
 
-All objects of a feature type are assigned to one common spatial structure. The spatial structure instance can be
-configured with its entity type and attributes.
+All objects of a feature type are associated with a spatial structure. Each spatial structure instance can be configured 
+with its own entity type, attributes, and properties. These attributes and properties are defined in the same way as those
+of the feature type instance itself.
 
-If the specification of the spatial structure instance in different feature type definitions is identical, then only
-one spatial structure instance is created (and all objects of the feature types are assigned to the same spatial
-structure).
+A spatial structure is reused across all feature type instances that share identical attributes and properties. As a result, 
+the total number of spatial structures ranges from one up to the number of feature type instances.
 
 #### Group Mapping
 
 ### Groups
 
-Every exported object can be assigned to a group (zero to multiple). If defined empty (groups: []), no groups are
-created. The assignment is defined by an attribute value (of the SQL query). For each attribute value used as a
-group assignment, there should be a group configuration.
-For each group assignment the system is creating an ifc group according to the group configuration with its parameters
-(entity_type and any number of attributes). When there is no group configuration for an assigned value, the system will
-create a simple ifc group entity without any special attributes.
+Each feature type instance can be assigned to one or more groups. This configuration is optional—if omitted, no group 
+assignment will be made.For every group assignment, the system creates an IFC group based on the specified group configuration,
+including its parameterssuch as entity_type and any number of attributes or properties. If no configuration exists for a 
+given assigned value, the system will generate a basic IFC group entity without additional attributes or properties.
+When defining groups, the "." character can be used to create nested group structures.
 
-When defining a group, you can use "." to create nested group structures. (IfcGroupKey)
+For example: The group "Amtliche Vermessung.Bodenbedeckung.befestigt" results in the creation of three nested groups.
+The feature type instances are assigned to the final group in this hierarchy.
+
+- Amtliche Vermessung
+  - Bodenbedeckung
+    - befestigt
+      - Feature type instance 1
+      - Feature type instance 2
+      - Feature type instance 3
+      - ...
 
 ### Examples
 

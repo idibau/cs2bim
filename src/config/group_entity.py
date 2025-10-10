@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class GroupEntityType(Enum):
+class GroupEntity(Enum):
     """Supported ifc entity types for groups"""
 
     IFC_DISTRIBUTION_SYSTEM = "IFC_DISTRIBUTION_SYSTEM"

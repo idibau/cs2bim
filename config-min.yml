@@ -40,19 +40,19 @@ ifc:
       - name: "parcel"
         sql_path: "/workspace/sql/parcels.sql"
         entity_mapping:
-          entity_type: IFC_GEOGRAPHIC_ELEMENT
+          entity: IFC_GEOGRAPHIC_ELEMENT
         spatial_structure_mapping:
-          entity_type: IFC_SITE
+          entity: IFC_SITE
     buildings:
       - name: "all"
         sql_path: "/workspace/sql/egid.sql"
         egid_xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
         entity_mapping:
-          entity_type: IFC_BUILDING
+          entity: IFC_BUILDING
           building_parts:
-            - entity_type: IFC_BUILDING_ELEMENT_PROXY
+            - entity: IFC_BUILDING_ELEMENT_PROXY
               geometry_mapping:
                 xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']"
-                type: SOLID
+                geometry: SOLID
         spatial_structure_mapping:
-          entity_type: IFC_SITE
+          entity: IFC_SITE

@@ -1,22 +1,19 @@
-import json
 import os
 from pathlib import Path
-from typing import List, Optional, Generic, TypeVar
+from typing import List, Optional
 
 from pydantic import BaseModel, model_validator, Field
 from pydantic_yaml import parse_yaml_raw_as
 
-from config.building_entity_type import BuildingEntityType
-from config.building_part_entity_type import BuildingPartEntityType
-from config.building_source_type import BuildingSourceType
+from config.building_entity import BuildingEntity
+from config.building_part_entity import BuildingPartEntity
+from config.building_source import BuildingSource
 from config.geo_referencing import GeoReferencing
-from config.gml_geometry_type import GmlGeometryType
+from config.gml_geometry import GmlGeometry
 from config.grid_size import GridSize
-from config.group_entity_type import GroupEntityType
-from config.projection_entity_type import ProjectionEntityType
-from config.projection_source_type import ProjectionSourceType
-from config.spatial_entity_type import SpatialEntityType
-from config.static_source_type import StaticSourceType
+from config.group_entity import GroupEntity
+from config.projection_entity import ProjectionEntity
+from config.projection_source import ProjectionSource
 
 
 class Color(BaseModel):
@@ -63,64 +60,98 @@ class TINConfig(BaseModel):
     max_height_error: float = Field(..., ge=0.0, le=0.05, description="Maximum allowed height error for TIN generation")
 
 
-TSourceType = TypeVar("TSourceType")
-TEntityType = TypeVar("TEntityType")
-
-
-class Source(BaseModel, Generic[TSourceType]):
-    type: TSourceType = Field(..., description="Type of the data source")
+class ProjectionSource(BaseModel):
+    type: ProjectionSource = Field(..., description="Type of the data source")
     expression: str = Field(..., description="Expression defining the source data")
 
 
-class PropertyConfig(BaseModel, Generic[TSourceType]):
+class ProjectionPropertyConfig(BaseModel):
     property: str = Field(..., description="Property name")
     property_set: str = Field(..., description="Property set name")
-    source: Source[TSourceType] = Field(..., description="Source configuration for this property")
+    source: ProjectionSource = Field(..., description="Source configuration for this property")
 
 
-class AttributeConfig(BaseModel, Generic[TSourceType]):
+class ProjectionAttributeConfig(BaseModel):
     attribute: str = Field(..., description="Attribute name (Only applied if the attribute exists on the entity)")
-    source: Source[TSourceType] = Field(..., description="Source configuration for this attribute")
+    source: ProjectionSource = Field(..., description="Source configuration for this attribute")
 
 
-class EntityConfig(BaseModel, Generic[TEntityType, TSourceType]):
-    entity_type: TEntityType = Field(..., description="Type of entity")
-    attributes: List[AttributeConfig[TSourceType]] = Field(default_factory=list, json_schema_extra={"default": []},
-                                                           description="List of attribute mappings")
-    properties: List[PropertyConfig[TSourceType]] = Field(default_factory=list, json_schema_extra={"default": []},
-                                                          description="List of property mappings")
+class ProjectionSpatialEntityConfig(BaseModel):
+    attributes: List[ProjectionAttributeConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                        description="List of attribute mappings")
+    properties: List[ProjectionPropertyConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                       description="List of property mappings")
 
-    def get_id(self) -> str:
-        return f"{json.dumps([attribute.source.expression for attribute in self.attributes], sort_keys=True)}-{self.entity_type.name}"
+
+class ProjectionEntityTypeConfig(BaseModel):
+    attributes: List[ProjectionAttributeConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                        description="List of attribute mappings")
+    properties: List[ProjectionPropertyConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                       description="List of property mappings")
+
+
+class ProjectionEntityConfig(ProjectionEntityTypeConfig):
+    entity: ProjectionEntity = Field(..., description="Type of entity")
 
 
 class ProjectionFeatureType(BaseModel):
     name: str = Field(..., description="Feature type name for the projection")
     sql_path: str = Field(..., description="Path to SQL definition for the projection feature type")
-    entity_mapping: EntityConfig[ProjectionEntityType, ProjectionSourceType] = Field(...,
-                                                                                     description="Entity mapping configuration for the projection")
-    spatial_structure_mapping: EntityConfig[SpatialEntityType, StaticSourceType] = Field(...,
-                                                                                         description="Spatial structure mapping for the projection")
-    group_mapping: List[Source[ProjectionSourceType]] = Field(default_factory=list,
-                                                              json_schema_extra={"default": []},
-                                                              description="Group mappings for the projection feature type")
+    entity_mapping: ProjectionEntityConfig = Field(..., description="Entity mapping configuration for the projection")
+    entity_type_mapping: Optional[ProjectionEntityTypeConfig] = Field(None,
+                                                                      description="Entity type mapping configuration for the projection")
+    spatial_structure_mapping: ProjectionSpatialEntityConfig = Field(...,
+                                                                     description="Spatial structure mapping for the projection")
+    group_mapping: List[ProjectionSource] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                  description="Group mappings for the projection feature type")
     color: Color = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0),
                          description="Color assigned to the projection feature type")
 
 
 class GmlGeometryMapping(BaseModel):
-    type: GmlGeometryType = Field(..., description="Referenced geometry type of the building part")
     xpath: str = Field(..., description="XPath expression to locate the building part geometry in source data")
+    geometry: GmlGeometry = Field(..., description="Referenced geometry type of the building part")
 
 
 class BuildingPartConfig(BaseModel):
-    entity_type: BuildingPartEntityType = Field(..., description="Type of entity")
+    entity: BuildingPartEntity = Field(..., description="Type of entity")
     geometry_mapping: Optional[GmlGeometryMapping] = Field(None, description="Geometry mapping for the building part")
     color: Color = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0),
                          description="Color assigned to the building part")
 
 
-class BuildingEntityConfig(EntityConfig[BuildingEntityType, BuildingSourceType]):
+class BuildingSource(BaseModel):
+    type: BuildingSource = Field(..., description="Type of the data source")
+    expression: str = Field(..., description="Expression defining the source data")
+
+
+class BuildingPropertyConfig(BaseModel):
+    property: str = Field(..., description="Property name")
+    property_set: str = Field(..., description="Property set name")
+    source: BuildingSource = Field(..., description="Source configuration for this property")
+
+
+class BuildingAttributeConfig(BaseModel):
+    attribute: str = Field(..., description="Attribute name (Only applied if the attribute exists on the entity)")
+    source: BuildingSource = Field(..., description="Source configuration for this attribute")
+
+
+class BuildingSpatialEntityConfig(BaseModel):
+    attributes: List[BuildingAttributeConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                      description="List of attribute mappings")
+    properties: List[BuildingPropertyConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                     description="List of property mappings")
+
+
+class BuildingEntityTypeConfig(BaseModel):
+    attributes: List[BuildingAttributeConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                      description="List of attribute mappings")
+    properties: List[BuildingPropertyConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                     description="List of property mappings")
+
+
+class BuildingEntityConfig(BuildingEntityTypeConfig):
+    entity: BuildingEntity = Field(..., description="Type of entity")
     building_parts: List[BuildingPartConfig] = Field(default_factory=list, json_schema_extra={"default": []},
                                                      description="List of building parts belonging to this building entity")
 
@@ -131,10 +162,10 @@ class BuildingFeatureType(BaseModel):
     egid_xpath: str = Field(...,
                             description="XPath expression to extract EGID identifier from city gml building entities")
     entity_mapping: BuildingEntityConfig = Field(..., description="Entity mapping configuration for the building")
-    spatial_structure_mapping: EntityConfig[SpatialEntityType, StaticSourceType] = Field(...,
-                                                                                         description="Spatial structure mapping for the building")
-    group_mapping: List[Source[BuildingSourceType]] = Field(default_factory=list, json_schema_extra={"default": []},
-                                                            description="Group mappings for the building feature type")
+    spatial_structure_mapping: BuildingSpatialEntityConfig = Field(...,
+                                                                   description="Spatial structure mapping for the building")
+    group_mapping: List[BuildingSource] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                description="Group mappings for the building feature type")
 
 
 class FeatureTypesConfig(BaseModel):
@@ -142,10 +173,28 @@ class FeatureTypesConfig(BaseModel):
     buildings: List[BuildingFeatureType] = Field(..., description="List of building feature type definitions")
 
 
+class StaticPropertyConfig(BaseModel):
+    property: str = Field(..., description="Property name")
+    property_set: str = Field(..., description="Property set name")
+    value: str = Field(..., description="Property value")
+
+
+class StaticAttributeConfig(BaseModel):
+    attribute: str = Field(..., description="Attribute name (Only applied if the attribute exists on the entity)")
+    value: str = Field(..., description="Attribute value")
+
+
+class GroupEntityConfig(BaseModel):
+    entity: GroupEntity = Field(..., description="Type of entity")
+    attributes: List[StaticAttributeConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                    description="List of attribute mappings")
+    properties: List[StaticPropertyConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                   description="List of property mappings")
+
+
 class GroupConfig(BaseModel):
     path: str = Field(..., description="Path identifier for the group")
-    entity_mapping: EntityConfig[GroupEntityType, StaticSourceType] = Field(...,
-                                                                            description="Entity mapping configuration for the group")
+    entity_mapping: GroupEntityConfig = Field(..., description="Entity mapping configuration for the group")
 
 
 class IFCConfig(BaseModel):
@@ -186,5 +235,6 @@ class Configuration(BaseModel):
 # config = Configuration.load("/workspace/config.yml")
 
 # JSON Schema
+import json
 with open("../../configuration.json", "w") as stream:
     json.dump(Configuration.model_json_schema(), stream, indent=4)

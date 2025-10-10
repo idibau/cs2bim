@@ -4,7 +4,6 @@ This module contains wrapper functions to simplify the process of building an if
 
 import datetime
 import logging
-
 from ifcopenshell import file, entity_instance, guid
 
 from config.configuration import Color, config
@@ -21,8 +20,6 @@ class IfcFile:
         self.file.header.file_name.organization = [config.ifc.author]
         self.translator = Translator()
         self.language = language
-
-
 
     def write(self, path: str):
         self.file.write(path)
@@ -178,14 +175,21 @@ class IfcFile:
             RelatedObjects=related_objects,
         )
 
-    def create_ifc_rel_contained_in_spatial_structure(
-            self, related_elements: list[entity_instance], relating_structure: entity_instance
-    ) -> entity_instance:
+    def create_ifc_rel_contained_in_spatial_structure(self, related_elements: list[entity_instance],
+                                                      relating_structure: entity_instance) -> entity_instance:
         return self.file.create_entity(
             "IfcRelContainedInSpatialStructure",
             GlobalId=guid.new(),
             RelatedElements=related_elements,
             RelatingStructure=relating_structure,
+        )
+
+    def create_ifc_rel_defines_by_type(self, related_objects, relating_type) -> entity_instance:
+        return self.file.create_entity(
+            "IfcRelDefinesByType",
+            GlobalId=guid.new(),
+            RelatedObjects=related_objects,
+            RelatingType=relating_type,
         )
 
     def create_ifc_group(self, name: str) -> entity_instance:
@@ -240,7 +244,8 @@ class IfcFile:
         outer = self.file.create_entity("IfcClosedShell", CfsFaces=cfs_faces)
         return self.file.create_entity("IfcFacetedBrep", Outer=outer)
 
-    def create_ifc_faceted_brep_with_voids(self, outer_faces: list[entity_instance], void_faces_list: list[list[entity_instance]]) -> entity_instance:
+    def create_ifc_faceted_brep_with_voids(self, outer_faces: list[entity_instance],
+                                           void_faces_list: list[list[entity_instance]]) -> entity_instance:
         outer = self.file.create_entity("IfcClosedShell", CfsFaces=outer_faces)
         voids = [self.file.create_entity("IfcClosedShell", CfsFaces=void_faces) for void_faces in void_faces_list]
         return self.file.create_entity("IfcFacetedBrepWithVoids", Outer=outer, Voids=voids)
@@ -265,10 +270,8 @@ class IfcFile:
     def create_ifc_indexed_polygonal_face_with_voids(
             self, coord_index: list[tuple[int, int, int]], inner_cord_indices: list[list[tuple[int, int, int]]]
     ) -> entity_instance:
-        return self.file.create_entity("IfcIndexedPolygonalFaceWithVoids", CoordList=coord_index, InnerCoordIndices=inner_cord_indices)
-
-
-
+        return self.file.create_entity("IfcIndexedPolygonalFaceWithVoids", CoordList=coord_index,
+                                       InnerCoordIndices=inner_cord_indices)
 
     def create_ifc_product_definition_shape(
             self, context_of_items: entity_instance, representation_type: str, items: list[entity_instance]
@@ -289,6 +292,11 @@ class IfcFile:
             "IfcGeographicElement", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
         )
 
+    def create_ifc_geographic_element_type(self) -> entity_instance:
+        return self.file.create_entity(
+            "IfcGeographicElementType", GlobalId=guid.new()
+        )
+
     def create_ifc_building(
             self, object_placement: entity_instance
     ) -> entity_instance:
@@ -300,7 +308,8 @@ class IfcFile:
             self, object_placement: entity_instance, representation: entity_instance
     ) -> entity_instance:
         return self.file.create_entity(
-            "IfcBuildingElementProxy", GlobalId=guid.new(), Name="", ObjectPlacement=object_placement, Representation=representation
+            "IfcBuildingElementProxy", GlobalId=guid.new(), Name="", ObjectPlacement=object_placement,
+            Representation=representation
         )
 
     def create_ifc_wall(

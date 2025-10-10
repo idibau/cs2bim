@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class BuildingSourceType(Enum):
+class BuildingSource(Enum):
     """Supported source types for properties and attributes in building feature types"""
 
     STATIC = "STATIC"

@@ -33,6 +33,8 @@ class Translator:
 
     @staticmethod
     def get_translation_key(value):
+        if value is None:
+            return None
         value = value.lower()
         value = re.sub(r"[^a-z0-9\s]", "", value)
         value = re.sub(r"\s+", "_", value.strip())

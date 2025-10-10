@@ -1,10 +1,9 @@
-from config.configuration import config
-from config.projection_entity_type import ProjectionEntityType
-from core.ifc.model.element import Element
+from config.projection_entity import ProjectionEntity
+from core.ifc.model.feature_element import FeatureElement
 from core.ifc.model.tessellation import Tessellation
 
 
-class Projection(Element):
+class Projection(FeatureElement):
 
     def __init__(self, data: tuple[list[list[float]], list[list[int]]]) -> None:
         super().__init__()
@@ -25,16 +24,12 @@ class Projection(Element):
         tessellation = Tessellation(self.triangles)
         ifc_face_set = tessellation.map_to_ifc(ifc_file)
         ifc_product_definition_shape = ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context,
-                                                                                "Tessellation", [ifc_face_set])
+                                                                                    "Tessellation", [ifc_face_set])
         ifc_file.create_ifc_styled_item(ifc_face_set, ifc_style)
         ifc_local_placement = ifc_file.create_ifc_local_placement((0.0, 0.0, 0.0))
-        if entity_type == ProjectionEntityType.IFC_GEOGRAPHIC_ELEMENT:
+        if entity_type == ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT:
             ifc_element = ifc_file.create_ifc_geographic_element(ifc_local_placement, ifc_product_definition_shape)
         else:
             raise NotImplementedError(
                 f"building step for feature type entity type {entity_type.name} not implemented for clipped terrain feature types")
-
-        self.set_ifc_attributes(ifc_file, ifc_element)
-        self.set_ifc_properties(ifc_file, ifc_element)
-
         return ifc_element

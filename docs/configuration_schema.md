@@ -19,7 +19,7 @@ JSON Schema missing a description, provide it using the `description` key in the
 
 # Definitions
 
-## AttributeConfig_BuildingSourceType_
+## BuildingAttributeConfig
 
 No description provided for this model.
 
@@ -28,29 +28,15 @@ No description provided for this model.
 | Property | Type | Required | Possible values | Description |
 | -------- | ---- | -------- | --------------- | ----------- |
 | attribute | `string` | ✅ | string | Attribute name (Only applied if the attribute exists on the entity) |
-| source | `object` | ✅ | [Source_BuildingSourceType_](#source_buildingsourcetype_) | Source configuration for this attribute |
+| source | `object` | ✅ | [__main____BuildingSource](#__main____buildingsource) | Source configuration for this attribute |
 
-## AttributeConfig_ProjectionSourceType_
+## BuildingEntity
 
-No description provided for this model.
+Supported ifc entity types for building entities
 
-#### Type: `object`
+#### Type: `string`
 
-| Property | Type | Required | Possible values | Description |
-| -------- | ---- | -------- | --------------- | ----------- |
-| attribute | `string` | ✅ | string | Attribute name (Only applied if the attribute exists on the entity) |
-| source | `object` | ✅ | [Source_ProjectionSourceType_](#source_projectionsourcetype_) | Source configuration for this attribute |
-
-## AttributeConfig_StaticSourceType_
-
-No description provided for this model.
-
-#### Type: `object`
-
-| Property | Type | Required | Possible values | Description |
-| -------- | ---- | -------- | --------------- | ----------- |
-| attribute | `string` | ✅ | string | Attribute name (Only applied if the attribute exists on the entity) |
-| source | `object` | ✅ | [Source_StaticSourceType_](#source_staticsourcetype_) | Source configuration for this attribute |
+**Possible Values:** `IFC_BUILDING`
 
 ## BuildingEntityConfig
 
@@ -60,18 +46,10 @@ No description provided for this model.
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity_type | `string` | ✅ | [BuildingEntityType](#buildingentitytype) |  | Type of entity |
-| attributes | `array` |  | [AttributeConfig_BuildingSourceType_](#attributeconfig_buildingsourcetype_) | `[]` | List of attribute mappings |
-| properties | `array` |  | [PropertyConfig_BuildingSourceType_](#propertyconfig_buildingsourcetype_) | `[]` | List of property mappings |
+| entity | `string` | ✅ | [BuildingEntity](#buildingentity) |  | Type of entity |
+| attributes | `array` |  | [BuildingAttributeConfig](#buildingattributeconfig) | `[]` | List of attribute mappings |
+| properties | `array` |  | [BuildingPropertyConfig](#buildingpropertyconfig) | `[]` | List of property mappings |
 | building_parts | `array` |  | [BuildingPartConfig](#buildingpartconfig) | `[]` | List of building parts belonging to this building entity |
-
-## BuildingEntityType
-
-Supported ifc entity types for building entities
-
-#### Type: `string`
-
-**Possible Values:** `IFC_BUILDING`
 
 ## BuildingFeatureType
 
@@ -85,8 +63,8 @@ No description provided for this model.
 | sql_path | `string` | ✅ | string |  | Path to SQL definition for the building feature type |
 | egid_xpath | `string` | ✅ | string |  | XPath expression to extract EGID identifier from city gml building entities |
 | entity_mapping | `object` | ✅ | [BuildingEntityConfig](#buildingentityconfig) |  | Entity mapping configuration for the building |
-| spatial_structure_mapping | `object` | ✅ | [EntityConfig_SpatialEntityType_StaticSourceType_](#entityconfig_spatialentitytype_staticsourcetype_) |  | Spatial structure mapping for the building |
-| group_mapping | `array` |  | [Source_BuildingSourceType_](#source_buildingsourcetype_) | `[]` | Group mappings for the building feature type |
+| spatial_structure_mapping | `object` | ✅ | [BuildingSpatialEntityConfig](#buildingspatialentityconfig) |  | Spatial structure mapping for the building |
+| group_mapping | `array` |  | [__main____BuildingSource](#__main____buildingsource) | `[]` | Group mappings for the building feature type |
 
 ## BuildingPartConfig
 
@@ -96,11 +74,11 @@ No description provided for this model.
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity_type | `string` | ✅ | [BuildingPartEntityType](#buildingpartentitytype) |  | Type of entity |
+| entity | `string` | ✅ | [BuildingPartEntity](#buildingpartentity) |  | Type of entity |
 | geometry_mapping | `object` or `null` |  | [GmlGeometryMapping](#gmlgeometrymapping) | `null` | Geometry mapping for the building part |
 | color | `object` |  | [Color](#color) |  | Color assigned to the building part |
 
-## BuildingPartEntityType
+## BuildingPartEntity
 
 Supported ifc entity types for building part entities
 
@@ -108,13 +86,28 @@ Supported ifc entity types for building part entities
 
 **Possible Values:** `IFC_WALL` or `IFC_SLAB` or `IFC_ROOF` or `IFC_BUILDING_ELEMENT_PROXY`
 
-## BuildingSourceType
+## BuildingPropertyConfig
 
-Supported source types for properties and attributes in building feature types
+No description provided for this model.
 
-#### Type: `string`
+#### Type: `object`
 
-**Possible Values:** `STATIC` or `SQL` or `CITY_GML`
+| Property | Type | Required | Possible values | Description |
+| -------- | ---- | -------- | --------------- | ----------- |
+| property | `string` | ✅ | string | Property name |
+| property_set | `string` | ✅ | string | Property set name |
+| source | `object` | ✅ | [__main____BuildingSource](#__main____buildingsource) | Source configuration for this property |
+
+## BuildingSpatialEntityConfig
+
+No description provided for this model.
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Default | Description |
+| -------- | ---- | -------- | --------------- | ------- | ----------- |
+| attributes | `array` |  | [BuildingAttributeConfig](#buildingattributeconfig) | `[]` | List of attribute mappings |
+| properties | `array` |  | [BuildingPropertyConfig](#buildingpropertyconfig) | `[]` | List of property mappings |
 
 ## Color
 
@@ -143,42 +136,6 @@ No description provided for this model.
 | port | `integer` | ✅ | integer | Database port number |
 | password | `string` | ✅ | string | Database password |
 
-## EntityConfig_GroupEntityType_StaticSourceType_
-
-No description provided for this model.
-
-#### Type: `object`
-
-| Property | Type | Required | Possible values | Default | Description |
-| -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity_type | `string` | ✅ | [GroupEntityType](#groupentitytype) |  | Type of entity |
-| attributes | `array` |  | [AttributeConfig_StaticSourceType_](#attributeconfig_staticsourcetype_) | `[]` | List of attribute mappings |
-| properties | `array` |  | [PropertyConfig_StaticSourceType_](#propertyconfig_staticsourcetype_) | `[]` | List of property mappings |
-
-## EntityConfig_ProjectionEntityType_ProjectionSourceType_
-
-No description provided for this model.
-
-#### Type: `object`
-
-| Property | Type | Required | Possible values | Default | Description |
-| -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity_type | `string` | ✅ | [ProjectionEntityType](#projectionentitytype) |  | Type of entity |
-| attributes | `array` |  | [AttributeConfig_ProjectionSourceType_](#attributeconfig_projectionsourcetype_) | `[]` | List of attribute mappings |
-| properties | `array` |  | [PropertyConfig_ProjectionSourceType_](#propertyconfig_projectionsourcetype_) | `[]` | List of property mappings |
-
-## EntityConfig_SpatialEntityType_StaticSourceType_
-
-No description provided for this model.
-
-#### Type: `object`
-
-| Property | Type | Required | Possible values | Default | Description |
-| -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity_type | `string` | ✅ | [SpatialEntityType](#spatialentitytype) |  | Type of entity |
-| attributes | `array` |  | [AttributeConfig_StaticSourceType_](#attributeconfig_staticsourcetype_) | `[]` | List of attribute mappings |
-| properties | `array` |  | [PropertyConfig_StaticSourceType_](#propertyconfig_staticsourcetype_) | `[]` | List of property mappings |
-
 ## FeatureTypesConfig
 
 No description provided for this model.
@@ -198,6 +155,14 @@ Supported geo referencing methods
 
 **Possible Values:** `LO_GEO_REF_30` or `LO_GEO_REF_40` or `LO_GEO_REF_50`
 
+## GmlGeometry
+
+Supported gml geometry types
+
+#### Type: `string`
+
+**Possible Values:** `MULTI_SURFACE` or `SOLID` or `COMPOSITE_SOLID`
+
 ## GmlGeometryMapping
 
 No description provided for this model.
@@ -206,16 +171,8 @@ No description provided for this model.
 
 | Property | Type | Required | Possible values | Description |
 | -------- | ---- | -------- | --------------- | ----------- |
-| type | `string` | ✅ | [GmlGeometryType](#gmlgeometrytype) | Referenced geometry type of the building part |
 | xpath | `string` | ✅ | string | XPath expression to locate the building part geometry in source data |
-
-## GmlGeometryType
-
-Supported gml geometry types
-
-#### Type: `string`
-
-**Possible Values:** `MULTI_SURFACE` or `SOLID` or `COMPOSITE_SOLID`
+| geometry | `string` | ✅ | [GmlGeometry](#gmlgeometry) | Referenced geometry type of the building part |
 
 ## GridSize
 
@@ -234,15 +191,27 @@ No description provided for this model.
 | Property | Type | Required | Possible values | Description |
 | -------- | ---- | -------- | --------------- | ----------- |
 | path | `string` | ✅ | string | Path identifier for the group |
-| entity_mapping | `object` | ✅ | [EntityConfig_GroupEntityType_StaticSourceType_](#entityconfig_groupentitytype_staticsourcetype_) | Entity mapping configuration for the group |
+| entity_mapping | `object` | ✅ | [GroupEntityConfig](#groupentityconfig) | Entity mapping configuration for the group |
 
-## GroupEntityType
+## GroupEntity
 
 Supported ifc entity types for groups
 
 #### Type: `string`
 
 **Possible Values:** `IFC_DISTRIBUTION_SYSTEM` or `IFC_DISTRIBUTION_CIRCUIT` or `IFC_BUILDING_BUILT_SYSTEM` or `IFC_STRUCTURAL_ANALYSIS_MODEL` or `IFC_ZONE`
+
+## GroupEntityConfig
+
+No description provided for this model.
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Default | Description |
+| -------- | ---- | -------- | --------------- | ------- | ----------- |
+| entity | `string` | ✅ | [GroupEntity](#groupentity) |  | Type of entity |
+| attributes | `array` |  | [StaticAttributeConfig](#staticattributeconfig) | `[]` | List of attribute mappings |
+| properties | `array` |  | [StaticPropertyConfig](#staticpropertyconfig) | `[]` | List of property mappings |
 
 ## I18nConfig
 
@@ -272,13 +241,47 @@ No description provided for this model.
 | feature_types | `object` | ✅ | [FeatureTypesConfig](#featuretypesconfig) |  | Configured feature types for IFC |
 | groups | `array` |  | [GroupConfig](#groupconfig) | `[]` | List of group configurations for IFC |
 
-## ProjectionEntityType
+## ProjectionAttributeConfig
+
+No description provided for this model.
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Description |
+| -------- | ---- | -------- | --------------- | ----------- |
+| attribute | `string` | ✅ | string | Attribute name (Only applied if the attribute exists on the entity) |
+| source | `object` | ✅ | [__main____ProjectionSource](#__main____projectionsource) | Source configuration for this attribute |
+
+## ProjectionEntity
 
 Supported ifc entity types for projection entities
 
 #### Type: `string`
 
 **Possible Values:** `IFC_GEOGRAPHIC_ELEMENT`
+
+## ProjectionEntityConfig
+
+No description provided for this model.
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Default | Description |
+| -------- | ---- | -------- | --------------- | ------- | ----------- |
+| entity | `string` | ✅ | [ProjectionEntity](#projectionentity) |  | Type of entity |
+| attributes | `array` |  | [ProjectionAttributeConfig](#projectionattributeconfig) | `[]` | List of attribute mappings |
+| properties | `array` |  | [ProjectionPropertyConfig](#projectionpropertyconfig) | `[]` | List of property mappings |
+
+## ProjectionEntityTypeConfig
+
+No description provided for this model.
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Default | Description |
+| -------- | ---- | -------- | --------------- | ------- | ----------- |
+| attributes | `array` |  | [ProjectionAttributeConfig](#projectionattributeconfig) | `[]` | List of attribute mappings |
+| properties | `array` |  | [ProjectionPropertyConfig](#projectionpropertyconfig) | `[]` | List of property mappings |
 
 ## ProjectionFeatureType
 
@@ -290,20 +293,13 @@ No description provided for this model.
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
 | name | `string` | ✅ | string |  | Feature type name for the projection |
 | sql_path | `string` | ✅ | string |  | Path to SQL definition for the projection feature type |
-| entity_mapping | `object` | ✅ | [EntityConfig_ProjectionEntityType_ProjectionSourceType_](#entityconfig_projectionentitytype_projectionsourcetype_) |  | Entity mapping configuration for the projection |
-| spatial_structure_mapping | `object` | ✅ | [EntityConfig_SpatialEntityType_StaticSourceType_](#entityconfig_spatialentitytype_staticsourcetype_) |  | Spatial structure mapping for the projection |
-| group_mapping | `array` |  | [Source_ProjectionSourceType_](#source_projectionsourcetype_) | `[]` | Group mappings for the projection feature type |
+| entity_mapping | `object` | ✅ | [ProjectionEntityConfig](#projectionentityconfig) |  | Entity mapping configuration for the projection |
+| spatial_structure_mapping | `object` | ✅ | [ProjectionSpatialEntityConfig](#projectionspatialentityconfig) |  | Spatial structure mapping for the projection |
+| entity_type_mapping | `object` or `null` |  | [ProjectionEntityTypeConfig](#projectionentitytypeconfig) | `null` | Entity type mapping configuration for the projection |
+| group_mapping | `array` |  | [__main____ProjectionSource](#__main____projectionsource) | `[]` | Group mappings for the projection feature type |
 | color | `object` |  | [Color](#color) |  | Color assigned to the projection feature type |
 
-## ProjectionSourceType
-
-Supported source types for properties and attributes in projection feature types
-
-#### Type: `string`
-
-**Possible Values:** `STATIC` or `SQL`
-
-## PropertyConfig_BuildingSourceType_
+## ProjectionPropertyConfig
 
 No description provided for this model.
 
@@ -313,31 +309,18 @@ No description provided for this model.
 | -------- | ---- | -------- | --------------- | ----------- |
 | property | `string` | ✅ | string | Property name |
 | property_set | `string` | ✅ | string | Property set name |
-| source | `object` | ✅ | [Source_BuildingSourceType_](#source_buildingsourcetype_) | Source configuration for this property |
+| source | `object` | ✅ | [__main____ProjectionSource](#__main____projectionsource) | Source configuration for this property |
 
-## PropertyConfig_ProjectionSourceType_
-
-No description provided for this model.
-
-#### Type: `object`
-
-| Property | Type | Required | Possible values | Description |
-| -------- | ---- | -------- | --------------- | ----------- |
-| property | `string` | ✅ | string | Property name |
-| property_set | `string` | ✅ | string | Property set name |
-| source | `object` | ✅ | [Source_ProjectionSourceType_](#source_projectionsourcetype_) | Source configuration for this property |
-
-## PropertyConfig_StaticSourceType_
+## ProjectionSpatialEntityConfig
 
 No description provided for this model.
 
 #### Type: `object`
 
-| Property | Type | Required | Possible values | Description |
-| -------- | ---- | -------- | --------------- | ----------- |
-| property | `string` | ✅ | string | Property name |
-| property_set | `string` | ✅ | string | Property set name |
-| source | `object` | ✅ | [Source_StaticSourceType_](#source_staticsourcetype_) | Source configuration for this property |
+| Property | Type | Required | Possible values | Default | Description |
+| -------- | ---- | -------- | --------------- | ------- | ----------- |
+| attributes | `array` |  | [ProjectionAttributeConfig](#projectionattributeconfig) | `[]` | List of attribute mappings |
+| properties | `array` |  | [ProjectionPropertyConfig](#projectionpropertyconfig) | `[]` | List of property mappings |
 
 ## RedisConfig
 
@@ -375,7 +358,7 @@ No description provided for this model.
 | dtm_items_url | `string` or `null` |  | string | `null` | URL to STAC items for DTM data |
 | building_items_url | `string` or `null` |  | string | `null` | URL to STAC items for building data |
 
-## Source_BuildingSourceType_
+## StaticAttributeConfig
 
 No description provided for this model.
 
@@ -383,21 +366,10 @@ No description provided for this model.
 
 | Property | Type | Required | Possible values | Description |
 | -------- | ---- | -------- | --------------- | ----------- |
-| type | `string` | ✅ | [BuildingSourceType](#buildingsourcetype) | Type of the data source |
-| expression | `string` | ✅ | string | Expression defining the source data |
+| attribute | `string` | ✅ | string | Attribute name (Only applied if the attribute exists on the entity) |
+| value | `string` | ✅ | string | Attribute value |
 
-## Source_ProjectionSourceType_
-
-No description provided for this model.
-
-#### Type: `object`
-
-| Property | Type | Required | Possible values | Description |
-| -------- | ---- | -------- | --------------- | ----------- |
-| type | `string` | ✅ | [ProjectionSourceType](#projectionsourcetype) | Type of the data source |
-| expression | `string` | ✅ | string | Expression defining the source data |
-
-## Source_StaticSourceType_
+## StaticPropertyConfig
 
 No description provided for this model.
 
@@ -405,24 +377,9 @@ No description provided for this model.
 
 | Property | Type | Required | Possible values | Description |
 | -------- | ---- | -------- | --------------- | ----------- |
-| type | `string` | ✅ | [StaticSourceType](#staticsourcetype) | Type of the data source |
-| expression | `string` | ✅ | string | Expression defining the source data |
-
-## SpatialEntityType
-
-Supported ifc entity types for spatial entities
-
-#### Type: `string`
-
-**Possible Values:** `IFC_SITE`
-
-## StaticSourceType
-
-Static source types for properties and attributes
-
-#### Type: `string`
-
-**Possible Values:** `STATIC`
+| property | `string` | ✅ | string | Property name |
+| property_set | `string` | ✅ | string | Property set name |
+| value | `string` | ✅ | string | Property value |
 
 ## TINConfig
 
@@ -434,6 +391,44 @@ No description provided for this model.
 | -------- | ---- | -------- | --------------- | ----------- |
 | grid_size | `number` | ✅ | [GridSize](#gridsize) | TIN grid size |
 | max_height_error | `number` | ✅ | `0.0 <= x <= 0.05` | Maximum allowed height error for TIN generation |
+
+## __main____BuildingSource
+
+No description provided for this model.
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Description |
+| -------- | ---- | -------- | --------------- | ----------- |
+| type | `string` | ✅ | [config__building_source__BuildingSource](#config__building_source__buildingsource) | Type of the data source |
+| expression | `string` | ✅ | string | Expression defining the source data |
+
+## __main____ProjectionSource
+
+No description provided for this model.
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Description |
+| -------- | ---- | -------- | --------------- | ----------- |
+| type | `string` | ✅ | [config__projection_source__ProjectionSource](#config__projection_source__projectionsource) | Type of the data source |
+| expression | `string` | ✅ | string | Expression defining the source data |
+
+## config__building_source__BuildingSource
+
+Supported source types for properties and attributes in building feature types
+
+#### Type: `string`
+
+**Possible Values:** `STATIC` or `SQL` or `CITY_GML`
+
+## config__projection_source__ProjectionSource
+
+Supported source types for properties and attributes in projection feature types
+
+#### Type: `string`
+
+**Possible Values:** `STATIC` or `SQL`
 
 
 ---

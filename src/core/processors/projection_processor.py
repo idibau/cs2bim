@@ -2,8 +2,9 @@ import logging
 
 import numpy as np
 
-from config.configuration import config
-from config.projection_source_type import ProjectionSourceType
+from config.configuration import config, ProjectionFeatureType, ProjectionAttributeConfig, ProjectionPropertyConfig
+from config.projection_source import ProjectionSource
+from core.ifc.model.element import Element
 from core.ifc.model.projection import Projection
 from core.tin.mesh import Mesh
 from core.tin.polygon import Area
@@ -74,29 +75,50 @@ class ProjectionProcessor:
                 logger.debug(f"create mesh for element {index + 1}/{len(elements)}")
                 mesh = mesh_data.create_mesh()
                 element = Projection(mesh.get_data())
-                for attribute in feature_type.entity_mapping.attributes:
-                    if attribute.source.type == ProjectionSourceType.SQL:
-                        if attribute.source.expression in mesh_data.element_data:
-                            element.add_attribute(attribute.attribute, mesh_data.element_data[attribute.source.expression])
-                    elif attribute.source.type == ProjectionSourceType.STATIC:
-                        element.add_attribute(attribute.attribute, attribute.source.expression)
-                for p in feature_type.entity_mapping.properties:
-                    if p.source.type == ProjectionSourceType.SQL:
-                        if p.source.expression in mesh_data.element_data:
-                            element.add_property(p.property_set, p.property, mesh_data.element_data[p.source.expression])
-                    elif p.source.type == ProjectionSourceType.STATIC:
-                        element.add_property(p.property_set, p.property, p.source.expression)
-                for group_mapping in feature_type.group_mapping:
-                    if group_mapping.type == ProjectionSourceType.SQL:
-                        element.add_group(mesh_data.element_data[group_mapping.expression])
-                    elif group_mapping.type == ProjectionSourceType.STATIC:
-                        element.add_group(group_mapping.expression)
+                self.add_attributes(element, feature_type.entity_mapping.attributes, mesh_data)
+                self.add_properties(element, feature_type.entity_mapping.properties, mesh_data)
+                self.add_groups(element, feature_type, mesh_data)
+
+                spatial_structure = Element()
+                self.add_attributes(spatial_structure, feature_type.spatial_structure_mapping.attributes, mesh_data)
+                self.add_properties(spatial_structure, feature_type.spatial_structure_mapping.properties, mesh_data)
+                element.spatial_structure = spatial_structure
+
+                if feature_type.entity_type_mapping is not None:
+                    projection_element_type = Element()
+                    self.add_attributes(projection_element_type, feature_type.entity_type_mapping.attributes, mesh_data)
+                    self.add_properties(projection_element_type, feature_type.entity_type_mapping.properties, mesh_data)
+                    element.element_type = projection_element_type
 
                 if not feature_type_key in projections:
                     projections[feature_type_key] = []
                 projections[feature_type_key].append(element)
             logger.info("finished creating meshes")
         return projections
+
+    def add_attributes(self, element: Element, attributes: list[ProjectionAttributeConfig], mesh_data):
+        for attribute in attributes:
+            if attribute.source.type == ProjectionSource.SQL:
+                if attribute.source.expression in mesh_data.element_data:
+                    element.add_attribute(attribute.attribute, mesh_data.element_data[attribute.source.expression])
+            elif attribute.source.type == ProjectionSource.STATIC:
+                element.add_attribute(attribute.attribute, attribute.source.expression)
+
+    def add_properties(self, element: Element, properties: list[ProjectionPropertyConfig], mesh_data):
+        for p in properties:
+            if p.source.type == ProjectionSource.SQL:
+                if p.source.expression in mesh_data.element_data:
+                    element.add_property(p.property_set, p.property, mesh_data.element_data[p.source.expression])
+            elif p.source.type == ProjectionSource.STATIC:
+                element.add_property(p.property_set, p.property, p.source.expression)
+
+    def add_groups(self, element: Projection, feature_type: ProjectionFeatureType, mesh_data):
+        for group_mapping in feature_type.group_mapping:
+            if group_mapping.type == ProjectionSource.SQL:
+                element.add_group(mesh_data.element_data[group_mapping.expression])
+            elif group_mapping.type == ProjectionSource.STATIC:
+                element.add_group(group_mapping.expression)
+
 
 class MeshData:
 

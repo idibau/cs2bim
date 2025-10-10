@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class GmlGeometryType(Enum):
+class GmlGeometry(Enum):
     """Supported gml geometry types"""
 
     MULTI_SURFACE = "MULTI_SURFACE"

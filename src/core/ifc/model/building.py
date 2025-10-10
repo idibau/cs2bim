@@ -1,11 +1,12 @@
-from config.building_part_entity_type import BuildingPartEntityType
+from config.building_part_entity import BuildingPartEntity
 from core.ifc.model.element import Element
+from core.ifc.model.feature_element import FeatureElement
 from core.ifc.model.gml.gml_geometry import GmlGeometry
 
 
-class BuildingPart(Element):
+class BuildingPart:
 
-    def __init__(self, entity_type: BuildingPartEntityType, gml_geometry: GmlGeometry, color):
+    def __init__(self, entity_type: BuildingPartEntity, gml_geometry: GmlGeometry, color):
         super().__init__()
         self.color = color
         self.gml_geometry = gml_geometry
@@ -21,13 +22,13 @@ class BuildingPart(Element):
 
     def create_ifc_element(self, ifc_file, product_definition_shape):
         ifc_local_placement = ifc_file.create_ifc_local_placement((0.0, 0.0, 0.0))
-        if self.entity_type == BuildingPartEntityType.IFC_ROOF:
+        if self.entity_type == BuildingPartEntity.IFC_ROOF:
             ifc_element = ifc_file.create_ifc_roof(ifc_local_placement, product_definition_shape)
-        elif self.entity_type == BuildingPartEntityType.IFC_SLAB:
+        elif self.entity_type == BuildingPartEntity.IFC_SLAB:
             ifc_element = ifc_file.create_ifc_slab(ifc_local_placement, product_definition_shape)
-        elif self.entity_type == BuildingPartEntityType.IFC_WALL:
+        elif self.entity_type == BuildingPartEntity.IFC_WALL:
             ifc_element = ifc_file.create_ifc_wall(ifc_local_placement, product_definition_shape)
-        elif self.entity_type == BuildingPartEntityType.IFC_BUILDING_ELEMENT_PROXY:
+        elif self.entity_type == BuildingPartEntity.IFC_BUILDING_ELEMENT_PROXY:
             ifc_element = ifc_file.create_ifc_building_element_proxy(ifc_local_placement, product_definition_shape)
         else:
             raise NotImplementedError(
@@ -35,7 +36,7 @@ class BuildingPart(Element):
         return ifc_element
 
 
-class Building(Element):
+class Building(FeatureElement):
 
     def __init__(self) -> None:
         super().__init__()
@@ -46,8 +47,6 @@ class Building(Element):
 
     def map_to_ifc(self, ifc_file, ifc_local_placement, ifc_representation_sub_context):
         ifc_building = ifc_file.create_ifc_building(ifc_local_placement)
-        self.set_ifc_attributes(ifc_file, ifc_building)
-        self.set_ifc_properties(ifc_file, ifc_building)
         ifc_elements = [building_part.map_to_ifc(ifc_file, ifc_representation_sub_context) for building_part in
                         self.building_parts]
         ifc_file.create_ifc_rel_contained_in_spatial_structure(ifc_elements, ifc_building)

@@ -2,10 +2,11 @@ import logging
 
 from lxml import etree
 
-from config.building_source_type import BuildingSourceType
+from config.building_source import BuildingSource
 from config.configuration import config
-from config.gml_geometry_type import GmlGeometryType
+from config.gml_geometry import GmlGeometry
 from core.ifc.model.building import BuildingPart, Building
+from core.ifc.model.element import Element
 from core.ifc.model.gml.composite_solid import CompositeSolid
 from core.ifc.model.gml.multi_surface import MultiSurface
 from core.ifc.model.gml.namespace import namespace
@@ -67,60 +68,67 @@ class BuildingProcessor:
 
     def create_building_model(self, building, building_config, origin, result_set):
         building_model = Building()
-        self.add_attributes(building, building_config.entity_mapping, building_model, result_set)
-        self.add_properties(building, building_config.entity_mapping, building_model, result_set)
+        self.add_attributes(building, building_config.entity_mapping.attributes, building_model, result_set)
+        self.add_properties(building, building_config.entity_mapping.properties, building_model, result_set)
         self.add_groups(building, building_config, building_model, result_set)
         logger.debug(f"start processing building parts")
         for building_part_config in building_config.entity_mapping.building_parts:
             geometry_mapping = building_part_config.geometry_mapping
             geometry_gmls = building.xpath(geometry_mapping.xpath, namespaces=namespace)
-            if geometry_mapping.type == GmlGeometryType.SOLID:
+            if geometry_mapping.geometry == GmlGeometry.SOLID:
                 geometry = Solid()
-            elif geometry_mapping.type == GmlGeometryType.COMPOSITE_SOLID:
+            elif geometry_mapping.geometry == GmlGeometry.COMPOSITE_SOLID:
                 geometry = CompositeSolid()
-            elif geometry_mapping.type == GmlGeometryType.MULTI_SURFACE:
+            elif geometry_mapping.geometry == GmlGeometry.MULTI_SURFACE:
                 geometry = MultiSurface()
             else:
                 raise NotImplementedError(
-                    f"building step for gml geometry type {geometry_mapping.type} not implemented")
+                    f"building step for gml geometry type {geometry_mapping.geometry} not implemented")
             for geometry_gml in geometry_gmls:
                 geometry.from_gml(geometry_gml, origin)
                 building_part = BuildingPart(building_part_config.entity_type, geometry, building_part_config.color)
                 building_model.add_building_part(building_part)
+
+        spatial_structure = Element()
+        self.add_attributes(building, building_config.spatial_structure_mapping.attributes, spatial_structure,
+                            result_set)
+        self.add_properties(building, building_config.spatial_structure_mapping.properties, spatial_structure,
+                            result_set)
+        building_model.spatial_structure = spatial_structure
         return building_model
 
-    def add_attributes(self, building, entity_mapping_config, element, result_set):
-        for attribute in entity_mapping_config.attributes:
-            if attribute.source.type == BuildingSourceType.CITY_GML:
+    def add_attributes(self, building, attributes, element, result_set):
+        for attribute in attributes:
+            if attribute.source.geometry == BuildingSource.CITY_GML:
                 value_elem = building.find(attribute.source.expression, namespaces=namespace)
                 if value_elem is not None:
                     element.add_attribute(attribute.attribute, value_elem.text.strip())
-            elif attribute.source.type == BuildingSourceType.SQL:
+            elif attribute.source.geometry == BuildingSource.SQL:
                 if attribute.source.expression in result_set:
                     element.add_attribute(attribute.attribute, result_set[attribute.source.expression])
-            elif attribute.source.type == BuildingSourceType.STATIC:
+            elif attribute.source.geometry == BuildingSource.STATIC:
                 element.add_attribute(attribute.attribute, attribute.source.expression)
 
-    def add_properties(self, building, entity_mapping_config, element, result_set):
-        for p in entity_mapping_config.properties:
-            if p.source.type == BuildingSourceType.CITY_GML:
+    def add_properties(self, building, properties, element, result_set):
+        for p in properties:
+            if p.source.geometry == BuildingSource.CITY_GML:
                 value_elem = building.find(p.source.expression, namespaces=namespace)
                 if value_elem is not None:
                     element.add_property(p.property_set, p.property, value_elem.text.strip())
-            elif p.source.type == BuildingSourceType.SQL:
+            elif p.source.geometry == BuildingSource.SQL:
                 if p.source.expression in result_set:
                     element.add_property(p.property_set, p.property, result_set[p.source.expression])
-            elif p.source.type == BuildingSourceType.STATIC:
+            elif p.source.geometry == BuildingSource.STATIC:
                 element.add_property(p.property_set, p.property, p.source.expression)
 
     def add_groups(self, building, building_config, element, result_set):
         for group_mapping in building_config.group_mapping:
-            if group_mapping.type == BuildingSourceType.CITY_GML:
+            if group_mapping.geometry == BuildingSource.CITY_GML:
                 value_elem = building.find(group_mapping.expression, namespaces=namespace)
                 if value_elem is not None:
                     element.add_group(value_elem.text.strip())
-            elif group_mapping.type == BuildingSourceType.SQL:
+            elif group_mapping.geometry == BuildingSource.SQL:
                 if group_mapping.expression in result_set:
                     element.add_group(result_set[group_mapping.expression])
-            elif group_mapping.type == BuildingSourceType.STATIC:
+            elif group_mapping.geometry == BuildingSource.STATIC:
                 element.add_group(group_mapping.expression)
