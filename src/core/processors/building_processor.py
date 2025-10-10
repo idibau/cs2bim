@@ -86,7 +86,7 @@ class BuildingProcessor:
                     f"building step for gml geometry type {geometry_mapping.geometry} not implemented")
             for geometry_gml in geometry_gmls:
                 geometry.from_gml(geometry_gml, origin)
-                building_part = BuildingPart(building_part_config.entity_type, geometry, building_part_config.color)
+                building_part = BuildingPart(building_part_config.entity, geometry, building_part_config.color)
                 building_model.add_building_part(building_part)
 
         spatial_structure = Element()
@@ -99,36 +99,36 @@ class BuildingProcessor:
 
     def add_attributes(self, building, attributes, element, result_set):
         for attribute in attributes:
-            if attribute.source.geometry == BuildingSource.CITY_GML:
+            if attribute.source.type == BuildingSource.CITY_GML:
                 value_elem = building.find(attribute.source.expression, namespaces=namespace)
                 if value_elem is not None:
                     element.add_attribute(attribute.attribute, value_elem.text.strip())
-            elif attribute.source.geometry == BuildingSource.SQL:
+            elif attribute.source.type == BuildingSource.SQL:
                 if attribute.source.expression in result_set:
                     element.add_attribute(attribute.attribute, result_set[attribute.source.expression])
-            elif attribute.source.geometry == BuildingSource.STATIC:
+            elif attribute.source.type == BuildingSource.STATIC:
                 element.add_attribute(attribute.attribute, attribute.source.expression)
 
     def add_properties(self, building, properties, element, result_set):
         for p in properties:
-            if p.source.geometry == BuildingSource.CITY_GML:
+            if p.source.type == BuildingSource.CITY_GML:
                 value_elem = building.find(p.source.expression, namespaces=namespace)
                 if value_elem is not None:
                     element.add_property(p.property_set, p.property, value_elem.text.strip())
-            elif p.source.geometry == BuildingSource.SQL:
+            elif p.source.type == BuildingSource.SQL:
                 if p.source.expression in result_set:
                     element.add_property(p.property_set, p.property, result_set[p.source.expression])
-            elif p.source.geometry == BuildingSource.STATIC:
+            elif p.source.type == BuildingSource.STATIC:
                 element.add_property(p.property_set, p.property, p.source.expression)
 
     def add_groups(self, building, building_config, element, result_set):
         for group_mapping in building_config.group_mapping:
-            if group_mapping.geometry == BuildingSource.CITY_GML:
+            if group_mapping.type == BuildingSource.CITY_GML:
                 value_elem = building.find(group_mapping.expression, namespaces=namespace)
                 if value_elem is not None:
                     element.add_group(value_elem.text.strip())
-            elif group_mapping.geometry == BuildingSource.SQL:
+            elif group_mapping.type == BuildingSource.SQL:
                 if group_mapping.expression in result_set:
-                    element.add_group(result_set[group_mapping.expression])
-            elif group_mapping.geometry == BuildingSource.STATIC:
+                    element.type(result_set[group_mapping.expression])
+            elif group_mapping.type == BuildingSource.STATIC:
                 element.add_group(group_mapping.expression)

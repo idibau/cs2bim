@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class GroupEntity(Enum):
-    """Supported ifc entity types for groups"""
+    """Supported ifc entities for groups"""
 
     IFC_DISTRIBUTION_SYSTEM = "IFC_DISTRIBUTION_SYSTEM"
     IFC_DISTRIBUTION_CIRCUIT = "IFC_DISTRIBUTION_CIRCUIT"

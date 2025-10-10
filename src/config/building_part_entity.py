@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class BuildingPartEntity(Enum):
-    """Supported ifc entity types for building part entities"""
+    """Supported ifc entities for building part entities"""
 
     IFC_WALL = "IFC_WALL"
     IFC_SLAB = "IFC_SLAB"

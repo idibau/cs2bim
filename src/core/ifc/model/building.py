@@ -6,11 +6,11 @@ from core.ifc.model.gml.gml_geometry import GmlGeometry
 
 class BuildingPart:
 
-    def __init__(self, entity_type: BuildingPartEntity, gml_geometry: GmlGeometry, color):
+    def __init__(self, entity: BuildingPartEntity, gml_geometry: GmlGeometry, color):
         super().__init__()
         self.color = color
         self.gml_geometry = gml_geometry
-        self.entity_type = entity_type
+        self.entity = entity
 
     def map_to_ifc(self, ifc_file, ifc_representation_sub_context):
         ifc_style = ifc_file.create_ifc_surface_style(self.color)
@@ -22,17 +22,17 @@ class BuildingPart:
 
     def create_ifc_element(self, ifc_file, product_definition_shape):
         ifc_local_placement = ifc_file.create_ifc_local_placement((0.0, 0.0, 0.0))
-        if self.entity_type == BuildingPartEntity.IFC_ROOF:
+        if self.entity == BuildingPartEntity.IFC_ROOF:
             ifc_element = ifc_file.create_ifc_roof(ifc_local_placement, product_definition_shape)
-        elif self.entity_type == BuildingPartEntity.IFC_SLAB:
+        elif self.entity == BuildingPartEntity.IFC_SLAB:
             ifc_element = ifc_file.create_ifc_slab(ifc_local_placement, product_definition_shape)
-        elif self.entity_type == BuildingPartEntity.IFC_WALL:
+        elif self.entity == BuildingPartEntity.IFC_WALL:
             ifc_element = ifc_file.create_ifc_wall(ifc_local_placement, product_definition_shape)
-        elif self.entity_type == BuildingPartEntity.IFC_BUILDING_ELEMENT_PROXY:
+        elif self.entity == BuildingPartEntity.IFC_BUILDING_ELEMENT_PROXY:
             ifc_element = ifc_file.create_ifc_building_element_proxy(ifc_local_placement, product_definition_shape)
         else:
             raise NotImplementedError(
-                f"building step for feature type entity type {self.entity_type.name} not implemented for building feature types")
+                f"building step for feature type entity {self.entity.name} not implemented for building feature types")
         return ifc_element
 
 

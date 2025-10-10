@@ -20,16 +20,16 @@ class Projection(FeatureElement):
     def _create_tuple(cls, l: list) -> tuple[float, float, float]:
         return float(l[0]), float(l[1]), float(l[2])
 
-    def map_to_ifc(self, ifc_file, entity_type, ifc_representation_sub_context, ifc_style):
+    def map_to_ifc(self, ifc_file, entity, ifc_representation_sub_context, ifc_style):
         tessellation = Tessellation(self.triangles)
         ifc_face_set = tessellation.map_to_ifc(ifc_file)
         ifc_product_definition_shape = ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context,
                                                                                     "Tessellation", [ifc_face_set])
         ifc_file.create_ifc_styled_item(ifc_face_set, ifc_style)
         ifc_local_placement = ifc_file.create_ifc_local_placement((0.0, 0.0, 0.0))
-        if entity_type == ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT:
+        if entity == ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT:
             ifc_element = ifc_file.create_ifc_geographic_element(ifc_local_placement, ifc_product_definition_shape)
         else:
             raise NotImplementedError(
-                f"building step for feature type entity type {entity_type.name} not implemented for clipped terrain feature types")
+                f"building step for feature type entity {entity.name} not implemented for clipped terrain feature types")
         return ifc_element

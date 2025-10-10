@@ -77,7 +77,7 @@ class Model:
             ifc_elements = []
             ifc_element_types = {}
             for element in elements:
-                ifc_element = element.map_to_ifc(ifc_file, feature_type.entity_mapping.entity_type,
+                ifc_element = element.map_to_ifc(ifc_file, feature_type.entity_mapping.entity,
                                                  ifc_representation_sub_context, ifc_style)
                 element.set_ifc_attributes(ifc_file, ifc_element)
                 element.set_ifc_properties(ifc_file, ifc_element)
@@ -86,7 +86,7 @@ class Model:
                 if element.element_type is not None:
                     if element.element_type not in ifc_element_types:
                         ifc_element_type = self.create_projection_ifc_element_type(ifc_file, element.element_type,
-                                                                                   feature_type.entity_mapping.entity_type)
+                                                                                   feature_type.entity_mapping.entity)
                         ifc_element_types[element.element_type] = (ifc_element_type, [])
                     ifc_element_types[element.element_type][1].append(ifc_element)
 
@@ -134,14 +134,14 @@ class Model:
         logger.info("completed ifc build")
         return ifc_file
 
-    def create_projection_ifc_element_type(self, ifc_file, element_type, projection_entity_type):
-        if projection_entity_type == ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT:
+    def create_projection_ifc_element_type(self, ifc_file, element_type, projection_entity):
+        if projection_entity == ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT:
             ifc_element_type = ifc_file.create_ifc_geographic_element_type()
             element_type.set_ifc_attributes(ifc_file, ifc_element_type)
             element_type.set_ifc_properties(ifc_file, ifc_element_type)
         else:
             raise NotImplementedError(
-                f"building step for projection entity type {projection_entity_type.name} not implemented for clipped terrain feature types")
+                f"building step for projection entity {projection_entity.name} not implemented for clipped terrain feature types")
         return ifc_element_type
 
     def create_ifc_spatial_structure(self, ifc_file, ifc_local_placement, ifc_project, spatial_structure_element):
@@ -163,22 +163,22 @@ class Model:
                     continue
                 if group_path in groups_config:
                     group_config = groups_config[group_definition]
-                    if group_config.entity_mapping.entity_type == GroupEntity.IFC_DISTRIBUTION_SYSTEM:
+                    if group_config.entity_mapping.entity == GroupEntity.IFC_DISTRIBUTION_SYSTEM:
                         ifc_groups[group_path] = ifc_file.create_ifc_distribution_system(group)
-                    elif group_config.entity_mapping.entity_type == GroupEntity.IFC_DISTRIBUTION_CIRCUIT:
+                    elif group_config.entity_mapping.entity == GroupEntity.IFC_DISTRIBUTION_CIRCUIT:
                         ifc_groups[group_path] = ifc_file.create_ifc_distribution_circuit(group)
-                    elif group_config.entity_mapping.entity_type == GroupEntity.IFC_BUILDING_BUILT_SYSTEM:
+                    elif group_config.entity_mapping.entity == GroupEntity.IFC_BUILDING_BUILT_SYSTEM:
                         if self.schema == IfcVersion.IFC4:
                             ifc_groups[group_path] = ifc_file.create_ifc_building_system(group)
                         else:
                             ifc_groups[group_path] = ifc_file.create_ifc_built_system(group)
-                    elif group_config.entity_mapping.entity_type == GroupEntity.IFC_STRUCTURAL_ANALYSIS_MODEL:
+                    elif group_config.entity_mapping.entity == GroupEntity.IFC_STRUCTURAL_ANALYSIS_MODEL:
                         ifc_groups[group_path] = ifc_file.create_ifc_structural_analysis_model(group)
-                    elif group_config.entity_mapping.entity_type == GroupEntity.IFC_ZONE:
+                    elif group_config.entity_mapping.entity == GroupEntity.IFC_ZONE:
                         ifc_groups[group_path] = ifc_file.create_ifc_zone(group)
                     else:
                         raise NotImplementedError(
-                            f"building step for ifc group entity {group_config.entity_mapping.entity_type.name} not implemented")
+                            f"building step for ifc group entity {group_config.entity_mapping.entity.name} not implemented")
                     ifc_group = ifc_groups[group_path]
 
                     group_element = self.build_element(group_config.attributes, group_config.properties)

@@ -343,7 +343,7 @@ the total number of spatial structures ranges from one up to the number of featu
 #### Spatial Structure Mapping
 
 All objects of a feature type are associated with a spatial structure. Each spatial structure instance can be configured 
-with its own entity type, attributes, and properties. These attributes and properties are defined in the same way as those
+with its own entity, attributes, and properties. These attributes and properties are defined in the same way as those
 of the feature type instance itself.
 
 A spatial structure is reused across all feature type instances that share identical attributes and properties. As a result, 
@@ -355,7 +355,7 @@ the total number of spatial structures ranges from one up to the number of featu
 
 Each feature type instance can be assigned to one or more groups. This configuration is optional—if omitted, no group 
 assignment will be made.For every group assignment, the system creates an IFC group based on the specified group configuration,
-including its parameterssuch as entity_type and any number of attributes or properties. If no configuration exists for a 
+including its parameters such as entity and any number of attributes or properties. If no configuration exists for a 
 given assigned value, the system will generate a basic IFC group entity without additional attributes or properties.
 When defining groups, the "." character can be used to create nested group structures.
 
@@ -377,9 +377,6 @@ The feature type instances are assigned to the final group in this hierarchy.
 
 # Known Issues
 
-- Entity types that are only supported in one of the two allowed ifc versions (4, 4x3) are not supported (e.g.,
-  IfcBuiltSystem). Explanation: There is no switch in the code that could deal with different cases based on a different
-  ifc version, neither are there parameters in the configuration to support different ifc versions.
 - Potential code optimization is not yet done.Parallelize computational tasks with threads, cache dtm data, load only
   necessary dtm data in memory, process the point cloud only once, and then derive feature type geometries from TIN
   instead of point clouds)
