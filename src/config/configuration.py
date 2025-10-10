@@ -232,9 +232,4 @@ class Configuration(BaseModel):
         return self
 
 
-# config = Configuration.load("/workspace/config.yml")
-
-# JSON Schema
-import json
-with open("../../configuration.json", "w") as stream:
-    json.dump(Configuration.model_json_schema(), stream, indent=4)
+config = Configuration.load("/workspace/config.yml")
