@@ -20,8 +20,8 @@ db:
 
 ########## stac configuration ############
 stac:
-  dtm_items_url: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
-  building_items_url: "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissbuildings3d_3_0/items"
+  dtm_items_url: "https://data.geo.admin.ch/api/stac/v1/collections/ch.swisstopo.swissalti3d/items"
+  building_items_url: "https://data.geo.admin.ch/api/stac/v1/collections/ch.swisstopo.swissbuildings3d_3_0/items"
 
 ############# tin configuration #############
 tin:
