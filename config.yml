@@ -267,6 +267,9 @@ ifc:
               source:
                 type: SQL
                 expression: "egris_egrid"
+        group_mapping:
+          - type: STATIC
+            expression: "Amtliche Vermessung.Gebaeude"
   groups:
     - path: "Amtliche Vermessung.Gebaeude"
       entity_mapping:
