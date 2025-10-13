@@ -25,7 +25,7 @@
 # Project description
 
 The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launched a research project *Cadastral
-Surveying Data to Building Information Modelling (CS2BIM)*. The _Institute of Virtual Design and Construction_ and the
+Surveying Data to Building Information Modeling (CS2BIM)*. The _Institute of Virtual Design and Construction_ and the
 _Institute of Geomatics_ at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed a service
 based on open source libraries. The service transforms GIS-based cadastral survey (CS) data with area geometries (2D) to
 IFC instances with 3D surface geometries. The geometry transformation is based on a projection of the 2D geometries onto
@@ -101,7 +101,7 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "IFC_VERSION": "IFC4x3",
+  "IFC_VERSION": "IFC4x3_ADD2",
   "NAME": "API Test",
   "POLYGON": "POLYGON((2615490.59 1264657.53, 2615782.92 1264674.74, 2615747.00 1264604.23, 2615490.59 1264657.53))",
   "PROJECT_ORIGIN": "2600000,1200000,0",
@@ -164,20 +164,26 @@ python main.py \
 
 # API
 
-This API provides endpoints to generate IFC models based on polygon input, check the generation state, and retrieve the generated file.
+This API provides endpoints to generate IFC models based on polygon input, check the generation state, and retrieve the
+generated file.
+There is also a swagger documentation site documenting all endpoints: http://0.0.0.0:8000/docs
 
 ## Endpoints
 
 ### 1. `POST /generate-model/`
+
 **Description:** Starts the generation of a new IFC model.
 
 **Request Body (JSON):**
-- `IFC_VERSION` *(string, required)*: The IFC version (`IFC4`, `IFC4x3`).
+
+- `IFC_VERSION` *(string, required)*: The IFC version (`IFC4`, `IFC4X3_ADD2`).
 - `NAME` *(string, required)*: The name of the model.
 - `POLYGON` *(string, required)*: A closed polygon in WKT (Well-Known Text) format.
 - `PROJECT_ORIGIN` *(string, optional)*: Origin point as a comma-separated string `[x,y,z]`.
+- `LANGUAGE` *(string, optional)*: The language of the model (`DE`, `FR`, `IT`)
 
 **Responses:**
+
 - `200`: Model generation started successfully. Returns task ID.
 - `422`: Validation error in the input data.
 - `500`: Error.
@@ -185,12 +191,15 @@ This API provides endpoints to generate IFC models based on polygon input, check
 ---
 
 ### 2. `GET /generation-state/{task_id}`
+
 **Description:** Retrieves the current state of a model generation task.
 
 **Path Parameter:**
+
 - `task_id` *(string, required)*: The ID of the generation task.
 
 **Responses:**
+
 - `200`: Returns the state of the task.
 - `422`: Validation error.
 - `500`: Error.
@@ -198,12 +207,15 @@ This API provides endpoints to generate IFC models based on polygon input, check
 ---
 
 ### 3. `GET /generated-file/{task_id}`
+
 **Description:** Fetches the generated IFC file once the task is completed.
 
 **Path Parameter:**
+
 - `task_id` *(string, required)*: The ID of the generation task.
 
 **Responses:**
+
 - `200`: Returns the generated file.
 - `202`: Task is still ongoing.
 - `400`: Model generation failed.
@@ -213,34 +225,78 @@ This API provides endpoints to generate IFC models based on polygon input, check
 
 ---
 
-There is also a swagger documentation site documenting all endpoints: http://0.0.0.0:8000/docs
-
 # Configuration
 
-Some properties of this python project can be configured using the config.yml file.  
+Some properties of this application can be configured using the config.yml file.  
 You can find the full documentation of the configuration file [here](docs/configuration_schema.md).
+
+## Language Configuration
+
+The language config contains the links to the yaml translation files.
+Translations are resolved and written using these yaml files. They are basically a simple key/value table.
+The values affected by translation are fixed and not configurable:
+
+- Attribute values
+- Property set names
+- Property names
+- Property values
+- Group names
+
+It does not matter whether a value is fixed or retrieved dynamically.
+If a translation key cannot be found, the original value is written unchanged.
+
+The following characters are allowed for keys in the table:
+
+- Letters (lowercase)
+- Numbers
+- Underscore (_)
+
+Keys derived from dynamic values are generated as follows:
+
+1. key = lower_case(key)
+2. key = remove_special_characters_except_spaces(key)
+3. key = trim_leading_and_trailing_spaces(key)
+4. key = replace_sequences_of_spaces_with_single_underscore(key)
+
+Example: "Jahr ( 1990 )" → "jahr ( 1990 )" → "jahr 1990 " → "jahr 1990" → "jahr_1990"
+
+## Redis Configuration
+
+Connection parameters.
+
+## DB Configuration
+
+Connection parameters.
 
 ## STAC Configuration
 
-There are two stac v0.9 urls that can be provided in the config. There are several conditions that need to be fulfilled:
+The projection feature types require a DTM file source provided via a STAC API. The building feature types require a
+CityGML file source.
+These URLs must be defined in the STAC configuration. Both STAC version 0.9 and version 1.0 are supported.
 
-- The provided urls must point to the according stac collection items
-- The features / items must have the property: feature.properties.datetime
+For the configuration to work properly:
+
+- The provided URLs must point to the corresponding STAC collection items
+- Each feature/item must include the property: feature.properties.datetime
 
 ### DTM
 
-Needs to be set if there are clipped_terrain feature classes configured.
+Needs to be set if there are projection feature types configured.
 Expected asset properties:
 
 - type = application/x.ascii-xyz+zip
-- eo:gsd = config.tin.grid_size
+- eo:gsd / gsd = config.tin.grid_size
 
 ### Buildings
 
-Needs to be set if there are buildings feature types configured.
+Needs to be set if there are building feature types configured.
 Expected asset properties:
 
 - type = application/x.gml+zip
+
+## TIN Configuration
+
+This configuration sets the grid size and the max height error.
 
 ## IFC configuration
 
@@ -273,47 +329,47 @@ Supported values are:
 **Coordinates and Offsets**  
 You can provide a project origin in LV95 coordinates (Easting, Northing, Height). The project origin can also be set
 to (0,0,0).  
-If not provided, the system sets a project origin calculated on a minimum bounding box of the perimeter.
+If not provided, the system sets a project origin in the lower left corner on a minimum bounding box of the perimeter.
 
 ![Levels of Georeferencing LoGeoRef](uploads/project-origin.png){width=600}
 
 ### Feature types
 
 A "feature type" is the definition of a set of objects that are exported in an IFC entity with common definitions.
-There are currently two feature types supported.
-
-#### Projection
-
-The main configurations of a projection include:
-- sql: A SQL query that selects objects in the GIS database, returning a geometry (must be an area) and some other
-  attributes for each object.
-- entity_mapping: The IFC entity, to which all selected objects of the projection are exported to.
-  - attributes: All attributes that are set on the objects.
-  - properties: Any number of property definitions that are exported as IFC properties/property sets.
-- spatial_structure_mapping: The IFC spatial structure, to which all objects of the projection are appended.
-- group_mapping: Any number of IFC group assignments.
-- color: An IFC color definition
+Each feature type is defined through a configuration that describes how data from the GIS database is transformed into
+IFC entities.
+For every configured feature type, a set of instances is created. Currently, two different kinds of feature types are
+supported.
 
 ![Example of feature type](./uploads/feature-classes.jpg){width=300}
 
-##### SQL
+#### Projection
 
-For each projection you have to provide a SQL file for querying the data. With the query you are selecting the
-cadastral data (with an area geometry type). The SQL query requires taking a polygon wkt as parameter "%(polygon)s" and
-returning a column named "wkt" with wkt string values. To guarantee correct processing, it is important to check that
-the sql also delivers all columns that are additionally configured for the according projection. This can be multiple
-columns for attributes, properties, or groups.
+Buildings are feature types that are generated by transforming building geometries from a CityGML file into IFC
+structures.
 
-The following schema shows the relationship between the attributes defined by the sql query and their linking to the
+##### Projection SQL
+
+A SQL query that selects objects from the GIS database. Each result row is converted into an IFC instance.
+The query requires taking a polygon wkt as parameter "%(polygon)s" and must return at least one column named `wkt`,
+containing the geometry (as an area).
+Additional columns can be included to provide values that can be referenced in the attribute, property, or group
+configurations.
+
+The following schema shows the relationship between the attributes defined by the SQL query and their linking to the
 configuration.  
 ![Schema of IFC configuration](./uploads/configuration-schema.jpg){width=600}
 
-Selecting the cadastral data by SQL is flexible and can be done in various ways. There are some examples in the sql folder:
+Selecting the cadastral data by SQL is flexible and can be done in various ways. There are some examples in the sql
+folder:
 
 1. The input polygon
-2. All areas (parcel, landcover etc.) that intersect with the polygon are included (parcels.sql, land_cover.sql, land_cover_buildings.sql)
-3. All areas (parcel, landcover etc.) are cut off at the border of the polygon (parcels_intersection.sql, land_covers_intersection.sql)
-4. All areas (parcel, landcover etc.) that are fully contained by the polygon are included (parcels_contains.sql, land_covers_contains.sql)
+2. All areas (parcel, land cover, etc.) that intersect with the polygon are
+   included ([Parcels](./sql/parcels.sql), [Land cover](./sql/land_covers.sql), [Land cover buildings](./sql/land_covers_buildings.sql))
+3. All areas (parcel, land cover, etc.) are cut off at the border of the
+   polygon ([Parcels intersection](./sql/parcels_intersection.sql), [Land covers intersection](./sql/land_covers_intersection.sql))
+4. All areas (parcel, land cover, etc.) that are fully contained by the polygon are
+   included ([Parcels contains](./sql/parcels_contains.sql), [Land covers contains](./sql/land_covers_contains.sql))
 5. The entire area of the input polygon without subdivisions (polygon.sql)
 
 ![Polygon](./uploads/sql.jpg){width=600}
@@ -326,49 +382,65 @@ ST_CurveToLine → Converts a given geometry to a linear geometry\
 ST_Intersects → Returns true if two geometries intersect. Geometries intersect if they have any point in common.
 ST_Contains → Returns true if the first geometry contains the second.
 
+##### Projection Entity Mapping
+
+Specifies the IFC entity that all selected objects are exported to. It also defines the attributes and properties that
+are applied to each exported entity.
+
+##### Entity Type Mapping
+
+Specifies an IFC entity type linked to each created instance. Entity types are shared among other instances of this
+feature type if their attribute or property values are identical.
+
 #### Building
 
-#### Entity Mapping
+Buildings are feature types that are generated by transforming building geometries from a CityGML file.
 
-#### Entity Type Mapping
+##### Building SQL
 
-The objects of a feature type can be associated with an entity type. Each entity type instance can be configured 
-with its own attributes, and properties. These attributes and properties are defined in the same way as those
-of the feature type instance itself.
+A SQL query that selects objects from the GIS database. Each result row is converted into an IFC instance.
+The query requires taking a polygon wkt as parameter "%(polygon)s" and must return at least one column named `egid`,
+containing the egid numbers of the buildings laying inside the polygon.
+Additional columns can be included to provide values that can be referenced in the attribute, property, or group
+configurations.
 
-A spatial structure is reused across all feature type instances that share identical attributes and properties. As a result, 
-the total number of spatial structures ranges from one up to the number of feature type instances.
+##### Building Entity Mapping
 
+For building feature types, the associated IFC entity is always IfcBuilding, and this cannot be changed.
+The entity mapping defines the attributes, properties, and building parts of the feature type.
+Building parts are attached to the corresponding IfcBuilding instance and represent the building’s geometry, allowing
+you to define how different parts are mapped and visualized.
 
 #### Spatial Structure Mapping
 
-All objects of a feature type are associated with a spatial structure. Each spatial structure instance can be configured 
-with its own entity, attributes, and properties. These attributes and properties are defined in the same way as those
-of the feature type instance itself.
-
-A spatial structure is reused across all feature type instances that share identical attributes and properties. As a result, 
-the total number of spatial structures ranges from one up to the number of feature type instances.
+Specifies the IFC spatial structure element that a created instance is linked to. Spatial structures are shared among
+instances if their attribute or property values are identical — even across different feature types. As a result, the
+total number of spatial structures ranges from one up to the number of feature type instances.
 
 #### Group Mapping
 
+Defines one or more IFC group assignments. Groups are shared among instances if the grouping attributes or properties
+match — even across different feature types.
+
 ### Groups
 
-Each feature type instance can be assigned to one or more groups. This configuration is optional—if omitted, no group 
-assignment will be made.For every group assignment, the system creates an IFC group based on the specified group configuration,
-including its parameters such as entity and any number of attributes or properties. If no configuration exists for a 
+Each feature type instance can be assigned to one or more groups. This configuration is optional—if omitted, no group
+assignment will be made. For every group assignment, the system creates an IFC group based on the specified group
+configuration,
+including its parameters such as entity and any number of attributes or properties. If no configuration exists for a
 given assigned value, the system will generate a basic IFC group entity without additional attributes or properties.
 When defining groups, the "." character can be used to create nested group structures.
 
-For example: The group "Amtliche Vermessung.Bodenbedeckung.befestigt" results in the creation of three nested groups.
+For example, the group "Amtliche Vermessung.Bodenbedeckung.befestigt" results in the creation of three nested groups.
 The feature type instances are assigned to the final group in this hierarchy.
 
 - Amtliche Vermessung
-  - Bodenbedeckung
-    - befestigt
-      - Feature type instance 1
-      - Feature type instance 2
-      - Feature type instance 3
-      - ...
+    - Bodenbedeckung
+        - befestigt
+            - Feature type instance 1
+            - Feature type instance 2
+            - Feature type instance 3
+            - ...
 
 ### Examples
 
