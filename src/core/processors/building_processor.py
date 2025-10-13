@@ -129,6 +129,6 @@ class BuildingProcessor:
                     element.add_group(value_elem.text.strip())
             elif group_mapping.type == BuildingSource.SQL:
                 if group_mapping.expression in result_set:
-                    element.type(result_set[group_mapping.expression])
+                    element.add_group(result_set[group_mapping.expression])
             elif group_mapping.type == BuildingSource.STATIC:
                 element.add_group(group_mapping.expression)

@@ -1,9 +1,9 @@
 import os
+from examples.example import grid_size, max_height_error
 from pathlib import Path
-from typing import List, Optional
-
 from pydantic import BaseModel, model_validator, Field
 from pydantic_yaml import parse_yaml_raw_as
+from typing import List, Optional
 
 from config.building_entity import BuildingEntity
 from config.building_part_entity import BuildingPartEntity
@@ -60,7 +60,7 @@ class TINConfig(BaseModel):
     max_height_error: float = Field(..., ge=0.0, le=0.05, description="Maximum allowed height error for TIN generation")
 
 
-class ProjectionSource(BaseModel):
+class ProjectionConfigSource(BaseModel):
     type: ProjectionSource = Field(..., description="Type of the data source")
     expression: str = Field(..., description="Expression defining the source data")
 
@@ -68,12 +68,12 @@ class ProjectionSource(BaseModel):
 class ProjectionPropertyConfig(BaseModel):
     property: str = Field(..., description="Property name")
     property_set: str = Field(..., description="Property set name")
-    source: ProjectionSource = Field(..., description="Source configuration for this property")
+    source: ProjectionConfigSource = Field(..., description="Source configuration for this property")
 
 
 class ProjectionAttributeConfig(BaseModel):
     attribute: str = Field(..., description="Attribute name (Only applied if the attribute exists on the entity)")
-    source: ProjectionSource = Field(..., description="Source configuration for this attribute")
+    source: ProjectionConfigSource = Field(..., description="Source configuration for this attribute")
 
 
 class ProjectionSpatialEntityConfig(BaseModel):
@@ -102,9 +102,9 @@ class ProjectionFeatureType(BaseModel):
                                                                       description="Entity type mapping configuration for the projection")
     spatial_structure_mapping: ProjectionSpatialEntityConfig = Field(...,
                                                                      description="Spatial structure mapping for the projection")
-    group_mapping: List[ProjectionSource] = Field(default_factory=list, json_schema_extra={"default": []},
+    group_mapping: List[ProjectionConfigSource] = Field(default_factory=list, json_schema_extra={"default": []},
                                                   description="Group mappings for the projection feature type")
-    color: Color = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0),
+    color: Color = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0), json_schema_extra={"default": "white"},
                          description="Color assigned to the projection feature type")
 
 
@@ -116,11 +116,11 @@ class GmlGeometryMapping(BaseModel):
 class BuildingPartConfig(BaseModel):
     entity: BuildingPartEntity = Field(..., description="Type of entity")
     geometry_mapping: Optional[GmlGeometryMapping] = Field(None, description="Geometry mapping for the building part")
-    color: Color = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0),
+    color: Color = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0),json_schema_extra={"default": "white"},
                          description="Color assigned to the building part")
 
 
-class BuildingSource(BaseModel):
+class BuildingSourceConfig(BaseModel):
     type: BuildingSource = Field(..., description="Type of the data source")
     expression: str = Field(..., description="Expression defining the source data")
 
@@ -128,12 +128,12 @@ class BuildingSource(BaseModel):
 class BuildingPropertyConfig(BaseModel):
     property: str = Field(..., description="Property name")
     property_set: str = Field(..., description="Property set name")
-    source: BuildingSource = Field(..., description="Source configuration for this property")
+    source: BuildingSourceConfig = Field(..., description="Source configuration for this property")
 
 
 class BuildingAttributeConfig(BaseModel):
     attribute: str = Field(..., description="Attribute name (Only applied if the attribute exists on the entity)")
-    source: BuildingSource = Field(..., description="Source configuration for this attribute")
+    source: BuildingSourceConfig = Field(..., description="Source configuration for this attribute")
 
 
 class BuildingSpatialEntityConfig(BaseModel):
@@ -164,13 +164,15 @@ class BuildingFeatureType(BaseModel):
     entity_mapping: BuildingEntityConfig = Field(..., description="Entity mapping configuration for the building")
     spatial_structure_mapping: BuildingSpatialEntityConfig = Field(...,
                                                                    description="Spatial structure mapping for the building")
-    group_mapping: List[BuildingSource] = Field(default_factory=list, json_schema_extra={"default": []},
+    group_mapping: List[BuildingSourceConfig] = Field(default_factory=list, json_schema_extra={"default": []},
                                                 description="Group mappings for the building feature type")
 
 
 class FeatureTypesConfig(BaseModel):
-    projections: List[ProjectionFeatureType] = Field(..., description="List of projection feature type definitions")
-    buildings: List[BuildingFeatureType] = Field(..., description="List of building feature type definitions")
+    projections: List[ProjectionFeatureType] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                     description="List of projection feature type definitions")
+    buildings: List[BuildingFeatureType] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                 description="List of building feature type definitions")
 
 
 class StaticPropertyConfig(BaseModel):
@@ -214,7 +216,8 @@ class Configuration(BaseModel):
     redis: RedisConfig = Field(..., description="Redis configuration")
     db: DBConfig = Field(..., description="Database configuration")
     stac: STACConfig = Field(..., description="STAC configuration for external data sources")
-    tin: TINConfig = Field(..., description="TIN (Triangulated Irregular Network) generation configuration")
+    tin: TINConfig = Field(default_factory=lambda: TINConfig(grid_size=0.5, max_height_error=0.05),
+                           description="TIN (Triangulated Irregular Network) generation configuration")
     ifc: IFCConfig = Field(..., description="IFC (Industry Foundation Classes) export configuration")
 
     @classmethod

@@ -162,26 +162,30 @@ class Model:
                 if group_path in ifc_groups:
                     continue
                 if group_path in groups_config:
-                    group_config = groups_config[group_definition]
+                    group_config = groups_config[group_path]
                     if group_config.entity_mapping.entity == GroupEntity.IFC_DISTRIBUTION_SYSTEM:
-                        ifc_groups[group_path] = ifc_file.create_ifc_distribution_system(group)
+                        ifc_group = ifc_file.create_ifc_distribution_system(group)
                     elif group_config.entity_mapping.entity == GroupEntity.IFC_DISTRIBUTION_CIRCUIT:
-                        ifc_groups[group_path] = ifc_file.create_ifc_distribution_circuit(group)
+                        ifc_group = ifc_file.create_ifc_distribution_circuit(group)
                     elif group_config.entity_mapping.entity == GroupEntity.IFC_BUILDING_BUILT_SYSTEM:
                         if self.schema == IfcVersion.IFC4:
-                            ifc_groups[group_path] = ifc_file.create_ifc_building_system(group)
+                            ifc_group = ifc_file.create_ifc_building_system(group)
                         else:
-                            ifc_groups[group_path] = ifc_file.create_ifc_built_system(group)
+                            ifc_group = ifc_file.create_ifc_built_system(group)
                     elif group_config.entity_mapping.entity == GroupEntity.IFC_STRUCTURAL_ANALYSIS_MODEL:
-                        ifc_groups[group_path] = ifc_file.create_ifc_structural_analysis_model(group)
+                        ifc_group = ifc_file.create_ifc_structural_analysis_model(group)
                     elif group_config.entity_mapping.entity == GroupEntity.IFC_ZONE:
-                        ifc_groups[group_path] = ifc_file.create_ifc_zone(group)
+                        ifc_group = ifc_file.create_ifc_zone(group)
                     else:
                         raise NotImplementedError(
                             f"building step for ifc group entity {group_config.entity_mapping.entity.name} not implemented")
-                    ifc_group = ifc_groups[group_path]
+                    ifc_groups[group_path] = ifc_group
 
-                    group_element = self.build_element(group_config.attributes, group_config.properties)
+                    group_element = Element()
+                    for attribute in group_config.attributes:
+                        element.add_attribute(attribute.attribute, attribute.value)
+                    for p in group_config.properties:
+                        element.add_property(p.property_set, p.property, p.value)
                     group_element.set_ifc_attributes(ifc_file, ifc_group)
                     group_element.set_ifc_properties(ifc_file, ifc_group)
                 else:
@@ -189,11 +193,3 @@ class Model:
                 if not parent_group_path == "":
                     ifc_file.create_ifc_rel_assigns_to_group([ifc_groups[group_path]], ifc_groups[parent_group_path])
             ifc_file.create_ifc_rel_assigns_to_group(ifc_group_elements, ifc_groups[group_definition])
-
-    def build_element(self, attributes, properties):
-        element = Element()
-        for attribute in attributes:
-            element.add_attribute(attribute.attribute, attribute.value)
-        for p in properties:
-            element.add_property(p.property_set, p.property, p.value)
-        return element
