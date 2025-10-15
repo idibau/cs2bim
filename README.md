@@ -163,8 +163,8 @@ three representative models have been generated. The configurations and models a
 
 | Description        | Spatial structure                           | Groups                                          | 3D                                       | 2D                                          | Configuration                                                   |
 |--------------------|---------------------------------------------|-------------------------------------------------|------------------------------------------|---------------------------------------------|-----------------------------------------------------------------|
-| Buildings          | ![BuildingEntity](uploads/example_2_ss.png) | ![BuildingEntity](uploads/example_2_groups.png) | ![BuildingEntity](uploads/example_2.png) | ![BuildingEntity](uploads/example_2_2d.png) | [Download](https://drive.switch.ch/index.php/s/6lFzcS20Hq3VV9E) |
-| Land covers        | ![BuildingEntity](uploads/example_1_ss.png) | ![BuildingEntity](uploads/example_1_groups.png) | ![BuildingEntity](uploads/example_1.png) | ![BuildingEntity](uploads/example_1_2d.png) | [Download](https://drive.switch.ch/index.php/s/SYfkfiYtPgjrAti) |
+| Buildings          | ![BuildingEntity](uploads/example_2_ss.png) | ![BuildingEntity](uploads/example_2_groups.png) | ![BuildingEntity](uploads/example_2.png) | ![BuildingEntity](uploads/example_2_2d.png) | [Download](https://drive.switch.ch/index.php/s/SYfkfiYtPgjrAti) |
+| Land covers        | ![BuildingEntity](uploads/example_1_ss.png) | ![BuildingEntity](uploads/example_1_groups.png) | ![BuildingEntity](uploads/example_1.png) | ![BuildingEntity](uploads/example_1_2d.png) | [Download](https://drive.switch.ch/index.php/s/6lFzcS20Hq3VV9E) |
 | Buildings, Parcels | ![BuildingEntity](uploads/example_3_ss.png) | ![BuildingEntity](uploads/example_3_groups.png) | ![BuildingEntity](uploads/example_3.png) | ![BuildingEntity](uploads/example_3_2d.png) | [Download](https://drive.switch.ch/index.php/s/0wcjF5KFn7Zbr6N) |
 
 ## Known Issues
