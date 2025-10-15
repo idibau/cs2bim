@@ -28,7 +28,6 @@ services:
       - backend
     volumes:
       - ./config.yml:/workspace/config.yml
-      - ./sql:/workspace/sql
       - ifc:/workspace/ifc
       - logs:/workspace/logs
 
@@ -46,6 +45,7 @@ services:
     volumes:
       - ./config.yml:/workspace/config.yml
       - ./sql:/workspace/sql
+      - ./i18n:/workspace/i18n
       - ifc:/workspace/ifc
       - logs:/workspace/logs
       - cache:/workspace/cache
