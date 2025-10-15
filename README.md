@@ -3,20 +3,20 @@
 # cs2bim
 
 <!-- TOC -->
-
 * [cs2bim](#cs2bim)
-* [Project description](#project-description)
-* [Getting started](#getting-started)
-    * [Getting started (Development)](#getting-started-development)
-        * [API](#api)
-        * [Standalone script](#standalone-script)
-* [Resulting IFC Files](#resulting-ifc-files)
-* [Further Documentation](#further-documentation)
+  * [Project description](#project-description)
+  * [Further Documentation](#further-documentation)
     * [Concepts](#concepts)
-* [Known Issues](#known-issues)
-* [Contact](#contact)
-* [References](#references)
-
+    * [API](#api)
+    * [Configuration](#configuration)
+  * [Getting started](#getting-started)
+  * [Getting started (Development)](#getting-started-development)
+    * [API](#api-1)
+    * [Standalone script](#standalone-script)
+  * [Resulting IFC Files](#resulting-ifc-files)
+  * [Known Issues](#known-issues)
+  * [Contact](#contact)
+  * [References](#references)
 <!-- TOC -->
 
 ## Project description
@@ -83,8 +83,9 @@ The run parameters are:
 - NAME: Name of the resulting ifc file.
 - POLYGON: The area in which the data is treated. The polygon must be a valid wkt string in LV95.
 - PROJECT_ORIGIN (optional): The project origin in LV95 coordinates "Easting, Northing, Height". If the project origin
-  is
-  set, all other geometry values in the ifc are calculated relative to the origin.
+  is set, all other geometry values in the ifc are calculated relative to the origin.
+- LANGUAGE (optional): The language into which the model should be translated (supported values,
+  see [Language](./src/i18n/language.py)).
 
 Example:
 
@@ -163,8 +164,8 @@ three representative models have been generated. The configurations and models a
 | Description        | Spatial structure                           | Groups                                          | 3D                                       | 2D                                          | Configuration                                                   |
 |--------------------|---------------------------------------------|-------------------------------------------------|------------------------------------------|---------------------------------------------|-----------------------------------------------------------------|
 | Buildings          | ![BuildingEntity](uploads/example_2_ss.png) | ![BuildingEntity](uploads/example_2_groups.png) | ![BuildingEntity](uploads/example_2.png) | ![BuildingEntity](uploads/example_2_2d.png) | [Download](https://drive.switch.ch/index.php/s/6lFzcS20Hq3VV9E) |
-| Land covers        | ![BuildingEntity](uploads/example_1_ss.png) | ![BuildingEntity](uploads/example_1_groups.png) | ![BuildingEntity](uploads/example_1.png) | ![BuildingEntity](uploads/example_1_2d.png) | [Download](https://drive.switch.ch/index.php/s/SYfkfiYtPgjrAti)                                                    |
-| Buildings, Parcels | ![BuildingEntity](uploads/example_3_ss.png) | ![BuildingEntity](uploads/example_3_groups.png) | ![BuildingEntity](uploads/example_3.png) | ![BuildingEntity](uploads/example_3_2d.png) | [Download](https://drive.switch.ch/index.php/s/0wcjF5KFn7Zbr6N)                                                    |
+| Land covers        | ![BuildingEntity](uploads/example_1_ss.png) | ![BuildingEntity](uploads/example_1_groups.png) | ![BuildingEntity](uploads/example_1.png) | ![BuildingEntity](uploads/example_1_2d.png) | [Download](https://drive.switch.ch/index.php/s/SYfkfiYtPgjrAti) |
+| Buildings, Parcels | ![BuildingEntity](uploads/example_3_ss.png) | ![BuildingEntity](uploads/example_3_groups.png) | ![BuildingEntity](uploads/example_3.png) | ![BuildingEntity](uploads/example_3_2d.png) | [Download](https://drive.switch.ch/index.php/s/0wcjF5KFn7Zbr6N) |
 
 ## Known Issues
 
