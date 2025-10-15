@@ -64,11 +64,11 @@ technical parameters and options.
 
 ## Getting started
 
-Modify the configuration according to your needs/environment. Details about configuration [see below](#configuration).  
+Modify the configuration according to your needs/environment. Details about configuration [see here](#configuration).  
 Prerequisites:
 
 - The PostGIS database with the cadastral data is available (connection with psychopg is possible)
-- The service to get terrain data is available
+- The service to get external data is available
 
 Build and run docker image
 
@@ -108,7 +108,7 @@ Important: The config file (./config.yml) and the sqls (./sql/) are mounted from
 started). For the program to work, these files must be provided.
 
 All generated ifc files are stored inside a docker volume called "ifc".
-All log files are stored inside a docker volume called "ifc".
+All log files are stored inside a docker volume called "logs".
 
 ## Getting started (Development)
 
