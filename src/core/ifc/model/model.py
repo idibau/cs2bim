@@ -182,10 +182,10 @@ class Model:
                     ifc_groups[group_path] = ifc_group
 
                     group_element = Element()
-                    for attribute in group_config.attributes:
-                        element.add_attribute(attribute.attribute, attribute.value)
-                    for p in group_config.properties:
-                        element.add_property(p.property_set, p.property, p.value)
+                    for attribute in group_config.entity_mapping.attributes:
+                        group_element.add_attribute(attribute.attribute, attribute.value)
+                    for p in group_config.entity_mapping.properties:
+                        group_element.add_property(p.property_set, p.property, p.value)
                     group_element.set_ifc_attributes(ifc_file, ifc_group)
                     group_element.set_ifc_properties(ifc_file, ifc_group)
                 else:
