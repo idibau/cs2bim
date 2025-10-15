@@ -304,6 +304,13 @@ class IfcFile:
             "IfcBuilding", GlobalId=guid.new(), ObjectPlacement=object_placement
         )
 
+    def create_ifc_space(self, object_placement: entity_instance, representation: entity_instance
+    ) -> entity_instance:
+        return self.file.create_entity(
+            "IfcSpace", GlobalId=guid.new(), ObjectPlacement=object_placement,
+            Representation=representation
+        )
+
     def create_ifc_building_element_proxy(
             self, object_placement: entity_instance, representation: entity_instance
     ) -> entity_instance:

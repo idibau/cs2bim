@@ -28,6 +28,8 @@ class BuildingPart:
             ifc_element = ifc_file.create_ifc_slab(ifc_local_placement, product_definition_shape)
         elif self.entity == BuildingPartEntity.IFC_WALL:
             ifc_element = ifc_file.create_ifc_wall(ifc_local_placement, product_definition_shape)
+        elif self.entity == BuildingPartEntity.IFC_SPACE:
+            ifc_element = ifc_file.create_ifc_space(ifc_local_placement, product_definition_shape)
         elif self.entity == BuildingPartEntity.IFC_BUILDING_ELEMENT_PROXY:
             ifc_element = ifc_file.create_ifc_building_element_proxy(ifc_local_placement, product_definition_shape)
         else:
