@@ -35,11 +35,11 @@ class ModelGenerator:
         origin = np.array(project_origin)
         model = Model(name, ifc_version, project_origin)
 
-        logger.info("process clipped terrain feature types")
-        clipped_terrain_processor = ProjectionProcessor()
-        clipped_terrains = clipped_terrain_processor.process(polygon, origin)
-        for key, clipped_terrains in clipped_terrains.items():
-            model.add_projections(key, clipped_terrains)
+        logger.info("process projection feature types")
+        projection_processor = ProjectionProcessor()
+        projections = projection_processor.process(polygon, origin)
+        for key, projections in projections.items():
+            model.add_projections(key, projections)
 
         logger.info("process building feature types")
         building_processor = BuildingProcessor()

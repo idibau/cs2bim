@@ -24,7 +24,7 @@ class ProjectionProcessor:
     def process(self, polygon, origin):
         feature_types = {ct.name: ct for ct in config.ifc.feature_types.projections}
         if not feature_types:
-            logger.info("no clipped terrain feature types configured")
+            logger.info("no projection feature types configured")
             return {}
 
         wkts = []
