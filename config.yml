@@ -37,7 +37,7 @@ ifc:
   project_name: "cs2bim"
   geo_referencing: LO_GEO_REF_50
   feature_types:
-    projection_feature_types:
+    projections:
       - name: "parcel"
         sql_path: "/workspace/sql/parcels.sql"
         entity_mapping:
