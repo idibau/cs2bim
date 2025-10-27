@@ -10,6 +10,7 @@ redis:
     celery_backend: "1"
     file_cache: "2"
   global_keyprefix: "prefix"
+  queue: "cs2bim"
 
 ########## postgis configuration ############
 db:

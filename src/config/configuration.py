@@ -57,6 +57,7 @@ class RedisConfig(BaseModel):
     port: int = Field(..., description="Redis port number")
     db: RedisDBConfig = Field(..., description="Nested Redis database configuration")
     global_keyprefix: Optional[str] = Field(None, description="Optional global keyprefix for the Redis result backend")
+    queue: Optional[str] = Field(None, description="Optional queue name for Celery tasks")
 
 
 class STACConfig(BaseModel):
