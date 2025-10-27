@@ -29,6 +29,14 @@ class Projection(FeatureElement):
         ifc_local_placement = ifc_file.create_ifc_local_placement((0.0, 0.0, 0.0))
         if entity == ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT:
             ifc_element = ifc_file.create_ifc_geographic_element(ifc_local_placement, ifc_product_definition_shape)
+        elif entity == ProjectionEntity.IFC_SPATIAL_ZONE:
+            ifc_element = ifc_file.create_ifc_spatial_zone(ifc_local_placement, ifc_product_definition_shape)
+        elif entity == ProjectionEntity.IFC_ANNOTATION:
+            ifc_element = ifc_file.create_ifc_annotation(ifc_local_placement, ifc_product_definition_shape)
+        elif entity == ProjectionEntity.IFC_SITE:
+            ifc_element = ifc_file.create_ifc_site(ifc_local_placement, ifc_product_definition_shape)
+        elif entity == ProjectionEntity.IFC_BUILDING:
+            ifc_element = ifc_file.create_ifc_building(ifc_local_placement, ifc_product_definition_shape)
         else:
             raise NotImplementedError(
                 f"building step for projection feature type entity {entity.name} not implemented")

@@ -127,7 +127,7 @@ class ProjectionFeatureType(BaseModel):
                           description="Path to SQL definition for the projection feature type. Must return at least a column named 'wkt'.")
     entity_mapping: ProjectionEntityConfig = Field(..., description="Entity mapping configuration for the projection")
     entity_type_mapping: Optional[ProjectionEntityTypeConfig] = Field(None,
-                                                                      description="Entity type mapping configuration for the projection")
+                                                                      description="Entity type mapping configuration for the projection. (Only supported for entities with TypeObject)")
     spatial_structure_mapping: ProjectionSpatialEntityConfig = Field(...,
                                                                      description="Spatial structure mapping for the projection")
     group_mapping: List[ProjectionConfigSource] = Field(default_factory=list, json_schema_extra={"default": []},

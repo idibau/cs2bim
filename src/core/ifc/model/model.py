@@ -137,15 +137,18 @@ class Model:
     def create_projection_ifc_element_type(self, ifc_file, element_type, projection_entity):
         if projection_entity == ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT:
             ifc_element_type = ifc_file.create_ifc_geographic_element_type()
-            element_type.set_ifc_attributes(ifc_file, ifc_element_type)
-            element_type.set_ifc_properties(ifc_file, ifc_element_type)
+        elif projection_entity == ProjectionEntity.IFC_SPATIAL_ZONE:
+            ifc_element_type = ifc_file.create_ifc_spatial_zone_type()
         else:
             raise NotImplementedError(
-                f"building step for projection entity {projection_entity.name} not implemented for clipped terrain feature types")
+                f"building step for projection entity type {projection_entity.name} not implemented")
+        element_type.set_ifc_attributes(ifc_file, ifc_element_type)
+        element_type.set_ifc_properties(ifc_file, ifc_element_type)
         return ifc_element_type
 
     def create_ifc_spatial_structure(self, ifc_file, ifc_local_placement, ifc_project, spatial_structure_element):
         ifc_spatial_structure = ifc_file.create_ifc_site(ifc_local_placement, ifc_project)
+        ifc_file.create_ifc_rel_aggregates(ifc_project, [ifc_spatial_structure])
         spatial_structure_element.set_ifc_attributes(ifc_file, ifc_spatial_structure)
         spatial_structure_element.set_ifc_properties(ifc_file, ifc_spatial_structure)
         return ifc_spatial_structure

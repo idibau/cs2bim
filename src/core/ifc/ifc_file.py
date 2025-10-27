@@ -156,15 +156,6 @@ class IfcFile:
         relative_placement = self.file.create_entity("IfcAxis2Placement3D", Location=location)
         return self.file.create_entity("IfcLocalPlacement", RelativePlacement=relative_placement)
 
-    def create_ifc_site(
-            self,
-            object_placement: entity_instance,
-            project: entity_instance,
-    ) -> entity_instance:
-        site = self.file.create_entity("IfcSite", GlobalId=guid.new(), ObjectPlacement=object_placement)
-        self.create_ifc_rel_aggregates(project, [site])
-        return site
-
     def create_ifc_rel_aggregates(
             self, relating_object: entity_instance, related_objects: list[entity_instance]
     ) -> entity_instance:
@@ -292,20 +283,49 @@ class IfcFile:
             "IfcGeographicElement", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
         )
 
+    def create_ifc_spatial_zone(
+            self, object_placement: entity_instance, representation: entity_instance
+    ) -> entity_instance:
+        return self.file.create_entity(
+            "IfcSpatialZone", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+        )
+
+    def create_ifc_annotation(
+            self, object_placement: entity_instance, representation: entity_instance
+    ) -> entity_instance:
+        return self.file.create_entity(
+            "IfcAnnotation", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+        )
+
+    def create_ifc_site(
+            self, object_placement: entity_instance, representation: entity_instance = None
+    ) -> entity_instance:
+        return self.file.create_entity(
+            "IfcAnnotation", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+        )
+
+    def create_ifc_building(
+            self, object_placement: entity_instance, representation: entity_instance = None
+    ) -> entity_instance:
+        if representation is None:
+            return self.file.create_entity("IfcAnnotation", GlobalId=guid.new(), ObjectPlacement=object_placement)
+        else:
+            return self.file.create_entity(
+                "IfcAnnotation", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+            )
+
     def create_ifc_geographic_element_type(self) -> entity_instance:
         return self.file.create_entity(
             "IfcGeographicElementType", GlobalId=guid.new()
         )
 
-    def create_ifc_building(
-            self, object_placement: entity_instance
-    ) -> entity_instance:
+    def create_ifc_spatial_zone_type(self) -> entity_instance:
         return self.file.create_entity(
-            "IfcBuilding", GlobalId=guid.new(), ObjectPlacement=object_placement
+            "IfcSpatialZoneType", GlobalId=guid.new()
         )
 
     def create_ifc_space(self, object_placement: entity_instance, representation: entity_instance
-    ) -> entity_instance:
+                         ) -> entity_instance:
         return self.file.create_entity(
             "IfcSpace", GlobalId=guid.new(), ObjectPlacement=object_placement,
             Representation=representation

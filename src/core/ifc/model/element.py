@@ -32,10 +32,7 @@ class Element:
     def __eq__(self, other):
         if not isinstance(other, Element):
             return False
-        return (
-            self.attributes == other.attributes and
-            self.property_sets == other.property_sets
-        )
+        return self.attributes == other.attributes and self.property_sets == other.property_sets
 
     def __hash__(self):
         return hash((
@@ -44,7 +41,4 @@ class Element:
         ))
 
     def __repr__(self):
-        return (
-            f"Element(attributes={self.attributes!r}, "
-            f"property_sets={list(self.property_sets.keys())!r})"
-        )
+        return f"Element(attributes={self.attributes!r}, " f"property_sets={list(self.property_sets.keys())!r})"
