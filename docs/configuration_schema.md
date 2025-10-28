@@ -95,7 +95,7 @@ Supported ifc entities for building part entities
 
 #### Type: `string`
 
-**Possible Values:** `IFC_WALL` or `IFC_SLAB` or `IFC_ROOF` or `IFC_BUILDING_ELEMENT_PROXY`
+**Possible Values:** `IFC_WALL` or `IFC_SLAB` or `IFC_ROOF` or `IFC_SPACE` or `IFC_BUILDING_ELEMENT_PROXY`
 
 ## BuildingPropertyConfig
 
@@ -299,7 +299,7 @@ Supported ifc entities for projection entities
 
 #### Type: `string`
 
-**Possible Values:** `IFC_GEOGRAPHIC_ELEMENT`
+**Possible Values:** `IFC_GEOGRAPHIC_ELEMENT` or `IFC_ANNOTATION` or `IFC_SITE` or `IFC_BUILDING` or `IFC_SPATIAL_ZONE`
 
 ## ProjectionEntityConfig
 
@@ -336,7 +336,7 @@ Feature type configuration for projection feature type
 | sql_path | `string` | ✅ | string |  | Path to SQL definition for the projection feature type. Must return at least a column named 'wkt'. |
 | entity_mapping | `object` | ✅ | [ProjectionEntityConfig](#projectionentityconfig) |  | Entity mapping configuration for the projection |
 | spatial_structure_mapping | `object` | ✅ | [ProjectionSpatialEntityConfig](#projectionspatialentityconfig) |  | Spatial structure mapping for the projection |
-| entity_type_mapping | `object` or `null` |  | [ProjectionEntityTypeConfig](#projectionentitytypeconfig) | `null` | Entity type mapping configuration for the projection |
+| entity_type_mapping | `object` or `null` |  | [ProjectionEntityTypeConfig](#projectionentitytypeconfig) | `null` | Entity type mapping configuration for the projection. (Only supported for entities with TypeObject) |
 | group_mapping | `array` |  | [ProjectionConfigSource](#projectionconfigsource) | `[]` | Group mappings for the projection feature type |
 | color | `object` |  | [Color](#color) | `"white"` | Color assigned to the projection feature type |
 
@@ -395,6 +395,7 @@ Redis connection configuration
 | port | `integer` | ✅ | integer |  | Redis port number |
 | db | `object` | ✅ | [RedisDBConfig](#redisdbconfig) |  | Nested Redis database configuration |
 | global_keyprefix | `string` or `null` |  | string | `null` | Optional global keyprefix for the Redis result backend |
+| queue | `string` or `null` |  | string | `null` | Optional queue name for Celery tasks |
 
 ## RedisDBConfig
 

@@ -15,7 +15,6 @@ The configuration is divided into several sections:
 - **External Data (STAC, TIN)**: Configure where the application remote data sources (STAC APIs) can be found.
 - **IFC Export**: Define how data will be structured and exported to IFC.
 
-
 ### 2. Internationalization Support
 
 The configuration supports referencing translation files for multiple languages. The values affected by translation are
@@ -147,7 +146,11 @@ total number of spatial structures ranges from one up to the number of feature t
 ##### Entity Type Mapping
 
 Specifies an IFC entity type linked to each created instance. Entity types are shared among other instances of this
-feature type if their attribute or property values are identical.
+feature type if their attribute or property values are identical. Entity types are only supported by certain IFC
+entities. The responsibility for configuring this correctly lies with the user. Configured entity types that do not
+exist are ignored.
+Attributes cannot be freely selected and depend on the ifc entity that is selected. If a configured attribute does not
+exist, it is ignored.
 
 #### Groups
 
