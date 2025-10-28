@@ -147,7 +147,7 @@ class Model:
         return ifc_element_type
 
     def create_ifc_spatial_structure(self, ifc_file, ifc_local_placement, ifc_project, spatial_structure_element):
-        ifc_spatial_structure = ifc_file.create_ifc_site(ifc_local_placement, ifc_project)
+        ifc_spatial_structure = ifc_file.create_ifc_site(ifc_local_placement)
         ifc_file.create_ifc_rel_aggregates(ifc_project, [ifc_spatial_structure])
         spatial_structure_element.set_ifc_attributes(ifc_file, ifc_spatial_structure)
         spatial_structure_element.set_ifc_properties(ifc_file, ifc_spatial_structure)
