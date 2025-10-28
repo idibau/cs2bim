@@ -22,7 +22,7 @@ if config.redis.global_keyprefix:
         "global_keyprefix": config.redis.global_keyprefix
     }
 if config.redis.queue:
-    celery_app.conf.task_default_queue = config.redis.queue
+    app.conf.task_default_queue = config.redis.queue
 
 
 @worker_process_init.connect
