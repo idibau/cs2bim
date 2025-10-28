@@ -96,7 +96,7 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "IFC_VERSION": "IFC4x3_ADD2",
+  "IFC_VERSION": "IFC4X3_ADD2",
   "NAME": "API Test",
   "POLYGON": "POLYGON((2615490.59 1264657.53, 2615782.92 1264674.74, 2615747.00 1264604.23, 2615490.59 1264657.53))",
   "PROJECT_ORIGIN": "2600000,1200000,0",
