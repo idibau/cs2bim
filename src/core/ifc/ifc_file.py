@@ -300,18 +300,20 @@ class IfcFile:
     def create_ifc_site(
             self, object_placement: entity_instance, representation: entity_instance = None
     ) -> entity_instance:
+        if representation is None:
+            return self.file.create_entity("IfcSite", GlobalId=guid.new(), ObjectPlacement=object_placement)
         return self.file.create_entity(
-            "IfcAnnotation", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+            "IfcSite", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
         )
 
     def create_ifc_building(
             self, object_placement: entity_instance, representation: entity_instance = None
     ) -> entity_instance:
         if representation is None:
-            return self.file.create_entity("IfcAnnotation", GlobalId=guid.new(), ObjectPlacement=object_placement)
+            return self.file.create_entity("IfcBuilding", GlobalId=guid.new(), ObjectPlacement=object_placement)
         else:
             return self.file.create_entity(
-                "IfcAnnotation", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+                "IfcBuilding", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
             )
 
     def create_ifc_geographic_element_type(self) -> entity_instance:
