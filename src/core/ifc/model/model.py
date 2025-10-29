@@ -74,14 +74,12 @@ class Model:
             logger.info(f"build FeatureType {feature_type_key}")
             feature_type = projections_config[feature_type_key]
             ifc_style = ifc_file.create_ifc_surface_style(feature_type.color)
-            ifc_elements = []
             ifc_element_types = {}
             for element in elements:
                 ifc_element = element.map_to_ifc(ifc_file, feature_type.entity_mapping.entity,
                                                  ifc_representation_sub_context, ifc_style)
                 element.set_ifc_attributes(ifc_file, ifc_element)
                 element.set_ifc_properties(ifc_file, ifc_element)
-                ifc_elements.append(ifc_element)
 
                 if element.element_type is not None:
                     if element.element_type not in ifc_element_types:
@@ -93,7 +91,7 @@ class Model:
                 if element.spatial_structure not in ifc_spatial_structures:
                     ifc_spatial_structure = self.create_ifc_spatial_structure(ifc_file, ifc_local_placement,
                                                                               ifc_project, element.spatial_structure)
-                    ifc_spatial_structures[element.spatial_structure] = (ifc_spatial_structure, [], [])
+                    ifc_spatial_structures[element.spatial_structure] = (ifc_spatial_structure, [])
                 ifc_spatial_structures[element.spatial_structure][1].append(ifc_element)
 
                 for group in element.groups:
@@ -106,29 +104,29 @@ class Model:
 
         for feature_type_key, elements in self.buildings.items():
             logger.info(f"build FeatureType {feature_type_key}")
-            ifc_elements = []
             for element in elements:
                 ifc_element = element.map_to_ifc(ifc_file, ifc_local_placement, ifc_representation_sub_context)
                 element.set_ifc_attributes(ifc_file, ifc_element)
                 element.set_ifc_properties(ifc_file, ifc_element)
-                ifc_elements.append(ifc_element)
 
                 if element.spatial_structure not in ifc_spatial_structures:
                     ifc_spatial_structure = self.create_ifc_spatial_structure(ifc_file, ifc_local_placement,
                                                                               ifc_project, element.spatial_structure)
-                    ifc_spatial_structures[element.spatial_structure] = (ifc_spatial_structure, [], [])
-                ifc_spatial_structures[element.spatial_structure][2].append(ifc_element)
+                    ifc_spatial_structures[element.spatial_structure] = (ifc_spatial_structure, [])
+                ifc_spatial_structures[element.spatial_structure][1].append(ifc_element)
 
                 for group in element.groups:
                     if not group in group_mappings:
                         group_mappings[group] = []
                     group_mappings[group].append(ifc_element)
 
-        for ifc_spatial_structure, ifc_elements, ifc_spatial_elements in ifc_spatial_structures.values():
-            if ifc_elements:
-                ifc_file.create_ifc_rel_contained_in_spatial_structure(ifc_elements, ifc_spatial_structure)
+        for ifc_spatial_structure, ifc_elements in ifc_spatial_structures.values():
+            ifc_spatial_elements = [e for e in ifc_elements if e.is_a('IfcSpatialStructureElement')]
+            ifc_non_spatial_elements = [e for e in ifc_elements if not e.is_a('IfcSpatialStructureElement')]
             if ifc_spatial_elements:
                 ifc_file.create_ifc_rel_aggregates(ifc_spatial_structure, ifc_spatial_elements)
+            if ifc_non_spatial_elements:
+                ifc_file.create_ifc_rel_contained_in_spatial_structure(ifc_non_spatial_elements, ifc_spatial_structure)
 
         self.create_ifc_groups(ifc_file, group_mappings)
         logger.info("completed ifc build")
