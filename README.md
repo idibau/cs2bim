@@ -159,13 +159,17 @@ python main.py \
 ## Resulting IFC Files
 
 Based on this polygon `POLYGON((2615655 1263023,2616195 1263023,2616195 1262520,2615655 1262520,2615655 1263023))`,
-three representative models have been generated. The configurations and models are available as download.
+three representative models have been generated. There are three example files provided, illustrating the variety of IFC
+configuration possibilities. The configurations and models are available as download. Additionally, a separate ZIP
+archive is available, containing supplementary examples on georeferencing and project origin.
 
 | Description        | Spatial structure                           | Groups                                          | 3D                                       | 2D                                          | Configuration                                                   |
 |--------------------|---------------------------------------------|-------------------------------------------------|------------------------------------------|---------------------------------------------|-----------------------------------------------------------------|
 | Buildings          | ![BuildingEntity](uploads/example_2_ss.png) | ![BuildingEntity](uploads/example_2_groups.png) | ![BuildingEntity](uploads/example_2.png) | ![BuildingEntity](uploads/example_2_2d.png) | [Download](https://drive.switch.ch/index.php/s/SYfkfiYtPgjrAti) |
 | Land covers        | ![BuildingEntity](uploads/example_1_ss.png) | ![BuildingEntity](uploads/example_1_groups.png) | ![BuildingEntity](uploads/example_1.png) | ![BuildingEntity](uploads/example_1_2d.png) | [Download](https://drive.switch.ch/index.php/s/6lFzcS20Hq3VV9E) |
 | Buildings, Parcels | ![BuildingEntity](uploads/example_3_ss.png) | ![BuildingEntity](uploads/example_3_groups.png) | ![BuildingEntity](uploads/example_3.png) | ![BuildingEntity](uploads/example_3_2d.png) | [Download](https://drive.switch.ch/index.php/s/0wcjF5KFn7Zbr6N) |
+
+[Download ifc_supplementary_examples.zip](https://drive.switch.ch/index.php/s/qoe0NF9U77aTw2O)
 
 ## Known Issues
 
