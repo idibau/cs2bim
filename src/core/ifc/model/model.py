@@ -16,10 +16,10 @@ logger = logging.getLogger(__name__)
 class Model:
     """Class holding all variable data for creating the ifc"""
 
-    def __init__(self, file_name: str, schema: IfcVersion, origin: tuple[float, float, float]) -> None:
+    def __init__(self, file_name: str, schema: IfcVersion, project_origin: tuple[float, float, float]) -> None:
         self.file_name = file_name
         self.schema = schema
-        self.origin = origin
+        self.project_origin = project_origin
         self.projections: dict[str, list[Projection]] = {}
         self.buildings: dict[str, list[Building]] = {}
 
@@ -49,19 +49,19 @@ class Model:
 
         geo_referencing = config.ifc.geo_referencing
         if geo_referencing == GeoReferencing.LO_GEO_REF_40:
-            location = self.origin
+            location = self.project_origin
         else:
             location = (0.0, 0.0, 0.0)
         ifc_representation_context = ifc_file.create_ifc_geometric_representation_context(location)
         ifc_representation_sub_context = ifc_file.create_ifc_geometric_representation_sub_context(
             ifc_representation_context)
         if geo_referencing == GeoReferencing.LO_GEO_REF_50:
-            ifc_file.create_ifc_map_conversion(ifc_length_unit, ifc_representation_context, self.origin)
+            ifc_file.create_ifc_map_conversion(ifc_length_unit, ifc_representation_context, self.project_origin)
 
         ifc_project = ifc_file.create_ifc_project(config.ifc.project_name, ifc_owner_history,
                                                   ifc_representation_context, ifc_unit_assignment)
         if geo_referencing == GeoReferencing.LO_GEO_REF_30:
-            location = self.origin
+            location = self.project_origin
         else:
             location = (0.0, 0.0, 0.0)
         ifc_local_placement = ifc_file.create_ifc_local_placement(location)

@@ -11,15 +11,15 @@ class Solid(GmlGeometry):
         self.exterior = CompositeSurface()
         self.interior = []
 
-    def from_gml(self, gml, origin):
+    def from_gml(self, gml, project_origin: tuple[float, float, float]):
         surface_exterior = gml.xpath("./gml:exterior/gml:CompositeSurface", namespaces=namespace)
         if len(surface_exterior) != 1:
             raise ValueError("Solid expects exactly one exterior composite surface")
-        self.exterior.from_gml(surface_exterior[0], origin)
+        self.exterior.from_gml(surface_exterior[0], project_origin)
         for interior_gml in gml.xpath("./gml:interior", namespaces=namespace):
             for composite_surface_gml in interior_gml.xpath("./gml:CompositeSurface", namespaces=namespace):
                 composite_surface = CompositeSurface()
-                composite_surface.from_gml(composite_surface_gml, origin)
+                composite_surface.from_gml(composite_surface_gml, project_origin)
                 self.interior.append(composite_surface)
 
     def map_to_ifc(self, ifc_file, ifc_style):

@@ -1,5 +1,12 @@
+import logging
+
 import numpy as np
 import shapely
+
+from config.configuration import config
+from core.tin.mesh import Mesh
+
+logger = logging.getLogger(__name__)
 
 
 class Area(object):
@@ -16,23 +23,48 @@ class Area(object):
 
     Parameters
     ----------
-    wkt_str : str
-        WKT string defining the polygon
+    polygon
+        Shaply polygon
     origin : np.ndarray of form [x, y]
         Origin to reduce coordinate values
     """
 
-    def __init__(self, wkt_str: str, origin: np.ndarray = np.zeros((2,))) -> None:
-        assert isinstance(wkt_str, str)
-
-        if isinstance(shapely.from_wkt(wkt_str), shapely.MultiPolygon):
+    def __init__(self, polygon, project_origin) -> None:
+        if isinstance(polygon, shapely.MultiPolygon):
             raise ValueError("multi polygon not supported")
 
-        self._geometry = self._check_polygon_definition(shapely.from_wkt(wkt_str))
+        self._geometry = self._check_polygon_definition(polygon)
 
-        assert origin.shape == (2,)
-        if not np.allclose(origin, np.zeros((2,))):
-            self._reduce(origin)
+        project_origin = np.array(project_origin)
+        assert project_origin.shape == (2,)
+        if not np.allclose(project_origin, np.zeros((2,))):
+            self._reduce(project_origin)
+
+        self.raster_points_within = []
+        self.raster_points_buffer = []
+
+    def add_raster_points(self, raster_points):
+        rpb = raster_points.within(self.get_geometry, 3 * config.tin.grid_size.value)
+        if rpb is not None:
+            self.raster_points_buffer.append(rpb)
+        rpw = raster_points.within(self.get_geometry, 0)
+        if rpw is not None:
+            self.raster_points_within.append(rpw)
+
+    def create_mesh(self):
+        if self.raster_points_buffer:
+            mesh = Mesh(np.vstack(self.raster_points_buffer))
+        else:
+            mesh = Mesh(np.empty((0, 3)))
+        if self.raster_points_within:
+            mesh_clipped = mesh.clip_mesh_by_area(self, np.vstack(self.raster_points_within))
+        else:
+            mesh_clipped = mesh.clip_mesh_by_area(self, np.empty((0, 3)))
+        mesh_clipped_decimated = mesh_clipped.decimate(config.tin.max_height_error, config.tin.grid_size.value)
+        logger.debug(
+            f"area consistency: {mesh_clipped_decimated.check_area_consistency(self.get_area, 0.1)}"
+        )
+        return mesh_clipped_decimated
 
     def _check_polygon_definition(self, poly: shapely.Polygon):
         """

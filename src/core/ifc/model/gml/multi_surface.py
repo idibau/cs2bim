@@ -12,18 +12,18 @@ class MultiSurface(GmlGeometry):
         self.polygons = []
         self.composite_surfaces = []
 
-    def from_gml(self, gml, origin):
+    def from_gml(self, gml, project_origin: tuple[float, float, float]):
         for polygon_gml in gml.xpath("./gml:surfaceMember/gml:Polygon | ./gml:surfaceMembers/gml:Polygon",
                                      namespaces=namespace):
             polygon = Polygon()
-            polygon.from_gml(polygon_gml, origin)
+            polygon.from_gml(polygon_gml, project_origin)
             self.polygons.append(polygon)
 
         for composite_surface_gml in gml.xpath(
                 "./gml:surfaceMember/gml:CompositeSurface | ./gml:surfaceMembers/gml:CompositeSurface",
                 namespaces=namespace):
             composite_surface = CompositeSurface()
-            composite_surface.from_gml(composite_surface_gml, origin)
+            composite_surface.from_gml(composite_surface_gml, project_origin)
             self.composite_surfaces.append(composite_surface_gml)
 
     def map_to_ifc(self, ifc_file, ifc_style):

@@ -23,7 +23,7 @@ class BuildingProcessor:
         self.postgis_service = PostgisService()
         self.stac_service = STACService()
 
-    def process(self, polygon, origin):
+    def process(self, polygon, project_origin: tuple[float, float, float]):
         feature_types = {b.name: b for b in config.ifc.feature_types.buildings}
         if not feature_types:
             logger.info("No building feature typees configured")
@@ -54,7 +54,7 @@ class BuildingProcessor:
                             egid = value_elem.text.strip()
                             if egid in egids:
                                 logger.debug(f"process building {egid}")
-                                building_model = self.create_building_model(building, building_config, origin,
+                                building_model = self.create_building_model(building, building_config, project_origin,
                                                                             egids[egid])
                                 if not feature_type_key in buildings:
                                     buildings[feature_type_key] = []
@@ -66,7 +66,7 @@ class BuildingProcessor:
                             del building.getparent()[0]
         return buildings
 
-    def create_building_model(self, building, building_config, origin, result_set):
+    def create_building_model(self, building, building_config, project_origin: tuple[float, float, float], result_set):
         building_model = Building()
         self.add_attributes(building, building_config.entity_mapping.attributes, building_model, result_set)
         self.add_properties(building, building_config.entity_mapping.properties, building_model, result_set)
@@ -85,7 +85,7 @@ class BuildingProcessor:
                 else:
                     raise NotImplementedError(
                         f"building step for gml geometry type {geometry_mapping.geometry} not implemented")
-                geometry.from_gml(geometry_gml, origin)
+                geometry.from_gml(geometry_gml, project_origin)
                 building_part = BuildingPart(building_part_config.entity, geometry, building_part_config.color)
                 building_model.add_building_part(building_part)
 

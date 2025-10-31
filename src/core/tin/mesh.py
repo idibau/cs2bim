@@ -5,7 +5,6 @@ import pandas as pd
 import pyvista as pv
 import shapely
 
-from .polygon import Area
 
 logger = logging.getLogger(__name__)
 
@@ -176,7 +175,7 @@ class Mesh(object):
 
         return edge_points, line_definition
 
-    def _filter_triangles(self, mesh: pv.PolyData, area: Area) -> np.ndarray:
+    def _filter_triangles(self, mesh: pv.PolyData, area) -> np.ndarray:
         """
         Filters triangles based on geometry object.
 
@@ -220,7 +219,7 @@ class Mesh(object):
 
         return tri_filtered
 
-    def clip_mesh_by_area(self, area: Area, points_within_area: np.ndarray | pd.DataFrame) -> "Mesh":
+    def clip_mesh_by_area(self, area, points_within_area: np.ndarray | pd.DataFrame) -> "Mesh":
         """
         Clips mesh by provided area.
 

@@ -10,10 +10,10 @@ class CompositeSolid(GmlGeometry):
         super().__init__()
         self.solids = []
 
-    def from_gml(self, gml, origin):
+    def from_gml(self, gml, project_origin: tuple[float, float, float]):
         for solid_gml in gml.xpath("./gml:solidMember/gml:Solid", namespaces=namespace):
             solid = Solid()
-            solid.from_gml(solid_gml, origin)
+            solid.from_gml(solid_gml, project_origin)
             self.solids.append(solid)
 
     def map_to_ifc(self, ifc_file, ifc_style):

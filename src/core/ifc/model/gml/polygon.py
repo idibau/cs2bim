@@ -8,14 +8,14 @@ class Polygon:
         self.exterior = PosList()
         self.interior = []
 
-    def from_gml(self, gml, origin):
+    def from_gml(self, gml, project_origin: tuple[float, float, float]):
         pos_list_exterior = gml.xpath("./gml:exterior//gml:posList", namespaces=namespace)
         if len(pos_list_exterior) != 1:
             raise ValueError("Polygon expects exactly one exterior posList")
-        self.exterior.from_gml(pos_list_exterior[0], origin)
+        self.exterior.from_gml(pos_list_exterior[0], project_origin)
         for pos_list_gml in gml.xpath("./gml:interior//gml:posList", namespaces=namespace):
             pos_list = PosList()
-            pos_list.from_gml(pos_list_gml, origin)
+            pos_list.from_gml(pos_list_gml, project_origin)
             self.interior.append(pos_list)
 
     def create_ifc_indexed_polygonal_face(self, ifc_file, coordinates):

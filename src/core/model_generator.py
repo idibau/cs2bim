@@ -32,18 +32,17 @@ class ModelGenerator:
         if project_origin is None:
             project_origin = self.calculate_origin_from_polygon(polygon)
 
-        origin = np.array(project_origin)
         model = Model(name, ifc_version, project_origin)
 
         logger.info("process projection feature types")
         projection_processor = ProjectionProcessor()
-        projections = projection_processor.process(polygon, origin)
+        projections = projection_processor.process(polygon, project_origin)
         for key, projections in projections.items():
             model.add_projections(key, projections)
 
         logger.info("process building feature types")
         building_processor = BuildingProcessor()
-        buildings = building_processor.process(polygon, origin)
+        buildings = building_processor.process(polygon, project_origin)
         for key, buildings in buildings.items():
             model.add_buildings(key, buildings)
 

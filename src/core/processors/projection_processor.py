@@ -1,12 +1,13 @@
 import logging
+import math
 
-import numpy as np
+from shapely import wkt
+from shapely.geometry import box
 
 from config.configuration import config, ProjectionFeatureType, ProjectionAttributeConfig, ProjectionPropertyConfig
 from config.projection_source import ProjectionSource
 from core.ifc.model.element import Element
 from core.ifc.model.projection import Projection
-from core.tin.mesh import Mesh
 from core.tin.polygon import Area
 from core.tin.raster import RasterPoints
 from service.postgis_service import PostgisService
@@ -21,7 +22,7 @@ class ProjectionProcessor:
         self.postgis_service = PostgisService()
         self.stac_service = STACService()
 
-    def process(self, polygon, origin):
+    def process(self, polygon, project_origin: tuple[float, float, float]):
         feature_types = {ct.name: ct for ct in config.ifc.feature_types.projections}
         if not feature_types:
             logger.info("no projection feature types configured")
@@ -57,14 +58,14 @@ class ProjectionProcessor:
             mesh_datas = []
             for element_data in elements:
                 try:
-                    mesh_data = MeshData(element_data, origin)
+                    mesh_data = MeshData(element_data, project_origin)
                     mesh_datas.append(mesh_data)
                 except Exception as e:
                     logger.error(f"Error in element data: {e}. Skipping element...")
 
             for dtm_file in dtm_files:
                 logger.info(f"load and process dtm file: {dtm_file}")
-                dtm_points = RasterPoints(dtm_file, origin=origin)
+                dtm_points = RasterPoints(dtm_file, project_origin)
                 for index, mesh_data in enumerate(mesh_datas):
                     logger.debug(f"calculate raster points for element {index + 1}/{len(elements)}")
                     mesh_data.add_raster_points(dtm_points)
@@ -73,8 +74,7 @@ class ProjectionProcessor:
             logger.info(f"create meshes for {feature_type_key} elements")
             for index, mesh_data in enumerate(mesh_datas):
                 logger.debug(f"create mesh for element {index + 1}/{len(elements)}")
-                mesh = mesh_data.create_mesh()
-                element = Projection(mesh.get_data())
+                element = Projection(mesh_data.create_mesh_data())
                 self.add_attributes(element, feature_type.entity_mapping.attributes, mesh_data)
                 self.add_properties(element, feature_type.entity_mapping.properties, mesh_data)
                 self.add_groups(element, feature_type, mesh_data)
@@ -122,33 +122,70 @@ class ProjectionProcessor:
 
 class MeshData:
 
-    def __init__(self, element_data, origin):
+    def __init__(self, element_data, project_origin):
         self.element_data = element_data
-        self.area = Area(wkt_str=element_data["wkt"], origin=origin[:2])
-        self.raster_points_within = []
-        self.raster_points_buffer = []
+        self.areas = []
+        polygons = self.cut_polygon_if_large(element_data["wkt"])
+        for polygon in polygons:
+            self.areas.append(Area(polygon, project_origin[:2]))
 
     def add_raster_points(self, raster_points):
-        rpb = raster_points.within(self.area.get_geometry, buffer_dist=3 * config.tin.grid_size.value)
-        if rpb is not None:
-            self.raster_points_buffer.append(rpb)
-        rpw = raster_points.within(self.area.get_geometry, buffer_dist=0)
-        if rpw is not None:
-            self.raster_points_within.append(rpw)
+        for area in self.areas:
+            area.add_raster_points(raster_points)
 
-    def create_mesh(self):
-        if self.raster_points_buffer:
-            mesh = Mesh(np.vstack(self.raster_points_buffer))
-        else:
-            mesh = Mesh(np.empty((0, 3)))
-        if self.raster_points_within:
-            mesh_clipped = mesh.clip_mesh_by_area(self.area, np.vstack(self.raster_points_within))
-        else:
-            mesh_clipped = mesh.clip_mesh_by_area(self.area, np.empty((0, 3)))
-        mesh_clipped_decimated = mesh_clipped.decimate(
-            max_height_error=config.tin.max_height_error, grid_size=config.tin.grid_size.value
-        )
-        logger.debug(
-            f"area consistency: {mesh_clipped_decimated.check_area_consistency(self.area.get_area, treshold=0.1)}"
-        )
-        return mesh_clipped_decimated
+    def create_mesh_data(self):
+        points_total = []
+        point_to_index = {}
+        indices_total = []
+
+        for area in self.areas:
+            mesh = area.create_mesh()
+            points, faces = mesh.get_data()
+
+            for face in faces:
+                new_face = []
+                for local_idx in face:
+                    p = tuple(points[local_idx])
+                    if p not in point_to_index:
+                        point_to_index[p] = len(points_total)
+                        points_total.append(p)
+                    new_face.append(point_to_index[p])
+                indices_total.append(tuple(new_face))
+
+        return points_total, indices_total
+
+    def cut_polygon_if_large(self, wkt_str, max_size_m=1000):
+        poly = wkt.loads(wkt_str)
+
+        minx, miny, maxx, maxy = poly.bounds
+        width = maxx - minx
+        height = maxy - miny
+
+        if width <= max_size_m and height <= max_size_m:
+            return [poly]
+
+        nx = math.ceil(width / max_size_m)
+        ny = math.ceil(height / max_size_m)
+
+        cut_polys = []
+        for i in range(nx):
+            for j in range(ny):
+                x1 = minx + i * max_size_m
+                y1 = miny + j * max_size_m
+                x2 = min(x1 + max_size_m, maxx)
+                y2 = min(y1 + max_size_m, maxy)
+                cell = box(x1, y1, x2, y2)
+                inter = poly.intersection(cell)
+                if inter.is_empty:
+                    continue
+                if inter.geom_type == "Polygon":
+                    cut_polys.append(inter)
+                elif inter.geom_type == "MultiPolygon":
+                    cut_polys.extend(list(inter.geoms))
+                else:
+                    pass
+
+        if len(cut_polys) > 1:
+            logger.info(f"CUT POLYYYYYY {len(cut_polys)}")
+
+        return cut_polys

@@ -8,10 +8,10 @@ class CompositeSurface:
         super().__init__()
         self.polygons = []
 
-    def from_gml(self, gml, origin):
+    def from_gml(self, gml, project_origin: tuple[float, float, float]):
         for polygon_gml in gml.xpath("./gml:surfaceMember/gml:Polygon", namespaces=namespace):
             polygon = Polygon()
-            polygon.from_gml(polygon_gml, origin)
+            polygon.from_gml(polygon_gml, project_origin)
             self.polygons.append(polygon)
 
     def create_ifc_indexed_polygonal_faces(self, ifc_file: IfcFile, coordinates):

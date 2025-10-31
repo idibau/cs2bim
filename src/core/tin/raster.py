@@ -12,10 +12,11 @@ class RasterPoints(object):
         Raster points as geopandas.GeoDataFrame
     """
 
-    def __init__(self, xyz_filepath: str, origin: np.ndarray = np.zeros((3,))) -> None:
+    def __init__(self, xyz_filepath: str, project_origin) -> None:
         self.data = np.loadtxt(xyz_filepath, delimiter=" ", skiprows=1)
-        if not np.allclose(origin, np.zeros((3,))):
-            self.data = self.data - origin
+        project_origin = np.array(project_origin)
+        if not np.allclose(project_origin, np.zeros((3,))):
+            self.data = self.data - project_origin
         if self.data.ndim == 1:
             self.data = self.data.reshape((1, -1))
         self.xy = self.data[:, :2]

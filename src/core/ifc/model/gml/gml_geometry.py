@@ -8,7 +8,7 @@ class GmlGeometry(ABC):
         pass
 
     @abstractmethod
-    def from_gml(self, gml, origin) -> None:
+    def from_gml(self, gml, project_origin: tuple[float, float, float]) -> None:
         pass
 
     @abstractmethod

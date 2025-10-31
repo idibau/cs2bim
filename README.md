@@ -177,7 +177,7 @@ archive is available, containing supplementary examples on georeferencing and pr
 
 ## Contact
 
-![Example of feature types](./uploads/fhnw-logo.svg){width=250}
+![Example of feature types](./uploads/fhnw-logo.svg)
 
 Fachhochschule Nordwestschweiz, Institut Digitales Bauen, 4132 Muttenz \
 University of Applied Sciences and Arts Northwestern Switzerland, Institute of Virtual Design and Construction
