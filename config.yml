@@ -18,7 +18,7 @@ db:
   user: "postgres"
   host: "host.docker.internal"
   port: 5432
-  password: "postgres"
+  password: "?"
 
 ########## stac configuration ############
 stac:
@@ -38,110 +38,110 @@ ifc:
   project_name: "cs2bim"
   geo_referencing: LO_GEO_REF_50
   feature_types:
-#    projections:
-#      - name: "parcel"
-#        sql_path: "/workspace/sql/parcels.sql"
-#        entity_mapping:
-#          entity: IFC_GEOGRAPHIC_ELEMENT
-#          properties:
-#            - property: "NBIdent"
-#              property_set: "CHKGK_CS"
-#              source:
-#                type: SQL
-#                expression: "nbident"
-#            - property: "Nummer"
-#              property_set: "CHKGK_CS"
-#              source:
-#                type: SQL
-#                expression: "nummer"
-#            - property: "EGRIS_EGRID"
-#              property_set: "CHKGK_CS"
-#              source:
-#                type: SQL
-#                expression: "egris_egrid"
-#        entity_type_mapping:
-#          attributes:
-#            - attribute: "PredefinedType"
-#              source:
-#                type: STATIC
-#                expression: "TERRAIN"
-#            - attribute: "ObjectType"
-#              source:
-#                type: STATIC
-#                expression: "LIEGENSCHAFT"
-#            - attribute: "Name"
-#              source:
-#                type: STATIC
-#                expression: "Parzelle"
-#        spatial_structure_mapping:
-#          attributes:
-#            - attribute: "CompositionType"
-#              source:
-#                type: STATIC
-#                expression: "COMPLEX"
-#            - attribute: "PredefinedType"
-#              source:
-#                type: STATIC
-#                expression: "USERDEFINED"
-#            - attribute: "ObjectType"
-#              source:
-#                type: STATIC
-#                expression: "Liegenschaften"
-#            - attribute: "Name"
-#              source:
-#                type: SQL
-#                expression: "egris_egrid"
-#        group_mapping:
-#          - type: STATIC
-#            expression: "Amtliche Vermessung.Liegenschaften"
-#        color:
-#          r: 0.31
-#          g: 0.67
-#          b: 0.04
-#          a: 0.85
-#      - name: "land_cover"
-#        sql_path: "/workspace/sql/land_covers.sql"
-#        entity_mapping:
-#          entity: IFC_GEOGRAPHIC_ELEMENT
-#          attributes:
-#            - attribute: "PredefinedType"
-#              source:
-#                type: STATIC
-#                expression: "USERDEFINED"
-#            - attribute: "ObjectType"
-#              source:
-#                type: SQL
-#                expression: "art"
-#            - attribute: "Name"
-#              source:
-#                type: SQL
-#                expression: "art"
-#        spatial_structure_mapping:
-#          attributes:
-#            - attribute: "CompositionType"
-#              source:
-#                type: STATIC
-#                expression: "COMPLEX"
-#            - attribute: "PredefinedType"
-#              source:
-#                type: STATIC
-#                expression: "USERDEFINED"
-#            - attribute: "ObjectType"
-#              source:
-#                type: STATIC
-#                expression: "Bodenbedeckung"
-#            - attribute: "Name"
-#              source:
-#                type: STATIC
-#                expression: "Bodenbedeckung"
-#        group_mapping:
-#          - type: SQL
-#            expression: "group"
-#        color:
-#          r: 0.52
-#          g: 0.42
-#          b: 0.04
-#          a: 0.85
+    projections:
+      - name: "parcel"
+        sql_path: "/workspace/sql/parcels.sql"
+        entity_mapping:
+          entity: IFC_GEOGRAPHIC_ELEMENT
+          properties:
+            - property: "NBIdent"
+              property_set: "CHKGK_CS"
+              source:
+                type: SQL
+                expression: "nbident"
+            - property: "Nummer"
+              property_set: "CHKGK_CS"
+              source:
+                type: SQL
+                expression: "nummer"
+            - property: "EGRIS_EGRID"
+              property_set: "CHKGK_CS"
+              source:
+                type: SQL
+                expression: "egris_egrid"
+        entity_type_mapping:
+          attributes:
+            - attribute: "PredefinedType"
+              source:
+                type: STATIC
+                expression: "TERRAIN"
+            - attribute: "ObjectType"
+              source:
+                type: STATIC
+                expression: "LIEGENSCHAFT"
+            - attribute: "Name"
+              source:
+                type: STATIC
+                expression: "Parzelle"
+        spatial_structure_mapping:
+          attributes:
+            - attribute: "CompositionType"
+              source:
+                type: STATIC
+                expression: "COMPLEX"
+            - attribute: "PredefinedType"
+              source:
+                type: STATIC
+                expression: "USERDEFINED"
+            - attribute: "ObjectType"
+              source:
+                type: STATIC
+                expression: "Liegenschaften"
+            - attribute: "Name"
+              source:
+                type: SQL
+                expression: "egris_egrid"
+        group_mapping:
+          - type: STATIC
+            expression: "Amtliche Vermessung.Liegenschaften"
+        color:
+          r: 0.31
+          g: 0.67
+          b: 0.04
+          a: 0.85
+      - name: "land_cover"
+        sql_path: "/workspace/sql/land_covers.sql"
+        entity_mapping:
+          entity: IFC_GEOGRAPHIC_ELEMENT
+          attributes:
+            - attribute: "PredefinedType"
+              source:
+                type: STATIC
+                expression: "USERDEFINED"
+            - attribute: "ObjectType"
+              source:
+                type: SQL
+                expression: "art"
+            - attribute: "Name"
+              source:
+                type: SQL
+                expression: "art"
+        spatial_structure_mapping:
+          attributes:
+            - attribute: "CompositionType"
+              source:
+                type: STATIC
+                expression: "COMPLEX"
+            - attribute: "PredefinedType"
+              source:
+                type: STATIC
+                expression: "USERDEFINED"
+            - attribute: "ObjectType"
+              source:
+                type: STATIC
+                expression: "Bodenbedeckung"
+            - attribute: "Name"
+              source:
+                type: STATIC
+                expression: "Bodenbedeckung"
+        group_mapping:
+          - type: SQL
+            expression: "group"
+        color:
+          r: 0.52
+          g: 0.42
+          b: 0.04
+          a: 0.85
     buildings:
       - name: "all"
         sql_path: "/workspace/sql/egid.sql"
