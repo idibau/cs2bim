@@ -1,6 +1,7 @@
 import re
 from pathlib import Path
 
+from config.configuration import config
 from i18n.language import Language
 from utils.utils import load_yaml_as_flat_dict
 
@@ -8,9 +9,9 @@ from utils.utils import load_yaml_as_flat_dict
 class Translator:
 
     def __init__(self):
-        self.de = self.load_translation_file("i18n/de.yml")
-        self.fr = self.load_translation_file("i18n/fr.yml")
-        self.it = self.load_translation_file("i18n/it.yml")
+        self.de = self.load_translation_file(config.i18n.de)
+        self.fr = self.load_translation_file(config.i18n.fr)
+        self.it = self.load_translation_file(config.i18n.it)
 
     def translate(self, value, language):
         if language is None:
