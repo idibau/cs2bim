@@ -8,7 +8,7 @@ from service.bounding_box import BoundingBox
 class PostgisService:
     """Service that accesses a postgis database according to the configuration"""
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.connection = psycopg2.connect(
             f"dbname = {config.db.dbname} user = {config.db.user} host = {config.db.host} password = {config.db.password} port = {config.db.port}"
         )

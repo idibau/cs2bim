@@ -1,14 +1,18 @@
 import logging
 
+from ifcopenshell import entity_instance
+
 from config.configuration import config
 from config.geo_referencing import GeoReferencing
 from config.group_entity import GroupEntity
 from config.projection_entity import ProjectionEntity
 from core.ifc.ifc_file import IfcFile
 from core.ifc.model.building import Building
+from core.ifc.model.coordinates import Coordinates
 from core.ifc.model.element import Element
 from core.ifc.model.ifc_version import IfcVersion
 from core.ifc.model.projection import Projection
+from i18n.language import Language
 
 logger = logging.getLogger(__name__)
 
@@ -16,24 +20,24 @@ logger = logging.getLogger(__name__)
 class Model:
     """Class holding all variable data for creating the ifc"""
 
-    def __init__(self, file_name: str, schema: IfcVersion, project_origin: tuple[float, float, float]) -> None:
+    def __init__(self, file_name: str, schema: IfcVersion, project_origin: Coordinates):
         self.file_name = file_name
         self.schema = schema
         self.project_origin = project_origin
         self.projections: dict[str, list[Projection]] = {}
         self.buildings: dict[str, list[Building]] = {}
 
-    def add_projections(self, feature_type_key: str, projections: list[Projection]) -> None:
+    def add_projections(self, feature_type_key: str, projections: list[Projection]):
         if not feature_type_key in self.projections:
             self.projections[feature_type_key] = []
         self.projections[feature_type_key].extend(projections)
 
-    def add_buildings(self, feature_type_key: str, elements: list[Building]) -> None:
+    def add_buildings(self, feature_type_key: str, elements: list[Building]):
         if not feature_type_key in self.buildings:
             self.buildings[feature_type_key] = []
         self.buildings[feature_type_key].extend(elements)
 
-    def map_to_ifc(self, language):
+    def map_to_ifc(self, language: Language) -> IfcFile:
         logger.info(f"initialize new ifc writer for ifc '{self.file_name}'")
         ifc_file = IfcFile(self.schema.value, self.file_name, language)
 
@@ -51,7 +55,7 @@ class Model:
         if geo_referencing == GeoReferencing.LO_GEO_REF_40:
             location = self.project_origin
         else:
-            location = (0.0, 0.0, 0.0)
+            location = Coordinates(0, 0, 0)
         ifc_representation_context = ifc_file.create_ifc_geometric_representation_context(location)
         ifc_representation_sub_context = ifc_file.create_ifc_geometric_representation_sub_context(
             ifc_representation_context)
@@ -63,7 +67,7 @@ class Model:
         if geo_referencing == GeoReferencing.LO_GEO_REF_30:
             location = self.project_origin
         else:
-            location = (0.0, 0.0, 0.0)
+            location = Coordinates(0, 0, 0)
         ifc_local_placement = ifc_file.create_ifc_local_placement(location)
 
         group_mappings = {}
@@ -132,7 +136,8 @@ class Model:
         logger.info("completed ifc build")
         return ifc_file
 
-    def create_projection_ifc_element_type(self, ifc_file, element_type, projection_entity):
+    def create_projection_ifc_element_type(self, ifc_file: IfcFile, element_type: Element,
+                                           projection_entity: ProjectionEntity) -> entity_instance:
         if projection_entity == ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT:
             ifc_element_type = ifc_file.create_ifc_geographic_element_type()
         elif projection_entity == ProjectionEntity.IFC_SPATIAL_ZONE:
@@ -144,19 +149,21 @@ class Model:
         element_type.set_ifc_properties(ifc_file, ifc_element_type)
         return ifc_element_type
 
-    def create_ifc_spatial_structure(self, ifc_file, ifc_local_placement, ifc_project, spatial_structure_element):
+    def create_ifc_spatial_structure(self, ifc_file: IfcFile, ifc_local_placement: entity_instance,
+                                     ifc_project: entity_instance,
+                                     spatial_structure_element: Element) -> entity_instance:
         ifc_spatial_structure = ifc_file.create_ifc_site(ifc_local_placement)
         ifc_file.create_ifc_rel_aggregates(ifc_project, [ifc_spatial_structure])
         spatial_structure_element.set_ifc_attributes(ifc_file, ifc_spatial_structure)
         spatial_structure_element.set_ifc_properties(ifc_file, ifc_spatial_structure)
         return ifc_spatial_structure
 
-    def create_ifc_groups(self, ifc_file, groups):
+    def create_ifc_groups(self, ifc_file: IfcFile, group_mappings: dict[str, list[entity_instance]]):
         ifc_groups = {}
         groups_config = {group.path: group for group in config.ifc.groups}
-        for group_definition, ifc_group_elements in groups.items():
+        for group_path, ifc_group_elements in group_mappings.items():
             path = []
-            for group in group_definition.split("."):
+            for group in group_path.split("."):
                 parent_group_path = ".".join(path)
                 path.append(group)
                 group_path = ".".join(path)
@@ -193,4 +200,4 @@ class Model:
                     ifc_groups[group_path] = ifc_file.create_ifc_group(group)
                 if not parent_group_path == "":
                     ifc_file.create_ifc_rel_assigns_to_group([ifc_groups[group_path]], ifc_groups[parent_group_path])
-            ifc_file.create_ifc_rel_assigns_to_group(ifc_group_elements, ifc_groups[group_definition])
+            ifc_file.create_ifc_rel_assigns_to_group(ifc_group_elements, ifc_groups[group_path])

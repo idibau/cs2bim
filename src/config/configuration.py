@@ -277,7 +277,7 @@ class Configuration(BaseModel):
     redis: RedisConfig = Field(..., description="Redis configuration")
     db: DBConfig = Field(..., description="Database configuration")
     stac: STACConfig = Field(..., description="STAC configuration for external data sources")
-    tin: TINConfig = Field(default_factory=lambda: TINConfig(grid_size=0.5, max_height_error=0.05),
+    tin: TINConfig = Field(default_factory=lambda: TINConfig(grid_size=GridSize.SMALL, max_height_error=0.05),
                            description="TIN (Triangulated Irregular Network) generation configuration")
     ifc: IFCConfig = Field(..., description="IFC (Industry Foundation Classes) export configuration")
 

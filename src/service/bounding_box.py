@@ -7,17 +7,17 @@ class BoundingBox:
 
     Attributes
     ----------
-    min_northing : float
+    min_northing :
         Minimum longitude
-    min_easting : float
+    min_easting :
         Minimum latitude
-    max_northing : float
+    max_northing :
         Maximum longitude
-    max_easting : float
+    max_easting :
         Maximum latitude
     """
 
-    def __init__(self, min_northing: float, min_easting: float, max_northing: float, max_easting: float) -> None:
+    def __init__(self, min_northing: float, min_easting: float, max_northing: float, max_easting: float):
         self.min_northing = min_northing
         self.min_easting = min_easting
         self.max_northing = max_northing

@@ -22,16 +22,16 @@ class STACService:
 
     FILE_TTL_SECONDS = 86400
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.cache_dir = "/workspace/cache"
         self.file_cache = FileCache()
 
-    def fetch_city_gml_assets(self, bounding_box: BoundingBox):
+    def fetch_city_gml_assets(self, bounding_box: BoundingBox) -> list[str]:
         asset_filter = lambda asset: asset["type"] == "application/x.gml+zip"
         hrefs = self.fetch_latest_assets(config.stac.building_items_url, bounding_box, asset_filter)
         return [self.fetch_and_extract_zip(href) for href in hrefs]
 
-    def fetch_dtm_assets(self, bounding_box: BoundingBox, grid_size: float):
+    def fetch_dtm_assets(self, bounding_box: BoundingBox, grid_size: float) -> list[str]:
         asset_filter = lambda asset: (asset["type"] == "application/x.ascii-xyz+zip" and (
                 asset.get("gsd") == grid_size or asset.get("eo:gsd") == grid_size))
         hrefs = self.fetch_latest_assets(config.stac.dtm_items_url, bounding_box, asset_filter)

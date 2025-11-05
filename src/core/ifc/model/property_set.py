@@ -1,7 +1,7 @@
 class PropertySet:
     """Class holding a set of properties"""
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str):
         self.name = name
         self.properties = {}
 

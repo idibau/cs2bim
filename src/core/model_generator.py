@@ -1,8 +1,8 @@
 import logging
 
-import numpy as np
 from shapely import wkt
 
+from core.ifc.model.coordinates import Coordinates
 from core.ifc.model.ifc_version import IfcVersion
 from core.ifc.model.model import Model
 from core.processors.building_processor import BuildingProcessor
@@ -24,10 +24,9 @@ class ModelGenerator:
         min_x = min(x for x, y in coords)
         min_y = min(y for x, y in coords)
 
-        return min_x, min_y, 0
+        return Coordinates(min_x, min_y, 0)
 
-    def generate(self, ifc_version: IfcVersion, name: str, polygon: str,
-                 project_origin: tuple[float, float, float] | None):
+    def generate(self, ifc_version: IfcVersion, name: str, polygon: str, project_origin: Coordinates | None):
         logger.info("start generating model")
         if project_origin is None:
             project_origin = self.calculate_origin_from_polygon(polygon)

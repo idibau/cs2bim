@@ -1,3 +1,8 @@
+from ifcopenshell import entity_instance
+from lxml.etree import _Element as XmlElement
+
+from core.ifc.ifc_file import IfcFile
+from core.ifc.model.coordinates import Coordinates
 from core.ifc.model.gml.namespace import namespace
 from core.ifc.model.gml.pos_list import PosList
 
@@ -8,7 +13,7 @@ class Polygon:
         self.exterior = PosList()
         self.interior = []
 
-    def from_gml(self, gml, project_origin: tuple[float, float, float]):
+    def from_gml(self, gml: XmlElement, project_origin: Coordinates):
         pos_list_exterior = gml.xpath("./gml:exterior//gml:posList", namespaces=namespace)
         if len(pos_list_exterior) != 1:
             raise ValueError("Polygon expects exactly one exterior posList")
@@ -18,7 +23,8 @@ class Polygon:
             pos_list.from_gml(pos_list_gml, project_origin)
             self.interior.append(pos_list)
 
-    def create_ifc_indexed_polygonal_face(self, ifc_file, coordinates):
+    def create_ifc_indexed_polygonal_face(self, ifc_file: IfcFile,
+                                          coordinates: dict[Coordinates, int]) -> entity_instance:
         exterior_indices = []
         for vertex in self.exterior.coordinates:
             if not vertex in coordinates:
@@ -39,7 +45,7 @@ class Polygon:
         else:
             return ifc_file.create_ifc_indexed_polygonal_face(exterior_indices)
 
-    def create_ifc_face(self, ifc_file):
+    def create_ifc_face(self, ifc_file: IfcFile) -> entity_instance:
         vertex_dict = {}
         vertices = []
         for vertex in self.exterior.coordinates:

@@ -4,9 +4,11 @@ This module contains wrapper functions to simplify the process of building an if
 
 import datetime
 import logging
+
 from ifcopenshell import file, entity_instance, guid
 
 from config.configuration import Color, config
+from core.ifc.model.coordinates import Coordinates
 from i18n.translator import Translator
 
 logger = logging.getLogger(__name__)
@@ -24,8 +26,8 @@ class IfcFile:
     def write(self, path: str):
         self.file.write(path)
 
-    def create_ifc_cartesian_point(self, coordinates: tuple[float, float, float]) -> entity_instance:
-        return self.file.create_entity("IfcCartesianPoint", Coordinates=coordinates)
+    def create_ifc_cartesian_point(self, coordinates: Coordinates) -> entity_instance:
+        return self.file.create_entity("IfcCartesianPoint", Coordinates=coordinates.to_tuple())
 
     def create_ifc_owner_history(self, name: str, version: str, application_full_name: str) -> entity_instance:
         the_person = self.file.create_entity("IfcPerson", GivenName=name)
@@ -85,9 +87,7 @@ class IfcFile:
             "IfcUnitAssignment", Units=[length_unit, area_unit, volume_unit, conversion_based_unit]
         )
 
-    def create_ifc_geometric_representation_context(
-            self, location_coordinates: tuple[float, float, float]
-    ) -> entity_instance:
+    def create_ifc_geometric_representation_context(self, location_coordinates: Coordinates) -> entity_instance:
         location = self.create_ifc_cartesian_point(location_coordinates)
         world_coordinate_system = self.file.create_entity("IfcAxis2Placement3D", Location=location)
         return self.file.create_entity(
@@ -113,7 +113,7 @@ class IfcFile:
             self,
             map_unit: entity_instance,
             source_crs: entity_instance,
-            origin: tuple[float, float, float],
+            origin: Coordinates,
     ) -> entity_instance:
         target_crs = self.file.create_entity(
             "IfcProjectedCRS",
@@ -128,9 +128,9 @@ class IfcFile:
             "IfcMapConversion",
             SourceCRS=source_crs,
             TargetCRS=target_crs,
-            Eastings=origin[0],
-            Northings=origin[1],
-            OrthogonalHeight=origin[2],
+            Eastings=origin.x,
+            Northings=origin.y,
+            OrthogonalHeight=origin.z,
             XAxisAbscissa=1,
             XAxisOrdinate=0,
         )
@@ -151,7 +151,7 @@ class IfcFile:
             UnitsInContext=units_in_context,
         )
 
-    def create_ifc_local_placement(self, location_coordinates: tuple[float, float, float]) -> entity_instance:
+    def create_ifc_local_placement(self, location_coordinates: Coordinates) -> entity_instance:
         location = self.create_ifc_cartesian_point(location_coordinates)
         relative_placement = self.file.create_entity("IfcAxis2Placement3D", Location=location)
         return self.file.create_entity("IfcLocalPlacement", RelativePlacement=relative_placement)
@@ -242,15 +242,17 @@ class IfcFile:
         return self.file.create_entity("IfcFacetedBrepWithVoids", Outer=outer, Voids=voids)
 
     def create_ifc_triangulated_face_set(
-            self, coord_list: list[tuple[float, float, float]], coord_index: list[tuple[int, int, int]]
+            self, coord_list: list[Coordinates], coord_index: list[tuple[int, int, int]]
     ) -> entity_instance:
-        coordinates = self.file.create_entity("IfcCartesianPointList3D", CoordList=coord_list)
+        coordinates = self.file.create_entity("IfcCartesianPointList3D",
+                                              CoordList=[coord.to_tuple() for coord in coord_list])
         return self.file.create_entity("IfcTriangulatedFaceSet", Coordinates=coordinates, CoordIndex=coord_index)
 
     def create_ifc_polygonal_face_set(
-            self, coord_list: list[tuple[float, float, float]], faces: list[entity_instance]
+            self, coord_list: list[Coordinates], faces: list[entity_instance]
     ) -> entity_instance:
-        coordinates = self.file.create_entity("IfcCartesianPointList3D", CoordList=coord_list)
+        coordinates = self.file.create_entity("IfcCartesianPointList3D",
+                                              CoordList=[coord.to_tuple() for coord in coord_list])
         return self.file.create_entity("IfcPolygonalFaceSet", Coordinates=coordinates, Faces=faces)
 
     def create_ifc_indexed_polygonal_face(

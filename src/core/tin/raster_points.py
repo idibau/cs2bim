@@ -1,5 +1,8 @@
 import numpy as np
 import shapely
+from shapely import Polygon
+
+from core.ifc.model.coordinates import Coordinates
 
 
 class RasterPoints(object):
@@ -12,20 +15,16 @@ class RasterPoints(object):
         Raster points as geopandas.GeoDataFrame
     """
 
-    def __init__(self, xyz_filepath: str, project_origin) -> None:
+    def __init__(self, xyz_filepath: str, project_origin: Coordinates):
         self.data = np.loadtxt(xyz_filepath, delimiter=" ", skiprows=1)
-        project_origin = np.array(project_origin)
+        project_origin = np.array(project_origin.to_tuple())
         if not np.allclose(project_origin, np.zeros((3,))):
             self.data = self.data - project_origin
         if self.data.ndim == 1:
             self.data = self.data.reshape((1, -1))
         self.xy = self.data[:, :2]
 
-    def within(
-            self,
-            polygon: shapely.geometry.Polygon,
-            buffer_dist: float = 0,
-    ) -> np.ndarray:
+    def within(self, polygon: Polygon, buffer_dist: float = 0) -> np.ndarray | None:
         """
         Return points within (or within buffer of) polygon.
         First filters by polygon bounding box for speed.

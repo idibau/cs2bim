@@ -1,9 +1,15 @@
+from ifcopenshell import entity_instance
+
+from core.ifc.ifc_file import IfcFile
+from core.ifc.model.coordinates import Coordinates
+
+
 class Tessellation:
 
-    def __init__(self, faces):
+    def __init__(self, faces: list[tuple[Coordinates, Coordinates, Coordinates]]):
         self.faces = faces
 
-    def map_to_ifc(self, ifc_file):
+    def map_to_ifc(self, ifc_file: IfcFile) -> entity_instance:
         vertices_dict = {}
         vertices = []
         indices = []

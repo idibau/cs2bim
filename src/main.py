@@ -2,6 +2,7 @@ import argparse
 import logging
 import sys
 
+from core.ifc.model.coordinates import Coordinates
 from core.ifc.model.ifc_version import IfcVersion
 from core.model_generator import ModelGenerator
 from i18n.language import Language
@@ -33,12 +34,19 @@ if not (args.IFC_VERSION and args.NAME and args.POLYGON):
     parser.print_help()
 else:
     ifc_version = IfcVersion(args.IFC_VERSION)
-    project_origin = None
     if args.PROJECT_ORIGIN:
         try:
-            project_origin = tuple(map(float, args.PROJECT_ORIGIN.split(",")))
-        except:
-            raise ValueError("PROJECT_ORIGIN must be in format float,float,float")
+            origin_values = [float(coord.strip()) for coord in args.PROJECT_ORIGIN.split(",")]
+        except ValueError:
+            raise ValueError(
+                "PROJECT_ORIGIN must contain only numbers in the format 'float,float,float' (e.g., 0.0,0.0,0.0).")
+        if len(origin_values) != 3:
+            raise ValueError(
+                "PROJECT_ORIGIN must contain exactly three values separated by commas (e.g., 0.0,0.0,0.0).")
+        project_origin = Coordinates(*origin_values)
+    else:
+        project_origin = None
+
     language = Language(args.LANGUAGE) if args.LANGUAGE else None
     logger.info(
         f"IFC_VERSION: {ifc_version.name}, NAME: {args.NAME}, POLYGON: {args.POLYGON}, PROJECT_ORIGIN: {project_origin if not project_origin is None else 'calculated'}, LANGUAGE: {language}"

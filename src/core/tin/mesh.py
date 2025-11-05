@@ -1,10 +1,9 @@
 import itertools
 import logging
+
 import numpy as np
-import pandas as pd
 import pyvista as pv
 import shapely
-
 
 logger = logging.getLogger(__name__)
 
@@ -15,20 +14,20 @@ class Mesh(object):
 
     Parameters
     ----------
-    data : np.ndarray | list | pv.PolyData
+    data :
         Raster to be converted into a triangle mesh
 
     Attributes
     ----------
-    mesh : pv.PolyData
+    mesh :
         Mesh triangulated from input points
-    min_values : np.ndarray
+    min_values :
         Min values along each coordinate dimension (x, y, z)
-    max_values : np.ndarray
+    max_values :
         Max values along each coordinate dimension (x, y, z)
     """
 
-    def __init__(self, data: np.ndarray | list | pv.PolyData | pd.DataFrame):
+    def __init__(self, data: np.ndarray | list | pv.PolyData):
         if isinstance(data, pv.PolyData):
             self.mesh = data
         else:
@@ -60,18 +59,18 @@ class Mesh(object):
 
         Parameters
         ----------
-        max_height_error : float
+        max_height_error :
             Maximum allowed height error in metres
             Is used to calculate the max allowed angle between adjacent triangles.
-        grid_size : float
+        grid_size :
             Grid size of raster points.
             Is used to calculate the max allowed angle between adjacent triangles.
-        max_edge_len : float; default = 0
+        max_edge_len :
             If specified, edges longer than this length are split in half.
 
         Returns
         -------
-        _ : Mesh
+        _ :
             Decimated mesh. Creates a new instance of Mesh
         """
         # calcualte max normal angle between to neighbouring triangles.
@@ -99,12 +98,12 @@ class Mesh(object):
 
         Parameters
         ----------
-        pts_2d: np.ndarray | list
+        pts_2d:
             2D points to be projected on surface
 
         Returns
         -------
-        _ : np.ndarray
+        _ :
             3d coordinates on surface of provided 2d points
         """
         assert isinstance(pts_2d, (np.ndarray, list))
@@ -137,7 +136,7 @@ class Mesh(object):
 
         return pts_3d
 
-    def calculate_edge_segment(self, p_start: np.ndarray, p_end: np.ndarray, th_line_p: float = 1e-8) -> list:
+    def calculate_edge_segment(self, p_start: np.ndarray, p_end: np.ndarray) -> list:
         """Slice surface along axis and return all intersection points points in correct order"""
         assert p_start.ndim == 1 and p_end.ndim == 1
 
@@ -181,16 +180,14 @@ class Mesh(object):
 
         Parameters
         ----------
-        mesh : pv.PolyData
+        mesh :
             Mesh constructed by constrained 2d-Delaunay triangulatiion
             form points within area and 3D lines along boundaries.
-        points_within_area :  np.ndarray
-            Points within area of form [x, y, z] (N x 3).
-
+        area :
 
         Returns
         -------
-        _ :  np.ndarray
+        _ :
             Triangle definition as expected by pyvista.
             [num_vertices, ind1, ind2, ind3]
 
@@ -219,7 +216,7 @@ class Mesh(object):
 
         return tri_filtered
 
-    def clip_mesh_by_area(self, area, points_within_area: np.ndarray | pd.DataFrame) -> "Mesh":
+    def clip_mesh_by_area(self, area, points_within_area: np.ndarray) -> "Mesh":
         """
         Clips mesh by provided area.
 
@@ -233,9 +230,9 @@ class Mesh(object):
 
         Parameters
         ----------
-        area : Area
+        area :
             Area to clip mesh with
-        points_within_area :  np.ndarray
+        points_within_area :
             Points within area of form [x, y, z] (N x 3).
 
         Returns
@@ -291,7 +288,6 @@ class Mesh(object):
         return self.mesh.points
 
     def _area_triangle(self, p1: np.ndarray, p2: np.ndarray, p3: np.ndarray) -> float:
-
         return np.abs((p1[0] * (p2[1] - p3[1]) + p2[0] * (p3[1] - p1[1]) + p3[0] * (p1[1] - p2[1])) / 2)
 
     @property
@@ -325,7 +321,7 @@ class Mesh(object):
 
         Returns
         -------
-        _ : tuple[list[list[float]], list[list[int]]]
+        _ :
             Point list of form [x, y, z] and triangle list of form [v1, v2, v3]
         """
         return self._points.tolist(), self._faces.tolist()

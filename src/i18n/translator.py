@@ -13,7 +13,7 @@ class Translator:
         self.fr = self.load_translation_file(config.i18n.fr)
         self.it = self.load_translation_file(config.i18n.it)
 
-    def translate(self, value, language):
+    def translate(self, value: str, language: Language) -> str:
         if language is None:
             return value
         elif language == Language.DE:
@@ -33,7 +33,7 @@ class Translator:
            return {}
 
     @staticmethod
-    def get_translation_key(value):
+    def get_translation_key(value: str | None) -> str | None:
         if value is None:
             return None
         value = value.lower()

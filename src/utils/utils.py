@@ -1,14 +1,13 @@
 import logging
 import sys
+import yaml
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
-
-import yaml
 
 from config.configuration import config
 
 
-def setup_logger(log_file_name: str = None):
+def setup_logger(log_file_name: str):
     logging_format = "%(asctime)s - %(filename)s:%(lineno)s - %(levelname)s - %(message)s"
     stream_handler = logging.StreamHandler(sys.stdout)
     stream_handler.setFormatter(logging.Formatter(logging_format))
@@ -25,11 +24,10 @@ def setup_logger(log_file_name: str = None):
         backupCount=3
     )
     file_handler.setFormatter(logging.Formatter(logging_format))
-
     root_logger.addHandler(file_handler)
 
 
-def get_output_path(generation_id):
+def get_output_path(generation_id: str) -> str:
     return f"/workspace/ifc/{generation_id}.ifc"
 
 

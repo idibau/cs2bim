@@ -1,7 +1,6 @@
 import functools
 import logging
 import os
-
 from celery.result import AsyncResult
 from fastapi import HTTPException, APIRouter
 from fastapi.responses import FileResponse
@@ -26,6 +25,7 @@ def log_exceptions(func):
         except Exception as e:
             logger.error(f"Request {func.__name__} failed: {str(e)}", exc_info=True)
             raise HTTPException(status_code=500, detail=str(e))
+
     return wrapper
 
 
@@ -40,11 +40,13 @@ async def generate_model(request_data: GenerateModelRequest):
     project_origin = None
     if request_data.PROJECT_ORIGIN:
         try:
-            string_values = request_data.PROJECT_ORIGIN.split(",")
-            project_origin = tuple(map(float, string_values))
+            project_origin = [float(coord.strip()) for coord in request_data.PROJECT_ORIGIN.split(",")]
         except ValueError:
-            raise HTTPException(status_code=422, detail="PROJECT_ORIGIN parameter must be in format float,float,float")
-
+            raise HTTPException(status_code=422,
+                                detail="PROJECT_ORIGIN must contain only numbers in the format 'float,float,float' (e.g., 0.0,0.0,0.0).")
+        if len(project_origin) != 3:
+            raise HTTPException(status_code=422,
+                                detail="PROJECT_ORIGIN must contain exactly three values separated by commas (e.g., 0.0,0.0,0.0).")
     try:
         geom = wkt.loads(polygon)
         if not isinstance(geom, Polygon):
