@@ -71,18 +71,8 @@ class STACService:
         file_id = os.path.basename(zip_href)
 
         entry = self.file_cache.get(file_id)
-        if entry:
-            if entry.expire_at > time.time():
-                if Path(entry.file_path).exists():
-                    logger.debug(f"Using cached file: {file_id}")
-                    return entry.file_path
-                else:
-                    logger.debug(f"Cached file expired: {file_id}")
-                    self.file_cache.delete(file_id)
-            else:
-                logger.debug(f"Removed expired file at cache fetch: {file_id}")
-                self.file_cache.delete(file_id)
-                Path(entry.file_path).unlink(missing_ok=True)
+        if entry is not None:
+            return entry.file_path
 
         logger.debug(f"Downloading asset from {zip_href}")
 
