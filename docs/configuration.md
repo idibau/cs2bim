@@ -129,6 +129,8 @@ folder
 **ST_Intersects**: Returns true if two geometries intersect. Geometries intersect if they have any point in common.
 **ST_Contains**: Returns true if the first geometry contains the second.
 
+Hint: The wildcard character '%' needs to be escaped like this '%%'.
+
 #### Attributes, properties and group mappings
 
 In most cases, the mapping of attributes, properties and group mappings is defined using two values: `source` and
