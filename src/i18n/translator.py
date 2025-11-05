@@ -9,9 +9,9 @@ from utils.utils import load_yaml_as_flat_dict
 class Translator:
 
     def __init__(self):
-        self.de = self.load_translation_file(config.i18n.de)
-        self.fr = self.load_translation_file(config.i18n.fr)
-        self.it = self.load_translation_file(config.i18n.it)
+        self.de = self.load_translation_file(config.i18n.de) if config.i18n is not None else {}
+        self.fr = self.load_translation_file(config.i18n.fr) if config.i18n is not None else {}
+        self.it = self.load_translation_file(config.i18n.it) if config.i18n is not None else {}
 
     def translate(self, value: str, language: Language) -> str:
         if language is None:
@@ -26,8 +26,8 @@ class Translator:
             raise NotImplementedError(f"No translation available for {language.name}")
 
     @staticmethod
-    def load_translation_file(path):
-        if Path(path).is_file():
+    def load_translation_file(path: str | None) -> dict[str, str]:
+        if path is not None and Path(path).is_file():
            return load_yaml_as_flat_dict(path)
         else:
            return {}
