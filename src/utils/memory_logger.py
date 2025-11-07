@@ -5,14 +5,23 @@ logger = logging.getLogger(__name__)
 
 
 def start_measuring_memory_usage():
+    """
+    Starts measuring memory usage.
+    """
     tracemalloc.start()
 
 
 def log_memory_usage():
+    """
+    Logs out current and peak memory usage. (Debug Level)
+    """
     current_memory_usage = tracemalloc.get_traced_memory()[0] / 1000000
     peak_memory_usage = tracemalloc.get_traced_memory()[1] / 1000000
-    logger.debug(f"Current Memory usage: {current_memory_usage}mb, Peak memory usage: {peak_memory_usage}mb")
+    logger.debug(f"current Memory usage: {current_memory_usage}mb, Peak memory usage: {peak_memory_usage}mb")
 
 
 def stop_measuring_memory_usage():
+    """
+    Stops measuring memory usage.
+    """
     tracemalloc.stop()

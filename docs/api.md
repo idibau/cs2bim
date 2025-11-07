@@ -37,7 +37,6 @@ There is also a swagger documentation site documenting all endpoints: http://0.0
 **Responses:**
 
 - `200`: Returns the state of the task.
-- `422`: Validation error.
 - `500`: Error.
 
 ---
@@ -56,5 +55,4 @@ There is also a swagger documentation site documenting all endpoints: http://0.0
 - `202`: Task is still ongoing.
 - `400`: Model generation failed.
 - `410`: File not found.
-- `422`: Validation error.
 - `500`: Error.

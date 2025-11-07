@@ -270,8 +270,15 @@ class IFCConfig(BaseModel):
 
 
 class Configuration(BaseModel):
-    """Application configuration"""
+    """
+    Root application configuration.
 
+    This class defines the complete configuration model for the application. It aggregates
+    settings for logging, internationalization (i18n), Redis and PostGIS database connections,
+    STAC data sources, TIN generation, and IFC export configuration. The configuration is
+    typically loaded from a YAML file using the `load()` class method, which supports
+    environment variable expansion.
+    """
     logging_level: str = Field(..., description="Logging level for the application (e.g., DEBUG, INFO, WARNING)")
     i18n: Optional[I18nConfig] = Field(None, description="Internationalization (i18n) configuration")
     redis: RedisConfig = Field(..., description="Redis configuration")
@@ -283,12 +290,35 @@ class Configuration(BaseModel):
 
     @classmethod
     def load(cls, path: str) -> "Configuration":
+        """
+        Load configuration from a YAML file
+
+        Args:
+            path (str): Path to the YAML configuration file.
+
+        Returns:
+            Configuration: An instance of the configuration loaded from the provided file.
+
+        Raises:
+            FileNotFoundError: If the configuration file does not exist at the given path.
+            ValidationError: If the YAML content does not conform to the expected schema.
+        """
         text = Path(path).read_text()
         expanded = os.path.expandvars(text)
         return parse_yaml_raw_as(cls, expanded)
 
     @model_validator(mode="after")
     def check_conditional_configs(self):
+        """
+        Validate conditional configuration dependencies
+
+        Returns:
+            Configuration: The validated configuration instance.
+
+        Raises:
+            ValueError: If `stac.dtm_items_url` is missing while projections are defined,
+                or if `stac.building_items_url` is missing while building feature types are defined.
+        """
         if self.ifc.feature_types.projections and self.stac.dtm_items_url is None:
             raise ValueError("stac.dtm_items_url is required when ifc.feature_types.projections is not empty")
         if self.ifc.feature_types.buildings and self.stac.building_items_url is None:

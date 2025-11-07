@@ -16,6 +16,20 @@ router = APIRouter()
 
 
 def log_exceptions(func):
+    """
+    A function decorator that catches and logs exceptions.
+
+    Args:
+        func: The asynchronous function to decorate.
+
+    Returns:
+        A decorated function that catches and logs exceptions.
+
+    Raises:
+        HTTPException: Passes through HTTPExceptions or converts general exceptions
+                       to HTTPExceptions with status 500.
+    """
+
     @functools.wraps(func)
     async def wrapper(*args, **kwargs):
         try:
@@ -23,7 +37,7 @@ def log_exceptions(func):
         except HTTPException as e:
             raise e
         except Exception as e:
-            logger.error(f"Request {func.__name__} failed: {str(e)}", exc_info=True)
+            logger.error(f"request {func.__name__} failed: {str(e)}", exc_info=True)
             raise HTTPException(status_code=500, detail=str(e))
 
     return wrapper
@@ -32,6 +46,21 @@ def log_exceptions(func):
 @router.post("/generate-model/")
 @log_exceptions
 async def generate_model(request_data: GenerateModelRequest):
+    """
+    Initiates a process to generate an ifc model based on a polygon.
+
+    Args:
+        request_data: GenerateModelRequest with the required data for model generation.
+
+    Returns:
+        A dictionary containing the task_id of the started Celery task.
+
+    Raises:
+        HTTPException (422): When PROJECT_ORIGIN is not correctly formatted.
+        HTTPException (422): When the POLYGON parameter is not valid.
+        HTTPException (500): For other internal errors.
+    """
+
     ifc_version = request_data.IFC_VERSION
     name = request_data.NAME
     polygon = request_data.POLYGON
@@ -70,6 +99,19 @@ async def generate_model(request_data: GenerateModelRequest):
 @router.get("/generation-state/{task_id}")
 @log_exceptions
 async def get_generation_state(task_id: str):
+    """
+    Returns the current status of a model generation task.
+
+    Args:
+        task_id: ID of the Celery task
+
+    Returns:
+        A dictionary with the current status of the task and error information if applicable.
+
+    Raises:
+        HTTPException (500): For internal errors.
+    """
+
     result = AsyncResult(task_id, app=app)
 
     state = result.state
@@ -85,6 +127,22 @@ async def get_generation_state(task_id: str):
 @router.get("/generated-file/{task_id}")
 @log_exceptions
 async def get_generated_file(task_id: str):
+    """
+    Returns the generated model file if the task completed successfully.
+
+    Args:
+        task_id: ID of the Celery task
+
+    Returns:
+        The generated model file as a download.
+
+    Raises:
+        HTTPException (202): When the task is still in progress.
+        HTTPException (400): When the task failed.
+        HTTPException (410): When the generated file cannot be found on disk.
+        HTTPException (500): For internal errors.
+    """
+
     result = AsyncResult(task_id, app=app)
 
     state = result.state

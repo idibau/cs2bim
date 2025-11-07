@@ -21,19 +21,13 @@ class Mesh(object):
     ----------
     mesh :
         Mesh triangulated from input points
-    min_values :
-        Min values along each coordinate dimension (x, y, z)
-    max_values :
-        Max values along each coordinate dimension (x, y, z)
-    """
+w    """
 
     def __init__(self, data: np.ndarray | list | pv.PolyData):
         if isinstance(data, pv.PolyData):
             self.mesh = data
         else:
             self.mesh = self._from_points(data)
-        self.min_values = self.mesh.points.min(axis=0)
-        self.max_values = self.mesh.points.max(axis=0)
 
     def _from_points(self, pts: np.ndarray | list) -> pv.PolyData:
         assert isinstance(pts, (np.ndarray, list))

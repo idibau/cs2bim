@@ -6,7 +6,12 @@ from service.bounding_box import BoundingBox
 
 
 class PostgisService:
-    """Service that accesses a postgis database according to the configuration"""
+    """
+    Service class for accessing a PostGIS database according to configuration.
+
+    This class provides methods for querying features based on SQL statements
+    and bounding boxes from a PostGIS database.
+    """
 
     def __init__(self):
         self.connection = psycopg2.connect(
@@ -14,6 +19,19 @@ class PostgisService:
         )
 
     def fetch_feature_type_elements(self, sql: str, polygon: str) -> list[dict[str, Any]]:
+        """
+        Executes an SQL query and returns the results as a list of dictionaries.
+
+        Args:
+            sql: The SQL query to run. Should contain a placeholder for `polygon`.
+            polygon: Polygon geometry as a WKT string, used within the SQL statement.
+
+        Returns:
+            A list of dictionaries representing the fetched rows, where the keys are the column names.
+
+        Raises:
+            Exception: If the SQL query does not return any column description.
+        """
         cur = self.connection.cursor()
         cur.execute(sql, {"polygon": polygon})
         rows = cur.fetchall()
@@ -28,7 +46,15 @@ class PostgisService:
         return result
 
     def get_bounding_box(self, wkts: list[str]) -> BoundingBox:
-        """Calculates and returns a minimal bounding box containing all geometries from the wkts"""
+        """
+        Calculates and returns the minimal bounding box containing all given geometries.
+
+        Args:
+            wkts: A list of WKT strings representing geometries.
+
+        Returns:
+            A BoundingBox object describing the minimal bounding box around the given geometries.
+        """
         cur = self.connection.cursor()
         cur.execute(
             f"""

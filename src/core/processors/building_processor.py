@@ -28,7 +28,7 @@ class BuildingProcessor:
     def process(self, polygon: str, project_origin: Coordinates) -> dict[str, list[Building]]:
         feature_types = {b.name: b for b in config.ifc.feature_types.buildings}
         if not feature_types:
-            logger.info("No building feature types configured")
+            logger.info("no building feature types configured")
             return {}
 
         logger.info(f"fetch city gml files")

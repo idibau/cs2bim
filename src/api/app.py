@@ -1,3 +1,17 @@
+"""
+API Application module
+
+This module initializes and configures the FastAPI application.
+It sets up logging, includes routers, and starts the API service.
+
+Example:
+    To run this module directly:
+
+    ```
+    python -m uvicorn api.app:app --reload
+    ```
+"""
+
 import logging
 from datetime import datetime
 from fastapi import FastAPI

@@ -1,4 +1,6 @@
 """
+Celery worker module
+
 Celery worker configuration and task for IFC model generation from geospatial data.
 Handles task queue setup, logging initialization, and model generation processes.
 """
@@ -46,16 +48,19 @@ def model_generation_task(self, ifc_version: str, name: str, polygon: str, proje
     Args:
         ifc_version: Target IFC schema version
         name: Project name
-        polygon: Geospatial polygon data
+        polygon: polygon as a wkt string
         project_origin: Coordinates for project origin
-        language: Optional localization language
+        language: Optional language
 
     Returns:
         Path to generated IFC file
+
+    Raises:
+        Exception: If model generation fails for any reason.
     """
     logger = logging.getLogger(__name__)
     try:
-        logger.info(f"Task {self.request.id}: Starting model generation")
+        logger.info(f"task {self.request.id}: Starting model generation")
         model_generator = ModelGenerator()
         project_origin = Coordinates(*project_origin) if project_origin else None
         model = model_generator.generate(IfcVersion(ifc_version), name, polygon, project_origin)
@@ -63,8 +68,8 @@ def model_generation_task(self, ifc_version: str, name: str, polygon: str, proje
         ifc_file = model.map_to_ifc(language)
         output_path = get_output_path(self.request.id)
         ifc_file.write(output_path)
-        logger.info(f"Task {self.request.id}: Model generation completed, file saved to {output_path}")
+        logger.info(f"task {self.request.id}: Model generation completed, file saved to {output_path}")
         return output_path
     except Exception as e:
-        logger.error(f"Task {self.request.id}: Model generation failed: {str(e)}", exc_info=True)
+        logger.error(f"task {self.request.id}: Model generation failed: {str(e)}", exc_info=True)
         raise
