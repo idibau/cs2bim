@@ -8,6 +8,6 @@ select
     'Amtliche Vermessung.Bodenbedeckung.' || bb.art as group
 from
     cs2bim.boflaeche bb
-    join perimeter on ST_Contains(perimeter.geom, bb.geometrie)
+    join perimeter on ST_Intersects(bb.geometrie, perimeter.geom)
 where
-    bb.art <> 'Gebaeude'
+    bb.art like 'befestigt%%'

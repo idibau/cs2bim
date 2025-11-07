@@ -10,4 +10,4 @@ from
     cs2bim.boflaeche bb
     join perimeter on ST_Intersects(bb.geometrie, perimeter.geom)
 where
-    bb.art <> 'Gebaeude'
+    bb.art like 'Gewaesser%%'

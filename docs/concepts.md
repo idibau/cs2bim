@@ -66,7 +66,7 @@ A more detailled description of the conversion can be found in our publication m
 
 The resulting 3D surfaces fulfill the 2D area constrains which are relevant for land coverage and property layer. However, since for every 2D polygon object a subset of grid points is triangulated by a 2D Delaunay triangulation, which does not find an optimal solution in the case of uniformly distributed grid points, there may be some small holes between two consecutive objects. This problem can be mitigated by using a 3D triangulation method instead, which is, however, much more computationally expensive.
 
-[Here](../examples/example.ipynb) you can find a more detailed explanation of the code.
+[Here](../examples/tin/example.ipynb) you can find a more detailed explanation of the code.
 
 # References
 [^IFC-Doc]: buildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html .  

@@ -114,12 +114,12 @@ folder
 
 1. The input polygon
 2. All areas that intersect with the polygon are
-   included ([Parcels](../sql/parcels.sql), [Land cover](../sql/land_covers.sql), [Land cover buildings](../sql/land_covers_buildings.sql))
+   included ([Parcels](../examples/sql/parcels.sql), [Land covers](../examples/sql/land_covers.sql), [Land covers buildings](../examples/sql/land_covers_buildings.sql))
 3. All areas are cut off at the border of the
-   polygon ([Parcels intersection](../sql/parcels_intersection.sql), [Land covers intersection](../sql/land_covers_intersection.sql))
+   polygon ([Parcels intersection](../examples/sql/parcels_intersection.sql), [Land covers intersection](../examples/sql/land_covers_intersection.sql))
 4. All areas that are fully contained by the polygon are
-   included ([Parcels contains](../sql/parcels_contains.sql), [Land covers contains](../sql/land_covers_contains.sql))
-5. The entire area of the input polygon without subdivisions (polygon.sql)
+   included ([Parcels contains](../examples/sql/parcels_contains.sql), [Land covers contains](../examples/sql/land_covers_contains.sql))
+5. The entire area of the input polygon without subdivisions ([Polygon](../examples/sql/polygon.sql))
 
 **Useful postgis functions**
 
