@@ -34,7 +34,6 @@ class Translator:
         Raises:
             NotImplementedError: If the specified language is not supported.
         """
-
         if language is None:
             return value
         elif language == Language.DE:
@@ -59,9 +58,9 @@ class Translator:
             Returns an empty dictionary if the path is None or does not exist.
         """
         if path is not None and Path(path).is_file():
-           return load_yaml_as_flat_dict(path)
+            return load_yaml_as_flat_dict(path)
         else:
-           return {}
+            return {}
 
     @staticmethod
     def get_translation_key(value: str | None) -> str | None:
