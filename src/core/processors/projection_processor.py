@@ -21,7 +21,7 @@ class ProjectionProcessor:
         self.stac_service = STACService()
 
     def process(self, polygon: str, project_origin: Coordinates) -> dict[str, list[Projection]]:
-        feature_types_by_key = {p.name: p for p in config.ifc.feature_types.projections}
+        feature_types_by_key = {p.name: p for p in config.ifc.projection_feature_types}
         if not feature_types_by_key:
             logger.info("no projection feature types configured")
             return {}

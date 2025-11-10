@@ -1,9 +1,8 @@
 logging_level: INFO
 i18n:
-  languages:
-    de: "de.yml"
-    fr: "fr.yml"
-    it: "it.yml"
+  de: "de.yml"
+  fr: "fr.yml"
+  it: "it.yml"
 redis:
   host: "redis"
   port: 6379
@@ -30,19 +29,18 @@ ifc:
   application_name: "test_app"
   project_name: "test_project"
   geo_referencing: LO_GEO_REF_50
-  feature_types:
-    projections: []
-    buildings:
-      - name: "test_building"
-        sql_path: "/test/sql/test.sql"
-        egid_xpath: ".//test"
-        entity_mapping:
-          entity: IFC_BUILDING
-          building_parts:
-            - entity: IFC_BUILDING_ELEMENT_PROXY
-              geometry_mapping:
-                xpath: ".//test/xpath"
-                geometry: SOLID
-        spatial_structure_mapping:
-          entity: IFC_SITE
+  projection_feature_types: []
+  building_feature_types:
+    - name: "test_building"
+      sql_path: "/test/sql/test.sql"
+      egid_xpath: ".//test"
+      entity_mapping:
+        entity: IFC_BUILDING
+        building_parts:
+          - entity: IFC_BUILDING_ELEMENT_PROXY
+            geometry_mapping:
+              xpath: ".//test/xpath"
+              geometry: SOLID
+      spatial_structure_mapping:
+        entity: IFC_SITE
   groups: []

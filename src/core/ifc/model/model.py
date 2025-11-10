@@ -73,7 +73,7 @@ class Model:
         group_mappings = {}
         ifc_spatial_structures = {}
 
-        projections_config = {p.name: p for p in config.ifc.feature_types.projections}
+        projections_config = {p.name: p for p in config.ifc.projection_feature_types}
         for feature_type_key, elements in self.projections.items():
             logger.info(f"build FeatureType {feature_type_key}")
             feature_type = projections_config[feature_type_key]

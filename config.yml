@@ -50,516 +50,515 @@ ifc:
   application_name: "cs2bim"
   project_name: "cs2bim"
   geo_referencing: LO_GEO_REF_50
-  feature_types:
-    projections:
-      - name: "liegenschaft"
-        sql_path: "/workspace/sql/av_liegenschaft.sql"
-        entity_mapping:
-          entity: IFC_GEOGRAPHIC_ELEMENT
-          attributes:
-            - attribute: "Name"
-              source:
-                type: SQL
-                expression: "egris_egrid"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "AV_LIEGENSCHAFT"
-          properties:
-            - property: "NBIdent"
-              property_set: "CH_AV_Liegenschaft"
-              source:
-                type: SQL
-                expression: "nbident"
-            - property: "Nummer"
-              property_set: "CH_AV_Liegenschaft"
-              source:
-                type: SQL
-                expression: "nummer"
-            - property: "EGRIS_EGRID"
-              property_set: "CH_AV_Liegenschaft"
-              source:
-                type: SQL
-                expression: "egris_egrid"
-        entity_type_mapping:
-          attributes:
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "AV_LIEGENSCHAFT"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ElementType"
-              source:
-                type: STATIC
-                expression: "AV_LIEGENSCHAFT"
-        spatial_structure_mapping:
-          attributes:
-            - attribute: "CompositionType"
-              source:
-                type: STATIC
-                expression: "COMPLEX"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "Amtliche Vermessung"
-            - attribute: "Name"
-              source:
-                type: SQL
-                expression: "egris_egrid"
-        group_mapping:
-          - type: STATIC
-            expression: "Amtliche Vermessung.Liegenschaft"
-        color:
-          r: 0.31
-          g: 0.67
-          b: 0.04
-          a: 0.85
-      - name: "bodenbedeckung_befestigt"
-        sql_path: "/workspace/sql/av_bodenbedeckung_befestigt.sql"
-        entity_mapping:
-          entity: IFC_GEOGRAPHIC_ELEMENT
-          attributes:
-            - attribute: "Name"
-              source:
-                type: SQL
-                expression: "art"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-        entity_type_mapping:
-          attributes:
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ElementType"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-        spatial_structure_mapping:
-          attributes:
-            - attribute: "CompositionType"
-              source:
-                type: STATIC
-                expression: "COMPLEX"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "Amtliche Vermessung"
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "Bodenbedeckung"
-        group_mapping:
-          - type: SQL
-            expression: "group"
-        color:
-          r: 0.50
-          g: 0.50
-          b: 0.50
-          a: 0.85
-      - name: "bodenbedeckung_bestockt"
-        sql_path: "/workspace/sql/av_bodenbedeckung_bestockt.sql"
-        entity_mapping:
-          entity: IFC_GEOGRAPHIC_ELEMENT
-          attributes:
-            - attribute: "Name"
-              source:
-                type: SQL
-                expression: "art"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-        entity_type_mapping:
-          attributes:
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ElementType"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-        spatial_structure_mapping:
-          attributes:
-            - attribute: "CompositionType"
-              source:
-                type: STATIC
-                expression: "COMPLEX"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "Amtliche Vermessung"
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "Bodenbedeckung"
-        group_mapping:
-          - type: SQL
-            expression: "group"
-        color:
-          r: 0.15
-          g: 0.50
-          b: 0.25
-          a: 0.85
-      - name: "bodenbedeckung_gebaeude"
-        sql_path: "/workspace/sql/av_bodenbedeckung_gebaeude.sql"
-        entity_mapping:
-          entity: IFC_GEOGRAPHIC_ELEMENT
-          attributes:
-            - attribute: "Name"
-              source:
-                type: SQL
-                expression: "art"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-        entity_type_mapping:
-          attributes:
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ElementType"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-        spatial_structure_mapping:
-          attributes:
-            - attribute: "CompositionType"
-              source:
-                type: STATIC
-                expression: "COMPLEX"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "Amtliche Vermessung"
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "Bodenbedeckung"
-        group_mapping:
-          - type: SQL
-            expression: "group"
-        color:
-          r: 0.95
-          g: 0.20
-          b: 0.15
-          a: 0.85
-      - name: "bodenbedeckung_gewaesser"
-        sql_path: "/workspace/sql/av_bodenbedeckung_gewaesser.sql"
-        entity_mapping:
-          entity: IFC_GEOGRAPHIC_ELEMENT
-          attributes:
-            - attribute: "Name"
-              source:
-                type: SQL
-                expression: "art"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-        entity_type_mapping:
-          attributes:
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ElementType"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-        spatial_structure_mapping:
-          attributes:
-            - attribute: "CompositionType"
-              source:
-                type: STATIC
-                expression: "COMPLEX"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "Amtliche Vermessung"
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "Bodenbedeckung"
-        group_mapping:
-          - type: SQL
-            expression: "group"
-        color:
-          r: 0.16
-          g: 0.50
-          b: 0.95
-          a: 0.85
-      - name: "bodenbedeckung_humusiert"
-        sql_path: "/workspace/sql/av_bodenbedeckung_humusiert.sql"
-        entity_mapping:
-          entity: IFC_GEOGRAPHIC_ELEMENT
-          attributes:
-            - attribute: "Name"
-              source:
-                type: SQL
-                expression: "art"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-        entity_type_mapping:
-          attributes:
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ElementType"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-        spatial_structure_mapping:
-          attributes:
-            - attribute: "CompositionType"
-              source:
-                type: STATIC
-                expression: "COMPLEX"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "Amtliche Vermessung"
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "Bodenbedeckung"
-        group_mapping:
-          - type: SQL
-            expression: "group"
-        color:
-          r: 0.20
-          g: 0.90
-          b: 0.40
-          a: 0.85
-      - name: "bodenbedeckung_vegetationslos"
-        sql_path: "/workspace/sql/av_bodenbedeckung_vegetationslos.sql"
-        entity_mapping:
-          entity: IFC_GEOGRAPHIC_ELEMENT
-          attributes:
-            - attribute: "Name"
-              source:
-                type: SQL
-                expression: "art"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-        entity_type_mapping:
-          attributes:
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ElementType"
-              source:
-                type: STATIC
-                expression: "AV_BODENBEDECKUNG"
-        spatial_structure_mapping:
-          attributes:
-            - attribute: "CompositionType"
-              source:
-                type: STATIC
-                expression: "COMPLEX"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "Amtliche Vermessung"
-            - attribute: "Name"
-              source:
-                type: STATIC
-                expression: "Bodenbedeckung"
-        group_mapping:
-          - type: SQL
-            expression: "group"
-        color:
-          r: 0.95
-          g: 0.61
-          b: 0.16
-          a: 0.85
-    buildings:
-      - name: "all"
-        sql_path: "/workspace/sql/egid.sql"
-        egid_xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
-        entity_mapping:
-          entity: IFC_BUILDING
-          attributes:
-            - attribute: "Name"
-              source:
-                type: CITY_GML
-                expression: ".//gen:intAttribute[@name='EGID']/gen:value"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "3DSM_BUILDING_LOD2"
-          properties:
-            - property: "EGID"
-              property_set: "CHKGK_3DSM"
-              source:
-                type: CITY_GML
-                expression: ".//gen:intAttribute[@name='EGID']/gen:value"
-            - property: "Erstellung_Jahr"
-              property_set: "CHKGK_3DSM"
-              source:
-                type: CITY_GML
-                expression: ".//gen:intAttribute[@name='ERSTELLUNG_JAHR']/gen:value"
-            - property: "Erstellung_Monat"
-              property_set: "CHKGK_3DSM"
-              source:
-                type: CITY_GML
-                expression: ".//gen:intAttribute[@name='ERSTELLUNG_MONAT']/gen:value"
-          building_parts:
-            - entity: IFC_BUILDING_ELEMENT_PROXY
-              geometry_mapping:
-                xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']"
-                geometry: SOLID
-              color:
-                r: 1.00
-                g: 1.00
-                b: 1.00
-                a: 0.2
-            - entity: IFC_WALL
-              geometry_mapping:
-                xpath: ".//bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface"
-                geometry: MULTI_SURFACE
-              color:
-                r: 1.00
-                g: 1.00
-                b: 1.00
-                a: 0.00
-            - entity: IFC_ROOF
-              geometry_mapping:
-                xpath: ".//bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface"
-                geometry: MULTI_SURFACE
-              color:
-                r: 1.00
-                g: 0.8
-                b: 0.8
-                a: 0.00
-            - entity: IFC_SLAB
-              geometry_mapping:
-                xpath: ".//bldg:boundedBy/bldg:GroundSurface/bldg:lod2MultiSurface/gml:MultiSurface"
-                geometry: MULTI_SURFACE
-              color:
-                r: 0.8
-                g: 0.8
-                b: 1.00
-                a: 0.00
-        spatial_structure_mapping:
-          attributes:
-            - attribute: "CompositionType"
-              source:
-                type: STATIC
-                expression: "COMPLEX"
-            - attribute: "PredefinedType"
-              source:
-                type: STATIC
-                expression: "USERDEFINED"
-            - attribute: "ObjectType"
-              source:
-                type: STATIC
-                expression: "Amtliche Vermessung"
-            - attribute: "Name"
-              source:
-                type: SQL
-                expression: "egris_egrid"
-        group_mapping:
-          - type: STATIC
-            expression: "3D-Stadtmodell.Gebaeude"
+  projection_feature_types:
+    - name: "liegenschaft"
+      sql_path: "/workspace/sql/av_liegenschaft.sql"
+      entity_mapping:
+        entity: IFC_GEOGRAPHIC_ELEMENT
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "egris_egrid"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_LIEGENSCHAFT"
+        properties:
+          - property: "NBIdent"
+            property_set: "CH_AV_Liegenschaft"
+            source:
+              type: SQL
+              expression: "nbident"
+          - property: "Nummer"
+            property_set: "CH_AV_Liegenschaft"
+            source:
+              type: SQL
+              expression: "nummer"
+          - property: "EGRIS_EGRID"
+            property_set: "CH_AV_Liegenschaft"
+            source:
+              type: SQL
+              expression: "egris_egrid"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_LIEGENSCHAFT"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_LIEGENSCHAFT"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "egris_egrid"
+      group_mapping:
+        - type: STATIC
+          expression: "Amtliche Vermessung.Liegenschaft"
+      color:
+        r: 0.31
+        g: 0.67
+        b: 0.04
+        a: 0.85
+    - name: "bodenbedeckung_befestigt"
+      sql_path: "/workspace/sql/av_bodenbedeckung_befestigt.sql"
+      entity_mapping:
+        entity: IFC_GEOGRAPHIC_ELEMENT
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "art"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bodenbedeckung"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+      color:
+        r: 0.50
+        g: 0.50
+        b: 0.50
+        a: 0.85
+    - name: "bodenbedeckung_bestockt"
+      sql_path: "/workspace/sql/av_bodenbedeckung_bestockt.sql"
+      entity_mapping:
+        entity: IFC_GEOGRAPHIC_ELEMENT
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "art"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bodenbedeckung"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+      color:
+        r: 0.15
+        g: 0.50
+        b: 0.25
+        a: 0.85
+    - name: "bodenbedeckung_gebaeude"
+      sql_path: "/workspace/sql/av_bodenbedeckung_gebaeude.sql"
+      entity_mapping:
+        entity: IFC_GEOGRAPHIC_ELEMENT
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "art"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bodenbedeckung"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+      color:
+        r: 0.95
+        g: 0.20
+        b: 0.15
+        a: 0.85
+    - name: "bodenbedeckung_gewaesser"
+      sql_path: "/workspace/sql/av_bodenbedeckung_gewaesser.sql"
+      entity_mapping:
+        entity: IFC_GEOGRAPHIC_ELEMENT
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "art"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bodenbedeckung"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+      color:
+        r: 0.16
+        g: 0.50
+        b: 0.95
+        a: 0.85
+    - name: "bodenbedeckung_humusiert"
+      sql_path: "/workspace/sql/av_bodenbedeckung_humusiert.sql"
+      entity_mapping:
+        entity: IFC_GEOGRAPHIC_ELEMENT
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "art"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bodenbedeckung"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+      color:
+        r: 0.20
+        g: 0.90
+        b: 0.40
+        a: 0.85
+    - name: "bodenbedeckung_vegetationslos"
+      sql_path: "/workspace/sql/av_bodenbedeckung_vegetationslos.sql"
+      entity_mapping:
+        entity: IFC_GEOGRAPHIC_ELEMENT
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "art"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bodenbedeckung"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+      color:
+        r: 0.95
+        g: 0.61
+        b: 0.16
+        a: 0.85
+  building_feature_types:
+    - name: "all"
+      sql_path: "/workspace/sql/egid.sql"
+      egid_xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
+      entity_mapping:
+        entity: IFC_BUILDING
+        attributes:
+          - attribute: "Name"
+            source:
+              type: CITY_GML
+              expression: ".//gen:intAttribute[@name='EGID']/gen:value"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "3DSM_BUILDING_LOD2"
+        properties:
+          - property: "EGID"
+            property_set: "CHKGK_3DSM"
+            source:
+              type: CITY_GML
+              expression: ".//gen:intAttribute[@name='EGID']/gen:value"
+          - property: "Erstellung_Jahr"
+            property_set: "CHKGK_3DSM"
+            source:
+              type: CITY_GML
+              expression: ".//gen:intAttribute[@name='ERSTELLUNG_JAHR']/gen:value"
+          - property: "Erstellung_Monat"
+            property_set: "CHKGK_3DSM"
+            source:
+              type: CITY_GML
+              expression: ".//gen:intAttribute[@name='ERSTELLUNG_MONAT']/gen:value"
+        building_parts:
+          - entity: IFC_BUILDING_ELEMENT_PROXY
+            geometry_mapping:
+              xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']"
+              geometry: SOLID
+            color:
+              r: 1.00
+              g: 1.00
+              b: 1.00
+              a: 0.2
+          - entity: IFC_WALL
+            geometry_mapping:
+              xpath: ".//bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface"
+              geometry: MULTI_SURFACE
+            color:
+              r: 1.00
+              g: 1.00
+              b: 1.00
+              a: 0.00
+          - entity: IFC_ROOF
+            geometry_mapping:
+              xpath: ".//bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface"
+              geometry: MULTI_SURFACE
+            color:
+              r: 1.00
+              g: 0.8
+              b: 0.8
+              a: 0.00
+          - entity: IFC_SLAB
+            geometry_mapping:
+              xpath: ".//bldg:boundedBy/bldg:GroundSurface/bldg:lod2MultiSurface/gml:MultiSurface"
+              geometry: MULTI_SURFACE
+            color:
+              r: 0.8
+              g: 0.8
+              b: 1.00
+              a: 0.00
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "egris_egrid"
+      group_mapping:
+        - type: STATIC
+          expression: "3D-Stadtmodell.Gebaeude"
   groups:
     - path: "Amtliche Vermessung.Gebaeude"
       entity_mapping:

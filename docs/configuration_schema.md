@@ -1,6 +1,12 @@
 # Configuration
 
-Application configuration
+Root application configuration.
+
+This class defines the complete configuration model for the application. It aggregates
+settings for logging, internationalization (i18n), Redis and PostGIS database connections,
+STAC data sources, TIN generation, and IFC export configuration. The configuration is
+typically loaded from a YAML file using the `load()` class method, which supports
+environment variable expansion.
 
 ### Type: `object`
 
@@ -166,17 +172,6 @@ Postgis connection configuration
 | port | `integer` | ✅ | integer | Database port number |
 | password | `string` | ✅ | string | Database password |
 
-## FeatureTypesConfig
-
-Feature types configuration for IFC export
-
-#### Type: `object`
-
-| Property | Type | Required | Possible values | Default | Description |
-| -------- | ---- | -------- | --------------- | ------- | ----------- |
-| projections | `array` |  | [ProjectionFeatureType](#projectionfeaturetype) | `[]` | List of projection feature type definitions |
-| buildings | `array` |  | [BuildingFeatureType](#buildingfeaturetype) | `[]` | List of building feature type definitions |
-
 ## GeoReferencing
 
 Supported geo referencing methods
@@ -268,7 +263,8 @@ IFC export configuration
 | application_name | `string` | ✅ | string |  | Name of the application generating IFC |
 | project_name | `string` | ✅ | string |  | Project name in IFC |
 | geo_referencing | `string` | ✅ | [GeoReferencing](#georeferencing) |  | Georeferencing configuration for IFC |
-| feature_types | `object` | ✅ | [FeatureTypesConfig](#featuretypesconfig) |  | Configured feature types for IFC |
+| projection_feature_types | `array` |  | [ProjectionFeatureType](#projectionfeaturetype) | `[]` | List of projection feature type definitions |
+| building_feature_types | `array` |  | [BuildingFeatureType](#buildingfeaturetype) | `[]` | List of building feature type definitions |
 | groups | `array` |  | [GroupConfig](#groupconfig) | `[]` | List of group configurations for IFC |
 
 ## ProjectionAttributeConfig

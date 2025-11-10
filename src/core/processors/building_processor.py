@@ -26,7 +26,7 @@ class BuildingProcessor:
         self.stac_service = STACService()
 
     def process(self, polygon: str, project_origin: Coordinates) -> dict[str, list[Building]]:
-        feature_types = {b.name: b for b in config.ifc.feature_types.buildings}
+        feature_types = {b.name: b for b in config.ifc.building_feature_types}
         if not feature_types:
             logger.info("no building feature types configured")
             return {}

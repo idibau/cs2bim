@@ -62,6 +62,19 @@ The configuration of the cs2bim service is described in two documents: an [overv
 the general setup and structure, and a detailed [configuration schema](docs/configuration_schema.md) explaining all
 technical parameters and options.
 
+To generate the document "configuration schmema" do the following:
+
+Generate json schema:
+```
+with open("configuration.json", "w") as stream:
+    json.dump(Configuration.model_json_schema(), stream, indent=4)
+```
+
+Generate markdown with [jsonschema-markdown](https://pypi.org/project/jsonschema-markdown/):
+```
+jsonschema-markdown configuration.json > configuration_schema.md --no-empty-columns
+```
+
 ## Getting started
 
 Modify the configuration according to your needs/environment. Details about configuration [see here](#configuration).  
@@ -165,9 +178,9 @@ archive is available, containing supplementary examples on georeferencing and pr
 
 | Description        | Spatial structure                           | Groups                                          | 3D                                       | 2D                                          | Configuration                                                   |
 |--------------------|---------------------------------------------|-------------------------------------------------|------------------------------------------|---------------------------------------------|-----------------------------------------------------------------|
-| Buildings          | ![BuildingEntity](uploads/example_2_ss.png) | ![BuildingEntity](uploads/example_2_groups.png) | ![BuildingEntity](uploads/example_2.png) | ![BuildingEntity](uploads/example_2_2d.png) | [Download](https://drive.switch.ch/index.php/s/SYfkfiYtPgjrAti) |
-| Land covers        | ![BuildingEntity](uploads/example_1_ss.png) | ![BuildingEntity](uploads/example_1_groups.png) | ![BuildingEntity](uploads/example_1.png) | ![BuildingEntity](uploads/example_1_2d.png) | [Download](https://drive.switch.ch/index.php/s/6lFzcS20Hq3VV9E) |
-| Buildings, Parcels | ![BuildingEntity](uploads/example_3_ss.png) | ![BuildingEntity](uploads/example_3_groups.png) | ![BuildingEntity](uploads/example_3.png) | ![BuildingEntity](uploads/example_3_2d.png) | [Download](https://drive.switch.ch/index.php/s/0wcjF5KFn7Zbr6N) |
+| Buildings          | ![BuildingEntity](uploads/example_2_ss.png) | ![BuildingEntity](uploads/example_2_groups.png) | ![BuildingEntity](uploads/example_2.png) | ![BuildingEntity](uploads/example_2_2d.png) | [Download](https://drive.switch.ch/index.php/s/4sVioXIq7vUIcz5) |
+| Land covers        | ![BuildingEntity](uploads/example_1_ss.png) | ![BuildingEntity](uploads/example_1_groups.png) | ![BuildingEntity](uploads/example_1.png) | ![BuildingEntity](uploads/example_1_2d.png) | [Download](https://drive.switch.ch/index.php/s/1mQqXoQaFoN6ZlB) |
+| Buildings, Parcels | ![BuildingEntity](uploads/example_3_ss.png) | ![BuildingEntity](uploads/example_3_groups.png) | ![BuildingEntity](uploads/example_3.png) | ![BuildingEntity](uploads/example_3_2d.png) | [Download](https://drive.switch.ch/index.php/s/g3lh4aHA7gyTJzs) |
 
 [Download ifc_supplementary_examples.zip](https://drive.switch.ch/index.php/s/qoe0NF9U77aTw2O)
 

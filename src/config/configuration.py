@@ -1,8 +1,9 @@
 import os
 from pathlib import Path
+from typing import List, Optional
+
 from pydantic import BaseModel, model_validator, Field
 from pydantic_yaml import parse_yaml_raw_as
-from typing import List, Optional
 
 from config.building_entity import BuildingEntity
 from config.building_part_entity import BuildingPartEntity
@@ -215,15 +216,6 @@ class BuildingFeatureType(BaseModel):
                                                       description="Group mappings for the building feature type")
 
 
-class FeatureTypesConfig(BaseModel):
-    """Feature types configuration for IFC export"""
-
-    projections: List[ProjectionFeatureType] = Field(default_factory=list, json_schema_extra={"default": []},
-                                                     description="List of projection feature type definitions")
-    buildings: List[BuildingFeatureType] = Field(default_factory=list, json_schema_extra={"default": []},
-                                                 description="List of building feature type definitions")
-
-
 class PropertyConfig(BaseModel):
     """Property mapping configuration"""
 
@@ -264,7 +256,11 @@ class IFCConfig(BaseModel):
     application_name: str = Field(..., description="Name of the application generating IFC")
     project_name: str = Field(..., description="Project name in IFC")
     geo_referencing: GeoReferencing = Field(..., description="Georeferencing configuration for IFC")
-    feature_types: FeatureTypesConfig = Field(..., description="Configured feature types for IFC")
+    projection_feature_types: List[ProjectionFeatureType] = Field(default_factory=list,
+                                                                  json_schema_extra={"default": []},
+                                                                  description="List of projection feature type definitions")
+    building_feature_types: List[BuildingFeatureType] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                              description="List of building feature type definitions")
     groups: List[GroupConfig] = Field(default_factory=list, json_schema_extra={"default": []},
                                       description="List of group configurations for IFC")
 
@@ -319,10 +315,10 @@ class Configuration(BaseModel):
             ValueError: If `stac.dtm_items_url` is missing while projections are defined,
                 or if `stac.building_items_url` is missing while building feature types are defined.
         """
-        if self.ifc.feature_types.projections and self.stac.dtm_items_url is None:
-            raise ValueError("stac.dtm_items_url is required when ifc.feature_types.projections is not empty")
-        if self.ifc.feature_types.buildings and self.stac.building_items_url is None:
-            raise ValueError("stac.building_items_url is required when ifc.feature_types.building is not empty")
+        if self.ifc.projection_feature_types and self.stac.dtm_items_url is None:
+            raise ValueError("stac.dtm_items_url is required when ifc.projection_feature_types is not empty")
+        if self.ifc.building_feature_types and self.stac.building_items_url is None:
+            raise ValueError("stac.building_items_url is required when ifc.building_feature_types is not empty")
         return self
 
 
