@@ -8,7 +8,7 @@ class Coordinates:
         return self.x, self.y, self.z
 
     def __str__(self) -> str:
-        return f"Coordinate(x={self.x}, y={self.y}, z={self.z})"
+        return f"Coordinates(x={self.x}, y={self.y}, z={self.z})"
 
     def __eq__(self, other) -> bool:
         if isinstance(other, Coordinates):
