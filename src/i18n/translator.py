@@ -21,7 +21,7 @@ class Translator:
 
     def translate(self, value: str, language: Language) -> str:
         """
-        Translates the given string into the specified language.
+        Translates the given string into the specified language. Periods are seen as word boundaries.
 
         Args:
             value: The input string to be translated.
@@ -37,13 +37,20 @@ class Translator:
         if language is None:
             return value
         elif language == Language.DE:
-            return self.de.get(self.get_translation_key(value), value)
+            translation_file = self.de
         elif language == Language.FR:
-            return self.fr.get(self.get_translation_key(value), value)
+            translation_file = self.fr
         elif language == Language.IT:
-            return self.it.get(self.get_translation_key(value), value)
+            translation_file = self.it
         else:
             raise NotImplementedError(f"No translation available for {language.name}")
+
+        values = value.split(".")
+        translations = []
+        for value in values:
+            translation = translation_file.get(self.get_translation_key(value), value)
+            translations.append(translation)
+        return ".".join(translations)
 
     @staticmethod
     def load_translation_file(path: str | None) -> dict[str, str]:
