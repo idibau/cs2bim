@@ -1,2 +1,61 @@
-test: "Deutsch"
+avbodenbedeckung: "AV_BODENBEDECKUNG"
+avliegenschaft: "AV_LIEGENSCHAFT"
+chavliegenschaft: "CH_AV_LIEGENSCHAFT"
 
+complex: "COMPLEX"
+egid: "EGID"
+egrisegrid: "EGRIS_EGRID"
+nbident: "NBIdent"
+userdefined: "USERDEFINED"
+
+3dstadtmodell: "3D Stadtmodell"
+bodenbedeckung: "Bodenbedeckung"
+gebaeude: "Gebäude"
+liegenschaft: "Liegenschaft"
+nummer: "Nummer"
+
+# Citygml
+
+erstellungjahr: "Erstellungsjahr"
+erstellungmonat: "Erstellungsmonat"
+
+# Amtliche Vermessung
+
+amtliche_vermessung: "Amtliche Vermessung"
+
+befestigt: "befestigt"
+bahn: "Bahn"
+flugplatz: "Flugplatz"
+strasseweg: "Strasse_Weg"
+trottoir: "Trottoir"
+uebrigebefestigte: "uebrige_befestigte"
+verkehrsinsel: "Verkehrsinsel"
+wasserbecken: "Wasserbecken"
+
+bestockt: "bestockt"
+geschlossenerwald: "geschlossener_Wald"
+wytweide: "Wytweide"
+wytweidedicht: "Wytweide_dicht"
+wytweideoffen: "Wytweide_offen"
+uebrigebestockte: "uebrige_bestockte"
+
+gewaesser: "Gewaesser"
+fliessendes: "fliessendes"
+schilfguertel: "Schilfguertel"
+stehendes: "stehendes"
+
+humusiert: "humusiert"
+ackerwieseweide: "Acker_Wiese_Weide"
+gartenanlage: "Gartenanlage"
+intensivkultur: "Intensivkultur"
+reben: "Reben"
+uebrigeintensivkultur: "uebrige_Intensivkultur"
+hochflachmoor: "Hoch_Flachmoor"
+uebrigehumusierte: "uebrige_humusierte"
+
+vegetationslos: "vegetationslos"
+fels: "Fels"
+gletscherfirn: "Gletscher_Firn"
+geroellsand: "Geroell_Sand"
+abbaudeponie: "Abbau_Deponie"
+uebrigevegetationslose: "uebrige_vegetationslose"

@@ -1,2 +1,62 @@
-test: "Französisch"
+avbodenbedeckung: "MO_COUVERTURE_DU_SOL"
+avliegenschaft: "MO_BIEN_FONDS"
+chavliegenschaft: "CH_MO_BIEN_FONDS"
+
+complex: "COMPLEX"
+egid: "EGID"
+egrisegrid: "EGRIS_EGRID"
+nbident: "NBIdent"
+userdefined: "USERDEFINED"
+
+3dstadtmodell: "modèle_3D"
+bodenbedeckung: "couverture_du_sol"
+gebaeude: "batiment"
+liegenschaft: "bien_fonds"
+nummer: "numéro"
+
+# Citygml
+
+erstellungjahr: "année_de_création"
+erstellungmonat: "mois_de_création"
+
+# Amtliche Vermessung
+
+amtliche_vermessung: "mensuration_officielle"
+
+befestigt: "revetement_dur"
+bahn: "chemin_de_fer"
+flugplatz: "place_aviation"
+strasseweg: "route_chemin"
+trottoir: "trottoir"
+uebrigebefestigte: "autre_revetement_dur"
+verkehrsinsel: "ilot"
+wasserbecken: "bassin"
+
+bestockt: "boisee"
+geschlossenerwald: "foret_dense"
+wytweide: "paturage_boise"
+wytweidedicht: "paturage_boise_dense"
+wytweideoffen: "paturage_boise_ouvert"
+uebrigebestockte: "autre_boisee"
+
+gewaesser: "eau"
+fliessendes: "cours_eau"
+schilfguertel: "roseliere"
+stehendes: "eau_stagnante"
+
+humusiert: "verte"
+ackerwieseweide: "champ_pre_paturage"
+gartenanlage: "jardin"
+intensivkultur: "culture_intensive"
+reben: "vigne"
+uebrigeintensivkultur: "autre_culture_intensive"
+hochflachmoor: "tourbiere"
+uebrigehumusierte: "autre_verte"
+
+vegetationslos: "sans_vegetation"
+fels: "rocher"
+gletscherfirn: "glacier_neve"
+geroellsand: "eboulis_sable"
+abbaudeponie: "graviere_decharge"
+uebrigevegetationslose: "autre_sans_vegetation"
 

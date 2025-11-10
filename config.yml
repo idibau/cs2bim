@@ -19,6 +19,12 @@ redis:
     file_cache: "2"
   global_keyprefix: "prefix"
 
+############ i18n configuration #############
+i18n:
+  de: "/workspace/i18n/de.yml"
+  fr: "/workspace/i18n/fr.yml"
+  it: "/workspace/i18n/it.yml"
+
 ########## postgis configuration ############
 db:
   dbname: "cs2bim"

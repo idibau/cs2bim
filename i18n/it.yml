@@ -1,2 +1,61 @@
-test: "Italienisch"
+avbodenbedeckung: "MO_COPERTURA_DEL_SUOLO"
+avliegenschaft: "MU_BENE_IMMOBILE"
+chavliegenschaft: "CH_MU_BENE_IMMOBILE"
 
+complex: "COMPLEX"
+egid: "EGID"
+egrisegrid: "EGRIS_EGRID"
+nbident: "NBIdent"
+userdefined: "USERDEFINED"
+
+3dstadtmodell: "modello_3D"
+bodenbedeckung: "copertura_del_suolo"
+gebaeude: "edificio"
+liegenschaft: "bene_immobile"
+nummer: "numero"
+
+# Citygml
+
+erstellungjahr: "anno_di_creazione"
+erstellungmonat: "mese_di_creazione"
+
+# Amtliche Vermessung
+
+amtliche_vermessung: "misurazione_ufficiale"
+
+befestigt: "rivestimento_duro"
+bahn: "ferrovia"
+flugplatz: "aeroporto"
+strasseweg: "strada_sentiero"
+trottoir: "marciapiede"
+uebrigebefestigte: "altro_rivestimento_duro"
+verkehrsinsel: "spartitraffico"
+wasserbecken: "bacino_idrico"
+
+bestockt: "bosco"
+geschlossenerwald: "bosco_fitto"
+wytweide: "pascolo_boscato"
+wytweidedicht: "pascolo_boscato_fitto"
+wytweideoffen: "pascolo_boscato_rado"
+uebrigebestockte: "altro_bosco"
+
+gewaesser: "acque"
+fliessendes: "corso_acqua"
+schilfguertel: "canneti"
+stehendes: "specchio_acqua"
+
+humusiert: "humus"
+ackerwieseweide: "campo_prato_pascolo"
+gartenanlage: "giardino"
+intensivkultur: "coltura_intensiva"
+reben: "vigna"
+uebrigeintensivkultur: "altra_coltura_intensiva"
+hochflachmoor: "torbiera"
+uebrigehumusierte: "altro_humus"
+
+vegetationslos: "senza_vegetazione"
+fels: "roccia"
+gletscherfirn: "ghiacciaio_nevaio"
+geroellsand: "pietraia_sabbia"
+abbaudeponie: "cava_di_ghiaia_discarica"
+uebrigevegetationslose: "altra_senza_vegetazione"
