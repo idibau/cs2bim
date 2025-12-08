@@ -45,10 +45,10 @@ tin:
 
 ############# ifc configuration #############
 ifc:
-  author: "FHNW"
+  author: "Geodienste"
   version: "1.0"
   application_name: "cs2bim"
-  project_name: "cs2bim"
+  project_name: "Geobasisdaten"
   geo_referencing: LO_GEO_REF_50
   projection_feature_types:
     - name: "liegenschaft"
@@ -114,8 +114,8 @@ ifc:
               expression: "Amtliche Vermessung"
           - attribute: "Name"
             source:
-              type: SQL
-              expression: "egris_egrid"
+              type: STATIC
+              expression: "Liegenschaft"
       group_mapping:
         - type: STATIC
           expression: "Amtliche Vermessung.Liegenschaft"
@@ -554,8 +554,8 @@ ifc:
               expression: "Amtliche Vermessung"
           - attribute: "Name"
             source:
-              type: SQL
-              expression: "egris_egrid"
+              type: STATIC
+              expression: "Gebaeude"
       group_mapping:
         - type: STATIC
           expression: "3D-Stadtmodell.Gebaeude"
