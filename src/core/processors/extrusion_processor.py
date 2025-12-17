@@ -29,12 +29,12 @@ class ExtrusionProcessor:
         self.postgis_service = PostgisService()
 
     def process(self, polygon: str, project_origin: Point) -> dict[str, list[Extrusion]]:
-        feature_types = {b.name: b for b in config.ifc.utility_feature_types}
+        feature_types = {b.name: b for b in config.ifc.extrusion_feature_types}
         if not feature_types:
             logger.info("no building feature types configured")
             return {}
 
-        utilities_by_key = {}
+        extrusions_by_key = {}
         for feature_type_key, feature_type in feature_types.items():
             logger.info(f"create {feature_type_key} feature type")
             with open(feature_type.sql_path, "r") as file:
@@ -43,7 +43,7 @@ class ExtrusionProcessor:
 
             extrusions = []
             for index, row in enumerate(sql_result):
-                logger.info(f"processing utility lines {index + 1}/{len(sql_result)}")
+                logger.info(f"processing extrusion lines {index + 1}/{len(sql_result)}")
 
                 try:
                     cross_section_type = CrossSectionType[row["cross_section"]]
@@ -96,10 +96,10 @@ class ExtrusionProcessor:
                 self.add_properties(spatial_structure, feature_type.spatial_structure_mapping.properties, row)
                 extrusion.spatial_structure = spatial_structure
 
-                if not feature_type_key in utilities_by_key:
-                    utilities_by_key[feature_type_key] = []
-                utilities_by_key[feature_type_key].append(extrusion)
-        return utilities_by_key
+                if not feature_type_key in extrusions_by_key:
+                    extrusions_by_key[feature_type_key] = []
+                extrusions_by_key[feature_type_key].append(extrusion)
+        return extrusions_by_key
 
     def create_simple_section(self, row: dict[str, Any], section_class):
         width = row.get("width")
@@ -139,8 +139,8 @@ class ExtrusionProcessor:
         try:
             start_point = wkb.loads(bytes.fromhex(start_hex))
             end_point = wkb.loads(bytes.fromhex(end_hex))
-            start_point = translate(start_point, xoff=project_origin.x, yoff=project_origin.y, zoff=project_origin.z)
-            end_point = translate(end_point, xoff=project_origin.x, yoff=project_origin.y, zoff=project_origin.z)
+            start_point = translate(start_point, xoff=-project_origin.x, yoff=-project_origin.y, zoff=-project_origin.z)
+            end_point = translate(end_point, xoff=-project_origin.x, yoff=-project_origin.y, zoff=-project_origin.z)
             return LinearExtrusion(cross_section, start_point, end_point)
         except Exception as e:
             logger.error(f"Failed to load WKB points for LinearExtrusion: {e}")
@@ -154,7 +154,7 @@ class ExtrusionProcessor:
 
         try:
             polyline = wkb.loads(bytes.fromhex(polyline_hex))
-            polyline = translate(polyline, xoff=project_origin.x, yoff=project_origin.y, zoff=project_origin.z)
+            polyline = translate(polyline, xoff=-project_origin.x, yoff=-project_origin.y, zoff=-project_origin.z)
             return PolylineExtrusion(cross_section, polyline)
         except Exception as e:
             logger.error(f"Failed to load WKB polyline for PolylineExtrusion: {e}")

@@ -75,10 +75,10 @@ ifc:
               type: STATIC
               expression: "Terrain"
       color:
-        r: 0.31
-        g: 0.67
-        b: 0.04
-        a: 0.85
+        r: 0.1
+        g: 0.1
+        b: 0.1
+        a: 0.8
 #    - name: "liegenschaft"
 #      sql_path: "/workspace/sql/av_liegenschaft.sql"
 #      entity_mapping:
@@ -606,6 +606,10 @@ ifc:
       group_mapping:
         - type: SQL
           expression: "group"
+      color:
+        r: 0.31
+        g: 0.67
+        b: 0.04
   groups:
     - path: "Amtliche Vermessung.Gebaeude"
       entity_mapping:

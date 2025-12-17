@@ -325,7 +325,7 @@ class IFCConfig(BaseModel):
                                                                   description="List of projection feature type definitions")
     building_feature_types: List[BuildingFeatureType] = Field(default_factory=list, json_schema_extra={"default": []},
                                                               description="List of building feature type definitions")
-    utility_feature_types: List[ExtrusionFeatureType] = Field(default_factory=list, json_schema_extra={"default": []},
+    extrusion_feature_types: List[ExtrusionFeatureType] = Field(default_factory=list, json_schema_extra={"default": []},
                                                               description="List of extrusion feature type definitions")
     groups: List[GroupConfig] = Field(default_factory=list, json_schema_extra={"default": []},
                                       description="List of group configurations for IFC")

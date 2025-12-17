@@ -46,9 +46,9 @@ class ModelGenerator:
             model.add_buildings(key, buildings)
 
         logger.info("process extrusion feature types")
-        utility_processor = ExtrusionProcessor()
-        utilities = utility_processor.process(polygon, project_origin)
-        for key, utility in utilities.items():
-            model.add_utilities(key, utility)
+        extrusion_processor = ExtrusionProcessor()
+        extrusions = extrusion_processor.process(polygon, project_origin)
+        for key, extrusion in extrusions.items():
+            model.add_extrusions(key, extrusion)
 
         return model

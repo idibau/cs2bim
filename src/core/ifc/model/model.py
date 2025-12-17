@@ -28,7 +28,7 @@ class Model:
         self.project_origin = project_origin
         self.projections: dict[str, list[Projection]] = {}
         self.buildings: dict[str, list[Building]] = {}
-        self.utilities: dict[str, list[Extrusion]] = {}
+        self.extrusions: dict[str, list[Extrusion]] = {}
 
 
     def add_projections(self, feature_type_key: str, projections: list[Projection]):
@@ -41,10 +41,10 @@ class Model:
             self.buildings[feature_type_key] = []
         self.buildings[feature_type_key].extend(elements)
 
-    def add_utilities(self, feature_type_key: str, elements: list[Extrusion]):
-        if not feature_type_key in self.utilities:
-            self.utilities[feature_type_key] = []
-        self.utilities[feature_type_key].extend(elements)
+    def add_extrusions(self, feature_type_key: str, elements: list[Extrusion]):
+        if not feature_type_key in self.extrusions:
+            self.extrusions[feature_type_key] = []
+        self.extrusions[feature_type_key].extend(elements)
 
     def map_to_ifc(self, language: Language) -> IfcFile:
         logger.info(f"initialize new ifc writer for ifc '{self.file_name}'")
@@ -133,10 +133,10 @@ class Model:
                         group_mappings[group] = []
                     group_mappings[group].append(ifc_element)
 
-        utilities_config = {p.name: p for p in config.ifc.utility_feature_types}
-        for feature_type_key, elements in self.utilities.items():
+        extrusion_config = {p.name: p for p in config.ifc.extrusion_feature_types}
+        for feature_type_key, elements in self.extrusions.items():
             logger.info(f"build FeatureType {feature_type_key}")
-            feature_type = utilities_config[feature_type_key]
+            feature_type = extrusion_config[feature_type_key]
             ifc_style = ifc_file.create_ifc_surface_style(feature_type.color)
             ifc_element_types = {}
             for element in elements:
@@ -192,13 +192,13 @@ class Model:
         return ifc_element_type
 
 
-    def create_utility_ifc_element_type(self, ifc_file: IfcFile, element_type: Element,
-                                        utility_entity: ExtrusionEntity) -> entity_instance:
-        if utility_entity == ExtrusionEntity.IFC_PIPE_SEGMENT:
+    def create_extrusion_ifc_element_type(self, ifc_file: IfcFile, element_type: Element,
+                                        extrusion_entity: ExtrusionEntity) -> entity_instance:
+        if extrusion_entity == ExtrusionEntity.IFC_PIPE_SEGMENT:
             ifc_element_type = ifc_file.create_ifc_pipe_segment_type()
         else:
             raise NotImplementedError(
-                f"building step for projection entity type {utility_entity.name} not implemented")
+                f"building step for projection entity type {extrusion_entity.name} not implemented")
         element_type.set_ifc_attributes(ifc_file, ifc_element_type)
         element_type.set_ifc_properties(ifc_file, ifc_element_type)
         return ifc_element_type
