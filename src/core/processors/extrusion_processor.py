@@ -13,7 +13,7 @@ from core.ifc.model.extrusion.cross_section_type import CrossSectionType
 from core.ifc.model.extrusion.egg import Egg
 from core.ifc.model.extrusion.extrusion import Extrusion
 from core.ifc.model.extrusion.extrusion_type import ExtrusionType
-from core.ifc.model.extrusion.linear_extrusion import LinearExtrusion
+from core.ifc.model.extrusion.line_extrusion import LineExtrusion
 from core.ifc.model.extrusion.polygon import Polygon
 from core.ifc.model.extrusion.polyline_extrusion import PolylineExtrusion
 from core.ifc.model.extrusion.rectangle import Rectangle
@@ -74,7 +74,7 @@ class ExtrusionProcessor:
                     continue
 
                 EXTRUSION_FACTORIES = {
-                    ExtrusionType.LINEAR: lambda row, cs: self.create_linear_extrusion(row, cs, project_origin),
+                    ExtrusionType.LINE: lambda row, cs: self.create_line_extrusion(row, cs, project_origin),
                     ExtrusionType.POLYLINE: lambda row, cs: self.create_polyline_extrusion(row, cs, project_origin),
                 }
 
@@ -129,11 +129,11 @@ class ExtrusionProcessor:
             logger.error(f"Failed to load polygon from hex: {e}")
             return None
 
-    def create_linear_extrusion(self, row: dict[str, Any], cross_section: CrossSection, project_origin: Point) -> LinearExtrusion | None:
+    def create_line_extrusion(self, row: dict[str, Any], cross_section: CrossSection, project_origin: Point) -> LineExtrusion | None:
         start_hex = row.get("start_point")
         end_hex = row.get("end_point")
         if not start_hex or not end_hex:
-            logger.warning("Missing 'start_point' or 'end_point' for LinearExtrusion")
+            logger.warning("Missing 'start_point' or 'end_point' for LineExtrusion")
             return None
 
         try:
@@ -141,7 +141,7 @@ class ExtrusionProcessor:
             end_point = wkb.loads(bytes.fromhex(end_hex))
             start_point = translate(start_point, xoff=-project_origin.x, yoff=-project_origin.y, zoff=-project_origin.z)
             end_point = translate(end_point, xoff=-project_origin.x, yoff=-project_origin.y, zoff=-project_origin.z)
-            return LinearExtrusion(cross_section, start_point, end_point)
+            return LineExtrusion(cross_section, start_point, end_point)
         except Exception as e:
             logger.error(f"Failed to load WKB points for LinearExtrusion: {e}")
             return None
