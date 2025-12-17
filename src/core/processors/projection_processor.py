@@ -1,12 +1,14 @@
 import logging
+
+from shapely import Point
+
 from core.processors.projection_data import ProjectionData
 from typing import Any
 
 from config.configuration import config, ProjectionFeatureType, ProjectionAttributeConfig, ProjectionPropertyConfig
 from config.projection_source import ProjectionSource
-from core.ifc.model.coordinates import Coordinates
 from core.ifc.model.element import Element
-from core.ifc.model.projection import Projection
+from core.ifc.model.projection.projection import Projection
 from core.tin.raster_points import RasterPoints
 from service.postgis_service import PostgisService
 from service.stac_service import STACService
@@ -20,7 +22,7 @@ class ProjectionProcessor:
         self.postgis_service = PostgisService()
         self.stac_service = STACService()
 
-    def process(self, polygon: str, project_origin: Coordinates) -> dict[str, list[Projection]]:
+    def process(self, polygon: str, project_origin: Point) -> dict[str, list[Projection]]:
         feature_types_by_key = {p.name: p for p in config.ifc.projection_feature_types}
         if not feature_types_by_key:
             logger.info("no projection feature types configured")

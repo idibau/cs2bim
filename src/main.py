@@ -29,7 +29,8 @@ import argparse
 import logging
 import sys
 
-from core.ifc.model.coordinates import Coordinates
+from shapely import Point
+
 from core.ifc.model.ifc_version import IfcVersion
 from core.model_generator import ModelGenerator
 from i18n.language import Language
@@ -86,7 +87,7 @@ else:
             raise ValueError(
                 "PROJECT_ORIGIN must contain exactly three values separated by commas (e.g., 0.0,0.0,0.0)."
             )
-        project_origin = Coordinates(*origin_values)
+        project_origin = Point(origin_values)
     else:
         project_origin = None
 

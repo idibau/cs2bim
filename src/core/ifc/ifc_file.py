@@ -6,9 +6,9 @@ import datetime
 import logging
 
 from ifcopenshell import file, entity_instance, guid
+from shapely import Point
 
 from config.configuration import Color, config
-from core.ifc.model.coordinates import Coordinates
 from i18n.translator import Translator
 
 logger = logging.getLogger(__name__)
@@ -26,8 +26,8 @@ class IfcFile:
     def write(self, path: str):
         self.file.write(path)
 
-    def create_ifc_cartesian_point(self, coordinates: Coordinates) -> entity_instance:
-        return self.file.create_entity("IfcCartesianPoint", Coordinates=coordinates.to_tuple())
+    def create_ifc_cartesian_point(self, point: Point) -> entity_instance:
+        return self.file.create_entity("IfcCartesianPoint", Coordinates=point.coords[0])
 
     def create_ifc_owner_history(self, name: str, version: str, application_full_name: str) -> entity_instance:
         the_person = self.file.create_entity("IfcPerson", GivenName=name)
@@ -87,7 +87,7 @@ class IfcFile:
             "IfcUnitAssignment", Units=[length_unit, area_unit, volume_unit, conversion_based_unit]
         )
 
-    def create_ifc_geometric_representation_context(self, location_coordinates: Coordinates) -> entity_instance:
+    def create_ifc_geometric_representation_context(self, location_coordinates: Point) -> entity_instance:
         location = self.create_ifc_cartesian_point(location_coordinates)
         world_coordinate_system = self.file.create_entity("IfcAxis2Placement3D", Location=location)
         return self.file.create_entity(
@@ -113,7 +113,7 @@ class IfcFile:
             self,
             map_unit: entity_instance,
             source_crs: entity_instance,
-            origin: Coordinates,
+            origin: Point,
     ) -> entity_instance:
         target_crs = self.file.create_entity(
             "IfcProjectedCRS",
@@ -151,7 +151,7 @@ class IfcFile:
             UnitsInContext=units_in_context,
         )
 
-    def create_ifc_local_placement(self, location_coordinates: Coordinates) -> entity_instance:
+    def create_ifc_local_placement(self, location_coordinates: Point) -> entity_instance:
         location = self.create_ifc_cartesian_point(location_coordinates)
         relative_placement = self.file.create_entity("IfcAxis2Placement3D", Location=location)
         return self.file.create_entity("IfcLocalPlacement", RelativePlacement=relative_placement)
@@ -242,17 +242,17 @@ class IfcFile:
         return self.file.create_entity("IfcFacetedBrepWithVoids", Outer=outer, Voids=voids)
 
     def create_ifc_triangulated_face_set(
-            self, coord_list: list[Coordinates], coord_index: list[tuple[int, int, int]]
+            self, coord_list: list[Point], coord_index: list[tuple[int, int, int]]
     ) -> entity_instance:
         coordinates = self.file.create_entity("IfcCartesianPointList3D",
-                                              CoordList=[coord.to_tuple() for coord in coord_list])
+                                              CoordList=[coord.coords[0] for coord in coord_list])
         return self.file.create_entity("IfcTriangulatedFaceSet", Coordinates=coordinates, CoordIndex=coord_index)
 
     def create_ifc_polygonal_face_set(
-            self, coord_list: list[Coordinates], faces: list[entity_instance]
+            self, coord_list: list[Point], faces: list[entity_instance]
     ) -> entity_instance:
         coordinates = self.file.create_entity("IfcCartesianPointList3D",
-                                              CoordList=[coord.to_tuple() for coord in coord_list])
+                                              CoordList=[coord.coords[0] for coord in coord_list])
         return self.file.create_entity("IfcPolygonalFaceSet", Coordinates=coordinates, Faces=faces)
 
     def create_ifc_indexed_polygonal_face(
@@ -372,6 +372,97 @@ class IfcFile:
     def create_ifc_styled_item(self, item: entity_instance, style: entity_instance) -> entity_instance:
         return self.file.create_entity("IfcStyledItem", Item=item, Styles=[style])
 
+    def create_ifc_pipe_segment(self, object_placement: entity_instance, representation: entity_instance
+                                ) -> entity_instance:
+        return self.file.create_entity(
+            "IfcPipeSegment", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+        )
+
+    def create_ifc_pipe_segment_type(self) -> entity_instance:
+        return self.file.create_entity(
+            "IfcPipeSegmentType", GlobalId=guid.new()
+        )
+
+    def create_ifc_swept_disk_solid(self, directrix: entity_instance, radius: float) -> entity_instance:
+        return self.file.create_entity(
+            "IfcSweptDiskSolid",
+            Directrix=directrix,
+            Radius=radius
+        )
+
+    def create_ifc_polyline(self, points: list[Point]) -> entity_instance:
+        if len(points) > 1 and points[0] == points[-1]:
+            cartesian_points = [self.create_ifc_cartesian_point(point) for point in points[:-1]]
+            cartesian_points.append(cartesian_points[0])
+        else:
+            cartesian_points = [self.create_ifc_cartesian_point(point) for point in points]
+        return self.file.create_entity(
+            "IfcPolyline",
+            Points=cartesian_points
+        )
+
+    def create_ifc_arbitrary_closed_profile_def(self, outer_curve: list[Point]):
+        ifc_outer_curve = self.create_ifc_polyline(outer_curve)
+        return self.file.create_entity(
+            "IfcArbitraryClosedProfileDef",
+            ProfileType="AREA",
+            OuterCurve=ifc_outer_curve
+        )
+
+    def create_ifc_rectangle_profile_def(self, x_dim: float, y_dim: float) -> entity_instance:
+        return self.file.create_entity(
+            "IfcRectangleProfileDef",
+            ProfileType="AREA",
+            XDim=x_dim,
+            YDim=y_dim
+        )
+
+    def create_ifc_circle_profile_def(self, radius: float) -> entity_instance:
+        return self.file.create_entity(
+            "IfcCircleProfileDef",
+            ProfileType="AREA",
+            Radius=radius
+        )
+
+    def create_ifc_sectioned_solid_horizontal(self, ifc_profile_def: entity_instance,
+                                              directrix: entity_instance) -> entity_instance:
+        ifc_start_point = self.create_ifc_axis_2_placement_linear(
+            self.create_ifc_point_by_distance_expression(0.0, directrix))
+        ifc_end_point = self.create_ifc_axis_2_placement_linear(
+            self.create_ifc_point_by_distance_expression(1.0, directrix))
+        return self.file.create_entity(
+            "IfcSectionedSolidHorizontal",
+            Directrix=directrix,
+            CrossSections=[ifc_profile_def, ifc_profile_def],
+            CrossSectionPositions=[ifc_start_point, ifc_end_point]
+        )
+
+    def create_ifc_extruded_area_solid(self, ifc_profile_def: entity_instance,
+                                       position: Point, depth: float):
+        ifc_axis_2_placement_3d = self.file.create_entity("IfcAxis2Placement3D",
+                                                          Location=self.create_ifc_cartesian_point(position))
+        ifc_direction = self.file.create_entity("IfcDirection", DirectionRatios=[0.0, 0.0, 1.0])
+        return self.file.create_entity(
+            "IfcExtrudedAreaSolid",
+            SweptArea=ifc_profile_def,
+            Position=ifc_axis_2_placement_3d,
+            ExtrudedDirection=ifc_direction,
+            Depth=depth
+        )
+
+    def create_ifc_axis_2_placement_linear(self, point: entity_instance):
+        return self.file.create_entity(
+            "IfcAxis2PlacementLinear",
+            Location=point
+        )
+
+    def create_ifc_point_by_distance_expression(self, distance_along: float, basis_curve: entity_instance):
+        return self.file.create_entity(
+            "IfcPointByDistanceExpression",
+            DistanceAlong=self.file.createIfcParameterValue(distance_along),
+            BasisCurve=basis_curve,
+        )
+
     def create_ifc_property_single_value(self, name: str, text: str) -> entity_instance:
         nominal_value = self.file.create_entity("IfcText", self.translator.translate(text, self.language))
         return self.file.create_entity("IfcPropertySingleValue", Name=self.translator.translate(name, self.language),
@@ -392,6 +483,6 @@ class IfcFile:
         )
         return relating_property_definition
 
-    def add_attribute(self, item: entity_instance, attribute, value):
+    def create_attribute(self, item: entity_instance, attribute, value):
         if hasattr(item, attribute):
             setattr(item, attribute, self.translator.translate(value, self.language))

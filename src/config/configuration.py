@@ -1,9 +1,8 @@
 import os
 from pathlib import Path
-from typing import List, Optional
-
 from pydantic import BaseModel, model_validator, Field
 from pydantic_yaml import parse_yaml_raw_as
+from typing import List, Optional
 
 from config.building_entity import BuildingEntity
 from config.building_part_entity import BuildingPartEntity
@@ -14,6 +13,8 @@ from config.grid_size import GridSize
 from config.group_entity import GroupEntity
 from config.projection_entity import ProjectionEntity
 from config.projection_source import ProjectionSource
+from config.extrusion_entity import ExtrusionEntity
+from config.extrusion_source import ExtrusionSource
 
 
 class Color(BaseModel):
@@ -216,6 +217,69 @@ class BuildingFeatureType(BaseModel):
                                                       description="Group mappings for the building feature type")
 
 
+class ExtrusionConfigSource(BaseModel):
+    """Source configuration for extrusion feature type"""
+
+    type: ExtrusionSource = Field(..., description="Type of the data source")
+    expression: str = Field(..., description="Expression defining the source data")
+
+
+class ExtrusionPropertyConfig(BaseModel):
+    """Property mapping configuration for extrusion feature type"""
+
+    property: str = Field(..., description="Property name")
+    property_set: str = Field(..., description="Property set name")
+    source: ExtrusionConfigSource = Field(..., description="Source configuration for this property")
+
+
+class ExtrusionAttributeConfig(BaseModel):
+    """Attribute mapping configuration for extrusion feature type"""
+
+    attribute: str = Field(..., description="Attribute name (Only applied if the attribute exists on the entity)")
+    source: ExtrusionConfigSource = Field(..., description="Source configuration for this attribute")
+
+
+class ExtrusionSpatialEntityConfig(BaseModel):
+    """Spatial structure mapping configuration for extrusion feature type"""
+
+    attributes: List[ExtrusionAttributeConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                       description="List of attribute mappings")
+    properties: List[ExtrusionPropertyConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                      description="List of property mappings")
+
+
+class ExtrusionEntityTypeConfig(BaseModel):
+    """Entity type mapping configuration for extrusion feature type"""
+
+    attributes: List[ExtrusionAttributeConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                       description="List of attribute mappings")
+    properties: List[ExtrusionPropertyConfig] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                      description="List of property mappings")
+
+
+class ExtrusionEntityConfig(ExtrusionEntityTypeConfig):
+    """Entity mapping configuration for extrusion feature type"""
+
+    entity: ExtrusionEntity = Field(..., description="Type of entity")
+
+
+class ExtrusionFeatureType(BaseModel):
+    """Feature type configuration for extrusion feature type"""
+
+    name: str = Field(..., description="Feature type name for the extrusion")
+    sql_path: Optional[str] = Field(None,
+                               description="Path to SQL definition for the extrusion feature type. Exact specification can be found in the configuration documentation.")
+    entity_mapping: ExtrusionEntityConfig = Field(..., description="Entity mapping configuration for the extrusion")
+    entity_type_mapping: Optional[ExtrusionEntityTypeConfig] = Field(None,
+                                                                     description="Entity type mapping configuration for the extrusion. (Only supported for entities with TypeObject)")
+    spatial_structure_mapping: ExtrusionSpatialEntityConfig = Field(...,
+                                                                    description="Spatial structure mapping for the projection")
+    group_mapping: List[ExtrusionConfigSource] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                       description="Group mappings for the projection feature type")
+    color: Color = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0), json_schema_extra={"default": "white"},
+                         description="Color assigned to the extrusion feature type")
+
+
 class PropertyConfig(BaseModel):
     """Property mapping configuration"""
 
@@ -261,6 +325,8 @@ class IFCConfig(BaseModel):
                                                                   description="List of projection feature type definitions")
     building_feature_types: List[BuildingFeatureType] = Field(default_factory=list, json_schema_extra={"default": []},
                                                               description="List of building feature type definitions")
+    utility_feature_types: List[ExtrusionFeatureType] = Field(default_factory=list, json_schema_extra={"default": []},
+                                                              description="List of extrusion feature type definitions")
     groups: List[GroupConfig] = Field(default_factory=list, json_schema_extra={"default": []},
                                       description="List of group configurations for IFC")
 

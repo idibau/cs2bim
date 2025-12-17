@@ -1,8 +1,6 @@
 import numpy as np
 import shapely
-from shapely import Polygon
-
-from core.ifc.model.coordinates import Coordinates
+from shapely import Polygon, Point
 
 
 class RasterPoints(object):
@@ -15,9 +13,9 @@ class RasterPoints(object):
         Raster points as geopandas.GeoDataFrame
     """
 
-    def __init__(self, xyz_filepath: str, project_origin: Coordinates):
+    def __init__(self, xyz_filepath: str, project_origin: Point):
         self.data = np.loadtxt(xyz_filepath, delimiter=" ", skiprows=1)
-        project_origin = np.array(project_origin.to_tuple())
+        project_origin = np.array(project_origin.coords[0])
         if not np.allclose(project_origin, np.zeros((3,))):
             self.data = self.data - project_origin
         if self.data.ndim == 1:

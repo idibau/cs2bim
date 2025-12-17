@@ -1,12 +1,12 @@
 import logging
 
-from shapely import wkt
+from shapely import wkt, Point
 
-from core.ifc.model.coordinates import Coordinates
 from core.ifc.model.ifc_version import IfcVersion
 from core.ifc.model.model import Model
 from core.processors.building_processor import BuildingProcessor
 from core.processors.projection_processor import ProjectionProcessor
+from core.processors.extrusion_processor import ExtrusionProcessor
 
 logger = logging.getLogger(__name__)
 
@@ -24,9 +24,9 @@ class ModelGenerator:
         min_x = min(x for x, y in coords)
         min_y = min(y for x, y in coords)
 
-        return Coordinates(min_x, min_y, 0)
+        return Point(min_x, min_y, 0)
 
-    def generate(self, ifc_version: IfcVersion, name: str, polygon: str, project_origin: Coordinates | None):
+    def generate(self, ifc_version: IfcVersion, name: str, polygon: str, project_origin: Point | None):
         logger.info("start generating model")
         if project_origin is None:
             project_origin = self.calculate_origin_from_polygon(polygon)
@@ -44,5 +44,11 @@ class ModelGenerator:
         buildings = building_processor.process(polygon, project_origin)
         for key, buildings in buildings.items():
             model.add_buildings(key, buildings)
+
+        logger.info("process extrusion feature types")
+        utility_processor = ExtrusionProcessor()
+        utilities = utility_processor.process(polygon, project_origin)
+        for key, utility in utilities.items():
+            model.add_utilities(key, utility)
 
         return model
