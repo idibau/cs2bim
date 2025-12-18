@@ -12,10 +12,10 @@ class Element:
         self.attributes = {}
         self.property_sets = {}
 
-    def add_property(self, property_set: str, key: str, value: str):
+    def add_property(self, property_set: str, key: str, value: Any):
         if not property_set in self.property_sets:
             self.property_sets[property_set] = PropertySet(property_set)
-        self.property_sets[property_set].add_property(key, value)
+        self.property_sets[property_set].add_property(key, str(value))
 
     def add_attribute(self, name: str, value: Any):
         if not name in self.attributes:
