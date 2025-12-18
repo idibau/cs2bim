@@ -47,6 +47,9 @@ class LineExtrusion(Extrusion):
         ifc_file.create_ifc_styled_item(ifc_geometry, ifc_style)
         if entity == ExtrusionEntity.IFC_PIPE_SEGMENT:
             ifc_element = ifc_file.create_ifc_pipe_segment(ifc_local_placement, ifc_product_definition_shape)
+        elif entity == ExtrusionEntity.IFC_DISTRIBUTION_FLOW_ELEMENT:
+            ifc_element = ifc_file.create_ifc_distribution_flow_element(ifc_local_placement,
+                                                                        ifc_product_definition_shape)
         else:
             raise Exception(
                 f"building step for feature class entity type {entity.name} not implemented")

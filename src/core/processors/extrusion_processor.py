@@ -2,11 +2,11 @@ import logging
 from typing import Any
 
 from shapely import Point, wkb
+from shapely.affinity import translate
 
 from config.configuration import config, ExtrusionAttributeConfig, ExtrusionPropertyConfig, ExtrusionFeatureType
 from config.extrusion_source import ExtrusionSource
 from core.ifc.model.element import Element
-from core.ifc.model.feature_element import FeatureElement
 from core.ifc.model.extrusion.circle import Circle
 from core.ifc.model.extrusion.cross_section import CrossSection
 from core.ifc.model.extrusion.cross_section_type import CrossSectionType
@@ -17,8 +17,8 @@ from core.ifc.model.extrusion.line_extrusion import LineExtrusion
 from core.ifc.model.extrusion.polygon import Polygon
 from core.ifc.model.extrusion.polyline_extrusion import PolylineExtrusion
 from core.ifc.model.extrusion.rectangle import Rectangle
+from core.ifc.model.feature_element import FeatureElement
 from service.postgis_service import PostgisService
-from shapely.affinity import translate
 
 logger = logging.getLogger(__name__)
 
@@ -84,6 +84,11 @@ class ExtrusionProcessor:
                     continue
                 extrusion_result = factory_func(row, cross_section)
                 if extrusion_result is not None:
+                    if feature_type.entity_type_mapping is not None:
+                        element_type = Element()
+                        self.add_attributes(element_type, feature_type.entity_type_mapping.attributes, row)
+                        self.add_properties(element_type, feature_type.entity_type_mapping.properties, row)
+                        extrusion_result.element_type = element_type
                     extrusions.append((extrusion_result, row))
 
             for extrusion, row in extrusions:
@@ -102,22 +107,22 @@ class ExtrusionProcessor:
         return extrusions_by_key
 
     def create_simple_section(self, row: dict[str, Any], section_class):
-        width = row.get("width")
+        width = row["width"]
         if not width:
             logger.warning(f"Mandatory 'width' missing for {section_class.__name__}")
             return None
         return section_class(width / 2)
 
     def create_rectangle(self, row: dict[str, Any]) -> Rectangle | None:
-        width = row.get("width")
-        height = row.get("height")
+        width = row["width"]
+        height = row["height"]
         if not width or not height:
             logger.warning("Mandatory 'width' or 'height' missing for Rectangle")
             return None
         return Rectangle(width, height)
 
     def create_polygon(self, row: dict[str, Any]) -> Polygon | None:
-        polygon_hex = row.get("area")
+        polygon_hex = row["area"]
         if not polygon_hex:
             logger.warning("Mandatory 'area' data missing for Polygon")
             return None
@@ -129,13 +134,13 @@ class ExtrusionProcessor:
             logger.error(f"Failed to load polygon from hex: {e}")
             return None
 
-    def create_line_extrusion(self, row: dict[str, Any], cross_section: CrossSection, project_origin: Point) -> LineExtrusion | None:
-        start_hex = row.get("start_point")
-        end_hex = row.get("end_point")
+    def create_line_extrusion(self, row: dict[str, Any], cross_section: CrossSection,
+                              project_origin: Point) -> LineExtrusion | None:
+        start_hex = row["start_point"]
+        end_hex = row["end_point"]
         if not start_hex or not end_hex:
             logger.warning("Missing 'start_point' or 'end_point' for LineExtrusion")
             return None
-
         try:
             start_point = wkb.loads(bytes.fromhex(start_hex))
             end_point = wkb.loads(bytes.fromhex(end_hex))
@@ -143,15 +148,15 @@ class ExtrusionProcessor:
             end_point = translate(end_point, xoff=-project_origin.x, yoff=-project_origin.y, zoff=-project_origin.z)
             return LineExtrusion(cross_section, start_point, end_point)
         except Exception as e:
-            logger.error(f"Failed to load WKB points for LinearExtrusion: {e}")
+            logger.error(f"Failed to load WKB points for LineExtrusion: {e}")
             return None
 
-    def create_polyline_extrusion(self, row: dict[str, Any], cross_section: CrossSection, project_origin: Point) -> PolylineExtrusion | None:
-        polyline_hex = row.get("polyline")
+    def create_polyline_extrusion(self, row: dict[str, Any], cross_section: CrossSection,
+                                  project_origin: Point) -> PolylineExtrusion | None:
+        polyline_hex = row["polyline"]
         if not polyline_hex:
             logger.warning("Missing 'polyline' data for PolylineExtrusion")
             return None
-
         try:
             polyline = wkb.loads(bytes.fromhex(polyline_hex))
             polyline = translate(polyline, xoff=-project_origin.x, yoff=-project_origin.y, zoff=-project_origin.z)

@@ -285,11 +285,21 @@ class IfcFile:
             "IfcGeographicElement", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
         )
 
+    def create_ifc_geographic_element_type(self) -> entity_instance:
+        return self.file.create_entity(
+            "IfcGeographicElementType", GlobalId=guid.new()
+        )
+
     def create_ifc_spatial_zone(
             self, object_placement: entity_instance, representation: entity_instance
     ) -> entity_instance:
         return self.file.create_entity(
             "IfcSpatialZone", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+        )
+
+    def create_ifc_spatial_zone_type(self) -> entity_instance:
+        return self.file.create_entity(
+            "IfcSpatialZoneType", GlobalId=guid.new()
         )
 
     def create_ifc_annotation(
@@ -317,16 +327,6 @@ class IfcFile:
             return self.file.create_entity(
                 "IfcBuilding", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
             )
-
-    def create_ifc_geographic_element_type(self) -> entity_instance:
-        return self.file.create_entity(
-            "IfcGeographicElementType", GlobalId=guid.new()
-        )
-
-    def create_ifc_spatial_zone_type(self) -> entity_instance:
-        return self.file.create_entity(
-            "IfcSpatialZoneType", GlobalId=guid.new()
-        )
 
     def create_ifc_space(self, object_placement: entity_instance, representation: entity_instance
                          ) -> entity_instance:
@@ -381,6 +381,18 @@ class IfcFile:
     def create_ifc_pipe_segment_type(self) -> entity_instance:
         return self.file.create_entity(
             "IfcPipeSegmentType", GlobalId=guid.new()
+        )
+
+    def create_ifc_distribution_flow_element(self, object_placement: entity_instance, representation: entity_instance
+                                             ) -> entity_instance:
+        return self.file.create_entity(
+            "IfcDistributionFlowElement", GlobalId=guid.new(), ObjectPlacement=object_placement,
+            Representation=representation
+        )
+
+    def create_ifc_distribution_flow_element_type(self) -> entity_instance:
+        return self.file.create_entity(
+            "IfcDistributionFlowElementType", GlobalId=guid.new()
         )
 
     def create_ifc_swept_disk_solid(self, directrix: entity_instance, radius: float) -> entity_instance:

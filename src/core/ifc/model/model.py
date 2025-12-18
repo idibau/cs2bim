@@ -1,4 +1,5 @@
 import logging
+from typing import Any
 
 from ifcopenshell import entity_instance
 from shapely import Point
@@ -96,8 +97,8 @@ class Model:
 
                 if element.element_type is not None:
                     if element.element_type not in ifc_element_types:
-                        ifc_element_type = self.create_projection_ifc_element_type(ifc_file, element.element_type,
-                                                                                   feature_type.entity_mapping.entity)
+                        ifc_element_type = self.create_ifc_element_type(ifc_file, element.element_type,
+                                                                        feature_type.entity_mapping.entity)
                         ifc_element_types[element.element_type] = (ifc_element_type, [])
                     ifc_element_types[element.element_type][1].append(ifc_element)
 
@@ -147,8 +148,8 @@ class Model:
 
                 if element.element_type is not None:
                     if element.element_type not in ifc_element_types:
-                        ifc_element_type = self.create_projection_ifc_element_type(ifc_file, element.element_type,
-                                                                                   feature_type.entity_mapping.entity)
+                        ifc_element_type = self.create_ifc_element_type(ifc_file, element.element_type,
+                                                                        feature_type.entity_mapping.entity)
                         ifc_element_types[element.element_type] = (ifc_element_type, [])
                     ifc_element_types[element.element_type][1].append(ifc_element)
 
@@ -178,12 +179,16 @@ class Model:
         logger.info("completed ifc build")
         return ifc_file
 
-    def create_projection_ifc_element_type(self, ifc_file: IfcFile, element_type: Element,
-                                           projection_entity: ProjectionEntity) -> entity_instance:
+    def create_ifc_element_type(self, ifc_file: IfcFile, element_type: Element,
+                                projection_entity: Any) -> entity_instance:
         if projection_entity == ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT:
             ifc_element_type = ifc_file.create_ifc_geographic_element_type()
         elif projection_entity == ProjectionEntity.IFC_SPATIAL_ZONE:
             ifc_element_type = ifc_file.create_ifc_spatial_zone_type()
+        elif projection_entity == ExtrusionEntity.IFC_PIPE_SEGMENT:
+            ifc_element_type = ifc_file.create_ifc_pipe_segment_type()
+        elif projection_entity == ExtrusionEntity.IFC_DISTRIBUTION_FLOW_ELEMENT:
+            ifc_element_type = ifc_file.create_ifc_distribution_flow_element_type()
         else:
             raise NotImplementedError(
                 f"building step for projection entity type {projection_entity.name} not implemented")
