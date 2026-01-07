@@ -187,8 +187,6 @@ class Model:
             ifc_element_type = ifc_file.create_ifc_spatial_zone_type()
         elif projection_entity == ExtrusionEntity.IFC_PIPE_SEGMENT:
             ifc_element_type = ifc_file.create_ifc_pipe_segment_type()
-        elif projection_entity == ExtrusionEntity.IFC_DISTRIBUTION_FLOW_ELEMENT:
-            ifc_element_type = ifc_file.create_ifc_distribution_flow_element_type()
         else:
             raise NotImplementedError(
                 f"building step for projection entity type {projection_entity.name} not implemented")

@@ -390,11 +390,6 @@ class IfcFile:
             Representation=representation
         )
 
-    def create_ifc_distribution_flow_element_type(self) -> entity_instance:
-        return self.file.create_entity(
-            "IfcDistributionFlowElementType", GlobalId=guid.new()
-        )
-
     def create_ifc_swept_disk_solid(self, directrix: entity_instance, radius: float) -> entity_instance:
         return self.file.create_entity(
             "IfcSweptDiskSolid",
