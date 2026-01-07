@@ -449,6 +449,14 @@ class IfcFile:
             CrossSectionPositions=[ifc_start_point, ifc_end_point]
         )
 
+    def create_ifc_fixed_reference_swept_area_solid(self, ifc_profile_def: entity_instance, directrix: entity_instance):
+        fixed_ref = self.file.create_entity("IfcDirection", DirectionRatios=(0.0, 0.0, 1.0))
+        return self.file.create_entity("IfcFixedReferenceSweptAreaSolid",
+                                       SweptArea=ifc_profile_def,
+                                       Directrix=directrix,
+                                       FixedReference=fixed_ref
+                                       )
+
     def create_ifc_extruded_area_solid(self, ifc_profile_def: entity_instance,
                                        position: Point, depth: float):
         ifc_axis_2_placement_3d = self.file.create_entity("IfcAxis2Placement3D",

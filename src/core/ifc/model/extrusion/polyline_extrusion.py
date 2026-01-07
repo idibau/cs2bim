@@ -38,7 +38,7 @@ class PolylineExtrusion(Extrusion):
             else:
                 raise Exception(
                     f"complex extrusion builing step for area class {type(self.area)} not implemented")
-            ifc_geometry = ifc_file.create_ifc_sectioned_solid_horizontal(ifc_profile_def, ifc_polyline)
+            ifc_geometry = ifc_file.create_ifc_fixed_reference_swept_area_solid(ifc_profile_def, ifc_polyline)
 
         ifc_product_definition_shape = ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context,
                                                                                     "AdvancedSweptSolid",
