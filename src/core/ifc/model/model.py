@@ -80,7 +80,7 @@ class Model:
             ifc_style = ifc_file.create_ifc_surface_style(feature_type.color)
             ifc_element_types = {}
             for element in elements:
-                ifc_element = element.map_to_ifc(ifc_file, feature_type.entity_mapping.entity,
+                ifc_element = element.map_to_ifc(ifc_file, feature_type.entity_mapping.entity, ifc_local_placement,
                                                  ifc_representation_sub_context, ifc_style)
                 element.set_ifc_attributes(ifc_file, ifc_element)
                 element.set_ifc_properties(ifc_file, ifc_element)
