@@ -156,6 +156,13 @@ class IfcFile:
         relative_placement = self.file.create_entity("IfcAxis2Placement3D", Location=location)
         return self.file.create_entity("IfcLocalPlacement", RelativePlacement=relative_placement)
 
+    def create_relative_ifc_local_placement(self, placement_rel_to: entity_instance, location_coordinates: Point) -> entity_instance:
+        location = self.create_ifc_cartesian_point(location_coordinates)
+        relative_placement = self.file.create_entity("IfcAxis2Placement3D", Location=location)
+        return self.file.create_entity("IfcLocalPlacement",
+                                       PlacementRelTo=placement_rel_to,
+                                       RelativePlacement=relative_placement)
+
     def create_ifc_rel_aggregates(
             self, relating_object: entity_instance, related_objects: list[entity_instance]
     ) -> entity_instance:

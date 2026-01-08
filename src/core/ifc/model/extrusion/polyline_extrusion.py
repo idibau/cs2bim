@@ -24,8 +24,8 @@ class PolylineExtrusion(Extrusion):
         for x, y, z in list(polyline.coords):
             self.points.append(Point(x, y, z))
 
-    def map_to_ifc(self, ifc_file: IfcFile, entity: ExtrusionEntity, ifc_representation_sub_context: entity_instance,
-                   ifc_style: entity_instance) -> entity_instance:
+    def map_to_ifc(self, ifc_file: IfcFile, entity: ExtrusionEntity, placement_rel_to: entity_instance,
+                   ifc_representation_sub_context: entity_instance, ifc_style: entity_instance) -> entity_instance:
         ifc_polyline = ifc_file.create_ifc_polyline(self.points)
 
         if isinstance(self.area, Circle):
@@ -43,7 +43,7 @@ class PolylineExtrusion(Extrusion):
         ifc_product_definition_shape = ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context,
                                                                                     "AdvancedSweptSolid",
                                                                                     [ifc_geometry])
-        ifc_local_placement = ifc_file.create_ifc_local_placement(Point(0.0, 0.0, 0.0))
+        ifc_local_placement = ifc_file.create_relative_ifc_local_placement(placement_rel_to, Point(0.0, 0.0, 0.0))
         ifc_file.create_ifc_styled_item(ifc_geometry, ifc_style)
         if entity == ExtrusionEntity.IFC_PIPE_SEGMENT:
             ifc_element = ifc_file.create_ifc_pipe_segment(ifc_local_placement, ifc_product_definition_shape)
