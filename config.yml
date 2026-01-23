@@ -603,8 +603,8 @@ ifc:
               expression: "USERDEFINED"
           - attribute: "ObjectType"
             source:
-              type: STATIC
-              expression: "LK_LKMAP"
+              type: SQL
+              expression: "objektart"
         properties:
           - property: "Lagebestimmung"
             property_set: "CHSIA_LKMap"
@@ -682,8 +682,8 @@ ifc:
               expression: "USERDEFINED"
           - attribute: "ObjectType"
             source:
-              type: STATIC
-              expression: "LK_LKMAP"
+              type: SQL
+              expression: "objektart"
         properties:
           - property: "Lagebestimmung"
             property_set: "CHSIA_LKMap"
@@ -761,8 +761,8 @@ ifc:
               expression: "USERDEFINED"
           - attribute: "ObjectType"
             source:
-              type: STATIC
-              expression: "LK_LKMAP"
+              type: SQL
+              expression: "objektart"
         properties:
           - property: "Lagebestimmung"
             property_set: "CHSIA_LKMap"
