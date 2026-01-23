@@ -31,13 +31,13 @@ class PolylineExtrusion(Extrusion):
         if isinstance(self.area, Circle):
             ifc_geometry = ifc_file.create_ifc_swept_disk_solid(ifc_polyline, self.area.radius)
         else:
-            if isinstance(self.area, Egg) or isinstance(self.area, Polygon):
+            if isinstance(self.area, Egg) or (isinstance(self.area, Polygon) and self.area.local):
                 ifc_profile_def = ifc_file.create_ifc_arbitrary_closed_profile_def(self.area.points)
             elif isinstance(self.area, Rectangle):
                 ifc_profile_def = ifc_file.create_ifc_rectangle_profile_def(self.area.width, self.area.height)
             else:
                 raise Exception(
-                    f"complex extrusion builing step for area class {type(self.area)} not implemented")
+                    f"complex extrusion building step for area class {type(self.area)} not implemented")
             ifc_geometry = ifc_file.create_ifc_fixed_reference_swept_area_solid(ifc_profile_def, ifc_polyline)
 
         ifc_product_definition_shape = ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context,

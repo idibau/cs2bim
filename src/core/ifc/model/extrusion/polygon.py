@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 class Polygon(CrossSection):
 
-    def __init__(self, polygon: BaseGeometry):
+    def __init__(self, polygon: BaseGeometry, local: bool):
         super().__init__()
         self.points = [Point(x, y) for x, y in polygon.exterior.coords]
+        self.local = local

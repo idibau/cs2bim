@@ -49,9 +49,8 @@ line_geometry_build as (
         from line_pairs
         group by t_id, objektart, pair_idx
     ) pairs
-    where ref_pos is not null and z_pos is not null -- Ensure pairs are complete
+    where ref_pos is not null and z_pos is not null
     group by t_id, objektart
-    -- Enforce logic: Must have data to form a line
     having count(*) > 0
 ),
 refs_single as (
@@ -81,11 +80,11 @@ from relevant_lines l
 join line_geometry_build lg on l.t_id = lg.t_id
 union all
 select
-    'POLYGON',
+    'POLYGON_GLOBAL',
     null,
     null,
-    ST_Translate(l.flaeche, -ST_X(kr.aposition), -ST_Y(kr.aposition)),
-    'LINE',
+    l.flaeche,
+    'SURFACE',
     null,
     kr.aposition,
     kz.aposition,
@@ -100,7 +99,7 @@ select
     null,
     l.dimension1::float / 1000,
     null,
-    'LINE',
+    'POINT',
     null,
     kr.aposition,
     kz.aposition,

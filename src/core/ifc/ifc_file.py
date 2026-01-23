@@ -2,9 +2,9 @@
 This module contains wrapper functions to simplify the process of building an ifc using ifcopenshells "create_entity" function.
 """
 
+import math
 import datetime
 import logging
-
 from ifcopenshell import file, entity_instance, guid
 from shapely import Point
 
@@ -156,7 +156,8 @@ class IfcFile:
         relative_placement = self.file.create_entity("IfcAxis2Placement3D", Location=location)
         return self.file.create_entity("IfcLocalPlacement", RelativePlacement=relative_placement)
 
-    def create_relative_ifc_local_placement(self, placement_rel_to: entity_instance, location_coordinates: Point) -> entity_instance:
+    def create_relative_ifc_local_placement(self, placement_rel_to: entity_instance,
+                                            location_coordinates: Point) -> entity_instance:
         location = self.create_ifc_cartesian_point(location_coordinates)
         relative_placement = self.file.create_entity("IfcAxis2Placement3D", Location=location)
         return self.file.create_entity("IfcLocalPlacement",
@@ -460,9 +461,18 @@ class IfcFile:
                                        )
 
     def create_ifc_extruded_area_solid(self, ifc_profile_def: entity_instance,
-                                       position: Point, depth: float):
-        ifc_axis_2_placement_3d = self.file.create_entity("IfcAxis2Placement3D",
-                                                          Location=self.create_ifc_cartesian_point(position))
+                                       position: Point, depth: float, orientation: float):
+        if orientation:
+            angle_rad = math.radians(90.0 - orientation)
+            x = math.cos(angle_rad)
+            y = math.sin(angle_rad)
+            ifc_direction_orientation = self.file.create_entity("IfcDirection", DirectionRatios=[x, y])
+            ifc_axis_2_placement_3d = self.file.create_entity("IfcAxis2Placement3D",
+                                                              Location=self.create_ifc_cartesian_point(position),
+                                                              RefDirection=ifc_direction_orientation)
+        else:
+            ifc_axis_2_placement_3d = self.file.create_entity("IfcAxis2Placement3D",
+                                                              Location=self.create_ifc_cartesian_point(position))
         ifc_direction = self.file.create_entity("IfcDirection", DirectionRatios=[0.0, 0.0, 1.0])
         return self.file.create_entity(
             "IfcExtrudedAreaSolid",

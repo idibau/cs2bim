@@ -2,6 +2,8 @@ import logging
 from ifcopenshell import entity_instance
 from shapely import Point
 from shapely.geometry.base import BaseGeometry
+from shapely.affinity import translate
+
 
 from config.extrusion_entity import ExtrusionEntity
 from core.ifc.ifc_file import IfcFile
@@ -15,17 +17,21 @@ from core.ifc.model.extrusion.rectangle import Rectangle
 logger = logging.getLogger(__name__)
 
 
-class LineExtrusion(Extrusion):
+class VerticalExtrusion(Extrusion):
 
-    def __init__(self, area: CrossSection, start_point: BaseGeometry, end_point: BaseGeometry):
+    def __init__(self, area: CrossSection, start_point: BaseGeometry, end_point: BaseGeometry, orientation: float):
         super().__init__()
         self.area = area
         self.start_point = start_point
         self.end_point = end_point
+        self.orientation = orientation
 
     def map_to_ifc(self, ifc_file: IfcFile, entity: ExtrusionEntity, placement_rel_to: entity_instance,
                    ifc_representation_sub_context: entity_instance, ifc_style: entity_instance) -> entity_instance:
-        if isinstance(self.area, Polygon) or isinstance(self.area, Egg):
+        if isinstance(self.area, Polygon) and not self.area.local:
+            ifc_profile_def = ifc_file.create_ifc_arbitrary_closed_profile_def(self.area.points)
+            self.start_point = translate(self.start_point, xoff=-self.start_point.x, yoff=-self.start_point.y, zoff=0)
+        elif isinstance(self.area, Egg) or isinstance(self.area, Polygon):
             ifc_profile_def = ifc_file.create_ifc_arbitrary_closed_profile_def(self.area.points)
         elif isinstance(self.area, Rectangle):
             ifc_profile_def = ifc_file.create_ifc_rectangle_profile_def(self.area.width, self.area.height)
@@ -33,10 +39,10 @@ class LineExtrusion(Extrusion):
             ifc_profile_def = ifc_file.create_ifc_circle_profile_def(self.area.radius)
         else:
             raise Exception(
-                f"simple extrusion builing step for area class {type(self.area)} not implemented")
+                f"simple extrusion building step for area class {type(self.area)} not implemented")
 
         ifc_geometry = ifc_file.create_ifc_extruded_area_solid(ifc_profile_def, self.start_point,
-                                                               self.end_point.z - self.start_point.z)
+                                                               self.end_point.z - self.start_point.z, self.orientation)
 
         ifc_product_definition_shape = ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context,
                                                                                     "AdvancedSweptSolid",

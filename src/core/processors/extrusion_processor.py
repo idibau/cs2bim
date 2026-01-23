@@ -1,8 +1,7 @@
 import logging
-from typing import Any
-
 from shapely import Point, wkb
 from shapely.affinity import translate
+from typing import Any
 
 from config.configuration import config, ExtrusionAttributeConfig, ExtrusionPropertyConfig, ExtrusionFeatureType
 from config.extrusion_source import ExtrusionSource
@@ -13,7 +12,7 @@ from core.ifc.model.extrusion.cross_section_type import CrossSectionType
 from core.ifc.model.extrusion.egg import Egg
 from core.ifc.model.extrusion.extrusion import Extrusion
 from core.ifc.model.extrusion.extrusion_type import ExtrusionType
-from core.ifc.model.extrusion.line_extrusion import LineExtrusion
+from core.ifc.model.extrusion.vertical_extrusion import VerticalExtrusion
 from core.ifc.model.extrusion.polygon import Polygon
 from core.ifc.model.extrusion.polyline_extrusion import PolylineExtrusion
 from core.ifc.model.extrusion.rectangle import Rectangle
@@ -55,7 +54,8 @@ class ExtrusionProcessor:
                     CrossSectionType.EGG: lambda row: self.create_simple_section(row, Egg),
                     CrossSectionType.CIRCLE: lambda row: self.create_simple_section(row, Circle),
                     CrossSectionType.RECTANGLE: self.create_rectangle,
-                    CrossSectionType.POLYGON: self.create_polygon,
+                    CrossSectionType.POLYGON_LOCAL: lambda row: self.create_polygon(row, True),
+                    CrossSectionType.POLYGON_GLOBAL: lambda row: self.create_polygon(row, False),
                 }
 
                 factory_func = SECTION_FACTORIES.get(cross_section_type)
@@ -74,7 +74,8 @@ class ExtrusionProcessor:
                     continue
 
                 EXTRUSION_FACTORIES = {
-                    ExtrusionType.LINE: lambda row, cs: self.create_line_extrusion(row, cs, project_origin),
+                    ExtrusionType.POINT: lambda row, cs: self.create_vertical_extrusion(row, cs, project_origin),
+                    ExtrusionType.SURFACE: lambda row, cs: self.create_vertical_extrusion(row, cs, project_origin),
                     ExtrusionType.POLYLINE: lambda row, cs: self.create_polyline_extrusion(row, cs, project_origin),
                 }
 
@@ -121,7 +122,7 @@ class ExtrusionProcessor:
             return None
         return Rectangle(width, height)
 
-    def create_polygon(self, row: dict[str, Any]) -> Polygon | None:
+    def create_polygon(self, row: dict[str, Any], local: bool) -> Polygon | None:
         polygon_hex = row["area"]
         if not polygon_hex:
             logger.warning("Mandatory 'area' data missing for Polygon")
@@ -129,26 +130,27 @@ class ExtrusionProcessor:
         try:
             polygon_wkb = bytes.fromhex(polygon_hex)
             polygon = wkb.loads(polygon_wkb)
-            return Polygon(polygon)
+            return Polygon(polygon, local)
         except Exception as e:
             logger.error(f"Failed to load polygon from hex: {e}")
             return None
 
-    def create_line_extrusion(self, row: dict[str, Any], cross_section: CrossSection,
-                              project_origin: Point) -> LineExtrusion | None:
+    def create_vertical_extrusion(self, row: dict[str, Any], cross_section: CrossSection,
+                                  project_origin: Point) -> VerticalExtrusion | None:
         start_hex = row["start_point"]
         end_hex = row["end_point"]
+        orientation = row["orientation"] if "orientation" in row else None
         if not start_hex or not end_hex:
-            logger.warning("Missing 'start_point' or 'end_point' for LineExtrusion")
+            logger.warning("Missing 'start_point' or 'end_point' for VerticalExtrusion")
             return None
         try:
             start_point = wkb.loads(bytes.fromhex(start_hex))
             end_point = wkb.loads(bytes.fromhex(end_hex))
             start_point = translate(start_point, xoff=-project_origin.x, yoff=-project_origin.y, zoff=-project_origin.z)
             end_point = translate(end_point, xoff=-project_origin.x, yoff=-project_origin.y, zoff=-project_origin.z)
-            return LineExtrusion(cross_section, start_point, end_point)
+            return VerticalExtrusion(cross_section, start_point, end_point, orientation)
         except Exception as e:
-            logger.error(f"Failed to load WKB points for LineExtrusion: {e}")
+            logger.error(f"Failed to load WKB points for VerticalExtrusion: {e}")
             return None
 
     def create_polyline_extrusion(self, row: dict[str, Any], cross_section: CrossSection,
