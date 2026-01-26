@@ -6,7 +6,9 @@ select
     ST_AsText(ST_CurveToLine(l.geometrie, 1)) as wkt,
     g.nbident as nbident,
     g.nummer as nummer,
-    g.egris_egrid as egris_egrid
+    g.egris_egrid as egris_egrid,
+    g.gueltigkeit as gueltigkeit,
+    g.vollstaendigkeit as vollstaendigkeit
 from
     cs2bim.liegenschaft l
     left join cs2bim.grundstueck g on (l.liegenschaft_von = g.t_id)

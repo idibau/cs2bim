@@ -84,6 +84,16 @@ ifc:
             source:
               type: SQL
               expression: "egris_egrid"
+          - property: "Gueltigkeit"
+            property_set: "CH_AV_Liegenschaft"
+            source:
+              type: SQL
+              expression: "gueltigkeit"
+          - property: "Vollstaendigkeit"
+            property_set: "CH_AV_Liegenschaft"
+            source:
+              type: SQL
+              expression: "vollstaendigkeit"
       entity_type_mapping:
         attributes:
           - attribute: "Name"
@@ -255,6 +265,22 @@ ifc:
             source:
               type: STATIC
               expression: "AV_BODENBEDECKUNG"
+        properties:
+          - property: "Nummer"
+            property_set: "CH_AV_Liegenschaft"
+            source:
+              type: SQL
+              expression: "nummer"
+          - property: "egid"
+            property_set: "CH_AV_Liegenschaft"
+            source:
+              type: SQL
+              expression: "egid"
+          - property: "art"
+            property_set: "CH_AV_Liegenschaft"
+            source:
+              type: SQL
+              expression: "art"
       entity_type_mapping:
         attributes:
           - attribute: "Name"
