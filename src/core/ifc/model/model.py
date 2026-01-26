@@ -20,10 +20,11 @@ logger = logging.getLogger(__name__)
 class Model:
     """Class holding all variable data for creating the ifc"""
 
-    def __init__(self, file_name: str, schema: IfcVersion, project_origin: Coordinates):
+    def __init__(self, file_name: str, schema: IfcVersion, project_origin: Coordinates, polygon: str):
         self.file_name = file_name
         self.schema = schema
         self.project_origin = project_origin
+        self.polygon = polygon
         self.projections: dict[str, list[Projection]] = {}
         self.buildings: dict[str, list[Building]] = {}
 
@@ -64,6 +65,15 @@ class Model:
 
         ifc_project = ifc_file.create_ifc_project(config.ifc.project_name, ifc_owner_history,
                                                   ifc_representation_context, ifc_unit_assignment)
+        project = Element()
+        project.add_property("Pset_DataSource", "DTM", config.stac.dtm_items_url)
+        project.add_property("Pset_DataSource", "Building", config.stac.building_items_url)
+        project.add_property("Pset_ProjectMetadata", "ProjectOrigin", str(self.project_origin))
+        if language:
+            project.add_property("Pset_ProjectMetadata", "Language", language.value)
+        project.add_property("Pset_ProjectMetadata", "Polygon", self.polygon)
+        project.set_ifc_properties(ifc_file, ifc_project)
+
         if geo_referencing == GeoReferencing.LO_GEO_REF_30:
             location = self.project_origin
         else:
