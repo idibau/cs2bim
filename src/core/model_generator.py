@@ -6,7 +6,7 @@ from core.ifc.model.coordinates import Coordinates
 from core.ifc.model.ifc_version import IfcVersion
 from core.ifc.model.model import Model
 from core.processors.building_processor import BuildingProcessor
-from core.processors.projection_processor import ProjectionProcessor
+from core.processors.projection_processor_2 import ProjectionProcessor
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +31,7 @@ class ModelGenerator:
         if project_origin is None:
             project_origin = self.calculate_origin_from_polygon(polygon)
 
-        model = Model(name, ifc_version, project_origin)
+        model = Model(name, ifc_version, project_origin, polygon)
 
         logger.info("process projection feature types")
         projection_processor = ProjectionProcessor()
