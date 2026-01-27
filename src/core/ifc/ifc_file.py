@@ -117,11 +117,10 @@ class IfcFile:
     ) -> entity_instance:
         target_crs = self.file.create_entity(
             "IfcProjectedCRS",
-            Name="EPSG:2056",
-            Description="CH1903+ / LV95 -- Swiss CH1903+ / LV95",
-            GeodeticDatum="CH1903+",
-            VerticalDatum="LN02",
-            MapProjection="CH1903+ / LV95",
+            Name=config.ifc.coordinate_reference_system.epsg_code,
+            Description=config.ifc.coordinate_reference_system.description,
+            GeodeticDatum=config.ifc.coordinate_reference_system.geodetic_datum,
+            VerticalDatum=config.ifc.coordinate_reference_system.vertical_datum,
             MapUnit=map_unit,
         )
         return self.file.create_entity(

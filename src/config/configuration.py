@@ -1,9 +1,8 @@
 import os
 from pathlib import Path
-from typing import List, Optional
-
 from pydantic import BaseModel, model_validator, Field
 from pydantic_yaml import parse_yaml_raw_as
+from typing import List, Optional
 
 from config.building_entity import BuildingEntity
 from config.building_part_entity import BuildingPartEntity
@@ -248,6 +247,14 @@ class GroupConfig(BaseModel):
     entity_mapping: GroupEntityConfig = Field(..., description="Entity mapping configuration for the group")
 
 
+class CoordinateReferenceSystem(BaseModel):
+    """Coordinate reference system for IFC export"""
+    epsg_code: str = Field(..., description="EPSG code for the coordinate reference system")
+    description: str = Field(..., description="Description of the coordinate reference system")
+    geodetic_datum: str = Field(..., description="Geodetic datum for the coordinate reference system")
+    vertical_datum: str = Field(..., description="Vertical datum for the coordinate r§eference system")
+
+
 class IFCConfig(BaseModel):
     """IFC export configuration"""
 
@@ -256,6 +263,8 @@ class IFCConfig(BaseModel):
     application_name: str = Field(..., description="Name of the application generating IFC")
     project_name: str = Field(..., description="Project name in IFC")
     geo_referencing: GeoReferencing = Field(..., description="Georeferencing configuration for IFC")
+    coordinate_reference_system: CoordinateReferenceSystem = Field(...,
+                                                                   description="Coordinate reference system for IFC")
     projection_feature_types: List[ProjectionFeatureType] = Field(default_factory=list,
                                                                   json_schema_extra={"default": []},
                                                                   description="List of projection feature type definitions")
