@@ -1,5 +1,4 @@
 import logging
-from core.processors.projection_data import ProjectionData
 from typing import Any
 
 from config.configuration import config, ProjectionFeatureType, ProjectionAttributeConfig, ProjectionPropertyConfig
@@ -7,6 +6,7 @@ from config.projection_source import ProjectionSource
 from core.ifc.model.coordinates import Coordinates
 from core.ifc.model.element import Element
 from core.ifc.model.projection import Projection
+from core.processors.projection_data import ProjectionData
 from core.tin.raster_points import RasterPoints
 from service.postgis_service import PostgisService
 from service.stac_service import STACService
