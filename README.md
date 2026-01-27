@@ -62,7 +62,7 @@ The configuration of the cs2bim service is described in two documents: an [overv
 the general setup and structure, and a detailed [configuration schema](docs/configuration_schema.md) explaining all
 technical parameters and options.
 
-To generate the document "configuration schmema" do the following:
+To generate the document "configuration schema" do the following:
 
 Generate json schema:
 ```
