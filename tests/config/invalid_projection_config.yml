@@ -29,6 +29,11 @@ ifc:
   application_name: "test_app"
   project_name: "test_project"
   geo_referencing: LO_GEO_REF_50
+  coordinate_reference_system:
+    epsg_code: "EPSG:2056"
+    description: "CH1903+ / LV95"
+    geodetic_datum: "CH1903+"
+    vertical_datum: "LN02"
   projection_feature_types: []
   building_feature_types:
     - name: "test_building"

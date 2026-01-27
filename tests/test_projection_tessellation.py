@@ -1,7 +1,7 @@
 from shapely import Point
 
 from config.projection_entity import ProjectionEntity
-from core.ifc.model.projection import Projection
+from core.ifc.model.projection.projection import Projection
 from core.ifc.model.projection.tessellation import Tessellation
 
 
@@ -22,6 +22,10 @@ class DummyIfcFile:
         self.calls.append(("create_ifc_styled_item", ifc_face_set, ifc_style))
 
     def create_ifc_local_placement(self, coord):
+        self.calls.append(("create_ifc_local_placement", coord))
+        return {"type": "IfcLocalPlacement", "coord": coord}
+
+    def create_relative_ifc_local_placement(self, placement_rel_to, coord):
         self.calls.append(("create_ifc_local_placement", coord))
         return {"type": "IfcLocalPlacement", "coord": coord}
 
@@ -84,5 +88,5 @@ class TestProjection:
         dummy = DummyIfcFile()
         # The Projection.map_to_ifc chooses based on entity, we select IFC_GEOGRAPHIC_ELEMENT path
         # Pass sentinel to go through first branch
-        elem = proj.map_to_ifc(dummy, ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT, None, None)
+        elem = proj.map_to_ifc(dummy, ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT, None, None, None)
         assert isinstance(elem, dict) and elem.get("type") == "IfcGeographicElement"
