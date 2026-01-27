@@ -124,8 +124,7 @@ differ from feature type to feature type.
 - Buildings: Expects a column with the name **egid**[number] that contains the egid number to identify the
   building.
 - Extrusions: Extrusions are a bit more complicated because there are different cross-sections and extrusion types that
-  require different columns. The columns **cross_section
-  **  [[cross_section_type](../src/core/ifc/model/extrusion/cross_section_type.py)] and **extrusion_type**
+  require different columns. The columns **cross_section**  [[cross_section_type](../src/core/ifc/model/extrusion/cross_section_type.py)] and **extrusion_type**
   [[extrusion_type](../src/core/ifc/model/extrusion/extrusion_type.py)] are always mandatory and used to identify the
   cross-section and extrusion type. The following
   table shows the valid values for these columns and the additional required columns for each valid combination.
