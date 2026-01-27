@@ -3,7 +3,8 @@ with perimeter as (
         ST_GeomFromText(%(polygon)s, 2056) as geom
 )
 select
-    ST_AsText(ST_CurveToLine(l.geometrie, 1)) as wkt,
+    ST_AsText(ST_CurveToLine(ST_Intersection(l.geometrie, perimeter.geom), 1)) as wkt,
+    ST_Contains(perimeter.geom, l.geometrie) as complete_geometry,
     g.nbident as nbident,
     g.nummer as nummer,
     g.egris_egrid as egris_egrid,

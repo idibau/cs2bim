@@ -74,6 +74,11 @@ ifc:
               type: STATIC
               expression: "AV_LIEGENSCHAFT"
         properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "C2B_PSet_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
           - property: "NBIdent"
             property_set: "CH_AV_Liegenschaft"
             source:
@@ -156,6 +161,12 @@ ifc:
             source:
               type: STATIC
               expression: "AV_BODENBEDECKUNG"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "C2B_PSet_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
       entity_type_mapping:
         attributes:
           - attribute: "Name"
@@ -213,6 +224,12 @@ ifc:
             source:
               type: STATIC
               expression: "AV_BODENBEDECKUNG"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "C2B_PSet_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
       entity_type_mapping:
         attributes:
           - attribute: "Name"
@@ -271,6 +288,11 @@ ifc:
               type: STATIC
               expression: "AV_BODENBEDECKUNG"
         properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "C2B_PSet_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
           - property: "Nummer"
             property_set: "CH_AV_Liegenschaft"
             source:
@@ -343,6 +365,12 @@ ifc:
             source:
               type: STATIC
               expression: "AV_BODENBEDECKUNG"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "C2B_PSet_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
       entity_type_mapping:
         attributes:
           - attribute: "Name"
@@ -400,6 +428,12 @@ ifc:
             source:
               type: STATIC
               expression: "AV_BODENBEDECKUNG"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "C2B_PSet_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
       entity_type_mapping:
         attributes:
           - attribute: "Name"
@@ -457,6 +491,12 @@ ifc:
             source:
               type: STATIC
               expression: "AV_BODENBEDECKUNG"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "C2B_PSet_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
       entity_type_mapping:
         attributes:
           - attribute: "Name"

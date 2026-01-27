@@ -3,7 +3,8 @@ with perimeter as (
         ST_GeomFromText(%(polygon)s, 2056) as geom
 )
 select
-    ST_AsText(ST_CurveToLine(geometrie, 1)) as wkt,
+    ST_AsText(ST_CurveToLine(ST_Intersection(bb.geometrie, perimeter.geom), 1)) as wkt,
+    ST_Contains(perimeter.geom, bb.geometrie) as complete_geometry,
     bb.art as art,
     'Amtliche Vermessung.Bodenbedeckung.' || bb.art as group,
     gbnr.nummer as nummer,

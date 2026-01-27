@@ -6,7 +6,7 @@ from core.ifc.model.coordinates import Coordinates
 from core.ifc.model.ifc_version import IfcVersion
 from core.ifc.model.model import Model
 from core.processors.building_processor import BuildingProcessor
-from core.processors.projection_processor_2 import ProjectionProcessor
+from core.processors.projection_processor import ProjectionProcessor
 
 logger = logging.getLogger(__name__)
 

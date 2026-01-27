@@ -7,6 +7,6 @@ select
 from
     cs2bim.boflaeche bb
     left join cs2bim.gebaeudenummer gbnr on (gbnr.gebaeudenummer_von = bb.t_id)
-    join perimeter on ST_Intersects(bb.geometrie, perimeter.geom)
+    join perimeter on ST_Contains(perimeter.geom, bb.geometrie)
 where
     bb.art = 'Gebaeude'
