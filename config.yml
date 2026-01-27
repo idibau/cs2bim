@@ -64,7 +64,7 @@ ifc:
           - attribute: "Name"
             source:
               type: SQL
-              expression: "egris_egrid"
+              expression: "nummer"
           - attribute: "PredefinedType"
             source:
               type: STATIC
