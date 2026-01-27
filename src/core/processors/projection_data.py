@@ -2,6 +2,7 @@ import logging
 import math
 from typing import Any
 
+import shapely
 from shapely import wkt
 from shapely.geometry import box
 from shapely.geometry.base import BaseGeometry
@@ -18,9 +19,18 @@ class ProjectionData:
     def __init__(self, element_row: dict[str, Any], project_origin: Coordinates):
         self.element_row = element_row
         self.areas = []
-        polygons = self.cut_polygon_if_large(element_row["wkt"])
-        for polygon in polygons:
-            self.areas.append(Area(polygon, project_origin))
+        polygon = wkt.loads(element_row["wkt"])
+        if polygon.geom_type == "Polygon":
+            polygons = self.cut_polygon_if_large(polygon)
+            for cut_polygon in polygons:
+                self.areas.append(Area(cut_polygon, project_origin))
+        elif polygon.geom_type == "MultiPolygon":
+            for sub_polygon in polygon.geoms:
+                polygons = self.cut_polygon_if_large(sub_polygon)
+                for cut_polygon in polygons:
+                    self.areas.append(Area(cut_polygon, project_origin))
+        else:
+            pass
 
     def add_raster_points(self, raster_points: RasterPoints):
         for area in self.areas:
@@ -47,9 +57,7 @@ class ProjectionData:
 
         return points_total, indices_total
 
-    def cut_polygon_if_large(self, wkt_str: str, max_size_m: int = 1000) -> list[BaseGeometry]:
-        poly = wkt.loads(wkt_str)
-
+    def cut_polygon_if_large(self, poly: shapely.Polygon, max_size_m: int = 1000) -> list[BaseGeometry]:
         minx, miny, maxx, maxy = poly.bounds
         width = maxx - minx
         height = maxy - miny
