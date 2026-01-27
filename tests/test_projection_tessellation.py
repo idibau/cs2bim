@@ -1,7 +1,8 @@
+from shapely import Point
+
 from config.projection_entity import ProjectionEntity
-from core.ifc.model.coordinates import Coordinates
 from core.ifc.model.projection import Projection
-from core.ifc.model.tessellation import Tessellation
+from core.ifc.model.projection.tessellation import Tessellation
 
 
 class DummyIfcFile:
@@ -48,7 +49,7 @@ class DummyIfcFile:
 class TestTessellation:
 
     def test_map_to_ifc_builds_unique_vertices_and_indices(self):
-        v1, v2, v3, v4 = Coordinates(0, 0, 0), Coordinates(1, 0, 0), Coordinates(0, 1, 0), Coordinates(1, 1, 0)
+        v1, v2, v3, v4 = Point(0, 0, 0), Point(1, 0, 0), Point(0, 1, 0), Point(1, 1, 0)
         # Two triangles that share an edge (v2-v3)
         faces = [
             (v1, v2, v3),

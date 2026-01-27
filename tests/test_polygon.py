@@ -1,8 +1,8 @@
 import pytest
 from lxml import etree
+from shapely import Point
 
-from core.ifc.model.coordinates import Coordinates
-from core.ifc.model.gml.polygon import Polygon
+from core.ifc.model.building.polygon import Polygon
 
 
 class TestGmlPolygon:
@@ -26,7 +26,7 @@ class TestGmlPolygon:
         gml_poly.append(outer)
         gml_poly.append(inner)
 
-        origin = Coordinates(0, 0, 0)
+        origin = Point(0, 0, 0)
         poly = Polygon()
         poly.from_gml(gml_poly, origin)
 
@@ -46,4 +46,4 @@ class TestGmlPolygon:
         gml_poly.append(outer)
 
         with pytest.raises(ValueError,  match="PosList must be closed"):
-            Polygon().from_gml(gml_poly, Coordinates(0, 0, 0))
+            Polygon().from_gml(gml_poly, Point(0, 0, 0))

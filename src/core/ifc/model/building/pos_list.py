@@ -1,6 +1,6 @@
 from lxml.etree import _Element as XmlElement
 
-from core.ifc.model.coordinates import Coordinates
+from shapely import Point
 
 
 class PosList:
@@ -8,7 +8,7 @@ class PosList:
         super().__init__()
         self.coordinates = []
 
-    def from_gml(self, gml: XmlElement, project_origin: Coordinates):
+    def from_gml(self, gml: XmlElement, project_origin: Point):
         coords = list(map(float, gml.text.split()))
         if len(coords) % 3 != 0:
             raise ValueError("PosList is not 3 dimensional")
@@ -18,5 +18,5 @@ class PosList:
             raise ValueError("PosList must be closed")
         for i in range(0, len(coords) - 3, 3):
             self.coordinates.append(
-                Coordinates(float(coords[i] - project_origin.x), float(coords[i + 1] - project_origin.y),
+                Point(float(coords[i] - project_origin.x), float(coords[i + 1] - project_origin.y),
                             float(coords[i + 2] - project_origin.z)))

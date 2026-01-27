@@ -2,11 +2,11 @@ import logging
 
 import numpy as np
 import shapely
+from shapely import Point
 from shapely.geometry.base import BaseGeometry
 from shapely.geometry.polygon import Polygon
 
 from config.configuration import config
-from core.ifc.model.coordinates import Coordinates
 from core.tin.mesh import Mesh
 from core.tin.raster_points import RasterPoints
 
@@ -32,13 +32,13 @@ class Area:
         Origin to reduce coordinate values
     """
 
-    def __init__(self, polygon: BaseGeometry, project_origin: Coordinates):
+    def __init__(self, polygon: BaseGeometry, project_origin: Point):
         if not isinstance(polygon, shapely.Polygon):
             raise ValueError(f"{type(polygon).__name__} not supported")
 
         self._geometry = self._check_polygon_definition(polygon)
 
-        project_origin = np.array(project_origin.to_tuple()[:2])
+        project_origin = np.array(project_origin.coords[0][:2])
         assert project_origin.shape == (2,)
         if not np.allclose(project_origin, np.zeros((2,))):
             self._reduce(project_origin)

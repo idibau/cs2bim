@@ -1,10 +1,10 @@
 from ifcopenshell import entity_instance
 from lxml.etree import _Element as XmlElement
+from shapely import Point
 
 from core.ifc.ifc_file import IfcFile
-from core.ifc.model.coordinates import Coordinates
-from core.ifc.model.gml.namespace import namespace
-from core.ifc.model.gml.pos_list import PosList
+from core.ifc.model.building.namespace import namespace
+from core.ifc.model.building.pos_list import PosList
 
 
 class Polygon:
@@ -13,7 +13,7 @@ class Polygon:
         self.exterior = PosList()
         self.interior = []
 
-    def from_gml(self, gml: XmlElement, project_origin: Coordinates):
+    def from_gml(self, gml: XmlElement, project_origin: Point):
         pos_list_exterior = gml.xpath("./gml:exterior//gml:posList", namespaces=namespace)
         if len(pos_list_exterior) != 1:
             raise ValueError("Polygon expects exactly one exterior posList")
@@ -24,7 +24,7 @@ class Polygon:
             self.interior.append(pos_list)
 
     def create_ifc_indexed_polygonal_face(self, ifc_file: IfcFile,
-                                          coordinates: dict[Coordinates, int]) -> entity_instance:
+                                          coordinates: dict[tuple, int]) -> entity_instance:
         exterior_indices = []
         for vertex in self.exterior.coordinates:
             if not vertex in coordinates:
@@ -35,9 +35,10 @@ class Polygon:
         for interior in self.interior:
             polygon_indices = []
             for vertex in interior.coordinates:
-                if not vertex in coordinates:
-                    coordinates[vertex] = len(coordinates) + 1
-                polygon_indices.append(coordinates[vertex])
+                key = vertex.coords[0]
+                if key not in coordinates:
+                    coordinates[key] = len(coordinates) + 1
+                polygon_indices.append(coordinates[key])
             interior_indices_list.append(polygon_indices)
 
         if interior_indices_list:

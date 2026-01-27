@@ -172,6 +172,106 @@ Postgis connection configuration
 | port | `integer` | ✅ | integer | Database port number |
 | password | `string` | ✅ | string | Database password |
 
+## ExtrusionAttributeConfig
+
+Attribute mapping configuration for extrusion feature type
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Description |
+| -------- | ---- | -------- | --------------- | ----------- |
+| attribute | `string` | ✅ | string | Attribute name (Only applied if the attribute exists on the entity) |
+| source | `object` | ✅ | [ExtrusionConfigSource](#extrusionconfigsource) | Source configuration for this attribute |
+
+## ExtrusionConfigSource
+
+Source configuration for extrusion feature type
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Description |
+| -------- | ---- | -------- | --------------- | ----------- |
+| type | `string` | ✅ | [ExtrusionSource](#extrusionsource) | Type of the data source |
+| expression | `string` | ✅ | string | Expression defining the source data |
+
+## ExtrusionEntity
+
+Supported ifc entities for extrusion entities
+
+#### Type: `string`
+
+**Possible Values:** `IFC_PIPE_SEGMENT` or `IFC_DISTRIBUTION_FLOW_ELEMENT`
+
+## ExtrusionEntityConfig
+
+Entity mapping configuration for extrusion feature type
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Default | Description |
+| -------- | ---- | -------- | --------------- | ------- | ----------- |
+| entity | `string` | ✅ | [ExtrusionEntity](#extrusionentity) |  | Type of entity |
+| attributes | `array` |  | [ExtrusionAttributeConfig](#extrusionattributeconfig) | `[]` | List of attribute mappings |
+| properties | `array` |  | [ExtrusionPropertyConfig](#extrusionpropertyconfig) | `[]` | List of property mappings |
+
+## ExtrusionEntityTypeConfig
+
+Entity type mapping configuration for extrusion feature type
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Default | Description |
+| -------- | ---- | -------- | --------------- | ------- | ----------- |
+| attributes | `array` |  | [ExtrusionAttributeConfig](#extrusionattributeconfig) | `[]` | List of attribute mappings |
+| properties | `array` |  | [ExtrusionPropertyConfig](#extrusionpropertyconfig) | `[]` | List of property mappings |
+
+## ExtrusionFeatureType
+
+Feature type configuration for extrusion feature type
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Default | Description |
+| -------- | ---- | -------- | --------------- | ------- | ----------- |
+| name | `string` | ✅ | string |  | Feature type name for the extrusion |
+| entity_mapping | `object` | ✅ | [ExtrusionEntityConfig](#extrusionentityconfig) |  | Entity mapping configuration for the extrusion |
+| spatial_structure_mapping | `object` | ✅ | [ExtrusionSpatialEntityConfig](#extrusionspatialentityconfig) |  | Spatial structure mapping for the projection |
+| sql_path | `string` or `null` |  | string | `null` | Path to SQL definition for the extrusion feature type. Exact specification can be found in the configuration documentation. |
+| entity_type_mapping | `object` or `null` |  | [ExtrusionEntityTypeConfig](#extrusionentitytypeconfig) | `null` | Entity type mapping configuration for the extrusion. (Only supported for entities with TypeObject) |
+| group_mapping | `array` |  | [ExtrusionConfigSource](#extrusionconfigsource) | `[]` | Group mappings for the projection feature type |
+| color | `object` |  | [Color](#color) | `"white"` | Color assigned to the extrusion feature type |
+
+## ExtrusionPropertyConfig
+
+Property mapping configuration for extrusion feature type
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Description |
+| -------- | ---- | -------- | --------------- | ----------- |
+| property | `string` | ✅ | string | Property name |
+| property_set | `string` | ✅ | string | Property set name |
+| source | `object` | ✅ | [ExtrusionConfigSource](#extrusionconfigsource) | Source configuration for this property |
+
+## ExtrusionSource
+
+Supported source types for properties and attributes in extrusion feature types
+
+#### Type: `string`
+
+**Possible Values:** `STATIC` or `SQL`
+
+## ExtrusionSpatialEntityConfig
+
+Spatial structure mapping configuration for extrusion feature type
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Default | Description |
+| -------- | ---- | -------- | --------------- | ------- | ----------- |
+| attributes | `array` |  | [ExtrusionAttributeConfig](#extrusionattributeconfig) | `[]` | List of attribute mappings |
+| properties | `array` |  | [ExtrusionPropertyConfig](#extrusionpropertyconfig) | `[]` | List of property mappings |
+
 ## GeoReferencing
 
 Supported geo referencing methods
@@ -265,6 +365,7 @@ IFC export configuration
 | geo_referencing | `string` | ✅ | [GeoReferencing](#georeferencing) |  | Georeferencing configuration for IFC |
 | projection_feature_types | `array` |  | [ProjectionFeatureType](#projectionfeaturetype) | `[]` | List of projection feature type definitions |
 | building_feature_types | `array` |  | [BuildingFeatureType](#buildingfeaturetype) | `[]` | List of building feature type definitions |
+| extrusion_feature_types | `array` |  | [ExtrusionFeatureType](#extrusionfeaturetype) | `[]` | List of extrusion feature type definitions |
 | groups | `array` |  | [GroupConfig](#groupconfig) | `[]` | List of group configurations for IFC |
 
 ## ProjectionAttributeConfig

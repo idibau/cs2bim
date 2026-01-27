@@ -32,7 +32,7 @@ class Element:
 
     def set_ifc_attributes(self, ifc_file: IfcFile, ifc_element: entity_instance):
         for attribute, value in self.attributes.items():
-            ifc_file.add_attribute(ifc_element, attribute, value)
+            ifc_file.create_attribute(ifc_element, attribute, value)
 
     def __eq__(self, other: Any) -> bool:
         if not isinstance(other, Element):

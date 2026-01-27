@@ -1,7 +1,7 @@
 import pytest
+from shapely import Point
 
-from core.ifc.model.coordinates import Coordinates
-from core.ifc.model.gml.pos_list import PosList
+from core.ifc.model.building.pos_list import PosList
 from lxml import etree
 
 
@@ -18,16 +18,16 @@ class TestPosList:
         gml = etree.Element("posList")
         gml.text = " ".join(str(v) for v in values)
 
-        origin = Coordinates(2600000.0, 1200000.0, 400.0)
+        origin = Point(2600000.0, 1200000.0, 400.0)
         pl = PosList()
         pl.from_gml(gml, origin)
 
         # After offset, first coordinate becomes (0,0,0)
         assert len(pl.coordinates) == 3  # last coordinate is closing point and not stored
-        assert pl.coordinates[0] == Coordinates(0.0, 0.0, 0.0)
+        assert pl.coordinates[0] == Point(0.0, 0.0, 0.0)
 
     def test_from_gml_rejects_non_3d_or_unclosed(self):
-        origin = Coordinates(0, 0, 0)
+        origin = Point(0, 0, 0)
         # Not closed
         gml1 = etree.Element("posList")
         gml1.text = "1 2 3 4 5 6"

@@ -630,6 +630,229 @@ ifc:
       group_mapping:
         - type: STATIC
           expression: "3D-Stadtmodell.Gebaeude"
+  extrusion_feature_types:
+    - name: "lklinie"
+      sql_path: "/workspace/sql/lk_map_linie.sql"
+      entity_mapping:
+        entity: IFC_DISTRIBUTION_FLOW_ELEMENT
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "name"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: SQL
+              expression: "objektart"
+        properties:
+          - property: "Lagebestimmung"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "lagebestimmung"
+          - property: "Hoehenbestimmung"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "hoehenbestimmung"
+          - property: "Status"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "status"
+          - property: "Eigentuemer"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "eigentuemer"
+          - property: "Objektart"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "objektart"
+          - property: "Breite"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "width"
+          - property: "Breite_Annahme"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "breite_annahme"
+          - property: "Profiltyp"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "profiltyp"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Leitungskataster"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Leitungskataster"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+    - name: "lkpunkt"
+      sql_path: "/workspace/sql/lk_map_punkt.sql"
+      entity_mapping:
+        entity: IFC_DISTRIBUTION_FLOW_ELEMENT
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "name"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: SQL
+              expression: "objektart"
+        properties:
+          - property: "Lagebestimmung"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "lagebestimmung"
+          - property: "Hoehenbestimmung"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "hoehenbestimmung"
+          - property: "Status"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "status"
+          - property: "Eigentuemer"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "eigentuemer"
+          - property: "Objektart"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "objektart"
+          - property: "Dimension1"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "width"
+          - property: "Dimension2"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "dimension2"
+          - property: "Dimension_Annahme"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "dimension_annahme"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Leitungskataster"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Leitungskataster"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+    - name: "lkflaeche"
+      sql_path: "/workspace/sql/lk_map_flaeche.sql"
+      entity_mapping:
+        entity: IFC_DISTRIBUTION_FLOW_ELEMENT
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "name"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: SQL
+              expression: "objektart"
+        properties:
+          - property: "Lagebestimmung"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "lagebestimmung"
+          - property: "Hoehenbestimmung"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "hoehenbestimmung"
+          - property: "Status"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "status"
+          - property: "Eigentuemer"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "eigentuemer"
+          - property: "Objektart"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "objektart"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Leitungskataster"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Leitungskataster"
+      group_mapping:
+        - type: SQL
+          expression: "group"
   groups:
     - path: "Amtliche Vermessung.Gebaeude"
       entity_mapping:
@@ -639,3 +862,75 @@ ifc:
             value: "USERDEFINED"
           - attribute: "ObjectType"
             value: "Gebaeude"
+    - path: "Leitungskataster.Abwasser"
+      entity_mapping:
+        entity: IFC_DISTRIBUTION_SYSTEM
+        attributes:
+          - attribute: "PredefinedType"
+            value: "SEWAGE"
+          - attribute: "ObjectType"
+            value: "Abwasser"
+    - path: "Leitungskataster.Elektrizitaet"
+      entity_mapping:
+        entity: IFC_DISTRIBUTION_SYSTEM
+        attributes:
+          - attribute: "PredefinedType"
+            value: "ELECTRICAL"
+          - attribute: "ObjectType"
+            value: "Elektrizitaet"
+    - path: "Leitungskataster.Fernwirkkabel"
+      entity_mapping:
+        entity: IFC_DISTRIBUTION_SYSTEM
+        attributes:
+          - attribute: "PredefinedType"
+            value: "CONTROL"
+          - attribute: "ObjectType"
+            value: "Fernwirkkabel"
+    - path: "Leitungskataster.Gas"
+      entity_mapping:
+        entity: IFC_DISTRIBUTION_SYSTEM
+        attributes:
+          - attribute: "PredefinedType"
+            value: "GAS"
+          - attribute: "ObjectType"
+            value: "Gas"
+    - path: "Leitungskataster.Kommunikation"
+      entity_mapping:
+        entity: IFC_DISTRIBUTION_SYSTEM
+        attributes:
+          - attribute: "PredefinedType"
+            value: "COMMUNICATION"
+          - attribute: "ObjectType"
+            value: "Kommunikation"
+    - path: "Leitungskataster.Schutzrohr"
+      entity_mapping:
+        entity: IFC_DISTRIBUTION_SYSTEM
+        attributes:
+          - attribute: "PredefinedType"
+            value: "USERDEFINED"
+          - attribute: "ObjectType"
+            value: "Schutzrohr"
+    - path: "Leitungskataster.Waerme"
+      entity_mapping:
+        entity: IFC_DISTRIBUTION_SYSTEM
+        attributes:
+          - attribute: "PredefinedType"
+            value: "HEATING"
+          - attribute: "ObjectType"
+            value: "Waerme"
+    - path: "Leitungskataster.Wasser"
+      entity_mapping:
+        entity: IFC_DISTRIBUTION_SYSTEM
+        attributes:
+          - attribute: "PredefinedType"
+            value: "WATERSUPPLY"
+          - attribute: "ObjectType"
+            value: "Wasser"
+    - path: "Leitungskataster.weitere Medien"
+      entity_mapping:
+        entity: IFC_DISTRIBUTION_SYSTEM
+        attributes:
+          - attribute: "PredefinedType"
+            value: "USERDEFINED"
+          - attribute: "ObjectType"
+            value: "weitereMedien"

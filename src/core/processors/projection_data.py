@@ -2,12 +2,10 @@ import logging
 import math
 from typing import Any
 
-import shapely
-from shapely import wkt
+from shapely import wkt, Point
 from shapely.geometry import box
 from shapely.geometry.base import BaseGeometry
 
-from core.ifc.model.coordinates import Coordinates
 from core.tin.area import Area
 from core.tin.raster_points import RasterPoints
 
@@ -16,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class ProjectionData:
 
-    def __init__(self, element_row: dict[str, Any], project_origin: Coordinates):
+    def __init__(self, element_row: dict[str, Any], project_origin: Point):
         self.element_row = element_row
         self.areas = []
         polygon = wkt.loads(element_row["wkt"])
