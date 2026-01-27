@@ -14,9 +14,9 @@ refs_single as (
     order by lkflaecheref, lkpunktref, art, t_id
 )
 select
-    'POLYGON' as cross_section,
-    ST_Translate(l.flaeche, -ST_X(kr.aposition), -ST_Y(kr.aposition)) as area,
-    'LINE' as extrusion_type,
+    'POLYGON_GLOBAL' as cross_section,
+    l.flaeche as area,
+    'SURFACE' as extrusion_type,
     kr.aposition as start_point,
     kz.aposition as end_point,
     case

@@ -18,7 +18,7 @@ select
     l.dimension1::float / 1000 as width,
     l.dimension2::float / 1000 as dimension2,
     l.dimension_annahme::float / 1000 as dimension_annahme,
-    'LINE' as extrusion_type,
+    'POINT' as extrusion_type,
     kr.aposition as start_point,
     kz.aposition as end_point,
     case
