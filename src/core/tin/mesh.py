@@ -33,12 +33,44 @@ w    """
         assert isinstance(pts, (np.ndarray, list))
 
         if isinstance(pts, list):
-            pts = np.ndarray(pts)
+            pts = np.array(pts)
 
         assert pts.ndim == 2
         assert pts.shape[1] == 3
 
-        return pv.PolyData(pts).delaunay_2d()
+        unique_x = np.unique(pts[:, 0])
+        unique_y = np.unique(pts[:, 1])
+
+        n_x = len(unique_x)
+        n_y = len(unique_y)
+
+        x_to_idx = {x: i for i, x in enumerate(unique_x)}
+        y_to_idx = {y: j for j, y in enumerate(unique_y)}
+
+        grid = np.full((n_y, n_x), -1, dtype=int)
+
+        for pt_idx, pt in enumerate(pts):
+            x, y = pt[0], pt[1]
+            i = x_to_idx[x]
+            j = y_to_idx[y]
+            grid[j, i] = pt_idx
+
+        faces = []
+        for j in range(n_y - 1):
+            for i in range(n_x - 1):
+                p00 = grid[j, i]
+                p10 = grid[j, i + 1]
+                p01 = grid[j + 1, i]
+                p11 = grid[j + 1, i + 1]
+
+                if p00 != -1 and p10 != -1 and p01 != -1 and p11 != -1:
+                    faces.extend([3, p00, p10, p01])
+                    faces.extend([3, p10, p11, p01])
+
+        faces_array = np.array(faces)
+        poly = pv.PolyData(pts, faces_array)
+
+        return poly
 
     def decimate(self, max_height_error: float, grid_size: float, max_edge_len: float = 0) -> "Mesh":
         """
