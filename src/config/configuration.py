@@ -4,16 +4,11 @@ from pydantic import BaseModel, model_validator, Field
 from pydantic_yaml import parse_yaml_raw_as
 from typing import List, Optional
 
-from config.building_entity import BuildingEntity
-from config.building_part_entity import BuildingPartEntity
 from config.building_source import BuildingSource
-from config.extrusion_entity import ExtrusionEntity
 from config.extrusion_source import ExtrusionSource
 from config.geo_referencing import GeoReferencing
 from config.gml_geometry import GmlGeometry
 from config.grid_size import GridSize
-from config.group_entity import GroupEntity
-from config.projection_entity import ProjectionEntity
 from config.projection_source import ProjectionSource
 
 
@@ -118,7 +113,7 @@ class ProjectionEntityTypeConfig(BaseModel):
 class ProjectionEntityConfig(ProjectionEntityTypeConfig):
     """Entity mapping configuration for projection feature type"""
 
-    entity: ProjectionEntity = Field(..., description="Type of entity")
+    entity: str = Field(..., description="Type of entity")
 
 
 class ProjectionFeatureType(BaseModel):
@@ -149,7 +144,7 @@ class GmlGeometryMapping(BaseModel):
 class BuildingPartConfig(BaseModel):
     """Building part configuration for building feature type"""
 
-    entity: BuildingPartEntity = Field(..., description="Type of entity")
+    entity: str = Field(..., description="Type of entity")
     geometry_mapping: Optional[GmlGeometryMapping] = Field(None, description="Geometry mapping for the building part")
     color: Color = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0), json_schema_extra={"default": "white"},
                          description="Color assigned to the building part")
@@ -198,7 +193,6 @@ class BuildingEntityTypeConfig(BaseModel):
 class BuildingEntityConfig(BuildingEntityTypeConfig):
     """Entity mapping configuration for building feature type"""
 
-    entity: BuildingEntity = Field(..., description="Type of entity")
     building_parts: List[BuildingPartConfig] = Field(default_factory=list, json_schema_extra={"default": []},
                                                      description="List of building parts belonging to this building entity")
 
@@ -262,7 +256,7 @@ class ExtrusionEntityTypeConfig(BaseModel):
 class ExtrusionEntityConfig(ExtrusionEntityTypeConfig):
     """Entity mapping configuration for extrusion feature type"""
 
-    entity: ExtrusionEntity = Field(..., description="Type of entity")
+    entity: str = Field(..., description="Type of entity")
 
 
 class ExtrusionFeatureType(BaseModel):
@@ -301,7 +295,7 @@ class AttributeConfig(BaseModel):
 class GroupEntityConfig(BaseModel):
     """Entity mapping configuration for group"""
 
-    entity: GroupEntity = Field(..., description="Type of entity")
+    entity: str = Field(..., description="Type of entity")
     attributes: List[AttributeConfig] = Field(default_factory=list, json_schema_extra={"default": []},
                                               description="List of attribute mappings")
     properties: List[PropertyConfig] = Field(default_factory=list, json_schema_extra={"default": []},

@@ -1,14 +1,10 @@
 import logging
-from typing import Any
 
 from ifcopenshell import entity_instance
 from shapely import Point
 
 from config.configuration import config
 from config.geo_referencing import GeoReferencing
-from config.group_entity import GroupEntity
-from config.projection_entity import ProjectionEntity
-from config.extrusion_entity import ExtrusionEntity
 from core.ifc.ifc_file import IfcFile
 from core.ifc.model.building.building import Building
 from core.ifc.model.element import Element
@@ -192,27 +188,8 @@ class Model:
         return ifc_file
 
     def create_ifc_element_type(self, ifc_file: IfcFile, element_type: Element,
-                                projection_entity: Any) -> entity_instance:
-        if projection_entity == ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT:
-            ifc_element_type = ifc_file.create_ifc_geographic_element_type()
-        elif projection_entity == ProjectionEntity.IFC_SPATIAL_ZONE:
-            ifc_element_type = ifc_file.create_ifc_spatial_zone_type()
-        elif projection_entity == ExtrusionEntity.IFC_PIPE_SEGMENT:
-            ifc_element_type = ifc_file.create_ifc_pipe_segment_type()
-        else:
-            raise NotImplementedError(
-                f"building step for projection entity type {projection_entity.name} not implemented")
-        element_type.set_ifc_attributes(ifc_file, ifc_element_type)
-        element_type.set_ifc_properties(ifc_file, ifc_element_type)
-        return ifc_element_type
-
-    def create_extrusion_ifc_element_type(self, ifc_file: IfcFile, element_type: Element,
-                                        extrusion_entity: ExtrusionEntity) -> entity_instance:
-        if extrusion_entity == ExtrusionEntity.IFC_PIPE_SEGMENT:
-            ifc_element_type = ifc_file.create_ifc_pipe_segment_type()
-        else:
-            raise NotImplementedError(
-                f"building step for projection entity type {extrusion_entity.name} not implemented")
+                                projection_entity: str) -> entity_instance:
+        ifc_element_type = ifc_file.create_ifc_type_product(f"{projection_entity}Type")
         element_type.set_ifc_attributes(ifc_file, ifc_element_type)
         element_type.set_ifc_properties(ifc_file, ifc_element_type)
         return ifc_element_type
@@ -220,7 +197,7 @@ class Model:
     def create_ifc_spatial_structure(self, ifc_file: IfcFile, ifc_local_placement: entity_instance,
                                      ifc_project: entity_instance,
                                      spatial_structure_element: Element) -> entity_instance:
-        ifc_spatial_structure = ifc_file.create_ifc_site(ifc_local_placement)
+        ifc_spatial_structure = ifc_file.create_ifc_product("IfcSite", ifc_local_placement)
         ifc_file.create_ifc_rel_aggregates(ifc_project, [ifc_spatial_structure])
         spatial_structure_element.set_ifc_attributes(ifc_file, ifc_spatial_structure)
         spatial_structure_element.set_ifc_properties(ifc_file, ifc_spatial_structure)
@@ -239,22 +216,7 @@ class Model:
                     continue
                 if group_path in groups_config:
                     group_config = groups_config[group_path]
-                    if group_config.entity_mapping.entity == GroupEntity.IFC_DISTRIBUTION_SYSTEM:
-                        ifc_group = ifc_file.create_ifc_distribution_system(group)
-                    elif group_config.entity_mapping.entity == GroupEntity.IFC_DISTRIBUTION_CIRCUIT:
-                        ifc_group = ifc_file.create_ifc_distribution_circuit(group)
-                    elif group_config.entity_mapping.entity == GroupEntity.IFC_BUILDING_BUILT_SYSTEM:
-                        if self.schema == IfcVersion.IFC4:
-                            ifc_group = ifc_file.create_ifc_building_system(group)
-                        else:
-                            ifc_group = ifc_file.create_ifc_built_system(group)
-                    elif group_config.entity_mapping.entity == GroupEntity.IFC_STRUCTURAL_ANALYSIS_MODEL:
-                        ifc_group = ifc_file.create_ifc_structural_analysis_model(group)
-                    elif group_config.entity_mapping.entity == GroupEntity.IFC_ZONE:
-                        ifc_group = ifc_file.create_ifc_zone(group)
-                    else:
-                        raise NotImplementedError(
-                            f"building step for ifc group entity {group_config.entity_mapping.entity.name} not implemented")
+                    ifc_group = ifc_file.create_ifc_group(group_config.entity_mapping.entity, group)
                     ifc_groups[group_path] = ifc_group
 
                     group_element = Element()
@@ -265,7 +227,7 @@ class Model:
                     group_element.set_ifc_attributes(ifc_file, ifc_group)
                     group_element.set_ifc_properties(ifc_file, ifc_group)
                 else:
-                    ifc_groups[group_path] = ifc_file.create_ifc_group(group)
+                    ifc_groups[group_path] = ifc_file.create_ifc_group("IfcGroup", group)
                 if not parent_group_path == "":
                     ifc_file.create_ifc_rel_assigns_to_group([ifc_groups[group_path]], ifc_groups[parent_group_path])
             ifc_file.create_ifc_rel_assigns_to_group(ifc_group_elements, ifc_groups[group_path])

@@ -59,7 +59,7 @@ ifc:
     - name: "liegenschaft"
       sql_path: "/workspace/sql/av_liegenschaft.sql"
       entity_mapping:
-        entity: IFC_GEOGRAPHIC_ELEMENT
+        entity: "IfcGeographicElement"
         attributes:
           - attribute: "Name"
             source:
@@ -147,7 +147,7 @@ ifc:
     - name: "bodenbedeckung_befestigt"
       sql_path: "/workspace/sql/av_bodenbedeckung_befestigt.sql"
       entity_mapping:
-        entity: IFC_GEOGRAPHIC_ELEMENT
+        entity: "IfcGeographicElement"
         attributes:
           - attribute: "Name"
             source:
@@ -210,7 +210,7 @@ ifc:
     - name: "bodenbedeckung_bestockt"
       sql_path: "/workspace/sql/av_bodenbedeckung_bestockt.sql"
       entity_mapping:
-        entity: IFC_GEOGRAPHIC_ELEMENT
+        entity: "IfcGeographicElement"
         attributes:
           - attribute: "Name"
             source:
@@ -273,7 +273,7 @@ ifc:
     - name: "bodenbedeckung_gebaeude"
       sql_path: "/workspace/sql/av_bodenbedeckung_gebaeude.sql"
       entity_mapping:
-        entity: IFC_GEOGRAPHIC_ELEMENT
+        entity: "IfcGeographicElement"
         attributes:
           - attribute: "Name"
             source:
@@ -351,7 +351,7 @@ ifc:
     - name: "bodenbedeckung_gewaesser"
       sql_path: "/workspace/sql/av_bodenbedeckung_gewaesser.sql"
       entity_mapping:
-        entity: IFC_GEOGRAPHIC_ELEMENT
+        entity: "IfcGeographicElement"
         attributes:
           - attribute: "Name"
             source:
@@ -414,7 +414,7 @@ ifc:
     - name: "bodenbedeckung_humusiert"
       sql_path: "/workspace/sql/av_bodenbedeckung_humusiert.sql"
       entity_mapping:
-        entity: IFC_GEOGRAPHIC_ELEMENT
+        entity: "IfcGeographicElement"
         attributes:
           - attribute: "Name"
             source:
@@ -477,7 +477,7 @@ ifc:
     - name: "bodenbedeckung_vegetationslos"
       sql_path: "/workspace/sql/av_bodenbedeckung_vegetationslos.sql"
       entity_mapping:
-        entity: IFC_GEOGRAPHIC_ELEMENT
+        entity: "IfcGeographicElement"
         attributes:
           - attribute: "Name"
             source:
@@ -542,7 +542,7 @@ ifc:
       sql_path: "/workspace/sql/egid.sql"
       egid_xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
       entity_mapping:
-        entity: IFC_BUILDING
+        entity: "IfcBuilding"
         attributes:
           - attribute: "Name"
             source:
@@ -573,7 +573,7 @@ ifc:
               type: CITY_GML
               expression: ".//gen:intAttribute[@name='ERSTELLUNG_MONAT']/gen:value"
         building_parts:
-          - entity: IFC_BUILDING_ELEMENT_PROXY
+          - entity: "IfcBuildingElementProxy"
             geometry_mapping:
               xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']"
               geometry: SOLID
@@ -582,7 +582,7 @@ ifc:
               g: 1.00
               b: 1.00
               a: 0.2
-          - entity: IFC_WALL
+          - entity: "IfcWall"
             geometry_mapping:
               xpath: ".//bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface"
               geometry: MULTI_SURFACE
@@ -591,7 +591,7 @@ ifc:
               g: 1.00
               b: 1.00
               a: 0.00
-          - entity: IFC_ROOF
+          - entity: "IfcRoof"
             geometry_mapping:
               xpath: ".//bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface"
               geometry: MULTI_SURFACE
@@ -600,7 +600,7 @@ ifc:
               g: 0.8
               b: 0.8
               a: 0.00
-          - entity: IFC_SLAB
+          - entity: "IfcSlab"
             geometry_mapping:
               xpath: ".//bldg:boundedBy/bldg:GroundSurface/bldg:lod2MultiSurface/gml:MultiSurface"
               geometry: MULTI_SURFACE
@@ -634,7 +634,7 @@ ifc:
     - name: "lklinie"
       sql_path: "/workspace/sql/lk_map_linie.sql"
       entity_mapping:
-        entity: IFC_DISTRIBUTION_FLOW_ELEMENT
+        entity: "IfcDistributionFlowElement"
         attributes:
           - attribute: "Name"
             source:
@@ -713,7 +713,7 @@ ifc:
     - name: "lkpunkt"
       sql_path: "/workspace/sql/lk_map_punkt.sql"
       entity_mapping:
-        entity: IFC_DISTRIBUTION_FLOW_ELEMENT
+        entity: "IfcDistributionFlowElement"
         attributes:
           - attribute: "Name"
             source:
@@ -792,7 +792,7 @@ ifc:
     - name: "lkflaeche"
       sql_path: "/workspace/sql/lk_map_flaeche.sql"
       entity_mapping:
-        entity: IFC_DISTRIBUTION_FLOW_ELEMENT
+        entity: "IfcDistributionFlowElement"
         attributes:
           - attribute: "Name"
             source:
@@ -856,7 +856,7 @@ ifc:
   groups:
     - path: "Amtliche Vermessung.Gebaeude"
       entity_mapping:
-        entity: IFC_BUILDING_BUILT_SYSTEM
+        entity: "IfcBuiltSystem"
         attributes:
           - attribute: "PredefinedType"
             value: "USERDEFINED"
@@ -864,7 +864,7 @@ ifc:
             value: "Gebaeude"
     - path: "Leitungskataster.Abwasser"
       entity_mapping:
-        entity: IFC_DISTRIBUTION_SYSTEM
+        entity: "IfcDistributionSystem"
         attributes:
           - attribute: "PredefinedType"
             value: "SEWAGE"
@@ -872,7 +872,7 @@ ifc:
             value: "Abwasser"
     - path: "Leitungskataster.Elektrizitaet"
       entity_mapping:
-        entity: IFC_DISTRIBUTION_SYSTEM
+        entity: "IfcDistributionSystem"
         attributes:
           - attribute: "PredefinedType"
             value: "ELECTRICAL"
@@ -880,7 +880,7 @@ ifc:
             value: "Elektrizitaet"
     - path: "Leitungskataster.Fernwirkkabel"
       entity_mapping:
-        entity: IFC_DISTRIBUTION_SYSTEM
+        entity: "IfcDistributionSystem"
         attributes:
           - attribute: "PredefinedType"
             value: "CONTROL"
@@ -888,7 +888,7 @@ ifc:
             value: "Fernwirkkabel"
     - path: "Leitungskataster.Gas"
       entity_mapping:
-        entity: IFC_DISTRIBUTION_SYSTEM
+        entity: "IfcDistributionSystem"
         attributes:
           - attribute: "PredefinedType"
             value: "GAS"
@@ -896,7 +896,7 @@ ifc:
             value: "Gas"
     - path: "Leitungskataster.Kommunikation"
       entity_mapping:
-        entity: IFC_DISTRIBUTION_SYSTEM
+        entity: "IfcDistributionSystem"
         attributes:
           - attribute: "PredefinedType"
             value: "COMMUNICATION"
@@ -904,7 +904,7 @@ ifc:
             value: "Kommunikation"
     - path: "Leitungskataster.Schutzrohr"
       entity_mapping:
-        entity: IFC_DISTRIBUTION_SYSTEM
+        entity: "IfcDistributionSystem"
         attributes:
           - attribute: "PredefinedType"
             value: "USERDEFINED"
@@ -912,7 +912,7 @@ ifc:
             value: "Schutzrohr"
     - path: "Leitungskataster.Waerme"
       entity_mapping:
-        entity: IFC_DISTRIBUTION_SYSTEM
+        entity: "IfcDistributionSystem"
         attributes:
           - attribute: "PredefinedType"
             value: "HEATING"
@@ -920,7 +920,7 @@ ifc:
             value: "Waerme"
     - path: "Leitungskataster.Wasser"
       entity_mapping:
-        entity: IFC_DISTRIBUTION_SYSTEM
+        entity: "IfcDistributionSystem"
         attributes:
           - attribute: "PredefinedType"
             value: "WATERSUPPLY"
@@ -928,7 +928,7 @@ ifc:
             value: "Wasser"
     - path: "Leitungskataster.weitere Medien"
       entity_mapping:
-        entity: IFC_DISTRIBUTION_SYSTEM
+        entity: "IfcDistributionSystem"
         attributes:
           - attribute: "PredefinedType"
             value: "USERDEFINED"

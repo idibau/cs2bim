@@ -1,6 +1,5 @@
 from shapely import Point
 
-from config.projection_entity import ProjectionEntity
 from core.ifc.model.projection.projection import Projection
 from core.ifc.model.projection.tessellation import Tessellation
 
@@ -29,26 +28,9 @@ class DummyIfcFile:
         self.calls.append(("create_ifc_local_placement", coord))
         return {"type": "IfcLocalPlacement", "coord": coord}
 
-    def create_ifc_geographic_element(self, placement, shape):
-        self.calls.append(("create_ifc_geographic_element", placement, shape))
-        return {"type": "IfcGeographicElement"}
-
-    def create_ifc_spatial_zone(self, placement, shape):
-        self.calls.append(("create_ifc_spatial_zone", placement, shape))
-        return {"type": "IfcSpatialZone"}
-
-    def create_ifc_annotation(self, placement, shape):
-        self.calls.append(("create_ifc_annotation", placement, shape))
-        return {"type": "IfcAnnotation"}
-
-    def create_ifc_site(self, placement, shape):
-        self.calls.append(("create_ifc_site", placement, shape))
-        return {"type": "IfcSite"}
-
-    def create_ifc_building(self, placement, shape):
-        self.calls.append(("create_ifc_building", placement, shape))
-        return {"type": "IfcBuilding"}
-
+    def create_ifc_product(self, entity, placement, shape):
+        self.calls.append(("create_ifc_product", entity, placement, shape))
+        return {"type": entity}
 
 class TestTessellation:
 
@@ -88,5 +70,5 @@ class TestProjection:
         dummy = DummyIfcFile()
         # The Projection.map_to_ifc chooses based on entity, we select IFC_GEOGRAPHIC_ELEMENT path
         # Pass sentinel to go through first branch
-        elem = proj.map_to_ifc(dummy, ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT, None, None, None)
+        elem = proj.map_to_ifc(dummy, "IfcGeographicElement", None, None, None)
         assert isinstance(elem, dict) and elem.get("type") == "IfcGeographicElement"

@@ -4,8 +4,6 @@ from shapely import Point
 from shapely.geometry.base import BaseGeometry
 from shapely.affinity import translate
 
-
-from config.extrusion_entity import ExtrusionEntity
 from core.ifc.ifc_file import IfcFile
 from core.ifc.model.extrusion.circle import Circle
 from core.ifc.model.extrusion.cross_section import CrossSection
@@ -26,7 +24,7 @@ class VerticalExtrusion(Extrusion):
         self.end_point = end_point
         self.orientation = orientation
 
-    def map_to_ifc(self, ifc_file: IfcFile, entity: ExtrusionEntity, placement_rel_to: entity_instance,
+    def map_to_ifc(self, ifc_file: IfcFile, entity: str, placement_rel_to: entity_instance,
                    ifc_representation_sub_context: entity_instance, ifc_style: entity_instance) -> entity_instance:
         if isinstance(self.area, Polygon) and not self.area.local:
             ifc_profile_def = ifc_file.create_ifc_arbitrary_closed_profile_def(self.area.points)
@@ -50,12 +48,5 @@ class VerticalExtrusion(Extrusion):
 
         ifc_local_placement = ifc_file.create_relative_ifc_local_placement(placement_rel_to, Point(0.0, 0.0, 0.0))
         ifc_file.create_ifc_styled_item(ifc_geometry, ifc_style)
-        if entity == ExtrusionEntity.IFC_PIPE_SEGMENT:
-            ifc_element = ifc_file.create_ifc_pipe_segment(ifc_local_placement, ifc_product_definition_shape)
-        elif entity == ExtrusionEntity.IFC_DISTRIBUTION_FLOW_ELEMENT:
-            ifc_element = ifc_file.create_ifc_distribution_flow_element(ifc_local_placement,
-                                                                        ifc_product_definition_shape)
-        else:
-            raise Exception(
-                f"building step for feature class entity type {entity.name} not implemented")
+        ifc_element = ifc_file.create_ifc_product(entity, ifc_local_placement, ifc_product_definition_shape)
         return ifc_element
