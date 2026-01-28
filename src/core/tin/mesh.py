@@ -21,7 +21,7 @@ class Mesh(object):
     ----------
     mesh :
         Mesh triangulated from input points
-w    """
+    """
 
     def __init__(self, data: np.ndarray | list | pv.PolyData):
         if isinstance(data, pv.PolyData):
