@@ -54,7 +54,6 @@ class Area:
             vertices_z.append([vertex[0], vertex[1], z])
 
         vertices_z = np.array(vertices_z)
-
         return vertices_z, faces
 
     def densify_linearring_by_raster(self, linear_ring, grid):
@@ -78,8 +77,10 @@ class Area:
             else:
                 intersection_points = []
             intersection_points_sorted = sorted(intersection_points, key=lambda p: p.distance(start))
-            points.append(start)
-            points.extend(intersection_points_sorted)
+            if not points or points[-1] != start:
+                points.append(start)
+            if intersection_points_sorted and points[-1] != intersection_points_sorted[0]:
+                points.extend(intersection_points_sorted)
 
         return LinearRing(points)
 
@@ -116,5 +117,7 @@ class Area:
         triangulation_input = {"vertices": vertices, "segments": segments}
         if holes:
             triangulation_input["holes"] = holes
-        result = tr.triangulate(triangulation_input, "p")
+        result = tr.triangulate(triangulation_input, "pQ")
+        if "vertices" not in result or "triangles" not in result:
+            return [], []
         return result["vertices"], result["triangles"]

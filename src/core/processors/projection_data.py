@@ -44,6 +44,9 @@ class ProjectionData:
 
         for area in self.areas:
             points, faces = area.create_mesh()
+            if len(points) == 0 or len(faces) == 0:
+                logger.debug("No points or faces found for area %s", area.polygon)
+                continue
             points = points - np.array([self.project_origin.x, self.project_origin.y, self.project_origin.z])
 
             for face in faces:
