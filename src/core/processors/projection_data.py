@@ -17,17 +17,18 @@ class ProjectionData:
 
     def __init__(self, element_row: dict[str, Any], project_origin: Point):
         self.element_row = element_row
+        self.project_origin = project_origin
         self.areas = []
         polygon = wkt.loads(element_row["wkt"])
         if polygon.geom_type == "Polygon":
             polygons = self.cut_polygon_if_large(polygon)
             for cut_polygon in polygons:
-                self.areas.append(Area(cut_polygon, project_origin))
+                self.areas.append(Area(cut_polygon))
         elif polygon.geom_type == "MultiPolygon":
             for sub_polygon in polygon.geoms:
                 polygons = self.cut_polygon_if_large(sub_polygon)
                 for cut_polygon in polygons:
-                    self.areas.append(Area(cut_polygon, project_origin))
+                    self.areas.append(Area(cut_polygon))
         else:
             pass
 
@@ -41,8 +42,8 @@ class ProjectionData:
         indices_total = []
 
         for area in self.areas:
-            mesh = area.create_mesh()
-            points, faces = mesh.get_data()
+            points, faces = area.create_mesh()
+            points = points - np.array([self.project_origin.x, self.project_origin.y, self.project_origin.z])
 
             for face in faces:
                 new_face = []

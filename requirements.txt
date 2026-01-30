@@ -21,3 +21,4 @@ celery[redis]==5.5.3
 redis==5.2.1
 lxml==6.0.0
 pytest==8.4.2
+triangle==20250106

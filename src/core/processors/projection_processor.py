@@ -65,7 +65,7 @@ class ProjectionProcessor:
 
             for dtm_file in dtm_files:
                 logger.info(f"load and process dtm file: {dtm_file}")
-                dtm_points = RasterPoints(dtm_file, project_origin)
+                dtm_points = RasterPoints(dtm_file)
                 for index, projection_element_data in enumerate(projection_data):
                     logger.debug(f"calculate raster points for element {index + 1}/{len(sql_result)}")
                     projection_element_data.add_raster_points(dtm_points)
