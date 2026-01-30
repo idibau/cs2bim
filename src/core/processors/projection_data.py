@@ -2,6 +2,7 @@ import logging
 import math
 from typing import Any
 
+import numpy as np
 import shapely
 from shapely import wkt, Point
 from shapely.geometry import box
