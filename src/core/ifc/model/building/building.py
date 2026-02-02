@@ -1,7 +1,6 @@
 from ifcopenshell import entity_instance
 from shapely import Point
 
-from config.building_part_entity import BuildingPartEntity
 from core.ifc.ifc_file import IfcFile
 from core.ifc.model.building.gml_geometry import GmlGeometry
 from core.ifc.model.feature_element import FeatureElement
@@ -9,7 +8,7 @@ from core.ifc.model.feature_element import FeatureElement
 
 class BuildingPart:
 
-    def __init__(self, entity: BuildingPartEntity, gml_geometry: GmlGeometry, color):
+    def __init__(self, entity: str, gml_geometry: GmlGeometry, color):
         super().__init__()
         self.color = color
         self.gml_geometry = gml_geometry
@@ -24,19 +23,7 @@ class BuildingPart:
     def create_ifc_element(self, ifc_file: IfcFile, placement_rel_to: entity_instance,
                            product_definition_shape: entity_instance) -> entity_instance:
         ifc_local_placement = ifc_file.create_relative_ifc_local_placement(placement_rel_to, Point(0, 0, 0))
-        if self.entity == BuildingPartEntity.IFC_ROOF:
-            ifc_element = ifc_file.create_ifc_roof(ifc_local_placement, product_definition_shape)
-        elif self.entity == BuildingPartEntity.IFC_SLAB:
-            ifc_element = ifc_file.create_ifc_slab(ifc_local_placement, product_definition_shape)
-        elif self.entity == BuildingPartEntity.IFC_WALL:
-            ifc_element = ifc_file.create_ifc_wall(ifc_local_placement, product_definition_shape)
-        elif self.entity == BuildingPartEntity.IFC_SPACE:
-            ifc_element = ifc_file.create_ifc_space(ifc_local_placement, product_definition_shape)
-        elif self.entity == BuildingPartEntity.IFC_BUILDING_ELEMENT_PROXY:
-            ifc_element = ifc_file.create_ifc_building_element_proxy(ifc_local_placement, product_definition_shape)
-        else:
-            raise NotImplementedError(
-                f"building step for feature type entity {self.entity.name} not implemented for building feature types")
+        ifc_element = ifc_file.create_ifc_product(self.entity, ifc_local_placement, product_definition_shape)
         return ifc_element
 
 
@@ -52,7 +39,7 @@ class Building(FeatureElement):
     def map_to_ifc(self, ifc_file: IfcFile, placement_rel_to: entity_instance,
                    ifc_representation_sub_context: entity_instance) -> entity_instance:
         ifc_local_placement = ifc_file.create_relative_ifc_local_placement(placement_rel_to, Point(0, 0, 0))
-        ifc_building = ifc_file.create_ifc_building(ifc_local_placement)
+        ifc_building = ifc_file.create_ifc_product("IfcBuilding", ifc_local_placement)
         ifc_elements = [building_part.map_to_ifc(ifc_file, ifc_local_placement, ifc_representation_sub_context) for
                         building_part in
                         self.building_parts]

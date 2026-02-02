@@ -1,7 +1,6 @@
 from ifcopenshell import entity_instance
 from shapely import Point
 
-from config.projection_entity import ProjectionEntity
 from core.ifc.ifc_file import IfcFile
 from core.ifc.model.feature_element import FeatureElement
 from core.ifc.model.projection.tessellation import Tessellation
@@ -20,7 +19,7 @@ class Projection(FeatureElement):
             p3 = Point(point_list[triangle[2]])
             self.triangles.append((p1, p2, p3))
 
-    def map_to_ifc(self, ifc_file: IfcFile, entity: ProjectionEntity, placement_rel_to: entity_instance, ifc_representation_sub_context: entity_instance,
+    def map_to_ifc(self, ifc_file: IfcFile, entity: str, placement_rel_to: entity_instance, ifc_representation_sub_context: entity_instance,
                    ifc_style: entity_instance) -> entity_instance:
         tessellation = Tessellation(self.triangles)
         ifc_face_set = tessellation.map_to_ifc(ifc_file)
@@ -28,17 +27,5 @@ class Projection(FeatureElement):
                                                                                     "Tessellation", [ifc_face_set])
         ifc_file.create_ifc_styled_item(ifc_face_set, ifc_style)
         ifc_local_placement = ifc_file.create_relative_ifc_local_placement(placement_rel_to, Point(0, 0, 0))
-        if entity == ProjectionEntity.IFC_GEOGRAPHIC_ELEMENT:
-            ifc_element = ifc_file.create_ifc_geographic_element(ifc_local_placement, ifc_product_definition_shape)
-        elif entity == ProjectionEntity.IFC_SPATIAL_ZONE:
-            ifc_element = ifc_file.create_ifc_spatial_zone(ifc_local_placement, ifc_product_definition_shape)
-        elif entity == ProjectionEntity.IFC_ANNOTATION:
-            ifc_element = ifc_file.create_ifc_annotation(ifc_local_placement, ifc_product_definition_shape)
-        elif entity == ProjectionEntity.IFC_SITE:
-            ifc_element = ifc_file.create_ifc_site(ifc_local_placement, ifc_product_definition_shape)
-        elif entity == ProjectionEntity.IFC_BUILDING:
-            ifc_element = ifc_file.create_ifc_building(ifc_local_placement, ifc_product_definition_shape)
-        else:
-            raise NotImplementedError(
-                f"building step for projection feature type entity {entity.name} not implemented")
+        ifc_element = ifc_file.create_ifc_product(entity, ifc_local_placement, ifc_product_definition_shape)
         return ifc_element
