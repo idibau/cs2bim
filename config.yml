@@ -1,6 +1,6 @@
 ### VARIANTE 2.2 ###
 
-# - Raumstruktur: Parzellen 
+# - Raumstruktur: Parzellen
 # - Typisierung: Themen
 # - Gruppierung: Themen
 # - PSets: Präfix nur CH
@@ -144,6 +144,44 @@ ifc:
         g: 0.67
         b: 0.04
         a: 0.85
+    - name: "selbstrecht"
+      sql_path: "/workspace/sql/av_selbstrecht.sql"
+      entity_mapping:
+        entity: IFC_GEOGRAPHIC_ELEMENT
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "C2B_PSet_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Selbstrecht"
+      group_mapping:
+        - type: STATIC
+          expression: "Amtliche Vermessung.Selbstrecht"
+    - name: "bergwerk"
+      sql_path: "/workspace/sql/av_bergwerk.sql"
+      entity_mapping:
+        entity: IFC_GEOGRAPHIC_ELEMENT
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "C2B_PSet_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bergwerk"
+      group_mapping:
+        - type: STATIC
+          expression: "Amtliche Vermessung.Bergwerk"
     - name: "bodenbedeckung_befestigt"
       sql_path: "/workspace/sql/av_bodenbedeckung_befestigt.sql"
       entity_mapping:
@@ -298,16 +336,31 @@ ifc:
             source:
               type: SQL
               expression: "nummer"
-          - property: "egid"
+          - property: "EGID"
             property_set: "CH_AV_Liegenschaft"
             source:
               type: SQL
               expression: "egid"
-          - property: "art"
+          - property: "Art"
             property_set: "CH_AV_Liegenschaft"
             source:
               type: SQL
               expression: "art"
+          - property: "Gebaeudename"
+            property_set: "CH_AV_Liegenschaft"
+            source:
+              type: SQL
+              expression: "gebaeudename"
+          - property: "StrasseHausnummer"
+            property_set: "CH_AV_Liegenschaft"
+            source:
+              type: SQL
+              expression: "strasse_hausnummer"
+          - property: "Ort"
+            property_set: "CH_AV_Liegenschaft"
+            source:
+              type: SQL
+              expression: "ort"
       entity_type_mapping:
         attributes:
           - attribute: "Name"
