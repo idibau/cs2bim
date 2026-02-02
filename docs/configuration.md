@@ -175,10 +175,11 @@ Hint: The wildcard character '%' needs to be escaped like this '%%'.
 In most cases, the mapping of attributes, properties, and group mappings is defined using two values: `source` and
 `expression`. It is important that the expression matches the type of source being used. An SQL source expects a column
 name to retrieve a value from the SQL result set. A CityGML source expects an XPath expression that selects the desired
-value (starting from bldg:Building). The Static source does not resolve any value and therefore has no requirements for
+value (starting from bldg:Building). The static source does not resolve any value and therefore has no requirements for
 the expression.
 Attributes cannot be freely selected and depend on the ifc entity that is selected. If a configured attribute does not
 exist, it is ignored.
+Properties that are configured but not found as output column in the sql result are also ignored. 
 
 #### Spatial Structure Mapping
 
