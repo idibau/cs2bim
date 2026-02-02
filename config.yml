@@ -147,7 +147,7 @@ ifc:
     - name: "selbstrecht"
       sql_path: "/workspace/sql/av_selbstrecht.sql"
       entity_mapping:
-        entity: IFC_GEOGRAPHIC_ELEMENT
+        entity: "IfcGeographicElement"
         properties:
           - property: "VollstaendigeGeometrie"
             property_set: "C2B_PSet_Metadaten"
@@ -166,7 +166,7 @@ ifc:
     - name: "bergwerk"
       sql_path: "/workspace/sql/av_bergwerk.sql"
       entity_mapping:
-        entity: IFC_GEOGRAPHIC_ELEMENT
+        entity: "IfcGeographicElement"
         properties:
           - property: "VollstaendigeGeometrie"
             property_set: "C2B_PSet_Metadaten"
