@@ -71,15 +71,13 @@ class Model:
         ifc_project = ifc_file.create_ifc_project(config.ifc.project_name, ifc_owner_history,
                                                   ifc_representation_context, ifc_unit_assignment)
         project = Element()
-        project.add_property("C2B_PSet_Datenquelle", "DTM", config.stac.dtm_items_url)
-        project.add_property("C2B_PSet_Datenquelle", "Gebaeude", config.stac.building_items_url)
-        project.add_property("C2B_PSet_Metadaten", "EPSG", config.ifc.coordinate_reference_system.epsg_code)
-        project.add_property("C2B_PSet_Metadaten", "GeodaetischesDatum", config.ifc.coordinate_reference_system.geodetic_datum)
-        project.add_property("C2B_PSet_Metadaten", "HoehenreferenzSystem", config.ifc.coordinate_reference_system.vertical_datum)
-        project.add_property("C2B_PSet_Metadaten", "ProjektUrsprung", str(self.project_origin))
-        if language:
-            project.add_property("C2B_PSet_Metadaten", "Sprache", language.value)
-        project.add_property("C2B_PSet_Metadaten", "Polygon", self.polygon)
+        project.add_property("CS2BIM_Metadata_SourcesParameters", "DataSourceDTM", config.stac.dtm_items_url)
+        project.add_property("CS2BIM_Metadata_SourcesParameters", "DataSource3DBuildings", config.stac.building_items_url)
+        project.add_property("CS2BIM_Metadata_SourcesParameters", "ProjectOrigin", str(self.project_origin))
+        project.add_property("CS2BIM_Metadata_SourcesParameters", "Polygon", self.polygon)
+        project.add_property("CS2BIM_Metadata_CRS", "EPSGCode", config.ifc.coordinate_reference_system.epsg_code)
+        project.add_property("CS2BIM_Metadata_CRS", "GeodeticDatum", config.ifc.coordinate_reference_system.geodetic_datum)
+        project.add_property("CS2BIM_Metadata_CRS", "VerticalDatum", config.ifc.coordinate_reference_system.vertical_datum)
         project.set_ifc_properties(ifc_file, ifc_project)
 
         if geo_referencing == GeoReferencing.LO_GEO_REF_30:
