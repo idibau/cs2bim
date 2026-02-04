@@ -107,7 +107,9 @@ else:
 
     model = model_generator.generate(ifc_version, args.NAME, args.POLYGON, project_origin)
     ifc_file = model.map_to_ifc(language)
+    logger.info("writing ifc")
     ifc_file.write(get_output_path(args.NAME))
+    logger.info("completed")
 
     log_memory_usage()
     stop_measuring_memory_usage()

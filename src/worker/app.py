@@ -68,6 +68,7 @@ def model_generation_task(self, ifc_version: str, name: str, polygon: str, proje
         language = Language(language) if language else None
         ifc_file = model.map_to_ifc(language)
         output_path = get_output_path(self.request.id)
+        logger.info("writing ifc")
         ifc_file.write(output_path)
         logger.info(f"task {self.request.id}: Model generation completed, file saved to {output_path}")
         return output_path
