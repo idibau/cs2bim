@@ -12,7 +12,7 @@ select
     bb.art as art,
     'Amtliche Vermessung.Bodenbedeckung.' || bb.art as "group",
     gbnr.nummer as nummer,
-    gbnr.gwr_egid as egid,
+    gbnr.gwr_egid as gwr_egid,
     case when objn.aname is null then '-' else objn.aname end as gebaeudename,
     STRING_AGG(addr.strasse_hausnummer, ', ') as strasse_hausnummer,
     ortn.atext as ort
@@ -27,4 +27,4 @@ from
     join perimeter on ST_Intersects(bb.geometrie, perimeter.geom)
 where
     bb.art = 'Gebaeude'
-group by wkt, complete_geometry, art, "group", nummer, egid, gebaeudename, ort
+group by wkt, complete_geometry, art, "group", nummer, gwr_egid, gebaeudename, ort
