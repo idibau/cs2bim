@@ -190,32 +190,8 @@ class IfcFile:
             RelatingType=relating_type,
         )
 
-    def create_ifc_group(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcGroup", GlobalId=guid.new(),
-                                       Name=self.translator.translate(name, self.language))
-
-    def create_ifc_distribution_system(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcDistributionSystem", GlobalId=guid.new(),
-                                       Name=self.translator.translate(name, self.language))
-
-    def create_ifc_distribution_circuit(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcDistributionCircuit", GlobalId=guid.new(),
-                                       Name=self.translator.translate(name, self.language))
-
-    def create_ifc_building_system(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcBuildingSystem", GlobalId=guid.new(),
-                                       Name=self.translator.translate(name, self.language))
-
-    def create_ifc_built_system(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcBuiltSystem", GlobalId=guid.new(),
-                                       Name=self.translator.translate(name, self.language))
-
-    def create_ifc_structural_analysis_model(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcStructuralAnalysisModel", GlobalId=guid.new(),
-                                       Name=self.translator.translate(name, self.language))
-
-    def create_ifc_zone(self, name: str) -> entity_instance:
-        return self.file.create_entity("IfcZone", GlobalId=guid.new(),
+    def create_ifc_group(self, entity_type: str, name: str) -> entity_instance:
+        return self.file.create_entity(entity_type, GlobalId=guid.new(),
                                        Name=self.translator.translate(name, self.language))
 
     def create_ifc_rel_assigns_to_group(
@@ -285,30 +261,6 @@ class IfcFile:
         )
         return self.file.create_entity("IfcProductDefinitionShape", Representations=[representation])
 
-    def create_ifc_geographic_element(
-            self, object_placement: entity_instance, representation: entity_instance
-    ) -> entity_instance:
-        return self.file.create_entity(
-            "IfcGeographicElement", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
-        )
-
-    def create_ifc_geographic_element_type(self) -> entity_instance:
-        return self.file.create_entity(
-            "IfcGeographicElementType", GlobalId=guid.new()
-        )
-
-    def create_ifc_spatial_zone(
-            self, object_placement: entity_instance, representation: entity_instance
-    ) -> entity_instance:
-        return self.file.create_entity(
-            "IfcSpatialZone", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
-        )
-
-    def create_ifc_spatial_zone_type(self) -> entity_instance:
-        return self.file.create_entity(
-            "IfcSpatialZoneType", GlobalId=guid.new()
-        )
-
     def create_ifc_annotation(
             self, object_placement: entity_instance, representation: entity_instance
     ) -> entity_instance:
@@ -316,59 +268,18 @@ class IfcFile:
             "IfcAnnotation", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
         )
 
-    def create_ifc_site(
-            self, object_placement: entity_instance, representation: entity_instance = None
-    ) -> entity_instance:
+    def create_ifc_product(self, entity_type: str, object_placement: entity_instance, representation: entity_instance = None) -> entity_instance:
         if representation is None:
-            return self.file.create_entity("IfcSite", GlobalId=guid.new(), ObjectPlacement=object_placement)
-        return self.file.create_entity(
-            "IfcSite", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
-        )
-
-    def create_ifc_building(
-            self, object_placement: entity_instance, representation: entity_instance = None
-    ) -> entity_instance:
-        if representation is None:
-            return self.file.create_entity("IfcBuilding", GlobalId=guid.new(), ObjectPlacement=object_placement)
+            return self.file.create_entity(entity_type, GlobalId=guid.new(), ObjectPlacement=object_placement)
         else:
             return self.file.create_entity(
-                "IfcBuilding", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+                entity_type, GlobalId=guid.new(), Name="", ObjectPlacement=object_placement,
+                Representation=representation
             )
 
-    def create_ifc_space(self, object_placement: entity_instance, representation: entity_instance
-                         ) -> entity_instance:
+    def create_ifc_type_product(self, entity_type: str) -> entity_instance:
         return self.file.create_entity(
-            "IfcSpace", GlobalId=guid.new(), ObjectPlacement=object_placement,
-            Representation=representation
-        )
-
-    def create_ifc_building_element_proxy(
-            self, object_placement: entity_instance, representation: entity_instance
-    ) -> entity_instance:
-        return self.file.create_entity(
-            "IfcBuildingElementProxy", GlobalId=guid.new(), Name="", ObjectPlacement=object_placement,
-            Representation=representation
-        )
-
-    def create_ifc_wall(
-            self, object_placement: entity_instance, representation: entity_instance
-    ) -> entity_instance:
-        return self.file.create_entity(
-            "IfcWall", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
-        )
-
-    def create_ifc_roof(
-            self, object_placement: entity_instance, representation: entity_instance
-    ) -> entity_instance:
-        return self.file.create_entity(
-            "IfcRoof", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
-        )
-
-    def create_ifc_slab(
-            self, object_placement: entity_instance, representation: entity_instance
-    ) -> entity_instance:
-        return self.file.create_entity(
-            "IfcSlab", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
+            entity_type, GlobalId=guid.new()
         )
 
     def create_ifc_surface_style(self, color: Color) -> entity_instance:
@@ -378,24 +289,6 @@ class IfcFile:
 
     def create_ifc_styled_item(self, item: entity_instance, style: entity_instance) -> entity_instance:
         return self.file.create_entity("IfcStyledItem", Item=item, Styles=[style])
-
-    def create_ifc_pipe_segment(self, object_placement: entity_instance, representation: entity_instance
-                                ) -> entity_instance:
-        return self.file.create_entity(
-            "IfcPipeSegment", GlobalId=guid.new(), ObjectPlacement=object_placement, Representation=representation
-        )
-
-    def create_ifc_pipe_segment_type(self) -> entity_instance:
-        return self.file.create_entity(
-            "IfcPipeSegmentType", GlobalId=guid.new()
-        )
-
-    def create_ifc_distribution_flow_element(self, object_placement: entity_instance, representation: entity_instance
-                                             ) -> entity_instance:
-        return self.file.create_entity(
-            "IfcDistributionFlowElement", GlobalId=guid.new(), ObjectPlacement=object_placement,
-            Representation=representation
-        )
 
     def create_ifc_swept_disk_solid(self, directrix: entity_instance, radius: float) -> entity_instance:
         return self.file.create_entity(
