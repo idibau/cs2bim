@@ -4,14 +4,7 @@ from shapely import Polygon, Point
 
 
 class RasterPoints(object):
-    """
-    Class for handling raster points
-
-    Attributes
-    ----------
-    data : geopandas.GeoDataFrame
-        Raster points as geopandas.GeoDataFrame
-    """
+    """Class for handling raster points"""
 
     def __init__(self, xyz_filepath: str):
         self.data = np.loadtxt(xyz_filepath, delimiter=" ", skiprows=1)

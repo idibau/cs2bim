@@ -1,10 +1,12 @@
 import logging
+
 import numpy as np
+import pyvista as pv
 import shapely
-import triangle as tr
-from shapely import Point, LineString, MultiLineString
+from shapely import Point, MultiPoint
 from shapely.geometry.base import BaseGeometry
 from shapely.geometry.polygon import LinearRing, Polygon
+from shapely.ops import orient
 
 from config.configuration import config
 from core.tin.grid import Grid
@@ -19,15 +21,15 @@ class Area:
     def __init__(self, polygon: BaseGeometry):
         if not isinstance(polygon, shapely.Polygon):
             raise ValueError(f"{type(polygon).__name__} not supported")
-        self.polygon = polygon
+        self.polygon = orient(polygon, sign=1.0)
         self.raster_points_within = []
         self.raster_points_buffer = []
 
     def add_raster_points(self, raster_points: RasterPoints):
-        rpb = raster_points.within(self.polygon, 2 * config.tin.grid_size.value)
+        rpb = raster_points.within(self.polygon, 3 * config.tin.grid_size.value)
         if rpb is not None:
             self.raster_points_buffer.extend(rpb)
-        rpw = raster_points.within(self.polygon, 0)
+        rpw = raster_points.within(self.polygon, -0.001)
         if rpw is not None:
             self.raster_points_within.extend(rpw)
 
@@ -50,74 +52,72 @@ class Area:
 
         vertices_z = []
         for vertex in vertices:
-            z = grid.get_height_for_vertex(np.array(vertex))
+            z = grid.get_height_for_vertex(np.array(vertex[:-1]))
             vertices_z.append([vertex[0], vertex[1], z])
-
         vertices_z = np.array(vertices_z)
-        return vertices_z, faces
+
+        return self.decimate(vertices_z, faces)
 
     def densify_linearring_by_raster(self, linear_ring, grid):
         coords = linear_ring.coords
-
-        minx, miny, maxx, maxy = linear_ring.bounds
-
-        x_grid_lines = [LineString([(x, miny), (x, maxy)]) for x in grid.unique_x]
-        y_grid_lines = [LineString([(minx, y), (maxx, y)]) for y in grid.unique_y]
-        grid_lines = MultiLineString([*x_grid_lines, *y_grid_lines])
-
         points = []
         for i in range(len(coords) - 1):
             start, end = Point(coords[i]), Point(coords[i + 1])
-            segment = LineString([start, end])
-            inter = segment.intersection(grid_lines)
-            if inter.geom_type == 'Point':
-                intersection_points = [inter]
-            elif inter.geom_type == "MultiPoint":
-                intersection_points = inter.geoms
-            else:
-                intersection_points = []
-            intersection_points_sorted = sorted(intersection_points, key=lambda p: p.distance(start))
-            if not points or points[-1] != start:
-                points.append(start)
-            if intersection_points_sorted and points[-1] != intersection_points_sorted[0]:
-                points.extend(intersection_points_sorted)
+            intersection_points_sorted = grid.get_intersection_points_with_line(start, end)
+            points.append(start)
+            points.extend(intersection_points_sorted)
 
-        return LinearRing(points)
+        deduplicated_list = list({p.coords[0]: p for p in MultiPoint(points).geoms}.values())
+        return LinearRing(deduplicated_list)
 
     def constrained_delaunay_2d(self, exterior, interiors, points_within):
-        segments = []
-        vertices = []
+        def to_3d(pts):
+            return np.hstack([pts, np.zeros((pts.shape[0], 1))])
 
+        exterior_points_3d = to_3d(np.array(exterior.coords))
+        interiors_points_3d = [to_3d(np.array(interior.coords)) for interior in interiors]
+        points_within_3d = to_3d(np.array(points_within)) if len(points_within) > 0 else np.empty((0, 3))
+
+        all_points = np.vstack([exterior_points_3d] + interiors_points_3d + [points_within_3d])
+
+        lines = []
         offset = 0
-        vertices.extend([list(pt) for pt in exterior.coords[:-1]])
-        n_exterior = len(exterior.coords[:-1])
-        exterior_segment = np.column_stack([
-            np.arange(n_exterior),
-            np.append(np.arange(1, n_exterior), offset)
-        ]).tolist()
-        segments.extend(exterior_segment)
-        offset = offset + n_exterior
-        for interior in interiors:
-            vertices.extend([list(pt) for pt in interior.coords[:-1]])
-            n_interior = len(interior.coords[:-1])
-            interior_segment = np.column_stack([
-                np.arange(offset, offset + n_interior),
-                np.append(np.arange(offset + 1, offset + n_interior), offset)
-            ]).tolist()
-            segments.extend(interior_segment)
-            offset = offset + n_interior
+        for loop in [exterior_points_3d] + interiors_points_3d:
+            n = len(loop)
+            for i in range(n):
+                lines.append([2, offset + i, offset + ((i + 1) % n)])
+            offset += n
 
-        vertices.extend(points_within)
+        edge_src = pv.PolyData(all_points[:offset])
+        edge_src.lines = np.hstack(lines)
 
-        holes = []
-        for interior in interiors:
-            point = Polygon(interior).representative_point()
-            holes.append(list(*point.coords))
+        mesh = pv.PolyData(all_points).delaunay_2d(edge_source=edge_src, tol=0)
 
-        triangulation_input = {"vertices": vertices, "segments": segments}
-        if holes:
-            triangulation_input["holes"] = holes
-        result = tr.triangulate(triangulation_input, "pQ")
-        if "vertices" not in result or "triangles" not in result:
-            return [], []
-        return result["vertices"], result["triangles"]
+        faces_raw = mesh.faces.reshape(-1, 4)[:, 1:]
+        keep_indices = []
+
+        for i, face_idx in enumerate(faces_raw):
+            tri_coords = mesh.points[face_idx][:, :2]
+            tri_poly = Polygon(tri_coords)
+            if tri_poly.within(self.polygon.buffer(0.01)):
+                keep_indices.append(i)
+
+        final_mesh = mesh.extract_cells(keep_indices).extract_surface()
+        return final_mesh.points, final_mesh.faces.reshape(-1, 4)[:, 1:]
+
+    def decimate(self, vertices, faces):
+        pv_faces = np.insert(faces, 0, 3, axis=1)
+        polydata = pv.PolyData(vertices, pv_faces)
+        max_normal_angle = min(2 * np.rad2deg(np.arctan(config.tin.max_height_error / config.tin.grid_size)), 45)
+        polydata.decimate_pro(
+            reduction=0.99,
+            feature_angle=max_normal_angle,
+            splitting=False,
+            preserve_topology=True,
+            boundary_vertex_deletion=False,
+            inplace=True
+        )
+        faces_flat = polydata.faces
+        faces_2d = faces_flat.reshape(-1, 4)
+        original_faces = faces_2d[:, 1:]
+        return polydata.points, original_faces

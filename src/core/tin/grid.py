@@ -1,6 +1,7 @@
 import logging
 
 import numpy as np
+from shapely import MultiLineString, LineString
 
 logger = logging.getLogger(__name__)
 
@@ -9,16 +10,13 @@ class Grid:
 
     def __init__(self, raster_points):
         self.raster_points = raster_points
-        self.unique_x = np.unique(raster_points[:, 0])
-        self.unique_y = np.unique(raster_points[:, 1])
+        self.x_coords = sorted(np.unique(raster_points[:, 0]))
+        self.y_coords = sorted(np.unique(raster_points[:, 1]))
 
-        n_x = len(self.unique_x)
-        n_y = len(self.unique_y)
+        x_to_idx = {x: i for i, x in enumerate(self.x_coords)}
+        y_to_idx = {y: j for j, y in enumerate(self.y_coords)}
 
-        x_to_idx = {x: i for i, x in enumerate(self.unique_x)}
-        y_to_idx = {y: j for j, y in enumerate(self.unique_y)}
-
-        self.grid = np.full((n_y, n_x), -1, dtype=int)
+        self.grid = np.full((len(self.y_coords), len(self.x_coords)), -1, dtype=int)
 
         for pt_idx, pt in enumerate(raster_points):
             x, y = pt[0], pt[1]
@@ -26,9 +24,41 @@ class Grid:
             j = y_to_idx[y]
             self.grid[j, i] = pt_idx
 
+        min_x = np.min(self.x_coords)
+        min_y = np.min(self.y_coords)
+        max_x = np.max(self.x_coords)
+        max_y = np.max(self.y_coords)
+
+        self.x_grid_lines = MultiLineString([LineString([(x, min_y), (x, max_y)]) for x in self.x_coords])
+        self.y_grid_lines = MultiLineString([LineString([(min_x, y), (max_x, y)]) for y in self.y_coords])
+
+        diagonal_lines = []
+        for i in range(len(self.x_coords) - 1):
+            for j in range(len(self.y_coords) - 1):
+                diag = LineString([(self.x_coords[i], self.y_coords[j + 1]), (self.x_coords[i + 1], self.y_coords[j])])
+                diagonal_lines.append(diag)
+        self.xy_grid_lines = MultiLineString(diagonal_lines)
+
+    def get_intersection_points_with_line(self, start, end):
+        line = LineString([start, end])
+
+        def get_intersection_gridlines(line, grid_lines):
+            inter = line.intersection(grid_lines)
+            if inter.geom_type == 'Point':
+                return [inter]
+            elif inter.geom_type == "MultiPoint":
+                return list(inter.geoms)
+            else:
+                return []
+
+        intersection_points = get_intersection_gridlines(line, self.x_grid_lines)
+        intersection_points.extend(get_intersection_gridlines(line, self.y_grid_lines))
+        intersection_points.extend(get_intersection_gridlines(line, self.xy_grid_lines))
+        return sorted(intersection_points, key=lambda p: p.distance(start))
+
     def get_height_for_vertex(self, vertex):
-        i = np.searchsorted(self.unique_x, vertex[0], side='right') - 1
-        j = np.searchsorted(self.unique_y, vertex[1], side='right') - 1
+        i = np.searchsorted(self.x_coords, vertex[0], side='right') - 1
+        j = np.searchsorted(self.y_coords, vertex[1], side='right') - 1
 
         i00 = self.grid[j, i]
         i10 = self.grid[j, i + 1]
@@ -43,11 +73,11 @@ class Grid:
         p01 = self.raster_points[i01]
         p11 = self.raster_points[i11]
 
-        dx = self.unique_x[i + 1] - self.unique_x[i]
-        dy = self.unique_y[j + 1] - self.unique_y[j]
+        dx = self.x_coords[i + 1] - self.x_coords[i]
+        dy = self.y_coords[j + 1] - self.y_coords[j]
 
-        u = (vertex[0] - self.unique_x[i]) / dx
-        v = (vertex[1] - self.unique_y[j]) / dy
+        u = (vertex[0] - self.x_coords[i]) / dx
+        v = (vertex[1] - self.y_coords[j]) / dy
 
         if u + v <= 1:
             return self.interpolate(vertex, [p00, p10, p01])
