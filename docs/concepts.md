@@ -51,10 +51,6 @@ The GIS geometry is transformed into a "Body" geometry of IFC. In the current im
 
 The GIS geometry is expected to be in WKT format ([ISO 19125-1])[^ISO19125-1]. If the geodata source is in INTERLIS format (ILI-RefMan)[^ILIRefMan], a preprocess must be run to transform it to the WKT format (e.g. ili2pg).
 
-# Internal object model
-
-![Internal object model](../uploads/internal-class-model.png)
-
 # Projection and triangulation
 
 Based on the available digital terrain model (DTM) represented as uniformly sampled grid points any 2D polygon object is converted into a 3D surface object. The 2D polygon object is assumed to be represented as WKT-string and to have no circular arcs.
@@ -62,11 +58,14 @@ First, all grid points within a specific buffer (user-definable argument) around
 
 ![Schematic illustration of geometry conversion](../uploads/cs-2d-t2-3d.jpg)
 
-A more detailled description of the conversion can be found in our publication mentioned in [README.md](../README_old.md)
-
 The resulting 3D surfaces fulfill the 2D area constrains which are relevant for land coverage and property layer. However, since for every 2D polygon object a subset of grid points is triangulated by a 2D Delaunay triangulation, which does not find an optimal solution in the case of uniformly distributed grid points, there may be some small holes between two consecutive objects. This problem can be mitigated by using a 3D triangulation method instead, which is, however, much more computationally expensive.
 
-[Here](../examples/tin/example.ipynb) you can find a more detailed explanation of the code.
+**Note**: The conversion process was reworked to fix problems with holes on shared edges. Key changes include:
+
+- **Two-tier raster point extraction**: Separate buffer zone points (for grid structure) and strictly internal points (for triangulation)
+- **Grid-based boundary densification**: Polygon edges are densified using intersections with horizontal, vertical and diagonal grid lines instead of raytracing
+- **Constrained Delaunay triangulation**: Single triangulation with boundary constraints instead of the two-step projection approach
+- **Post-triangulation height assignment**: Z-coordinates computed via barycentric interpolation after 2D triangulation, rather than raytracing projection
 
 # References
 [^IFC-Doc]: buildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html .  
