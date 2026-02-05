@@ -72,12 +72,16 @@ class Model:
                                                   ifc_representation_context, ifc_unit_assignment)
         project = Element()
         project.add_property("CS2BIM_Metadata_SourcesParameters", "DataSourceDTM", config.stac.dtm_items_url)
-        project.add_property("CS2BIM_Metadata_SourcesParameters", "DataSource3DBuildings", config.stac.building_items_url)
-        project.add_property("CS2BIM_Metadata_SourcesParameters", "ProjectOrigin", str(self.project_origin))
+        project.add_property("CS2BIM_Metadata_SourcesParameters", "DataSource3DBuildings",
+                             config.stac.building_items_url)
+        project.add_property("CS2BIM_Metadata_SourcesParameters", "ProjectOrigin",
+                             f"{self.project_origin.x}, {self.project_origin.y}, {self.project_origin.z}")
         project.add_property("CS2BIM_Metadata_SourcesParameters", "Polygon", self.polygon)
         project.add_property("CS2BIM_Metadata_CRS", "EPSGCode", config.ifc.coordinate_reference_system.epsg_code)
-        project.add_property("CS2BIM_Metadata_CRS", "GeodeticDatum", config.ifc.coordinate_reference_system.geodetic_datum)
-        project.add_property("CS2BIM_Metadata_CRS", "VerticalDatum", config.ifc.coordinate_reference_system.vertical_datum)
+        project.add_property("CS2BIM_Metadata_CRS", "GeodeticDatum",
+                             config.ifc.coordinate_reference_system.geodetic_datum)
+        project.add_property("CS2BIM_Metadata_CRS", "VerticalDatum",
+                             config.ifc.coordinate_reference_system.vertical_datum)
         project.set_ifc_properties(ifc_file, ifc_project)
 
         if geo_referencing == GeoReferencing.LO_GEO_REF_30:

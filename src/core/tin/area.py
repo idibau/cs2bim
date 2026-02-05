@@ -26,7 +26,7 @@ class Area:
 
     def add_raster_points(self, raster_points: RasterPoints):
         """Add raster points within and buffered around the polygon area."""
-        rpb = raster_points.within(self.polygon, 3 * config.tin.grid_size.value)
+        rpb = raster_points.within(self.polygon, 2 * config.tin.grid_size.value)
         if rpb is not None:
             self.raster_points_buffer.extend(rpb)
         rpw = raster_points.within(self.polygon, -0.001)
