@@ -15,9 +15,9 @@ environment variable expansion.
 | logging_level | `string` | ✅ | string |  | Logging level for the application (e.g., DEBUG, INFO, WARNING) |
 | redis | `object` | ✅ | [RedisConfig](#redisconfig) |  | Redis configuration |
 | db | `object` | ✅ | [DBConfig](#dbconfig) |  | Database configuration |
-| stac | `object` | ✅ | [STACConfig](#stacconfig) |  | STAC configuration for external data sources |
 | ifc | `object` | ✅ | [IFCConfig](#ifcconfig) |  | IFC (Industry Foundation Classes) export configuration |
 | i18n | `object` or `null` |  | [I18nConfig](#i18nconfig) | `null` | Internationalization (i18n) configuration |
+| stac | `object` |  | [STACConfig](#stacconfig) |  | STAC configuration for external data sources |
 | tin | `object` |  | [TINConfig](#tinconfig) |  | TIN (Triangulated Irregular Network) generation configuration |
 
 
@@ -47,14 +47,6 @@ Attribute mapping configuration for building feature type
 | attribute | `string` | ✅ | string | Attribute name (Only applied if the attribute exists on the entity) |
 | source | `object` | ✅ | [BuildingSourceConfig](#buildingsourceconfig) | Source configuration for this attribute |
 
-## BuildingEntity
-
-Supported ifc entities for building entities
-
-#### Type: `string`
-
-**Possible Values:** `IFC_BUILDING`
-
 ## BuildingEntityConfig
 
 Entity mapping configuration for building feature type
@@ -63,7 +55,6 @@ Entity mapping configuration for building feature type
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity | `string` | ✅ | [BuildingEntity](#buildingentity) |  | Type of entity |
 | attributes | `array` |  | [BuildingAttributeConfig](#buildingattributeconfig) | `[]` | List of attribute mappings |
 | properties | `array` |  | [BuildingPropertyConfig](#buildingpropertyconfig) | `[]` | List of property mappings |
 | building_parts | `array` |  | [BuildingPartConfig](#buildingpartconfig) | `[]` | List of building parts belonging to this building entity |
@@ -80,7 +71,7 @@ Feature type configuration for building feature type
 | sql_path | `string` | ✅ | string |  | Path to SQL definition for the building feature type. Must return at least a column named 'egid'. |
 | egid_xpath | `string` | ✅ | string |  | XPath expression to extract EGID identifier from city gml building entities |
 | entity_mapping | `object` | ✅ | [BuildingEntityConfig](#buildingentityconfig) |  | Entity mapping configuration for the building |
-| spatial_structure_mapping | `object` | ✅ | [BuildingSpatialEntityConfig](#buildingspatialentityconfig) |  | Spatial structure mapping for the building |
+| spatial_structure_mapping | `object` |  | [BuildingSpatialEntityConfig](#buildingspatialentityconfig) |  | Spatial structure mapping for the building |
 | group_mapping | `array` |  | [BuildingSourceConfig](#buildingsourceconfig) | `[]` | Group mappings for the building feature type |
 
 ## BuildingPartConfig
@@ -91,17 +82,9 @@ Building part configuration for building feature type
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity | `string` | ✅ | [BuildingPartEntity](#buildingpartentity) |  | Type of entity |
+| entity | `string` | ✅ | string |  | Type of entity |
 | geometry_mapping | `object` or `null` |  | [GmlGeometryMapping](#gmlgeometrymapping) | `null` | Geometry mapping for the building part |
 | color | `object` |  | [Color](#color) | `"white"` | Color assigned to the building part |
-
-## BuildingPartEntity
-
-Supported ifc entities for building part entities
-
-#### Type: `string`
-
-**Possible Values:** `IFC_WALL` or `IFC_SLAB` or `IFC_ROOF` or `IFC_SPACE` or `IFC_BUILDING_ELEMENT_PROXY`
 
 ## BuildingPropertyConfig
 
@@ -158,6 +141,19 @@ Color configuration based on red, green, blue and alpha channels
 | b | `number` | ✅ | `0.0 <= x <= 1.0` |  | Blue channel |
 | a | `number` |  | `0.0 <= x <= 1.0` | `0.0` | Alpha channel |
 
+## CoordinateReferenceSystem
+
+Coordinate reference system for IFC export
+
+#### Type: `object`
+
+| Property | Type | Required | Possible values | Description |
+| -------- | ---- | -------- | --------------- | ----------- |
+| epsg_code | `string` | ✅ | string | EPSG code for the coordinate reference system |
+| description | `string` | ✅ | string | Description of the coordinate reference system |
+| geodetic_datum | `string` | ✅ | string | Geodetic datum for the coordinate reference system |
+| vertical_datum | `string` | ✅ | string | Vertical datum for the coordinate r§eference system |
+
 ## DBConfig
 
 Postgis connection configuration
@@ -194,14 +190,6 @@ Source configuration for extrusion feature type
 | type | `string` | ✅ | [ExtrusionSource](#extrusionsource) | Type of the data source |
 | expression | `string` | ✅ | string | Expression defining the source data |
 
-## ExtrusionEntity
-
-Supported ifc entities for extrusion entities
-
-#### Type: `string`
-
-**Possible Values:** `IFC_PIPE_SEGMENT` or `IFC_DISTRIBUTION_FLOW_ELEMENT`
-
 ## ExtrusionEntityConfig
 
 Entity mapping configuration for extrusion feature type
@@ -210,7 +198,7 @@ Entity mapping configuration for extrusion feature type
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity | `string` | ✅ | [ExtrusionEntity](#extrusionentity) |  | Type of entity |
+| entity | `string` | ✅ | string |  | Type of entity |
 | attributes | `array` |  | [ExtrusionAttributeConfig](#extrusionattributeconfig) | `[]` | List of attribute mappings |
 | properties | `array` |  | [ExtrusionPropertyConfig](#extrusionpropertyconfig) | `[]` | List of property mappings |
 
@@ -235,9 +223,9 @@ Feature type configuration for extrusion feature type
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
 | name | `string` | ✅ | string |  | Feature type name for the extrusion |
 | entity_mapping | `object` | ✅ | [ExtrusionEntityConfig](#extrusionentityconfig) |  | Entity mapping configuration for the extrusion |
-| spatial_structure_mapping | `object` | ✅ | [ExtrusionSpatialEntityConfig](#extrusionspatialentityconfig) |  | Spatial structure mapping for the projection |
 | sql_path | `string` or `null` |  | string | `null` | Path to SQL definition for the extrusion feature type. Exact specification can be found in the configuration documentation. |
 | entity_type_mapping | `object` or `null` |  | [ExtrusionEntityTypeConfig](#extrusionentitytypeconfig) | `null` | Entity type mapping configuration for the extrusion. (Only supported for entities with TypeObject) |
+| spatial_structure_mapping | `object` |  | [ExtrusionSpatialEntityConfig](#extrusionspatialentityconfig) |  | Spatial structure mapping for the projection |
 | group_mapping | `array` |  | [ExtrusionConfigSource](#extrusionconfigsource) | `[]` | Group mappings for the projection feature type |
 | color | `object` |  | [Color](#color) | `"white"` | Color assigned to the extrusion feature type |
 
@@ -318,14 +306,6 @@ Group configuration for IFC export
 | path | `string` | ✅ | string | Path identifier for the group |
 | entity_mapping | `object` | ✅ | [GroupEntityConfig](#groupentityconfig) | Entity mapping configuration for the group |
 
-## GroupEntity
-
-Supported ifc entities for groups
-
-#### Type: `string`
-
-**Possible Values:** `IFC_DISTRIBUTION_SYSTEM` or `IFC_DISTRIBUTION_CIRCUIT` or `IFC_BUILDING_BUILT_SYSTEM` or `IFC_STRUCTURAL_ANALYSIS_MODEL` or `IFC_ZONE`
-
 ## GroupEntityConfig
 
 Entity mapping configuration for group
@@ -334,7 +314,7 @@ Entity mapping configuration for group
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity | `string` | ✅ | [GroupEntity](#groupentity) |  | Type of entity |
+| entity | `string` | ✅ | string |  | Type of entity |
 | attributes | `array` |  | [AttributeConfig](#attributeconfig) | `[]` | List of attribute mappings |
 | properties | `array` |  | [PropertyConfig](#propertyconfig) | `[]` | List of property mappings |
 
@@ -363,6 +343,7 @@ IFC export configuration
 | application_name | `string` | ✅ | string |  | Name of the application generating IFC |
 | project_name | `string` | ✅ | string |  | Project name in IFC |
 | geo_referencing | `string` | ✅ | [GeoReferencing](#georeferencing) |  | Georeferencing configuration for IFC |
+| coordinate_reference_system | `object` | ✅ | [CoordinateReferenceSystem](#coordinatereferencesystem) |  | Coordinate reference system for IFC |
 | projection_feature_types | `array` |  | [ProjectionFeatureType](#projectionfeaturetype) | `[]` | List of projection feature type definitions |
 | building_feature_types | `array` |  | [BuildingFeatureType](#buildingfeaturetype) | `[]` | List of building feature type definitions |
 | extrusion_feature_types | `array` |  | [ExtrusionFeatureType](#extrusionfeaturetype) | `[]` | List of extrusion feature type definitions |
@@ -390,14 +371,6 @@ Source configuration for projection feature type
 | type | `string` | ✅ | [ProjectionSource](#projectionsource) | Type of the data source |
 | expression | `string` | ✅ | string | Expression defining the source data |
 
-## ProjectionEntity
-
-Supported ifc entities for projection entities
-
-#### Type: `string`
-
-**Possible Values:** `IFC_GEOGRAPHIC_ELEMENT` or `IFC_ANNOTATION` or `IFC_SITE` or `IFC_BUILDING` or `IFC_SPATIAL_ZONE`
-
 ## ProjectionEntityConfig
 
 Entity mapping configuration for projection feature type
@@ -406,7 +379,7 @@ Entity mapping configuration for projection feature type
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity | `string` | ✅ | [ProjectionEntity](#projectionentity) |  | Type of entity |
+| entity | `string` | ✅ | string |  | Type of entity |
 | attributes | `array` |  | [ProjectionAttributeConfig](#projectionattributeconfig) | `[]` | List of attribute mappings |
 | properties | `array` |  | [ProjectionPropertyConfig](#projectionpropertyconfig) | `[]` | List of property mappings |
 
@@ -432,8 +405,8 @@ Feature type configuration for projection feature type
 | name | `string` | ✅ | string |  | Feature type name for the projection |
 | sql_path | `string` | ✅ | string |  | Path to SQL definition for the projection feature type. Must return at least a column named 'wkt'. |
 | entity_mapping | `object` | ✅ | [ProjectionEntityConfig](#projectionentityconfig) |  | Entity mapping configuration for the projection |
-| spatial_structure_mapping | `object` | ✅ | [ProjectionSpatialEntityConfig](#projectionspatialentityconfig) |  | Spatial structure mapping for the projection |
 | entity_type_mapping | `object` or `null` |  | [ProjectionEntityTypeConfig](#projectionentitytypeconfig) | `null` | Entity type mapping configuration for the projection. (Only supported for entities with TypeObject) |
+| spatial_structure_mapping | `object` |  | [ProjectionSpatialEntityConfig](#projectionspatialentityconfig) |  | Spatial structure mapping for the projection |
 | group_mapping | `array` |  | [ProjectionConfigSource](#projectionconfigsource) | `[]` | Group mappings for the projection feature type |
 | color | `object` |  | [Color](#color) | `"white"` | Color assigned to the projection feature type |
 
