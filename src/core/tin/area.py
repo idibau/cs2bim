@@ -1,5 +1,4 @@
 import logging
-
 import numpy as np
 import pyvista as pv
 import shapely
@@ -26,6 +25,7 @@ class Area:
         self.raster_points_buffer = []
 
     def add_raster_points(self, raster_points: RasterPoints):
+        """Add raster points within and buffered around the polygon area."""
         rpb = raster_points.within(self.polygon, 3 * config.tin.grid_size.value)
         if rpb is not None:
             self.raster_points_buffer.extend(rpb)
@@ -33,7 +33,8 @@ class Area:
         if rpw is not None:
             self.raster_points_within.extend(rpw)
 
-    def create_mesh(self):
+    def create_mesh(self) -> tuple[np.ndarray, np.ndarray]:
+        """Create a triangulated mesh from the polygon and raster points."""
         if not self.raster_points_buffer:
             raise Exception("No raster points found for area")
 
@@ -58,7 +59,8 @@ class Area:
 
         return self.decimate(vertices_z, faces)
 
-    def densify_linearring_by_raster(self, linear_ring, grid):
+    def densify_linearring_by_raster(self, linear_ring: LinearRing, grid: Grid) -> LinearRing:
+        """Add intersection points from the grid to the linear ring."""
         coords = linear_ring.coords
         points = []
         for i in range(len(coords) - 1):
@@ -70,8 +72,10 @@ class Area:
         deduplicated_list = list({p.coords[0]: p for p in MultiPoint(points).geoms}.values())
         return LinearRing(deduplicated_list)
 
-    def constrained_delaunay_2d(self, exterior, interiors, points_within):
-        def to_3d(pts):
+    def constrained_delaunay_2d(self, exterior: LinearRing, interiors: list[LinearRing],
+                                points_within: list[list[float]]):
+        """Perform constrained Delaunay triangulation with exterior, interiors, and interior points."""
+        def to_3d(pts: np.ndarray) -> np.ndarray:
             return np.hstack([pts, np.zeros((pts.shape[0], 1))])
 
         exterior_points_3d = to_3d(np.array(exterior.coords))
@@ -105,7 +109,8 @@ class Area:
         final_mesh = mesh.extract_cells(keep_indices).extract_surface()
         return final_mesh.points, final_mesh.faces.reshape(-1, 4)[:, 1:]
 
-    def decimate(self, vertices, faces):
+    def decimate(self, vertices: np.ndarray, faces: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        """Reduce mesh complexity while preserving topology."""
         pv_faces = np.insert(faces, 0, 3, axis=1)
         polydata = pv.PolyData(vertices, pv_faces)
         max_normal_angle = min(2 * np.rad2deg(np.arctan(config.tin.max_height_error / config.tin.grid_size)), 45)

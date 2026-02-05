@@ -1,14 +1,15 @@
 import logging
 
 import numpy as np
-from shapely import MultiLineString, LineString
+from shapely import MultiLineString, LineString, Point
 
 logger = logging.getLogger(__name__)
 
 
 class Grid:
+    """Grid structure for managing raster points and performing interpolation for areas"""
 
-    def __init__(self, raster_points):
+    def __init__(self, raster_points: np.ndarray):
         self.raster_points = raster_points
         self.x_coords = sorted(np.unique(raster_points[:, 0]))
         self.y_coords = sorted(np.unique(raster_points[:, 1]))
@@ -39,10 +40,11 @@ class Grid:
                 diagonal_lines.append(diag)
         self.xy_grid_lines = MultiLineString(diagonal_lines)
 
-    def get_intersection_points_with_line(self, start, end):
+    def get_intersection_points_with_line(self, start: Point, end: Point):
+        """Returns intersection points between a line and grid lines, sorted by distance from start."""
         line = LineString([start, end])
 
-        def get_intersection_gridlines(line, grid_lines):
+        def get_intersection_gridlines(line: LineString, grid_lines: MultiLineString):
             inter = line.intersection(grid_lines)
             if inter.geom_type == 'Point':
                 return [inter]
@@ -56,7 +58,8 @@ class Grid:
         intersection_points.extend(get_intersection_gridlines(line, self.xy_grid_lines))
         return sorted(intersection_points, key=lambda p: p.distance(start))
 
-    def get_height_for_vertex(self, vertex):
+    def get_height_for_vertex(self, vertex: np.ndarray):
+        """Calculates interpolated height for a vertex anywhere on the grid."""
         i = np.searchsorted(self.x_coords, vertex[0], side='right') - 1
         j = np.searchsorted(self.y_coords, vertex[1], side='right') - 1
 
@@ -80,11 +83,12 @@ class Grid:
         v = (vertex[1] - self.y_coords[j]) / dy
 
         if u + v <= 1:
-            return self.interpolate(vertex, [p00, p10, p01])
+            return self.interpolate(vertex, np.array([p00, p10, p01]))
         else:
-            return self.interpolate(vertex, [p11, p10, p01])
+            return self.interpolate(vertex, np.array([p11, p10, p01]))
 
-    def interpolate(self, v, triangle):
+    def interpolate(self, v: np.ndarray, triangle: np.ndarray):
+        """Performs barycentric interpolation for a 2D point within a 3D triangle."""
         (x, y) = v
         (x1, y1, z1), (x2, y2, z2), (x3, y3, z3) = triangle
 
