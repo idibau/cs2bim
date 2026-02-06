@@ -1,6 +1,7 @@
 # property sets
 cs2bimmetadatasourcesparameters: "CS2BIM_Metadata_SourcesParameters"
 cs2bimmetadatacrs: "CS2BIM_Metadata_CRS"
+
 chgeodienstemetadaten: "CHGeodienste_Metadaten"
 chavgrundstueck: "CH_AV_Grundstueck"
 chavgebaeudenummer: "CH_AV_Gebaeudenummer"
