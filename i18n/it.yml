@@ -1,28 +1,57 @@
-avbodenbedeckung: "MO_COPERTURA_DEL_SUOLO"
-avliegenschaft: "MU_BENE_IMMOBILE"
-chavliegenschaft: "CH_MU_BENE_IMMOBILE"
+# property sets
+cs2bimmetadatasourcesparameters: "CS2BIM_Metadata_SourcesParameters"
+cs2bimmetadatacrs: "CS2BIM_Metadata_CRS"
+chgeodienstemetadaten: "CHGeodienste_Metadaten"
+chavgrundstueck: "CH_AV_Grundstueck"
+chavgebaeudenummer: "CH_AV_Gebaeudenummer"
+chavbodenbedeckung: "CH_AV_Bodenbedeckung"
+chavobjektname: "CH_AV_Objektname"
+chavgebaeudeadresse: "CH_AV_Gebaeudeadresse"
 
-complex: "COMPLEX"
-egid: "EGID"
+# properties
+datasourcedtm: "DataSourceDTM"
+datasource3dbuildings: "DataSource3DBuildings"
+projectorigin: "ProjectOrigin"
+polygon: "Polygon"
+epsgcode: "EPSGCode"
+geodeticdatum: "GeodeticDatum"
+verticaldatum: "VerticalDatum"
+
+vollstaendigegeometrie: "VollstaendigeGeometrie"
+
+gueltigkeit: "Gueltigkeit"
+vollstaendigkeit: "Vollstaendigkeit"
+strassehausnummer: "StrasseHausnummer"
+ortschaftsname: "OrtschaftsName"
+art: "Art"
+
 egrisegrid: "EGRIS_EGRID"
-nbident: "NBIdent"
-userdefined: "USERDEFINED"
-
-3dstadtmodell: "modello_3D"
-bodenbedeckung: "copertura_del_suolo"
-gebaeude: "edificio"
-liegenschaft: "bene_immobile"
+egid: "EGID"
 nummer: "numero"
-
-# Citygml
-
+nbident: "NBIdent"
 erstellungjahr: "anno_di_creazione"
 erstellungmonat: "mese_di_creazione"
 
-# Amtliche Vermessung
+# property values / attribute values / group values
+avliegenschaft: "MU_BENE_IMMOBILE"
+avbodenbedeckung: "MO_COPERTURA_DEL_SUOLO"
+avselbstrecht: "AV_SELBSTRECHT"
+avbergwerk: "AV_BERGWERK"
 
 amtliche_vermessung: "misurazione_ufficiale"
+liegenschaften: "Liegenschaften"
+3dstadtmodell: "modello_3D"
 
+liegenschaft: "bene_immobile"
+bodenbedeckung: "copertura_del_suolo"
+bergwerk: "Bergwerk"
+selbstrecht: "Selbstrecht"
+gebaeude: "edificio"
+
+userdefined: "USERDEFINED"
+complex: "COMPLEX"
+
+# Amtliche Vermessung
 befestigt: "rivestimento_duro"
 bahn: "ferrovia"
 flugplatz: "aeroporto"
@@ -59,3 +88,6 @@ gletscherfirn: "ghiacciaio_nevaio"
 geroellsand: "pietraia_sabbia"
 abbaudeponie: "cava_di_ghiaia_discarica"
 uebrigevegetationslose: "altra_senza_vegetazione"
+
+rechtskraeftig: "Rechtskraeftig"
+vollsteandig: "Vollsteandig"

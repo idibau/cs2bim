@@ -1,28 +1,57 @@
-avbodenbedeckung: "MO_COUVERTURE_DU_SOL"
-avliegenschaft: "MO_BIEN_FONDS"
-chavliegenschaft: "CH_MO_BIEN_FONDS"
+# property sets
+cs2bimmetadatasourcesparameters: "CS2BIM_Metadata_SourcesParameters"
+cs2bimmetadatacrs: "CS2BIM_Metadata_CRS"
+chgeodienstemetadaten: "CHGeodienste_Metadaten"
+chavgrundstueck: "CH_AV_Grundstueck"
+chavgebaeudenummer: "CH_AV_Gebaeudenummer"
+chavbodenbedeckung: "CH_AV_Bodenbedeckung"
+chavobjektname: "CH_AV_Objektname"
+chavgebaeudeadresse: "CH_AV_Gebaeudeadresse"
 
-complex: "COMPLEX"
-egid: "EGID"
+# properties
+datasourcedtm: "DataSourceDTM"
+datasource3dbuildings: "DataSource3DBuildings"
+projectorigin: "ProjectOrigin"
+polygon: "Polygon"
+epsgcode: "EPSGCode"
+geodeticdatum: "GeodeticDatum"
+verticaldatum: "VerticalDatum"
+
+vollstaendigegeometrie: "VollstaendigeGeometrie"
+
+gueltigkeit: "Gueltigkeit"
+vollstaendigkeit: "Vollstaendigkeit"
+strassehausnummer: "StrasseHausnummer"
+ortschaftsname: "OrtschaftsName"
+art: "Art"
+
 egrisegrid: "EGRIS_EGRID"
-nbident: "NBIdent"
-userdefined: "USERDEFINED"
-
-3dstadtmodell: "modèle_3D"
-bodenbedeckung: "couverture_du_sol"
-gebaeude: "batiment"
-liegenschaft: "bien_fonds"
+egid: "EGID"
 nummer: "numéro"
-
-# Citygml
-
+nbident: "NBIdent"
 erstellungjahr: "année_de_création"
 erstellungmonat: "mois_de_création"
 
-# Amtliche Vermessung
+# property values / attribute values / group values
+avliegenschaft: "MO_BIEN_FONDS"
+avbodenbedeckung: "MO_COUVERTURE_DU_SOL"
+avselbstrecht: "AV_SELBSTRECHT"
+avbergwerk: "AV_BERGWERK"
 
 amtliche_vermessung: "mensuration_officielle"
+liegenschaften: "Liegenschaften"
+3dstadtmodell: "modèle_3D"
 
+liegenschaft: "bien_fonds"
+bodenbedeckung: "couverture_du_sol"
+bergwerk: "Bergwerk"
+selbstrecht: "Selbstrecht"
+gebaeude: "batiment"
+
+userdefined: "USERDEFINED"
+complex: "COMPLEX"
+
+# Amtliche Vermessung
 befestigt: "revetement_dur"
 bahn: "chemin_de_fer"
 flugplatz: "place_aviation"
@@ -60,3 +89,5 @@ geroellsand: "eboulis_sable"
 abbaudeponie: "graviere_decharge"
 uebrigevegetationslose: "autre_sans_vegetation"
 
+rechtskraeftig: "Rechtskraeftig"
+vollsteandig: "Vollsteandig"

@@ -1,28 +1,57 @@
-avbodenbedeckung: "AV_BODENBEDECKUNG"
-avliegenschaft: "AV_LIEGENSCHAFT"
-chavliegenschaft: "CH_AV_LIEGENSCHAFT"
+# property sets
+cs2bimmetadatasourcesparameters: "CS2BIM_Metadata_SourcesParameters"
+cs2bimmetadatacrs: "CS2BIM_Metadata_CRS"
+chgeodienstemetadaten: "CHGeodienste_Metadaten"
+chavgrundstueck: "CH_AV_Grundstueck"
+chavgebaeudenummer: "CH_AV_Gebaeudenummer"
+chavbodenbedeckung: "CH_AV_Bodenbedeckung"
+chavobjektname: "CH_AV_Objektname"
+chavgebaeudeadresse: "CH_AV_Gebaeudeadresse"
 
-complex: "COMPLEX"
-egid: "EGID"
+# properties
+datasourcedtm: "DataSourceDTM"
+datasource3dbuildings: "DataSource3DBuildings"
+projectorigin: "ProjectOrigin"
+polygon: "Polygon"
+epsgcode: "EPSGCode"
+geodeticdatum: "GeodeticDatum"
+verticaldatum: "VerticalDatum"
+
+vollstaendigegeometrie: "VollstaendigeGeometrie"
+
+gueltigkeit: "Gueltigkeit"
+vollstaendigkeit: "Vollstaendigkeit"
+strassehausnummer: "StrasseHausnummer"
+ortschaftsname: "OrtschaftsName"
+art: "Art"
+
 egrisegrid: "EGRIS_EGRID"
-nbident: "NBIdent"
-userdefined: "USERDEFINED"
-
-3dstadtmodell: "3D Stadtmodell"
-bodenbedeckung: "Bodenbedeckung"
-gebaeude: "Gebäude"
-liegenschaft: "Liegenschaft"
+egid: "EGID"
 nummer: "Nummer"
-
-# Citygml
-
+nbident: "NBIdent"
 erstellungjahr: "Erstellungsjahr"
 erstellungmonat: "Erstellungsmonat"
 
-# Amtliche Vermessung
+# property values / attribute values / group values
+avliegenschaft: "AV_LIEGENSCHAFT"
+avbodenbedeckung: "AV_BODENBEDECKUNG"
+avselbstrecht: "AV_SELBSTRECHT"
+avbergwerk: "AV_BERGWERK"
 
 amtliche_vermessung: "Amtliche Vermessung"
+liegenschaften: "Liegenschaften"
+3dstadtmodell: "3D Stadtmodell"
 
+liegenschaft: "Liegenschaft"
+bodenbedeckung: "Bodenbedeckung"
+bergwerk: "Bergwerk"
+selbstrecht: "Selbstrecht"
+gebaeude: "Gebäude"
+
+userdefined: "USERDEFINED"
+complex: "COMPLEX"
+
+# Amtliche Vermessung
 befestigt: "befestigt"
 bahn: "Bahn"
 flugplatz: "Flugplatz"
@@ -59,3 +88,6 @@ gletscherfirn: "Gletscher_Firn"
 geroellsand: "Geroell_Sand"
 abbaudeponie: "Abbau_Deponie"
 uebrigevegetationslose: "uebrige_vegetationslose"
+
+rechtskraeftig: "Rechtskraeftig"
+vollsteandig: "Vollsteandig"
