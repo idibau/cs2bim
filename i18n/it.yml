@@ -39,9 +39,9 @@ avbodenbedeckung: "MU_COPERTURA_DEL_SUOLO"
 avselbstrecht: "MU_DIRITTO_DISTINTO_PERMANENTE"
 avbergwerk: "MU_MINIERA"
 
-amtliche_vermessung: "misurazione ufficiale"
-liegenschaften: "beni immobili"
-3dstadtmodell: "modello 3D"
+amtliche_vermessung: "misurazione_ufficiale"
+liegenschaften: "beni_immobili"
+3dstadtmodell: "modello_3D"
 
 liegenschaft: "bene_immobile"
 bodenbedeckung: "copertura_del_suolo"

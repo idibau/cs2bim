@@ -39,9 +39,9 @@ avbodenbedeckung: "MO_COUVERTURE_DU_SOL"
 avselbstrecht: "MO_DROIT_DISTINCT_PERMANENT"
 avbergwerk: "MO_MINE"
 
-amtliche_vermessung: "mensuration officielle"
-liegenschaften: "biens fonds"
-3dstadtmodell: "modele 3D"
+amtliche_vermessung: "mensuration_officielle"
+liegenschaften: "biens_fonds"
+3dstadtmodell: "modele_3D"
 
 liegenschaft: "bien_fonds"
 bodenbedeckung: "couverture_du_sol"

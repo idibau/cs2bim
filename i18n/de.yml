@@ -39,9 +39,9 @@ avbodenbedeckung: "AV_BODENBEDECKUNG"
 avselbstrecht: "AV_SELBSTRECHT"
 avbergwerk: "AV_BERGWERK"
 
-amtliche_vermessung: "Amtliche Vermessung"
+amtliche_vermessung: "Amtliche_Vermessung"
 liegenschaften: "Liegenschaften"
-3dstadtmodell: "3D Stadtmodell"
+3dstadtmodell: "3D_Stadtmodell"
 
 liegenschaft: "Liegenschaft"
 bodenbedeckung: "Bodenbedeckung"
