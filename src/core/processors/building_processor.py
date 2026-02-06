@@ -1,19 +1,18 @@
 import logging
 from lxml import etree
 from lxml.etree import _Element as XmlElement
-from typing import Any
-
 from shapely import Point
+from typing import Any
 
 from config.building_source import BuildingSource
 from config.configuration import config, BuildingFeatureType, BuildingAttributeConfig, BuildingPropertyConfig
 from config.gml_geometry import GmlGeometry
 from core.ifc.model.building.building import BuildingPart, Building
-from core.ifc.model.element import Element
 from core.ifc.model.building.composite_solid import CompositeSolid
 from core.ifc.model.building.multi_surface import MultiSurface
 from core.ifc.model.building.namespace import namespace
 from core.ifc.model.building.solid import Solid
+from core.ifc.model.element import Element
 from service.postgis_service import PostgisService
 from service.stac_service import STACService
 
@@ -26,8 +25,9 @@ class BuildingProcessor:
         self.postgis_service = PostgisService()
         self.stac_service = STACService()
 
-    def process(self, polygon: str, project_origin: Point) -> dict[str, list[Building]]:
-        feature_types = {b.name: b for b in config.ifc.building_feature_types}
+    def process(self, polygon: str, project_origin: Point, feature_types: list[str]) -> dict[str, list[Building]]:
+        feature_types = {ft.name: ft for ft in config.ifc.building_feature_types if
+                         not feature_types or ft.name in feature_types}
         if not feature_types:
             logger.info("no building feature types configured")
             return {}

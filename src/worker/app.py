@@ -42,7 +42,7 @@ def setup_logger_on_worker(**kwargs):
 
 @app.task(bind=True)
 def model_generation_task(self, ifc_version: str, name: str, polygon: str, project_origin: list[float],
-                          language: str | None):
+                          language: str, feature_types: list[str]):
     """
     Generate IFC model from geospatial data.
 
@@ -52,6 +52,7 @@ def model_generation_task(self, ifc_version: str, name: str, polygon: str, proje
         polygon: polygon as a wkt string
         project_origin: Coordinates for project origin
         language: Optional language
+        feature_types: Optional list of feature types to include in the model
 
     Returns:
         Path to generated IFC file
@@ -64,7 +65,7 @@ def model_generation_task(self, ifc_version: str, name: str, polygon: str, proje
         logger.info(f"task {self.request.id}: Starting model generation")
         model_generator = ModelGenerator()
         project_origin = Point(project_origin) if project_origin else None
-        model = model_generator.generate(IfcVersion(ifc_version), name, polygon, project_origin)
+        model = model_generator.generate(IfcVersion(ifc_version), name, polygon, project_origin, feature_types)
         language = Language(language) if language else None
         ifc_file = model.map_to_ifc(language)
         output_path = get_output_path(self.request.id)

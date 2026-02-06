@@ -1,8 +1,6 @@
 import logging
-from typing import Any
-
 from shapely import Point
-
+from typing import Any
 
 from config.configuration import config, ProjectionFeatureType, ProjectionAttributeConfig, ProjectionPropertyConfig
 from config.projection_source import ProjectionSource
@@ -22,8 +20,9 @@ class ProjectionProcessor:
         self.postgis_service = PostgisService()
         self.stac_service = STACService()
 
-    def process(self, polygon: str, project_origin: Point) -> dict[str, list[Projection]]:
-        feature_types_by_key = {p.name: p for p in config.ifc.projection_feature_types}
+    def process(self, polygon: str, project_origin: Point, feature_types: list[str]) -> dict[str, list[Projection]]:
+        feature_types_by_key = {ft.name: ft for ft in config.ifc.projection_feature_types if
+                                not feature_types or ft.name in feature_types}
         if not feature_types_by_key:
             logger.info("no projection feature types configured")
             return {}

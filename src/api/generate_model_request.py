@@ -11,3 +11,4 @@ class GenerateModelRequest(BaseModel):
     POLYGON: str = Field(..., description="The closed WKT string representing the polygon")
     PROJECT_ORIGIN: Optional[str] = Field(None, description="Optional origin as comma-separated string [x,y,z]")
     LANGUAGE: Optional[Language] = Field(None, description="The language of the model")
+    FEATURE_TYPES: Optional[str] = Field(None, description="Optional comma-separated list of feature types")

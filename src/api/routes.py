@@ -8,6 +8,7 @@ from shapely import wkt
 from shapely.geometry import Polygon
 
 from api.generate_model_request import GenerateModelRequest
+from config.configuration import config
 from worker.app import app, model_generation_task
 
 logger = logging.getLogger(__name__)
@@ -87,12 +88,16 @@ async def generate_model(request_data: GenerateModelRequest):
     except Exception as e:
         raise HTTPException(status_code=422, detail=f"POLYGON parameter could not be parsed: {e}")
 
+    feature_types = None
+    if request_data.FEATURE_TYPES:
+        feature_types = [ft.strip() for ft in request_data.FEATURE_TYPES.split(",")]
+
     logger.info(
         f"Received generate-model request: IFC_VERSION={ifc_version}, NAME={name}, POLYGON={polygon}, PROJECT_ORIGIN={project_origin if project_origin else 'calculated'}"
     )
 
     task = model_generation_task.delay(ifc_version.value, name, polygon, project_origin,
-                                       language.value if language else None)
+                                       language.value if language else None, feature_types)
     return {"task_id": task.id}
 
 
@@ -165,3 +170,25 @@ async def get_generated_file(task_id: str):
         raise HTTPException(status_code=410, detail="Generated file not found on disk")
 
     return FileResponse(path=output_path, filename=os.path.basename(output_path), media_type='application/octet-stream')
+
+
+@router.get("/feature-types")
+@log_exceptions
+async def get_feature_types():
+    """
+    Returns the configured feature types for the model generation process.
+    Can be used to list the available feature types for the user interface.
+
+    Returns:
+        A dict of feature types.
+
+    Raises:
+        HTTPException (500): For internal errors.
+    """
+    projection_feature_types = [ft.name for ft in config.ifc.projection_feature_types]
+    building_feature_types = [ft.name for ft in config.ifc.building_feature_types]
+    extrusion_feature_types = [ft.name for ft in config.ifc.extrusion_feature_types]
+
+    return {"projection_feature_types": projection_feature_types,
+            "building_feature_types": building_feature_types,
+            "extrusion_feature_types": extrusion_feature_types}

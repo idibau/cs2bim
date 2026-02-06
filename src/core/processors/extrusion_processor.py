@@ -12,10 +12,10 @@ from core.ifc.model.extrusion.cross_section_type import CrossSectionType
 from core.ifc.model.extrusion.egg import Egg
 from core.ifc.model.extrusion.extrusion import Extrusion
 from core.ifc.model.extrusion.extrusion_type import ExtrusionType
-from core.ifc.model.extrusion.vertical_extrusion import VerticalExtrusion
 from core.ifc.model.extrusion.polygon import Polygon
 from core.ifc.model.extrusion.polyline_extrusion import PolylineExtrusion
 from core.ifc.model.extrusion.rectangle import Rectangle
+from core.ifc.model.extrusion.vertical_extrusion import VerticalExtrusion
 from core.ifc.model.feature_element import FeatureElement
 from service.postgis_service import PostgisService
 
@@ -27,8 +27,9 @@ class ExtrusionProcessor:
     def __init__(self):
         self.postgis_service = PostgisService()
 
-    def process(self, polygon: str, project_origin: Point) -> dict[str, list[Extrusion]]:
-        feature_types = {b.name: b for b in config.ifc.extrusion_feature_types}
+    def process(self, polygon: str, project_origin: Point, feature_types: list[str]) -> dict[str, list[Extrusion]]:
+        feature_types = {ft.name: ft for ft in config.ifc.extrusion_feature_types if
+                         not feature_types or ft.name in feature_types}
         if not feature_types:
             logger.info("no building feature types configured")
             return {}
