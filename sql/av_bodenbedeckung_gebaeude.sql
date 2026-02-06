@@ -11,20 +11,23 @@ select
     ST_Contains(perimeter.geom, bb.geometrie) as complete_geometry,
     bb.art as art,
     'Amtliche Vermessung.Bodenbedeckung.' || bb.art as "group",
-    gbnr.nummer as nummer,
-    gbnr.gwr_egid as gwr_egid,
-    case when objn.aname is null then '-' else objn.aname end as gebaeudename,
+    STRING_AGG(gbnr.nummer, ', ') as nummer,
+    STRING_AGG(gbnr.gwr_egid::text, ', ') as gwr_egid,
+    COALESCE(STRING_AGG(objn.aname, ', '), '-') as gebaeudename,
     STRING_AGG(addr.strasse_hausnummer, ', ') as strasse_hausnummer,
-    ortn.atext as ort
+    STRING_AGG(ortn.atext, ', ') as ort
 from
     cs2bim.boflaeche bb
     left join cs2bim.gebaeudenummer gbnr on (gbnr.gebaeudenummer_von = bb.t_id)
     left join cs2bim.objektname objn on (objn.objektname_von = bb.t_id)
     left join address addr on ST_Contains(bb.geometrie, addr.lage)
---     left join cs2bim.gebaeudeeingang gbei on (gbnr.gwr_egid = addr.addr_egid)
     left join cs2bim.ortschaft ort on ST_Contains(ort.flaeche, bb.geometrie)
     left join cs2bim.ortschaftsname ortn on (ort.t_id = ortn.ortschaftsname_von)
     join perimeter on ST_Intersects(bb.geometrie, perimeter.geom)
 where
     bb.art = 'Gebaeude'
-group by wkt, complete_geometry, art, "group", nummer, gwr_egid, gebaeudename, ort
+group by
+    bb.t_id,
+    bb.geometrie,
+    perimeter.geom,
+    bb.art
