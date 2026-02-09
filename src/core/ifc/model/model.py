@@ -45,7 +45,7 @@ class Model:
 
     def map_to_ifc(self, language: Language) -> IfcFile:
         logger.info(f"initialize new ifc writer for ifc '{self.file_name}'")
-        ifc_file = IfcFile(self.schema.value, self.file_name, language)
+        ifc_file = IfcFile(self.schema, self.file_name, language)
 
         logger.info(f"build ifc")
         ifc_owner_history = ifc_file.create_ifc_owner_history(config.ifc.author, config.ifc.version,

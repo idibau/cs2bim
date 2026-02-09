@@ -9,14 +9,17 @@ from ifcopenshell import file, entity_instance, guid
 from shapely import Point
 
 from config.configuration import Color, config
+from core.ifc.model.ifc_version import IfcVersion
+from i18n.language import Language
 from i18n.translator import Translator
 
 logger = logging.getLogger(__name__)
 
 
 class IfcFile:
-    def __init__(self, schema, file_name, language):
-        self.file = file(schema=schema)
+    def __init__(self, schema: IfcVersion, file_name: str, language: Language):
+        self.schema = schema
+        self.file = file(schema=schema.value)
         self.file.header.file_name.name = file_name
         self.file.header.file_name.author = [config.ifc.author]
         self.file.header.file_name.organization = [config.ifc.author]
@@ -191,6 +194,10 @@ class IfcFile:
         )
 
     def create_ifc_group(self, entity_type: str, name: str) -> entity_instance:
+        if self.schema == IfcVersion.IFC4 and entity_type == "IfcBuiltSystem":
+            entity_type = "IfcBuildingSystem"
+        if self.schema == IfcVersion.IFC4X3_ADD2 and entity_type == "IfcBuildingSystem":
+            entity_type = "IfcBuiltSystem"
         return self.file.create_entity(entity_type, GlobalId=guid.new(),
                                        Name=self.translator.translate(name, self.language))
 

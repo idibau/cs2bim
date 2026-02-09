@@ -170,6 +170,18 @@ folder
 
 Hint: The wildcard character '%' needs to be escaped like this '%%'.
 
+#### Entity Mapping
+
+Specifies the IFC entity used to create instances for feature types. The configuration expects a string containing the
+exact name of the entity as defined in the IFC schema.
+
+Not all entities are supported by all IFC versions, so only entities that are available across the supported versions
+should be used. An exception to this rule applies to IfcBuiltSystem / IfcBuildingSystem. If either of these entities is
+configured, the system will automatically create the appropriate entity for the selected IFC version.
+
+Incorrect or unsupported entity names will result in errors. The responsibility for providing a valid and compatible
+entity name lies with the user.
+
 #### Attributes, properties, and group mappings
 
 In most cases, the mapping of attributes, properties, and group mappings is defined using two values: `source` and
@@ -179,7 +191,7 @@ value (starting from bldg:Building). The static source does not resolve any valu
 the expression.
 Attributes cannot be freely selected and depend on the ifc entity that is selected. If a configured attribute does not
 exist, it is ignored.
-Properties that are configured but not found as output column in the sql result are also ignored. 
+Properties that are configured but not found as output column in the sql result are also ignored.
 
 #### Spatial Structure Mapping
 
@@ -187,7 +199,7 @@ Specifies the IFC spatial structure element that a created instance is linked to
 instances if their attribute or property values are identical — even across different feature types. As a result, the
 total number of spatial structures ranges from one up to the number of feature type instances.
 
-##### Entity Type Mapping
+#### Entity Type Mapping
 
 Specifies an IFC entity type linked to each created instance. Entity types are shared among other instances of this
 feature type if their attribute or property values are identical. Entity types are only supported by certain IFC
