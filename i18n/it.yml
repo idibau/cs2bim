@@ -90,5 +90,10 @@ geroellsand: "pietraia_sabbia"
 abbaudeponie: "cava_di_ghiaia_discarica"
 uebrigevegetationslose: "altra_senza_vegetazione"
 
-rechtskraeftig: "valido_legalmente"
+rechtskraeftig: "definitivo"
+streitig: "controverso"
+provisorisch: "provvisorio"
+undefiniert: "indefinito"
+
 vollstaendig: "completo"
+unvollstaendig: "incompleto"

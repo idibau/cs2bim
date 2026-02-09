@@ -90,5 +90,10 @@ geroellsand: "eboulis_sable"
 abbaudeponie: "graviere_decharge"
 uebrigevegetationslose: "autre_sans_vegetation"
 
-rechtskraeftig: "en_vigueur"
+rechtskraeftig: "definitif"
+streitig: "litigieux"
+provisorisch: "provisoire"
+undefiniert: "indefini"
+
 vollstaendig: "complet"
+unvollstaendig: "incomplet"
