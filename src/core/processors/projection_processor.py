@@ -10,8 +10,8 @@ from core.ifc.model.element import Element
 from core.ifc.model.projection.projection import Projection
 from core.processors.projection_data import ProjectionData
 from core.tin.raster_points import RasterPoints
+from service.postgis_service import PostgisService
 from service.bounding_box import BoundingBox
-from service.sqlite_service import SqliteService
 from service.stac_service import STACService
 
 logger = logging.getLogger(__name__)

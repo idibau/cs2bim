@@ -57,12 +57,6 @@ class STACService:
         hrefs = self.fetch_latest_assets(config.stac.dtm_items_url, bounding_box, asset_filter)
         return [self.fetch_and_extract_zip(href, "xyz") for href in hrefs]
 
-    def fetch_av_assets(self, bounding_box: BoundingBox) -> list[str]:
-        asset_filter = lambda asset: ("GPKG ZIP" in asset["title"])
-        hrefs = self.fetch_latest_assets(config.stac.av_items_url, bounding_box, asset_filter)
-        return [self.fetch_and_extract_zip(href, "gpkg") for href in hrefs]
-
-
     def fetch_features(self, stac_collection_items_url: str, bounding_box: BoundingBox) -> list[dict]:
         """
         Queries the STAC endpoint for features that intersect the specified bounding box.
