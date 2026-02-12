@@ -2,7 +2,6 @@ import psycopg2
 from typing import Any
 
 from config.configuration import config
-from service.bounding_box import BoundingBox
 
 
 class PostgisService:
@@ -44,26 +43,3 @@ class PostgisService:
             result.append(dict(zip(column_names, row)))
         cur.close()
         return result
-
-    def get_bounding_box(self, wkts: list[str]) -> BoundingBox:
-        """
-        Calculates and returns the minimal bounding box containing all given geometries.
-
-        Args:
-            wkts: A list of WKT strings representing geometries.
-
-        Returns:
-            A BoundingBox object describing the minimal bounding box around the given geometries.
-        """
-        cur = self.connection.cursor()
-        cur.execute(
-            f"""
-                select ST_AsText(ST_Envelope(ST_Collect(ARRAY[{",".join(f"ST_GeomFromText('{wkt}')" for wkt in wkts)}])))
-            """
-        )
-        wkt = cur.fetchall()[0][0]
-        coordinates = []
-        for points in wkt[9:-2].split(","):
-            coordinates.append((float(points.split(" ")[0]), float(points.split(" ")[1])))
-        cur.close()
-        return BoundingBox(coordinates[0][1], coordinates[0][0], coordinates[2][1], coordinates[2][0])

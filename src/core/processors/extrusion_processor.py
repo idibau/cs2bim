@@ -30,7 +30,7 @@ class ExtrusionProcessor:
     def process(self, polygon: str, project_origin: Point) -> dict[str, list[Extrusion]]:
         feature_types = {b.name: b for b in config.ifc.extrusion_feature_types}
         if not feature_types:
-            logger.info("no building feature types configured")
+            logger.info("no extrusion feature types configured")
             return {}
 
         extrusions_by_key = {}

@@ -1,4 +1,6 @@
+import shapely
 from pyproj import Transformer
+from shapely import wkt
 
 
 class BoundingBox:
@@ -17,6 +19,21 @@ class BoundingBox:
         self.min_easting = min_easting
         self.max_northing = max_northing
         self.max_easting = max_easting
+
+    @classmethod
+    def from_wkts(cls, wkts: list[str]) -> "BoundingBox":
+        """
+        Calculates and returns the minimal bounding box containing all given geometries.
+
+        Args:
+            wkts: A list of WKT strings representing geometries.
+
+        Returns:
+            A BoundingBox object describing the minimal bounding box around the given geometries.
+        """
+        geoms = [wkt.loads(x) for x in wkts]
+        bbox = shapely.total_bounds(geoms)
+        return BoundingBox(bbox[1], bbox[0], bbox[3], bbox[2])
 
     def get_wgs84_bounding_box_as_string(self) -> str:
         """

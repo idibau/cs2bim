@@ -15,6 +15,7 @@ from core.ifc.model.building.multi_surface import MultiSurface
 from core.ifc.model.building.namespace import namespace
 from core.ifc.model.building.solid import Solid
 from service.postgis_service import PostgisService
+from service.bounding_box import BoundingBox
 from service.stac_service import STACService
 
 logger = logging.getLogger(__name__)
@@ -33,7 +34,7 @@ class BuildingProcessor:
             return {}
 
         logger.info(f"fetch city gml files")
-        bounding_box = self.postgis_service.get_bounding_box([polygon])
+        bounding_box = BoundingBox.from_wkts([polygon])
         city_gmls = self.stac_service.fetch_city_gml_assets(bounding_box)
         logger.info(f"fetched {len(city_gmls)} city gml files")
 

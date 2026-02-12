@@ -11,6 +11,7 @@ from core.ifc.model.projection.projection import Projection
 from core.processors.projection_data import ProjectionData
 from core.tin.raster_points import RasterPoints
 from service.postgis_service import PostgisService
+from service.bounding_box import BoundingBox
 from service.stac_service import STACService
 
 logger = logging.getLogger(__name__)
@@ -42,9 +43,9 @@ class ProjectionProcessor:
         logger.info("calculate bounding box for fetching dtm files")
         if len(wkts) == 0:
             logger.warning("no content found for this polygon")
-            bounding_box = self.postgis_service.get_bounding_box([polygon])
+            bounding_box = BoundingBox.from_wkts([polygon])
         else:
-            bounding_box = self.postgis_service.get_bounding_box(wkts)
+            bounding_box = BoundingBox.from_wkts(wkts)
 
         logger.info("fetch dtm files")
         dtm_files = self.stac_service.fetch_dtm_assets(bounding_box, config.tin.grid_size.value)
