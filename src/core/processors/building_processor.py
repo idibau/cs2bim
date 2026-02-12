@@ -14,8 +14,8 @@ from core.ifc.model.building.composite_solid import CompositeSolid
 from core.ifc.model.building.multi_surface import MultiSurface
 from core.ifc.model.building.namespace import namespace
 from core.ifc.model.building.solid import Solid
-from service.postgis_service import PostgisService
 from service.bounding_box import BoundingBox
+from service.sqlite_service import SqliteService
 from service.stac_service import STACService
 
 logger = logging.getLogger(__name__)
