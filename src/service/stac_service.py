@@ -143,17 +143,17 @@ class STACService:
         if resp.status_code != 200:
             raise Exception(f"requesting assets failed with HTTP error {resp.status_code}")
 
+        file_path = None
         with ZipFile(BytesIO(resp.content)) as zip_file:
             all_files = zip_file.namelist()
             matching_files = [f for f in all_files if f.lower().endswith(target_extension.lower())]
             if not matching_files:
-                logger.warning(f"No files with extension {target_extension} found in zip.")
-            else:
-                file_name = matching_files[0]
-                if len(matching_files) > 1:
-                    logger.warning(f"Multiple {target_extension} files found. Using: {file_name}")
-                file_path = zip_file.extract(member=file_name, path=self.cache_dir)
-                self.file_cache.add(file_id, file_path, self.FILE_TTL_SECONDS)
+                raise Exception(f"No .{target_extension} file found in ZIP: {zip_href}")
+            file_name = matching_files[0]
+            if len(matching_files) > 1:
+                logger.warning(f"Multiple {target_extension} files found. Using: {file_name}")
+            file_path = zip_file.extract(member=file_name, path=self.cache_dir)
+            self.file_cache.add(file_id, file_path, self.FILE_TTL_SECONDS)
 
         logger.info(f"cached new file {file_id}")
         return file_path

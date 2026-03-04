@@ -48,10 +48,9 @@ class BuildingProcessor:
 
             for index, city_gml in enumerate(city_gmls):
                 logger.info(f"processing city gml {index + 1}/{len(city_gmls)}")
-                context_iter = etree.iterparse(city_gml, events=("end",),
-                                               tag="{http://www.opengis.net/citygml/building/2.0}Building")
-
                 for key, building_config in feature_types.items():
+                    context_iter = etree.iterparse(city_gml, events=("end",),
+                                                   tag="{http://www.opengis.net/citygml/building/2.0}Building")
                     for event, building_gml in context_iter:
                         value_elem = building_gml.find(building_config.egid_xpath, namespaces=namespace)
                         if value_elem is not None:

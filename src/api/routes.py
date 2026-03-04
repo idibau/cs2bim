@@ -84,6 +84,8 @@ async def generate_model(request_data: GenerateModelRequest):
             raise HTTPException(status_code=422, detail="POLYGON parameter is not valid")
         if not geom.exterior.is_ring or not all(interior.is_ring for interior in geom.interiors):
             raise HTTPException(status_code=422, detail="POLYGON parameter is not closed")
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=422, detail=f"POLYGON parameter could not be parsed: {e}")
 
