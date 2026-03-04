@@ -361,7 +361,7 @@ class IfcFile:
 
     def create_ifc_extruded_area_solid(self, ifc_profile_def: entity_instance,
                                        position: Point, depth: float, orientation: float):
-        if orientation:
+        if orientation is not None:
             angle_rad = math.radians(90.0 - orientation)
             x = math.cos(angle_rad)
             y = math.sin(angle_rad)

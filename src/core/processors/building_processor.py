@@ -59,7 +59,7 @@ class BuildingProcessor:
                                 logger.debug(f"process building {egid}")
                                 building = self.create_building(building_gml, building_config, project_origin,
                                                                 element_rows_by_egid[egid])
-                                if not feature_type_key in buildings_by_key:
+                                if feature_type_key not in buildings_by_key:
                                     buildings_by_key[feature_type_key] = []
                                 buildings_by_key[feature_type_key].append(building)
                                 logger.debug(f"finished processing building")

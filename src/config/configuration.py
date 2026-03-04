@@ -314,7 +314,7 @@ class CoordinateReferenceSystem(BaseModel):
     epsg_code: str = Field(..., description="EPSG code for the coordinate reference system")
     description: str = Field(..., description="Description of the coordinate reference system")
     geodetic_datum: str = Field(..., description="Geodetic datum for the coordinate reference system")
-    vertical_datum: str = Field(..., description="Vertical datum for the coordinate r§eference system")
+    vertical_datum: str = Field(..., description="Vertical datum for the coordinate reference system")
 
 
 class IFCConfig(BaseModel):

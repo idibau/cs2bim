@@ -13,12 +13,12 @@ class Element:
         self.property_sets = {}
 
     def add_property(self, property_set: str, key: str, value: Any):
-        if not property_set in self.property_sets:
+        if property_set not in self.property_sets:
             self.property_sets[property_set] = PropertySet(property_set)
         self.property_sets[property_set].add_property(key, str(value))
 
     def add_attribute(self, name: str, value: Any):
-        if not name in self.attributes:
+        if name not in self.attributes:
             self.attributes[name] = value
         else:
             raise Exception(f"Attribute {name} already exists")

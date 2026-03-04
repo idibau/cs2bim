@@ -36,7 +36,7 @@ class Area:
     def create_mesh(self) -> tuple[np.ndarray, np.ndarray]:
         """Create a triangulated mesh from the polygon and raster points."""
         if not self.raster_points_buffer:
-            raise Exception("No raster points found for area")
+            raise ValueError("No raster points found for area")
 
         self.raster_points_buffer = np.vstack(self.raster_points_buffer)
         if self.raster_points_within:

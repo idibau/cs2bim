@@ -77,7 +77,7 @@ class ProjectionProcessor:
                 logger.debug(f"create mesh for element {index + 1}/{len(sql_result)}")
                 projection = self.create_projection(feature_type, projection_element_data)
 
-                if not feature_type_key in projections_by_key:
+                if feature_type_key not in projections_by_key:
                     projections_by_key[feature_type_key] = []
                 projections_by_key[feature_type_key].append(projection)
             logger.info("finished creating meshes")

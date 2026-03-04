@@ -31,7 +31,7 @@ class ProjectionData:
                 for cut_polygon in polygons:
                     self.areas.append(Area(cut_polygon))
         else:
-            pass
+            logger.debug(f"Skipping unsupported geometry: {polygon.geom_type}")
 
     def add_raster_points(self, raster_points: RasterPoints):
         for area in self.areas:
@@ -88,6 +88,6 @@ class ProjectionData:
                 elif inter.geom_type == "MultiPolygon":
                     cut_polys.extend(list(inter.geoms))
                 else:
-                    pass
+                    logger.debug(f"Skipping degenerate intersection geometry: {inter.geom_type}")
 
         return cut_polys

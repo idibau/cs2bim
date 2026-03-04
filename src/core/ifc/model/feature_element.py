@@ -11,5 +11,5 @@ class FeatureElement(Element):
 
 
     def add_group(self, name: str):
-        if not name in self.groups:
+        if name not in self.groups:
             self.groups.append(name)

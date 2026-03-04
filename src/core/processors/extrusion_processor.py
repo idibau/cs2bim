@@ -102,7 +102,7 @@ class ExtrusionProcessor:
                 self.add_properties(spatial_structure, feature_type.spatial_structure_mapping.properties, row)
                 extrusion.spatial_structure = spatial_structure
 
-                if not feature_type_key in extrusions_by_key:
+                if feature_type_key not in extrusions_by_key:
                     extrusions_by_key[feature_type_key] = []
                 extrusions_by_key[feature_type_key].append(extrusion)
         return extrusions_by_key

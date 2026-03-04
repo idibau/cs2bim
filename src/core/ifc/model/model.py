@@ -29,17 +29,17 @@ class Model:
         self.extrusions: dict[str, list[Extrusion]] = {}
 
     def add_projections(self, feature_type_key: str, projections: list[Projection]):
-        if not feature_type_key in self.projections:
+        if feature_type_key not in self.projections:
             self.projections[feature_type_key] = []
         self.projections[feature_type_key].extend(projections)
 
     def add_buildings(self, feature_type_key: str, elements: list[Building]):
-        if not feature_type_key in self.buildings:
+        if feature_type_key not in self.buildings:
             self.buildings[feature_type_key] = []
         self.buildings[feature_type_key].extend(elements)
 
     def add_extrusions(self, feature_type_key: str, elements: list[Extrusion]):
-        if not feature_type_key in self.extrusions:
+        if feature_type_key not in self.extrusions:
             self.extrusions[feature_type_key] = []
         self.extrusions[feature_type_key].extend(elements)
 
@@ -119,7 +119,7 @@ class Model:
                 ifc_spatial_structures[element.spatial_structure][1].append(ifc_element)
 
                 for group in element.groups:
-                    if not group in group_mappings:
+                    if group not in group_mappings:
                         group_mappings[group] = []
                     group_mappings[group].append(ifc_element)
 
@@ -140,7 +140,7 @@ class Model:
                 ifc_spatial_structures[element.spatial_structure][1].append(ifc_element)
 
                 for group in element.groups:
-                    if not group in group_mappings:
+                    if group not in group_mappings:
                         group_mappings[group] = []
                     group_mappings[group].append(ifc_element)
 
@@ -170,7 +170,7 @@ class Model:
                 ifc_spatial_structures[element.spatial_structure][1].append(ifc_element)
 
                 for group in element.groups:
-                    if not group in group_mappings:
+                    if group not in group_mappings:
                         group_mappings[group] = []
                     group_mappings[group].append(ifc_element)
 
