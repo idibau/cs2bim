@@ -73,12 +73,23 @@ class STACService:
         """
         bbox_str = bounding_box.get_wgs84_bounding_box_as_string()
         logger.debug(f"fetching STAC items for bbox: {bbox_str}")
-        resp = requests.get(stac_collection_items_url, params={"bbox": bbox_str}, timeout=60)
-        logger.debug(f"STAC items request: {resp.url}")
-        if resp.status_code != 200:
-            raise Exception(f"requesting items failed with HTTP error {resp.status_code}")
-        features = resp.json().get("features", [])
-        return features
+
+        all_features = []
+        url = stac_collection_items_url
+        params = {"bbox": bbox_str}
+
+        while url:
+            resp = requests.get(url, params=params, timeout=60)
+            logger.debug(f"STAC items request: {resp.url}")
+            if resp.status_code != 200:
+                raise Exception(f"requesting items failed with HTTP error {resp.status_code}")
+            data = resp.json()
+            all_features.extend(data.get("features", []))
+            next_link = next((l for l in data.get("links", []) if l["rel"] == "next"), None)
+            url = next_link["href"] if next_link else None
+            params = {}
+
+        return all_features
 
     def fetch_latest_assets(self, stac_collection_items_url: str, bounding_box: BoundingBox, asset_filter: Callable) -> \
     list[str]:
