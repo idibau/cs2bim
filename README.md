@@ -1,5 +1,3 @@
-![status: WIP](https://img.shields.io/badge/status-WIP-yellow)
-
 # cs2bim
 
 <!-- TOC -->
