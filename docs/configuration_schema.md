@@ -8,7 +8,7 @@ STAC data sources, TIN generation, and IFC export configuration. The configurati
 typically loaded from a YAML file using the `load()` class method, which supports
 environment variable expansion.
 
-### Type: `object`
+## Type: `object`
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |

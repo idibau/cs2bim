@@ -15,6 +15,3 @@
 
 
 
-## Internal object model
-
-![Internal object model](../uploads/internal-class-model.png)

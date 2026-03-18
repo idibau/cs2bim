@@ -4,12 +4,18 @@ The application is configured using a YAML file. Below, you'll find an overview 
 can find the full and more technical documentation of the configuration file [here](./configuration_schema.md).
   
 
-The configuration is divided into several sections:
-- **Logging**: Set the application's log level (e.g., DEBUG, INFO).
-- **Connections**: Provide connection settings for Redis and Database access.
-- **Internationalization (i18n)**: Specify translation files to support multiple languages.
-- **External Data (STAC, TIN)**: Configure where the application remote data sources (STAC APIs) can be found.
-- **IFC Export**: Define how data will be structured and exported to IFC.
+The configuration is divided into several sections:  
+
+- **Logging**  
+Set the application's log level (e.g., DEBUG, INFO).
+- **Connections**  
+Provide connection settings for Redis and Database access.
+- **Internationalization (i18n)**  
+Specify translation files to support multiple languages.
+- **External Data (STAC, TIN)**  
+Configure where the application remote data sources (STAC APIs) can be found.
+- **IFC Export**  
+Define how data will be structured and exported to IFC.
   
 The concepts and principles of the configuration and the most important parameters are described in the following sections.
 

@@ -9,7 +9,7 @@ On this page some basics and concepts of the cs2bim project are documented.
 - [References](#references)
 
 
-# IFC basic principles
+## IFC basic principles
 The "Industry Foundation Classes" (IFC) is an open, international standard that defines a conceptual data model for buildings. It is developped and maintained by buildingSmart International and documented in an open HTML based documentation (IFC-Doc)[^IFC-Doc]. IFC is also published as an ISO standard (ISO16739-1)[^ISO16739-1], that is identical to the open standard.  
 
 IFC defines a large data model. In the context of cs2bim, the core of the IFC data model can be described (simplified) with the following structures (see also (Schildknecht, 2023)[^Schildknecht-2023]).
@@ -35,7 +35,7 @@ The data model shown above is simplified and conceptualised. In fact, the data m
 ![IFC schema (extraction, simplified)](../uploads/ifc-simplified.png)
 
 
-# Transformation GIS --> IFC
+## Transformation GIS --> IFC
 The transformation of a GIS feature type into the IFC schema takes place as shown in the following figure.
 
 ![Transformation GIS--> IFC, conceptual view](../uploads/transformation-conceptual.jpg)
@@ -51,7 +51,7 @@ The GIS geometry is transformed into a "Body" geometry of IFC. In the current im
 
 The GIS geometry is expected to be in WKT format ([ISO 19125-1])[^ISO19125-1]. If the geodata source is in INTERLIS format (ILI-RefMan)[^ILIRefMan], a preprocess must be run to transform it to the WKT format (e.g. ili2pg).
 
-# Projection and triangulation
+## Projection and triangulation
 
 Based on the available digital terrain model (DTM) represented as uniformly sampled grid points any 2D polygon object is converted into a 3D surface object. The 2D polygon object is assumed to be represented as WKT-string and to have no circular arcs.
 First, all grid points within a specific buffer (user-definable argument) around the 2D polygon object are extracted. A 2D Delaunay triangulation is applied to the retrieved subset of grid points to obtain a triangulated irregular network (TIN). Then, the vertices of the polygon object are projected onto the surface by using raytracing along the z-unit vector (0,0,1). For each line segment of the polygon object a vertical plane is defined and intersection points of all triangle edges are calculated. The new surface object with all grid points within the polygon object and a boundary consisting of all vertices and intersection point is defined. The new surface is again triangulated using a 2D Delaunay triangulation. To reduce the number of triangles it is possible to apply a simplification of the TIN by specifying the maximum acceptable height error (user-definable argument). The following figure shows the geometry conversion schematically.
@@ -67,7 +67,7 @@ The resulting 3D surfaces fulfill the 2D area constrains which are relevant for 
 - **Constrained Delaunay triangulation**: Single triangulation with boundary constraints instead of the two-step projection approach
 - **Post-triangulation height assignment**: Z-coordinates computed via barycentric interpolation after 2D triangulation, rather than raytracing projection
 
-# References
+## References
 [^IFC-Doc]: buildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html .  
 [^ISO16739-1]: ISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.  
 [^Schildknecht-2023]: Schildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100  
