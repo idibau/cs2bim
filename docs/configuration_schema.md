@@ -82,7 +82,7 @@ Building part configuration for building feature type
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity | `string` | ✅ | string |  | Type of entity |
+| entity | `string` | ✅ | string |  | Name of entity according to IFC schema, e.g. 'IfcWall' |
 | geometry_mapping | `object` or `null` |  | [GmlGeometryMapping](#gmlgeometrymapping) | `null` | Geometry mapping for the building part |
 | color | `object` |  | [Color](#color) | `"white"` | Color assigned to the building part |
 
@@ -152,7 +152,7 @@ Coordinate reference system for IFC export
 | epsg_code | `string` | ✅ | string | EPSG code for the coordinate reference system |
 | description | `string` | ✅ | string | Description of the coordinate reference system |
 | geodetic_datum | `string` | ✅ | string | Geodetic datum for the coordinate reference system |
-| vertical_datum | `string` | ✅ | string | Vertical datum for the coordinate r§eference system |
+| vertical_datum | `string` | ✅ | string | Vertical datum for the coordinate reference system |
 
 ## DBConfig
 
@@ -198,7 +198,7 @@ Entity mapping configuration for extrusion feature type
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity | `string` | ✅ | string |  | Type of entity |
+| entity | `string` | ✅ | string |  | Name of entity according to IFC schema, e.g. 'IfcWall' |
 | attributes | `array` |  | [ExtrusionAttributeConfig](#extrusionattributeconfig) | `[]` | List of attribute mappings |
 | properties | `array` |  | [ExtrusionPropertyConfig](#extrusionpropertyconfig) | `[]` | List of property mappings |
 
@@ -314,7 +314,7 @@ Entity mapping configuration for group
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity | `string` | ✅ | string |  | Type of entity |
+| entity | `string` | ✅ | string |  | Name of entity according to IFC schema, e.g. 'IfcWall' |
 | attributes | `array` |  | [AttributeConfig](#attributeconfig) | `[]` | List of attribute mappings |
 | properties | `array` |  | [PropertyConfig](#propertyconfig) | `[]` | List of property mappings |
 
@@ -379,7 +379,7 @@ Entity mapping configuration for projection feature type
 
 | Property | Type | Required | Possible values | Default | Description |
 | -------- | ---- | -------- | --------------- | ------- | ----------- |
-| entity | `string` | ✅ | string |  | Type of entity |
+| entity | `string` | ✅ | string |  | Name of entity according to IFC schema, e.g. 'IfcWall' |
 | attributes | `array` |  | [ProjectionAttributeConfig](#projectionattributeconfig) | `[]` | List of attribute mappings |
 | properties | `array` |  | [ProjectionPropertyConfig](#projectionpropertyconfig) | `[]` | List of property mappings |
 

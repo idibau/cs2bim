@@ -113,7 +113,7 @@ class ProjectionEntityTypeConfig(BaseModel):
 class ProjectionEntityConfig(ProjectionEntityTypeConfig):
     """Entity mapping configuration for projection feature type"""
 
-    entity: str = Field(..., description="Type of entity")
+    entity: str = Field(..., description="Name of entity according to IFC schema, e.g. 'IfcWall'")
 
 
 class ProjectionFeatureType(BaseModel):
@@ -144,7 +144,7 @@ class GmlGeometryMapping(BaseModel):
 class BuildingPartConfig(BaseModel):
     """Building part configuration for building feature type"""
 
-    entity: str = Field(..., description="Type of entity")
+    entity: str = Field(..., description="Name of entity according to IFC schema, e.g. 'IfcWall'")
     geometry_mapping: Optional[GmlGeometryMapping] = Field(None, description="Geometry mapping for the building part")
     color: Color = Field(default_factory=lambda: Color(r=1.0, g=1.0, b=1.0), json_schema_extra={"default": "white"},
                          description="Color assigned to the building part")
@@ -256,7 +256,7 @@ class ExtrusionEntityTypeConfig(BaseModel):
 class ExtrusionEntityConfig(ExtrusionEntityTypeConfig):
     """Entity mapping configuration for extrusion feature type"""
 
-    entity: str = Field(..., description="Type of entity")
+    entity: str = Field(..., description="Name of entity according to IFC schema, e.g. 'IfcWall'")
 
 
 class ExtrusionFeatureType(BaseModel):
@@ -295,7 +295,7 @@ class AttributeConfig(BaseModel):
 class GroupEntityConfig(BaseModel):
     """Entity mapping configuration for group"""
 
-    entity: str = Field(..., description="Type of entity")
+    entity: str = Field(..., description="Name of entity according to IFC schema, e.g. 'IfcWall'")
     attributes: List[AttributeConfig] = Field(default_factory=list, json_schema_extra={"default": []},
                                               description="List of attribute mappings")
     properties: List[PropertyConfig] = Field(default_factory=list, json_schema_extra={"default": []},
