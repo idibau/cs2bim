@@ -9,3 +9,6 @@ __pycache__
 # files
 *.stl
 *.ifc
+/.quarto/
+**/*.quarto_ipynb
+/_book
