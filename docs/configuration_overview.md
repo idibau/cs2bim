@@ -233,25 +233,19 @@ In this section some feature type specific configurations and concepts are descr
 - xpath zur selektion der konkreten BuildingParts sowie der zu verwendenden Geometrie
   - d.h. der LOD wird über den xpath-Ausdruck definiert
 
+
+```egid_xpath```
+
+```xpath```
+
+
 #### Extrusion (extrusion_feature_type)
 
 Extrusions are a bit more complicated because there are different cross-sections and extrusion types that
   require different columns. The columns ```cross_section``` [[cross_section_type](../src/core/ifc/model/extrusion/cross_section_type.py)] and ```extrusion_type``` [[extrusion_type](../src/core/ifc/model/extrusion/extrusion_type.py)] are always mandatory and used to identify the
-  cross-section and extrusion type. The following table shows the valid values for these columns and the additional required columns for each valid combination.
+  cross-section and extrusion type. See [this table](concepts.md#tbl-extrusion-parameter-usage) in [this section](concepts.md#extrusions) that shows the valid values for these columns and the additional required columns for each valid combination.
 
-  | extrusion_type | cross_section_type | polyline[3d_wkt_line_string] | start_point[3d_wkt_point], end_point[3d_wkt_point] | width[number in meters] | height[number in meters] | orientation[number degrees] | area[2d_wkt_polygon] |
-  |:--------------:|:------------------:|:----------------------------:|:--------------------------------------------------:|:-----------------------:|:------------------------:|:---------------------------:|:--------------------:|
-  |    POLYLINE    |    CIRCLE, EGG     |              x               |                                                    |            x            |                          |                             |                      |
-  |    POLYLINE    |     RECTANGLE      |              x               |                                                    |            x            |            x             |                             |                      |
-  |    POLYLINE    |   POLYGON_LOCAL    |              x               |                                                    |                         |                          |                             |   x<sup>(1)</sup>    |
-  |     POINT      |       CIRCLE       |                              |                         x                          |            x            |                          |                             |                      |
-  |     POINT      |     RECTANGLE      |                              |                         x                          |            x            |            x             |                             |                      |
-  |     POINT      |   POLYGON_LOCAL    |                              |                         x                          |                         |                          |              x              |   x<sup>(1)</sup>    |
-  |    SURFACE     |   POLYGON_GLOBAL   |                              |                         x                          |                         |                          |              x              |   x<sup>(2)</sup>    |
-
-  x<sup>(1)</sup>: Polygon defined in local coordinates.
-
-  x<sup>(2)</sup>: Polygon defined in global coordinates.  
+For a list of all extrusion parameters see [this table](concepts.md#tbl-extrusion-parameters)  
 
 
 

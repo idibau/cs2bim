@@ -16,7 +16,7 @@ To run the service, a ready-to-use Docker-based setup is provided.
 
 These pages describe the technical aspects and configurations of the application, as well as the concepts required and used for it.  
 
-The source code is available here: https://github.com/idibau/cs2bim/  
+The source code is available on [github](https://github.com/idibau/cs2bim/)  
 
 
 ## Project

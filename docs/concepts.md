@@ -28,18 +28,18 @@ In IFC, any groups can be defined for any subject/functional grouping of element
 - **IfcClassificationReference**  
 As an alternative to IfcGroup, an IfcElement can be assigned to a classification value. Classification values belong to classifications that are typically defined outside of IFC.   
 
-![IFC principles (simplified), according to [@schildknecht2023LeitungskatasterNachSIA405]](../uploads/ifc-principles.png)
+![IFC principles (simplified), according to [@schildknecht2023LeitungskatasterNachSIA405]](../uploads/ifc-principles.png){#fig-ifc-principles}
 
 
 The data model shown above is simplified and conceptualised. In fact, the data model of IFC is much more structured and uses, amongst other things, inheritance relationships and relationship classes. The figure below shows the same core elements again, but taking into account the most important inheritance relationships from IFC (note: this figure is also a simplified representation).  
 
-![IFC schema (extraction, simplified)](../uploads/ifc-simplified.png)
+![IFC schema (extraction, simplified)](../uploads/ifc-simplified.png){#fig-ifc-simplified}
 
 
 ## Transformation GIS --> IFC
 The transformation of a GIS feature type into the IFC schema takes place as shown in the following figure.
 
-![Transformation GIS--> IFC, conceptual view](../uploads/transformation-conceptual.jpg)
+![Transformation GIS--> IFC, conceptual view](../uploads/transformation-conceptual.jpg){#fig-transformation-gis-ifc}
 
 The entity mapping determines for which IFC entity an instance is created for each feature of the feature type.  
 The attribute values of a feature can be transformed into  
@@ -58,7 +58,7 @@ The GIS geometry is expected to be in WKT format [@iso2006ISO1912512006]. If the
 Based on the available digital terrain model (DTM) represented as uniformly sampled grid points any 2D polygon object is converted into a 3D surface object. The 2D polygon object is assumed to be represented as WKT-string and to have ***no circular arcs***.  
 First, all grid points within a specific buffer (user-definable argument) around the 2D polygon object are extracted. A 2D Delaunay triangulation is applied to the retrieved subset of grid points to obtain a triangulated irregular network (TIN). Then, the vertices of the polygon object are projected onto the surface by using raytracing along the z-unit vector (0,0,1). For each line segment of the polygon object a vertical plane is defined and intersection points of all triangle edges are calculated. The new surface object with all grid points within the polygon object and a boundary consisting of all vertices and intersection point is defined. The new surface is again triangulated using a 2D Delaunay triangulation. To reduce the number of triangles it is possible to apply a simplification of the TIN by specifying the maximum acceptable height error (user-definable argument). The following figure shows the geometry conversion schematically.
 
-![Schematic illustration of geometry conversion](../uploads/cs-2d-t2-3d.jpg)
+![Schematic illustration of geometry conversion](../uploads/cs-2d-t2-3d.jpg){#fig-geometry-conversion}
 
 The resulting 3D surfaces fulfill the 2D area constrains which are relevant for land coverage and property layer. However, since for every 2D polygon object a subset of grid points is triangulated by a 2D Delaunay triangulation, which does not find an optimal solution in the case of uniformly distributed grid points, there may be some small holes between two consecutive objects. This problem can be mitigated by using a 3D triangulation method instead, which is, however, much more computationally expensive.
 
@@ -74,7 +74,7 @@ The resulting 3D surfaces fulfill the 2D area constrains which are relevant for 
 In this project the transformation of 3D city models is based on CityGML, version 2.  
 The data model of CityGML comprises different thematic modules. In addition to the Core module, only the Building module is processed for the transformation of the 3D city model.  
 
-![CityGML v2, Modules](../uploads/citygml-modules.jpg)
+![CityGML v2, Modules](../uploads/citygml-modules.jpg){#fig-citygml-modules}
 
 
 ### Building structure
@@ -82,19 +82,19 @@ The data model of CityGML comprises different thematic modules. In addition to t
 Within the Building module, the two classes (features) ```Building``` and ```BuildingPart``` are taken into account, including their bounding surface objects  ```_BoundarySurface```, such as, for example, ```RoofSurface```, ```WallSurface```, ```GroundSurface``` etc.  
 Finer structuring of the building, such as ```BuildingInstallation```, ```BuildingFurniture``` or ```Room```, has not been considered in this project, since no data for these classes are available in the used source dataset (SwissBuildings3D).  
 
-![CityGML v2, Building model](../uploads/citygml-building.jpg)
+![CityGML v2, Building model](../uploads/citygml-building.jpg){#fig-citygml-building}
 
 
 For the mapping between CityGML and IFC the aggregation hierarchy between ```Building``` and ```BuildingPart``` of CityGML is converted into a hierarchy between building elements (child elements of ```IfcBuiltElement```) and spatial structure elements (child elements of ```IfcSpatialStructureElement```) using the spatial containment concept (```IfcRelContainedInSpatialStructure```).  
 
-![CityGML hierarchy mapping to IFC](../uploads/citygml-ifc-mapping.jpg){fig-align="left" width=65%}
+![CityGML hierarchy mapping to IFC](../uploads/citygml-ifc-mapping.jpg){#fig-citygml-ifc-mapping fig-align="left" width=65%}
 
 ### Geometry types
 CityGML supports different geometry types of GML. For the transformation of 3D city models with a focus on buildings, the support of solid and simple surface geometries is sufficient. The following figure shows the geometry types relevant and supported for the transformation of buildings in this project (i.e. the simple geometries ```Solid```, ```Polygon``` with ```LinearRing``` and the composite geometries ```CompositeSolid```, ```CompositeSurface``` and ```MultiSurface```)
  
-![CityGML v2, geometry primitives](../uploads/citygml-geometry-primitives.jpg)
+![CityGML v2, geometry primitives](../uploads/citygml-geometry-primitives.jpg){#fig-citygml-geometry-primitives}
 
-![CityGML v2, geometry complexes](../uploads/citygml-geometry-complexes.jpg)
+![CityGML v2, geometry complexes](../uploads/citygml-geometry-complexes.jpg){#fig-citygml-geometry-complexes}
 
 
 The conversion from the GML geometry type to the IFC geometry type is defined according to the following table:  
@@ -106,7 +106,7 @@ The conversion from the GML geometry type to the IFC geometry type is defined ac
 | CompositeSolid   |                  |
 | CompositePolygon |                  |
 | Multisurface     |                  |
-
+: CityGML geometry IFC mapping {#tbl-citygml-ifc-mapping}
 
 
 ## Extrusions
@@ -136,7 +136,9 @@ This fact is also taken into account in the transformation functions of the extr
 
 The following figure shows a schematic representation of the different types of extrusion:  
 
-![Extrusion types](../uploads/extrusion-types.jpg)
+![Extrusion types](../uploads/extrusion-types.jpg){#fig-extrusion-types}
+
+
 
 Depending on the type of extrusion and the cross section, different additional parameters are required to define the extrusion algorithm. The following table lists the extrusion parameters required for each type of extrusion, while the table below explains each parameter in detail.  
 
@@ -150,10 +152,10 @@ Depending on the type of extrusion and the cross section, different additional p
 |POINT   |RECTANGLE     | |x|x|x|x|x| |
 |POINT   |POLYGON_LOCAL | |x|x| | |x|x(1)|
 |SURFACE |POLYGON_GLOBAL| |x|x| | | |x(2)|
+: Extrusion parameter usage {#tbl-extrusion-parameter-usage}
 
 (1) Polygondefinition in lokalem Koordinatensystem  
 (2) Polygondefinition in LV95  
-
 
 
 | Parameter          | Beschreibung|
@@ -167,6 +169,7 @@ Depending on the type of extrusion and the cross section, different additional p
 | width              | Width of the cross section in [m]  |
 | orientation        | If extrusion_type = POINT and cross_section_type = RECTANGELE, POLYGON. Orientation of the cross section.<br>Degrees 0.0 .. 359.9  |
 | polygon            | Cross section, 2D polygon in WKT format in [m].<br><br>If extrusion_type = _POLYLINE_:  <br>A cross-sectional area defined in a local coordinate system in which the extrusion axis passes through the origin (0,0). The cross-sectional area is always defined as being orthogonal to the extrusion axis.<br><br>If extrusion_type = _POINT_:  <br>A cross-sectional area in local coordinate system. The area is always defined in the xy-plane of the parent, absolute coordinate system (e.g. LV95).<br>The cross-sectional area is extruded between the points point_start and point_end without being rotated relative to the xy-plane.<br><br>If extrusion_type = _SURFACE_:  <br>Surface in absolute coordinate system (e.g. LV95). The surface is always defined in the xy-plane of the parent coordinate system (e.g. LV95). The surface is extruded between the z-values of the points point_start and point_end and in the direction defined by point_start and point_end, without being rotated relative to the xy-plane. |
+: Extrusion parameters {#tbl-extrusion-parameters}
   
 <br>
 <br>  
@@ -178,6 +181,6 @@ The conversion of the extrusion types described above into IFC geometry types is
 | POLYLINE       | CIRCLE                  | IfcSweptDiskSolid               |
 | POLYLINE       | EGG, RECTANGLE, POLYGON | IfcFixedReferenceSweptAreaSolid |
 | POINT, SURFACE | [all]                   | IfcExtrudedAreaSolid            |
-
+: Extrusion types IFC mapping {#tbl-extrusion-mapping}
 
 
