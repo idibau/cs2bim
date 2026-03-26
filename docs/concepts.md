@@ -39,7 +39,7 @@ The data model shown above is simplified and conceptualised. In fact, the data m
 ## Transformation GIS --> IFC
 The transformation of a GIS feature type into the IFC schema takes place as shown in the following figure.
 
-![Transformation GIS--> IFC, conceptual view](../uploads/transformation-conceptual.jpg){#fig-transformation-gis-ifc}
+![Transformation GIS--> IFC, conceptual view](../uploads/transformation-conceptual.jpg){#fig-transformation-gis-ifc fig-align="left" width=65%}
 
 The entity mapping determines for which IFC entity an instance is created for each feature of the feature type.  
 The attribute values of a feature can be transformed into  
@@ -71,10 +71,10 @@ The resulting 3D surfaces fulfill the 2D area constrains which are relevant for 
 
 
 ## CityGML / 3D city model
-In this project the transformation of 3D city models is based on CityGML, version 2.  
+In this project the transformation of 3D city models is based on CityGML, version 2 [@groger2012OGCCityGeography].  
 The data model of CityGML comprises different thematic modules. In addition to the Core module, only the Building module is processed for the transformation of the 3D city model.  
 
-![CityGML v2, Modules](../uploads/citygml-modules.jpg){#fig-citygml-modules}
+![CityGML v2, Modules (based on [@groger2012OGCCityGeography])](../uploads/citygml-modules.jpg){#fig-citygml-modules}
 
 
 ### Building structure
@@ -82,7 +82,7 @@ The data model of CityGML comprises different thematic modules. In addition to t
 Within the Building module, the two classes (features) ```Building``` and ```BuildingPart``` are taken into account, including their bounding surface objects  ```_BoundarySurface```, such as, for example, ```RoofSurface```, ```WallSurface```, ```GroundSurface``` etc.  
 Finer structuring of the building, such as ```BuildingInstallation```, ```BuildingFurniture``` or ```Room```, has not been considered in this project, since no data for these classes are available in the used source dataset (SwissBuildings3D).  
 
-![CityGML v2, Building model](../uploads/citygml-building.jpg){#fig-citygml-building}
+![CityGML v2, Building model (based on [@groger2012OGCCityGeography])](../uploads/citygml-building.jpg){#fig-citygml-building}
 
 
 For the mapping between CityGML and IFC the aggregation hierarchy between ```Building``` and ```BuildingPart``` of CityGML is converted into a hierarchy between building elements (child elements of ```IfcBuiltElement```) and spatial structure elements (child elements of ```IfcSpatialStructureElement```) using the spatial containment concept (```IfcRelContainedInSpatialStructure```).  
@@ -92,15 +92,15 @@ For the mapping between CityGML and IFC the aggregation hierarchy between ```Bui
 ### Geometry types
 CityGML supports different geometry types of GML. For the transformation of 3D city models with a focus on buildings, the support of solid and simple surface geometries is sufficient. The following figure shows the geometry types relevant and supported for the transformation of buildings in this project (i.e. the simple geometries ```Solid```, ```Polygon``` with ```LinearRing``` and the composite geometries ```CompositeSolid```, ```CompositeSurface``` and ```MultiSurface```)
  
-![CityGML v2, geometry primitives](../uploads/citygml-geometry-primitives.jpg){#fig-citygml-geometry-primitives}
+![CityGML v2, geometry primitives (based on [@groger2012OGCCityGeography])](../uploads/citygml-geometry-primitives.jpg){#fig-citygml-geometry-primitives}
 
-![CityGML v2, geometry complexes](../uploads/citygml-geometry-complexes.jpg){#fig-citygml-geometry-complexes}
+![CityGML v2, geometry complexes (based on [@groger2012OGCCityGeography])](../uploads/citygml-geometry-complexes.jpg){#fig-citygml-geometry-complexes}
 
 
 The conversion from the GML geometry type to the IFC geometry type is defined according to the following table:  
 
 | GML Geometry     | IFC Geometry     |
-| ---------------- | ---------------- |
+| :--------------- | :--------------- |
 | Solid            | Brep             |
 | Polygon          | PolygonalFaceSet |
 | CompositeSolid   |                  |
@@ -143,7 +143,7 @@ The following figure shows a schematic representation of the different types of 
 Depending on the type of extrusion and the cross section, different additional parameters are required to define the extrusion algorithm. The following table lists the extrusion parameters required for each type of extrusion, while the table below explains each parameter in detail.  
 
 |   |   |   |   |   |   |   |   |   |
-|---|---|---|---|---|---|---|---|---|
+|:--|:--|---|---|---|---|---|---|---|
 |extrusion_type|cross_section_type|polyline|point_start|point_end|height|width|orientation|polygon|
 |POLYLINE|CIRCLE, EGG   |x| | | |x| | |
 |POLYLINE|RECTANGLE     |x| | |x|x| | |
@@ -159,7 +159,7 @@ Depending on the type of extrusion and the cross section, different additional p
 
 
 | Parameter          | Beschreibung|
-| --------- | ----------- |
+|:-------- |:----------- |
 | extrusion_type     | POLYLINE extruding along 3D polyline.<br>POINT extruding point geometry between two points.<br>SURFACE extruding surface geometry. Extrusion vector and lenght is defined by two points |
 | cross_section_type | CIRCLE<br>EGG<br>RECTANGLE<br>POLYGON_LOCAL arbitrary cross sections defined in local coordinate system<br>POLYGON_GLOBAL arbitrary cross sections defined in global coordinate system |
 | polyline           | Extrusion axis for extrusion_type = POLYLINE;<br>3D polyline in WKT format.<br>The extrusion axis is centered in the cross-section with respect to both height and width. |
@@ -177,7 +177,7 @@ Depending on the type of extrusion and the cross section, different additional p
 The conversion of the extrusion types described above into IFC geometry types is performed according to the following mapping table:  
 
 | extrusion type | cross section type      | IFC geometry type               |
-| -------------- | ----------------------- | ------------------------------- |
+| :------------- | :---------------------- | :------------------------------ |
 | POLYLINE       | CIRCLE                  | IfcSweptDiskSolid               |
 | POLYLINE       | EGG, RECTANGLE, POLYGON | IfcFixedReferenceSweptAreaSolid |
 | POINT, SURFACE | [all]                   | IfcExtrudedAreaSolid            |

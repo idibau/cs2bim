@@ -25,18 +25,17 @@ _Institute of Geomatics_ at the University of Applied Sciences Northwestern Swit
 based on open source libraries. 
 
 ## Authors
-[Institut Digitales Bauen](https://www.fhnw.ch/idibau){target="_blank"}  
+[Institut Digitales Bauen](https://www.fhnw.ch/idibau)  
 Fachhochschule Nordwestschweiz /  
 University of Applied Sciences and Arts Northwestern Switzerland, Institute of Virtual Design and Construction
 
-Project head  
-- [Prof. Lukas Schildknecht](https://www.fhnw.ch/de/personen/lukas-schildknecht){target="_blank"}  
-- [Prof. Oliver Schneider](https://www.fhnw.ch/de/personen/oliver-schneider){target="_blank"}  
+Project team:  
 
-Project staff  
-- [Prof. Christian Gamma](https://www.fhnw.ch/de/personen/christian-gamma){target="_blank"}  
-- [Joel Gschwind](https://www.fhnw.ch/de/personen/joel-gschwind){target="_blank"}  
-- [Jonas Meyer](https://www.fhnw.ch/de/personen/jonas-meyer){target="_blank"}  
+- Lukas Schildknecht
+- Oliver Schneider
+- Joel Gschwind
+- Jonas Meyer  
+- Christian Gamma
 
 If you use this project for your research, please cite:
 
@@ -57,4 +56,4 @@ If you use this project for your research, please cite:
 
 ## License
 BY-NC-SA  
-[![](uploads/by-nc-sa.png){width=120px}](https://creativecommons.org/licenses/by-nc-sa/4.0/){target="_blank"}
+[![](uploads/by-nc-sa.png){width=120px}](https://creativecommons.org/licenses/by-nc-sa/4.0/)

@@ -229,14 +229,12 @@ In this section some feature type specific configurations and concepts are descr
 
 
 #### Building (building_feature_type)
-- egid als selektionskriterium
-- xpath zur selektion der konkreten BuildingParts sowie der zu verwendenden Geometrie
-  - d.h. der LOD wird über den xpath-Ausdruck definiert
 
+The processing of buildings from CityGML is based on the EGID (a unique identification for all buildings in Switzerland). In the first step, all EGID located within the processing perimeter are identified. To do this, the EGID are queried using an SQL statement from a geodata source within the database (attribute ```egid``` in the SQL statement).  
+In a second step, the corresponding building objects are identified within the CityGML files. This is done via an attributive selection, i.e., the EGID must be included in the CityGML records. The parameter ```egid_xpath``` defines the XQuery expression through which the EGID number is defined within the CityGML objects.  
 
-```egid_xpath```
+The parameter ```egid_xpath``` defines an XQuery expression used to query a geometry definition within CityGML. This parameter can be used to define both the LOG to be processed and the BuildingParts to be processed by formulating the appropriate XQuery expressions.  
 
-```xpath```
 
 
 #### Extrusion (extrusion_feature_type)
@@ -245,7 +243,7 @@ Extrusions are a bit more complicated because there are different cross-sections
   require different columns. The columns ```cross_section``` [[cross_section_type](../src/core/ifc/model/extrusion/cross_section_type.py)] and ```extrusion_type``` [[extrusion_type](../src/core/ifc/model/extrusion/extrusion_type.py)] are always mandatory and used to identify the
   cross-section and extrusion type. See [this table](concepts.md#tbl-extrusion-parameter-usage) in [this section](concepts.md#extrusions) that shows the valid values for these columns and the additional required columns for each valid combination.
 
-For a list of all extrusion parameters see [this table](concepts.md#tbl-extrusion-parameters)  
+For a list of all extrusion parameters see also [this table](concepts.md#tbl-extrusion-parameters).  
 
 
 
