@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Configuration Overview – cs2bim</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../docs/configuration_schema.html" rel="next">
+<link href="../docs/architecture.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-75f02de4d0792729241189e21b3d3496.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/architecture.html">Application</a></li><li class="breadcrumb-item"><a href="../docs/configuration_overview.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Configuration Overview</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">cs2bim</a> 
+        <div class="sidebar-tools-main">
+    <a href="../cs2bim.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Concepts</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/mapping_conventions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mapping Principles</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Application</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/configuration_overview.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Configuration Overview</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/configuration_schema.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Configuration</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/api.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">API</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#internationalization-support" id="toc-internationalization-support" class="nav-link active" data-scroll-target="#internationalization-support"><span class="header-section-number">4.1</span> Internationalization Support</a></li>
+  <li><a href="#external-data" id="toc-external-data" class="nav-link" data-scroll-target="#external-data"><span class="header-section-number">4.2</span> External Data</a>
+  <ul>
+  <li><a href="#dtm" id="toc-dtm" class="nav-link" data-scroll-target="#dtm"><span class="header-section-number">4.2.1</span> DTM</a></li>
+  <li><a href="#buildings" id="toc-buildings" class="nav-link" data-scroll-target="#buildings"><span class="header-section-number">4.2.2</span> Buildings</a></li>
+  </ul></li>
+  <li><a href="#ifc-export" id="toc-ifc-export" class="nav-link" data-scroll-target="#ifc-export"><span class="header-section-number">4.3</span> IFC Export</a>
+  <ul>
+  <li><a href="#geo-referencing" id="toc-geo-referencing" class="nav-link" data-scroll-target="#geo-referencing"><span class="header-section-number">4.3.1</span> Geo referencing</a></li>
+  <li><a href="#feature-types" id="toc-feature-types" class="nav-link" data-scroll-target="#feature-types"><span class="header-section-number">4.3.2</span> Feature types</a></li>
+  <li><a href="#sql" id="toc-sql" class="nav-link" data-scroll-target="#sql"><span class="header-section-number">4.3.3</span> SQL</a></li>
+  <li><a href="#entity-mapping" id="toc-entity-mapping" class="nav-link" data-scroll-target="#entity-mapping"><span class="header-section-number">4.3.4</span> Entity Mapping</a></li>
+  <li><a href="#attributes-properties-and-group-mappings" id="toc-attributes-properties-and-group-mappings" class="nav-link" data-scroll-target="#attributes-properties-and-group-mappings"><span class="header-section-number">4.3.5</span> Attributes, properties and group mappings</a></li>
+  <li><a href="#spatial-structure-mapping" id="toc-spatial-structure-mapping" class="nav-link" data-scroll-target="#spatial-structure-mapping"><span class="header-section-number">4.3.6</span> Spatial Structure Mapping</a></li>
+  <li><a href="#entity-type-mapping" id="toc-entity-type-mapping" class="nav-link" data-scroll-target="#entity-type-mapping"><span class="header-section-number">4.3.7</span> Entity Type Mapping</a></li>
+  <li><a href="#groups" id="toc-groups" class="nav-link" data-scroll-target="#groups"><span class="header-section-number">4.3.8</span> Groups</a></li>
+  <li><a href="#special-configurations-feature-type-specific" id="toc-special-configurations-feature-type-specific" class="nav-link" data-scroll-target="#special-configurations-feature-type-specific"><span class="header-section-number">4.3.9</span> Special configurations (feature type specific)</a>
+  <ul>
+  <li><a href="#building-building_feature_type" id="toc-building-building_feature_type" class="nav-link" data-scroll-target="#building-building_feature_type"><span class="header-section-number">4.3.9.1</span> Building (building_feature_type)</a></li>
+  <li><a href="#extrusion-extrusion_feature_type" id="toc-extrusion-extrusion_feature_type" class="nav-link" data-scroll-target="#extrusion-extrusion_feature_type"><span class="header-section-number">4.3.9.2</span> Extrusion (extrusion_feature_type)</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/architecture.html">Application</a></li><li class="breadcrumb-item"><a href="../docs/configuration_overview.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Configuration Overview</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Configuration Overview</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The application is configured using a <a href="../config.yml">YAML file</a>. Below, you’ll find an overview of the main configuration concepts. You can find the full and more technical documentation of the configuration file <a href="../docs/configuration_schema.html">here</a>.</p>
+<p>The configuration is divided into several sections:</p>
+<ul>
+<li><strong>Logging</strong><br>
+Set the application’s log level (e.g., DEBUG, INFO).</li>
+<li><strong>Connections</strong><br>
+Provide connection settings for Redis and Database access.</li>
+<li><strong>Internationalization (i18n)</strong><br>
+Specify translation files to support multiple languages.</li>
+<li><strong>External Data (STAC, TIN)</strong><br>
+Configure where the application remote data sources (STAC APIs) can be found.</li>
+<li><strong>IFC Export</strong><br>
+Define how data will be structured and exported to IFC.</li>
+</ul>
+<p>The concepts and principles of the configuration and the most important parameters are described in the following sections.</p>
+<section id="internationalization-support" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="internationalization-support"><span class="header-section-number">4.1</span> Internationalization Support</h2>
+<p>The configuration supports referencing translation files for multiple languages. The values affected by translation are fixed and not configurable:</p>
+<ul>
+<li>Attribute values</li>
+<li>Property set names</li>
+<li>Property names</li>
+<li>Property values</li>
+<li>Group names</li>
+</ul>
+<p>If a translation key cannot be found, the original value is written unchanged. The following characters are allowed for keys in the table: letters (lowercase), numbers and underscore (_).</p>
+<p>Keys derived from dynamic values are generated as follows:</p>
+<ol type="1">
+<li>key = lower_case(key)</li>
+<li>key = remove_special_characters_except_spaces(key)</li>
+<li>key = trim_leading_and_trailing_spaces(key)</li>
+<li>key = replace_sequences_of_spaces_with_single_underscore(key)</li>
+</ol>
+<p>Example: “Year ( 1990 )” → “year ( 1990 )” → “year 1990” → “year 1990” → “year_1990”</p>
+</section>
+<section id="external-data" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="external-data"><span class="header-section-number">4.2</span> External Data</h2>
+<p>The projection feature types require a DTM file source provided via a STAC API. The building feature types require a CityGML file source. These URLs must be defined in the STAC configuration.</p>
+<section id="dtm" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="dtm"><span class="header-section-number">4.2.1</span> DTM</h3>
+<p>Needs to be set if there are projection feature types configured. Expected asset properties:</p>
+<ul>
+<li>type = application/x.ascii-xyz+zip</li>
+<li>eo:gsd / gsd = config.tin.grid_size</li>
+</ul>
+</section>
+<section id="buildings" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="buildings"><span class="header-section-number">4.2.2</span> Buildings</h3>
+<p>Needs to be set if there are building feature types configured. Expected asset properties:</p>
+<ul>
+<li>type = application/x.gml+zip</li>
+</ul>
+</section>
+</section>
+<section id="ifc-export" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="ifc-export"><span class="header-section-number">4.3</span> IFC Export</h2>
+<section id="geo-referencing" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="geo-referencing"><span class="header-section-number">4.3.1</span> Geo referencing</h3>
+<p>You can provide the so-called “Level of Georeferencing” (LoGeoRef), according to (Clemen&amp;Görne, 2019) [^LoGeoRef].<br>
+The different levels represent different methods of defining information about georeferencing in IFC.<br>
+Supported values are:</p>
+<ul>
+<li>LO_GEO_REF_30
+<ul>
+<li>IfcObjectPlacement of an IfcSpatialStructureElement contains georeferencing</li>
+<li>Suitability for local projects on a smaller scale</li>
+<li>IFC 2.3</li>
+</ul></li>
+<li>LO_GEO_REF_40
+<ul>
+<li>IfcGeometricRepresentation context of IfcProject contains georeferencing</li>
+<li>Suited for larger infrastructure projects</li>
+<li>IFC 2.3</li>
+</ul></li>
+<li>LO_GEO_REF_50
+<ul>
+<li>IfcMapConversion defines georeferencing of the “SurveyPoint”, including coordinate system parameters</li>
+<li>Suited for large-scale and linear project expansions</li>
+<li>IFC 4.0</li>
+</ul></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../uploads/lo-geo-ref.png" class="img-fluid figure-img"></p>
+<figcaption>Levels of Georeferencing LoGeoRef</figcaption>
+</figure>
+</div>
+<p><strong>Coordinates and Offsets</strong><br>
+You can provide a project origin in LV95 coordinates (Easting, Northing, Height). The project origin can also be set to (0,0,0).<br>
+If not provided, the system sets a project origin in the lower left corner on a minimum bounding box of the perimeter.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../uploads/project-origin.png" class="img-fluid figure-img"></p>
+<figcaption>Levels of Georeferencing LoGeoRef</figcaption>
+</figure>
+</div>
+</section>
+<section id="feature-types" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="feature-types"><span class="header-section-number">4.3.2</span> Feature types</h3>
+<p>A “feature type” is the definition of a set of objects that are exported as instances of an IFC entity with common definitions. Each feature type is defined through a configuration that describes how data from the GIS database is transformed into IFC instances. For every configured feature type, a set of instances is created. Currently, three different kinds of feature types are supported. They differ according to the type of geometry conversion.</p>
+<ul>
+<li><p><strong>Projection</strong> (projection_feature_types)<br>
+Projections are feature types that generate IFC structures by projecting 2D areas onto a 3D surface (in this case the terrain model).</p></li>
+<li><p><strong>Building</strong> (building_feature_types)<br>
+Buildings are feature types that are generated by transforming 3D building geometries from CityGML into IFC structures.</p></li>
+<li><p><strong>Extrusion</strong> (extrusion_feature_types)<br>
+Extrusions are feature types that are generated by extruding 2D areas along a polyline. Five different cross-section types (CIRCLE, EGG, RECTANGLE, POLYGON_GLOBAL, POLYGON_LOCAL) and three different extrusion types (POLYLINE (horizontal) , SURFACE (vertical) and POINT (vertical)) are supported.</p></li>
+</ul>
+</section>
+<section id="sql" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="sql"><span class="header-section-number">4.3.3</span> SQL</h3>
+<p>The basis of a feature type is a SQL statement, that selects data from a geodata source. The SQL statement is stored in a separate file. It is executed at the beginning of constructing of the feature type instances. It determines what objects to create for the feature type. The input parameter “%(polygon)s” is the input WKT string of the application. It is expected that this input parameter is used to select the relevant feature type instances for the request. Each result row is converted into an IFC instance. The required return columns differ from feature type to feature type.</p>
+<ul>
+<li>Projection: Expects a column with the name <code>wkt</code>[2d_wkt_polygon] that represents the area to be projected.</li>
+<li>Building: Expects a column with the name <code>egid</code>[number] that contains the egid number to identify the building.</li>
+<li>Extrusion: Extrusions are a bit more complicated because there are different cross-sections and extrusion types that require different columns. The columns <code>cross_section</code> [<a href="../src/core/ifc/model/extrusion/cross_section_type.py">cross_section_type</a>] and <code>extrusion_type</code> [<a href="../src/core/ifc/model/extrusion/extrusion_type.py">extrusion_type</a>] are always mandatory and used to identify the cross-section and extrusion type. Depending on the <code>cross_section</code> and <code>extrusion_type</code> additional columns are needed. See <a href="#building-building_feature_type">this section</a> for more details.</li>
+</ul>
+<p>Additional columns can be included to provide values that can be referenced in the attribute, property, or group configurations, see <a href="#attributes-properties-and-group-mappings">this section</a> for more details.</p>
+<p>Selecting the data by SQL is flexible and can be done in various ways. Specifically use geometry functions (e.g.&nbsp;intersections) and aggregation functions. There are some examples in the sql folder.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../uploads/sql.jpg" class="img-fluid figure-img"></p>
+<figcaption>Polygon</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li>The input polygon</li>
+<li>All areas that intersect with the polygon are included (<a href="../examples/sql/parcels.sql">Parcels</a>, <a href="../examples/sql/land_covers.sql">Land covers</a>, <a href="../examples/sql/land_covers_buildings.sql">Land covers buildings</a>)</li>
+<li>All areas are cut off at the border of the polygon (<a href="../examples/sql/parcels_intersection.sql">Parcels intersection</a>, <a href="../examples/sql/land_covers_intersection.sql">Land covers intersection</a>)</li>
+<li>All areas that are fully contained by the polygon are included (<a href="../examples/sql/parcels_contains.sql">Parcels contains</a>, <a href="../examples/sql/land_covers_contains.sql">Land covers contains</a>)</li>
+<li>The entire area of the input polygon without subdivisions (<a href="../examples/sql/polygon.sql">Polygon</a>)</li>
+</ol>
+<p><strong>Useful postgis functions</strong></p>
+<p><strong>ST_GeomFromText</strong>: Constructs a PostGIS ST_Geometry object<br>
+<strong>ST_AsText</strong>: Returns the OGC WKT representation of the geometry<br>
+<strong>ST_CurveToLine</strong>: Converts a given geometry to a linear geometry<br>
+<strong>ST_Intersects</strong>: Returns true if two geometries intersect. Geometries intersect if they have any point in common. <strong>ST_Contains</strong>: Returns true if the first geometry contains the second.</p>
+<p>Hint: The wildcard character ‘%’ needs to be escaped like this ‘%%’.</p>
+</section>
+<section id="entity-mapping" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="entity-mapping"><span class="header-section-number">4.3.4</span> Entity Mapping</h3>
+<p>Specifies the IFC entity used to create instances for feature types. The configuration expects a string containing the exact name of the entity as defined in the IFC schema.</p>
+<p>Not all entities are supported by all IFC versions, so only entities that are available across the supported versions should be used. An exception to this rule applies to IfcBuiltSystem / IfcBuildingSystem. If either of these entities is configured, the system will automatically create the appropriate entity for the selected IFC version.</p>
+<p>Incorrect or unsupported entity names will result in errors. The responsibility for providing a valid and compatible entity name lies with the user.</p>
+</section>
+<section id="attributes-properties-and-group-mappings" class="level3" data-number="4.3.5">
+<h3 data-number="4.3.5" class="anchored" data-anchor-id="attributes-properties-and-group-mappings"><span class="header-section-number">4.3.5</span> Attributes, properties and group mappings</h3>
+<p>To define a value for an attribute, property or group name, the source needs to be defined. The <code>source</code> is defined by a <code>type</code> and an <code>expression</code>. There are three different types of sources to evaluate the values of attributes, properties and group names:</p>
+<ul>
+<li><code>SQL</code>: The value is determined by an attribute of the SQL statement.</li>
+<li><code>STATIC</code>: The value is static and defined directly in the configuration</li>
+<li><code>CITY_GML</code> (for buildins feature types only): The value is determined by an XPath expression</li>
+</ul>
+<p>It is important that the expression matches the type being used. An SQL source expects a column name to retrieve a value from the SQL result set. A CityGML source expects an XPath expression that selects the desired value (starting from bldg:Building). The static source does not resolve any value and therefore has no requirements for the expression.<br>
+Attributes cannot be freely selected and depend on the ifc entity that is selected. If a configured attribute does not exist, it is ignored. Properties that are configured but not found as output column in the sql result are also ignored.</p>
+<p>The following figure shows schematically the attributes of the sql statement and their referene as parameters in the configuration.<br>
+<img src="../uploads/configuration-schema.png" class="img-fluid quarto-figure quarto-figure-left" style="width:75.0%" alt="SQL Configuration Schema"></p>
+</section>
+<section id="spatial-structure-mapping" class="level3" data-number="4.3.6">
+<h3 data-number="4.3.6" class="anchored" data-anchor-id="spatial-structure-mapping"><span class="header-section-number">4.3.6</span> Spatial Structure Mapping</h3>
+<p>Specifies the IFC spatial structure element that a created instance is linked to. Spatial structures are shared among instances if their attribute or property values are identical — even across different feature types. As a result, the total number of spatial structures ranges from one up to the number of feature type instances.</p>
+</section>
+<section id="entity-type-mapping" class="level3" data-number="4.3.7">
+<h3 data-number="4.3.7" class="anchored" data-anchor-id="entity-type-mapping"><span class="header-section-number">4.3.7</span> Entity Type Mapping</h3>
+<p>Specifies an IFC entity type linked to each created instance. Entity types are shared among other instances of this feature type if their attribute or property values are identical. Entity types are only supported by certain IFC entities. The responsibility for configuring this correctly lies with the user. Configured entity types that do not exist are ignored. Attributes cannot be freely selected and depend on the ifc entity that is selected. If a configured attribute does not exist, it is ignored.</p>
+</section>
+<section id="groups" class="level3" data-number="4.3.8">
+<h3 data-number="4.3.8" class="anchored" data-anchor-id="groups"><span class="header-section-number">4.3.8</span> Groups</h3>
+<p>Each feature type instance can be assigned to one or more groups. This configuration is optional—if omitted, no group assignment will be made. For every group assignment, the system creates an IFC group based on the specified group configuration, including its parameters such as entity and any number of attributes or properties. If no configuration exists for a given assigned value, the system will generate a basic IFC group entity without additional attributes or properties. When defining groups, the “.” character can be used to create nested group structures.</p>
+<p>For example, the group “Amtliche Vermessung.Bodenbedeckung.befestigt” results in the creation of three nested groups. The feature type instances are assigned to the final group in this hierarchy.</p>
+<ul>
+<li>Amtliche Vermessung
+<ul>
+<li>Bodenbedeckung
+<ul>
+<li>befestigt
+<ul>
+<li>Feature type instance 1</li>
+<li>Feature type instance 2</li>
+<li>Feature type instance 3</li>
+<li>…</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="special-configurations-feature-type-specific" class="level3" data-number="4.3.9">
+<h3 data-number="4.3.9" class="anchored" data-anchor-id="special-configurations-feature-type-specific"><span class="header-section-number">4.3.9</span> Special configurations (feature type specific)</h3>
+<p>In this section some feature type specific configurations and concepts are described.</p>
+<section id="building-building_feature_type" class="level4" data-number="4.3.9.1">
+<h4 data-number="4.3.9.1" class="anchored" data-anchor-id="building-building_feature_type"><span class="header-section-number">4.3.9.1</span> Building (building_feature_type)</h4>
+<p>The processing of buildings from CityGML is based on the EGID (a unique identification for all buildings in Switzerland). In the first step, all EGID located within the processing perimeter are identified. To do this, the EGID are queried using an SQL statement from a geodata source within the database (attribute <code>egid</code> in the SQL statement).<br>
+In a second step, the corresponding building objects are identified within the CityGML files. This is done via an attributive selection, i.e., the EGID must be included in the CityGML records. The parameter <code>egid_xpath</code> defines the XQuery expression through which the EGID number is defined within the CityGML objects.</p>
+<p>The parameter <code>egid_xpath</code> defines an XQuery expression used to query a geometry definition within CityGML. This parameter can be used to define both the LOG to be processed and the BuildingParts to be processed by formulating the appropriate XQuery expressions.</p>
+</section>
+<section id="extrusion-extrusion_feature_type" class="level4" data-number="4.3.9.2">
+<h4 data-number="4.3.9.2" class="anchored" data-anchor-id="extrusion-extrusion_feature_type"><span class="header-section-number">4.3.9.2</span> Extrusion (extrusion_feature_type)</h4>
+<p>Extrusions are a bit more complicated because there are different cross-sections and extrusion types that require different columns. The columns <code>cross_section</code> [<a href="../src/core/ifc/model/extrusion/cross_section_type.py">cross_section_type</a>] and <code>extrusion_type</code> [<a href="../src/core/ifc/model/extrusion/extrusion_type.py">extrusion_type</a>] are always mandatory and used to identify the cross-section and extrusion type. See <a href="../docs/concepts.html#tbl-extrusion-parameter-usage">this table</a> in <a href="../docs/concepts.html#extrusions">this section</a> that shows the valid values for these columns and the additional required columns for each valid combination.</p>
+<p>For a list of all extrusion parameters see also <a href="../docs/concepts.html#tbl-extrusion-parameters">this table</a>.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-buildingsmartinternational2023IFC4320DocumentationOfficial" class="csl-entry" role="listitem">
+buildingSmart International, 2023. <span>IFC4</span>.3.2.0 <span>Documentation</span> (official 4.3.2.0) [WWW Document]. URL <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html">https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html</a> (accessed 11.28.2023).
+</div>
+<div id="ref-ech2024ECH0031INTERLIS2" class="csl-entry" role="listitem">
+<span class="nocase">eCH-0031 iliRefMan</span>, 2024. <em><a href="https://www.ech.ch/de/ech/ech-0031/2.1.0"><span class="nocase">eCH-0031 INTERLIS</span> 2 – <span>Referenzhandbuch</span>, <span>Version</span> 2.1.0</a></em>, eCH Government Standards.
+</div>
+<div id="ref-groger2012OGCCityGeography" class="csl-entry" role="listitem">
+Gröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. <em><span>OGC City Geography Markup Language</span> (<span>CityGML</span>) <span>Encoding Standard</span></em>. OGC Version 2.0.0, 344.
+</div>
+<div id="ref-iso2024ISO1673912024" class="csl-entry" role="listitem">
+<span>ISO</span> 16739-1, 2024. <em><span>ISO</span> 16739-1:2024 <span>Industry Foundation Classes</span> (<span>IFC</span>) for data sharing in the construction and facility management industries — <span>Part</span> 1: <span>Data</span> schema</em>.
+</div>
+<div id="ref-iso2006ISO1912512006" class="csl-entry" role="listitem">
+<span>ISO</span> 19125-1, 2006. <em><span>ISO</span> 19125-1:2006 <span>Geographic</span> information - <span>Simple</span> feature access - <span>Part</span> 1: <span>Common</span> architecture</em>.
+</div>
+<div id="ref-ogc2021OGCCityGeography" class="csl-entry" role="listitem">
+<span>CityGML CM</span>, 2021. <em><span>OGC City Geography Markup Language</span> (<span>CityGML</span>) <span>Part</span> 1: <span>Conceptual Model Standard</span></em>.
+</div>
+<div id="ref-schildknecht2023LeitungskatasterNachSIA405" class="csl-entry" role="listitem">
+Schildknecht, L., 2023. <em>Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC</em>. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. <a href="https://doi.org/10.21428/71cd88bc.016ca100">https://doi.org/10.21428/71cd88bc.016ca100</a>
+</div>
+<div id="ref-schildknecht2025IntegrationGeodatenBIM" class="csl-entry" role="listitem">
+Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. <em>Integration von <span>Geodaten</span> in <span>BIM</span>/<span>IFC</span> - ein <span>Open-Source-Ansatz</span> für die <span>Daten</span> der amtlichen <span>Vermessung</span></em>. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. <a href="https://doi.org/10.21428/71cd88bc.1463dde3">https://doi.org/10.21428/71cd88bc.1463dde3</a>
+</div>
+<div id="ref-schildknecht2025IntegrationLandAdministration" class="csl-entry" role="listitem">
+Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. <em><a href="https://www.researchgate.net/publication/394433219_Integration_of_Land_Administration_Data_into_BIMIFC_-an_Open_Source_Approach_for_Swiss_Cadastral_Survey_Data#fullTextFileContent">Integration of land administration data into <span>BIM</span>/<span>IFC</span> - an open source approach for <span>Swiss</span> cadastral survey data</a></em>, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.
+</div>
+<div id="ref-sia2025SIA40082025" class="csl-entry" role="listitem">
+<span>SIA</span> 4008, 2025. <em><span>SIA</span> 4008:2025 <span>Leitungskataster</span> - <span>Wegleitung</span> zur <span>Norm SIA</span> 405</em>.
+</div>
+<div id="ref-sia2025SIA4052025" class="csl-entry" role="listitem">
+<span>SIA</span> 405, 2025. <em><span>SIA</span> 405:2025 <span>Geodaten</span> zu <span>Ver-</span> und <span>Entsorgungsleitungen</span></em>.
+</div>
+</div>
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../docs/architecture.html" class="pagination-link" aria-label="Architecture">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Architecture</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../docs/configuration_schema.html" class="pagination-link" aria-label="Configuration">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Configuration</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>FHNW - Institut Digitales Bauen <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img src="./_img/by-nc-sa.png" class="light-content img-fluid" width="50" alt="CC BY-NC-SA"></a></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
