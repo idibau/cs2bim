@@ -99,13 +99,11 @@ CityGML supports different geometry types of GML. For the transformation of 3D c
 
 The conversion from the GML geometry type to the IFC geometry type is defined according to the following table:  
 
-| GML Geometry     | IFC Geometry     |
-| :--------------- | :--------------- |
-| Solid            | Brep             |
-| Polygon          | PolygonalFaceSet |
-| CompositeSolid   |                  |
-| CompositePolygon |                  |
-| Multisurface     |                  |
+| GML Geometry     | IFC Geometry    |
+|:-----------------|:----------------|
+| Solid            | Brep            |
+| CompositeSolid   | Brep            |
+| Multisurface     | Tessellation    |
 : CityGML geometry IFC mapping {#tbl-citygml-ifc-mapping}
 
 
