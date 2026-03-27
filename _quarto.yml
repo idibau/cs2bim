@@ -1,0 +1,54 @@
+project:
+  type: book
+
+book:
+  title: "cs2bim"
+  author: "FHNW Institut Digitales Bauen"
+  date: 2026-03-26
+  date-format: DD.MM.YYYY
+  downloads: [pdf]
+  sidebar:
+    collapse-level: 5   # to show a deep toc-hierarchy in the sidebar
+  page-footer: 
+    center: FHNW - Institut Digitales Bauen [![CC BY-NC-SA](./_img/by-nc-sa.png){width=50px .light-content}](https://creativecommons.org/licenses/by-nc-sa/4.0/){target="_blank"}
+  chapters:
+    - index.md
+    - part: Concepts
+      chapters:
+        - docs/concepts.md
+        - docs/mapping_conventions.md
+    - part: Application
+      chapters:
+#        - README.md
+        - docs/architecture.md
+        - docs/configuration_overview.md
+        - docs/configuration_schema.md
+        - docs/api.md
+  appendices:
+      - docs/references.qmd
+
+bibliography:
+  - docs/cs2bim.bib
+csl: docs/elsevier-harvard-idibau-2024-11-27.csl
+nocite: |   # to list all items from the bib file in the references site
+  @*        
+
+format:
+  html:
+    toc: true
+    toc-depth: 5   # to show a deep toc-hierarchy in the sidebar
+    theme:
+#      - flatly
+#      - cosmo
+#      - brand
+      - yeti
+    link-external-newwindow: true
+    
+  pdf:
+    documentclass: scrreprt
+    # toc-title: Inhaltsverzeichnis
+    # mainfont: "Arial"
+    # sansfont: "Arial"
+
+
+

@@ -1,0 +1,1 @@
+select ST_AsText(ST_CurveToLine(ST_GeomFromText(%(polygon)s, 2056), 1)) as wkt;

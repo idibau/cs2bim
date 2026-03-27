@@ -199,7 +199,7 @@ University of Applied Sciences and Arts Northwestern Switzerland, Institute of V
 
 Project head
 
-- Oliver Schneider
+- Prof. Oliver Schneider
 - Prof. Lukas Schildknecht
 
 Project staff

@@ -6,7 +6,7 @@ There is also a swagger documentation site documenting all endpoints: http://0.0
 
 ## Endpoints
 
-### 1. `POST /generate-model/`
+### `POST /generate-model/`
 
 **Description:** Starts the generation of a new IFC model.
 
@@ -26,7 +26,7 @@ There is also a swagger documentation site documenting all endpoints: http://0.0
 
 ---
 
-### 2. `GET /generation-state/{task_id}`
+### `GET /generation-state/{task_id}`
 
 **Description:** Retrieves the current state of a model generation task.
 
@@ -41,7 +41,7 @@ There is also a swagger documentation site documenting all endpoints: http://0.0
 
 ---
 
-### 3. `GET /generated-file/{task_id}`
+### `GET /generated-file/{task_id}`
 
 **Description:** Fetches the generated IFC file once the task is completed.
 
