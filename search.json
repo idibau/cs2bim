@@ -275,7 +275,7 @@
     "href": "docs/configuration_schema.html#buildingpartconfig",
     "title": "5  Configuration",
     "section": "6.5 BuildingPartConfig",
-    "text": "6.5 BuildingPartConfig\nBuilding part configuration for building feature type\n\n6.5.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nType of entity\n\n\ngeometry_mapping\nobject or null\n\nGmlGeometryMapping\nnull\nGeometry mapping for the building part\n\n\ncolor\nobject\n\nColor\n\"white\"\nColor assigned to the building part",
+    "text": "6.5 BuildingPartConfig\nBuilding part configuration for building feature type\n\n6.5.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nName of entity according to IFC schema, e.g. ‘IfcWall’\n\n\ngeometry_mapping\nobject or null\n\nGmlGeometryMapping\nnull\nGeometry mapping for the building part\n\n\ncolor\nobject\n\nColor\n\"white\"\nColor assigned to the building part",
     "crumbs": [
       "Application",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
@@ -341,7 +341,7 @@
     "href": "docs/configuration_schema.html#coordinatereferencesystem",
     "title": "5  Configuration",
     "section": "6.11 CoordinateReferenceSystem",
-    "text": "6.11 CoordinateReferenceSystem\nCoordinate reference system for IFC export\n\n6.11.0.1 Type: object\n\n\n\n\n\n\n\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nepsg_code\nstring\n✅\nstring\nEPSG code for the coordinate reference system\n\n\ndescription\nstring\n✅\nstring\nDescription of the coordinate reference system\n\n\ngeodetic_datum\nstring\n✅\nstring\nGeodetic datum for the coordinate reference system\n\n\nvertical_datum\nstring\n✅\nstring\nVertical datum for the coordinate r§eference system",
+    "text": "6.11 CoordinateReferenceSystem\nCoordinate reference system for IFC export\n\n6.11.0.1 Type: object\n\n\n\n\n\n\n\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nepsg_code\nstring\n✅\nstring\nEPSG code for the coordinate reference system\n\n\ndescription\nstring\n✅\nstring\nDescription of the coordinate reference system\n\n\ngeodetic_datum\nstring\n✅\nstring\nGeodetic datum for the coordinate reference system\n\n\nvertical_datum\nstring\n✅\nstring\nVertical datum for the coordinate reference system",
     "crumbs": [
       "Application",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
@@ -385,7 +385,7 @@
     "href": "docs/configuration_schema.html#extrusionentityconfig",
     "title": "5  Configuration",
     "section": "6.15 ExtrusionEntityConfig",
-    "text": "6.15 ExtrusionEntityConfig\nEntity mapping configuration for extrusion feature type\n\n6.15.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nType of entity\n\n\nattributes\narray\n\nExtrusionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nExtrusionPropertyConfig\n[]\nList of property mappings",
+    "text": "6.15 ExtrusionEntityConfig\nEntity mapping configuration for extrusion feature type\n\n6.15.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nName of entity according to IFC schema, e.g. ‘IfcWall’\n\n\nattributes\narray\n\nExtrusionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nExtrusionPropertyConfig\n[]\nList of property mappings",
     "crumbs": [
       "Application",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
@@ -506,7 +506,7 @@
     "href": "docs/configuration_schema.html#groupentityconfig",
     "title": "5  Configuration",
     "section": "6.26 GroupEntityConfig",
-    "text": "6.26 GroupEntityConfig\nEntity mapping configuration for group\n\n6.26.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nType of entity\n\n\nattributes\narray\n\nAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nPropertyConfig\n[]\nList of property mappings",
+    "text": "6.26 GroupEntityConfig\nEntity mapping configuration for group\n\n6.26.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nName of entity according to IFC schema, e.g. ‘IfcWall’\n\n\nattributes\narray\n\nAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nPropertyConfig\n[]\nList of property mappings",
     "crumbs": [
       "Application",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
@@ -561,7 +561,7 @@
     "href": "docs/configuration_schema.html#projectionentityconfig",
     "title": "5  Configuration",
     "section": "6.31 ProjectionEntityConfig",
-    "text": "6.31 ProjectionEntityConfig\nEntity mapping configuration for projection feature type\n\n6.31.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nType of entity\n\n\nattributes\narray\n\nProjectionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nProjectionPropertyConfig\n[]\nList of property mappings",
+    "text": "6.31 ProjectionEntityConfig\nEntity mapping configuration for projection feature type\n\n6.31.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nName of entity according to IFC schema, e.g. ‘IfcWall’\n\n\nattributes\narray\n\nProjectionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nProjectionPropertyConfig\n[]\nList of property mappings",
     "crumbs": [
       "Application",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
