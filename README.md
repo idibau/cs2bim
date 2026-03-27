@@ -17,6 +17,9 @@
   * [References](#references)
 <!-- TOC -->
 
+> [!NOTE] 
+> See the detailed documentation [here](idibau.github.io/cs2bim/).
+
 ## Project description
 
 The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launched a research project *Cadastral
