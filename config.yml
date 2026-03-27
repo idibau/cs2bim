@@ -1,0 +1,1134 @@
+################# general ###################
+logging_level: INFO
+
+########### redis configuration #############
+redis:
+  host: "redis"
+  port: 6379
+  db:
+    celery_broker: "0"
+    celery_backend: "1"
+    file_cache: "2"
+  global_keyprefix: "prefix"
+
+############ i18n configuration #############
+i18n:
+  de: "/workspace/i18n/de.yml"
+  fr: "/workspace/i18n/fr.yml"
+  it: "/workspace/i18n/it.yml"
+
+########## postgis configuration ############
+db:
+  dbname: "cs2bim"
+  user: "postgres"
+  host: "host.docker.internal"
+  port: 5432
+  password: "?"
+
+########## stac configuration ############
+stac:
+  dtm_items_url: "https://data.geo.admin.ch/api/stac/v1/collections/ch.swisstopo.swissalti3d/items"
+  building_items_url: "https://data.geo.admin.ch/api/stac/v1/collections/ch.swisstopo.swissbuildings3d_3_0/items"
+
+############# tin configuration #############
+tin:
+  grid_size: 2.0
+  max_height_error: 0.05
+
+############# ifc configuration #############
+ifc:
+  author: "Geodienste"
+  version: "1.0"
+  application_name: "cs2bim"
+  project_name: "Geobasisdaten"
+  geo_referencing: LO_GEO_REF_50
+  coordinate_reference_system:
+    epsg_code: "EPSG:2056"
+    description: "CH1903+ / LV95"
+    geodetic_datum: "CH1903+"
+    vertical_datum: "LN02"
+  projection_feature_types:
+    - name: "liegenschaft"
+      sql_path: "/workspace/sql/av_liegenschaft.sql"
+      entity_mapping:
+        entity: "IfcGeographicElement"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "nummer"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_LIEGENSCHAFT"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "CHGeodienste_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
+          - property: "NBIdent"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "nbident"
+          - property: "Nummer"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "nummer"
+          - property: "EGRIS_EGRID"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "egris_egrid"
+          - property: "Gueltigkeit"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "gueltigkeit"
+          - property: "Vollstaendigkeit"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "vollstaendigkeit"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_LIEGENSCHAFT"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_LIEGENSCHAFT"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Liegenschaft"
+      group_mapping:
+        - type: STATIC
+          expression: "Amtliche Vermessung.Liegenschaften.Liegenschaft"
+      color:
+        r: 0.31
+        g: 0.67
+        b: 0.04
+        a: 0.85
+    - name: "selbstrecht"
+      sql_path: "/workspace/sql/av_selbstrecht.sql"
+      entity_mapping:
+        entity: "IfcGeographicElement"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "nummer"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_SELBSTRECHT"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "CHGeodienste_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
+          - property: "NBIdent"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "nbident"
+          - property: "Nummer"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "nummer"
+          - property: "EGRIS_EGRID"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "egris_egrid"
+          - property: "Gueltigkeit"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "gueltigkeit"
+          - property: "Vollstaendigkeit"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "vollstaendigkeit"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_SELBSTRECHT"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_SELBSTRECHT"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "SelbstRecht"
+      group_mapping:
+        - type: STATIC
+          expression: "Amtliche Vermessung.Liegenschaften.SelbstRecht"
+    - name: "bergwerk"
+      sql_path: "/workspace/sql/av_bergwerk.sql"
+      entity_mapping:
+        entity: "IfcGeographicElement"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "nummer"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BERGWERK"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "CHGeodienste_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
+          - property: "NBIdent"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "nbident"
+          - property: "Nummer"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "nummer"
+          - property: "EGRIS_EGRID"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "egris_egrid"
+          - property: "Gueltigkeit"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "gueltigkeit"
+          - property: "Vollstaendigkeit"
+            property_set: "CH_AV_Grundstueck"
+            source:
+              type: SQL
+              expression: "vollstaendigkeit"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BERGWERK"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BERGWERK"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bergwerk"
+      group_mapping:
+        - type: STATIC
+          expression: "Amtliche Vermessung.Liegenschaften.Bergwerk"
+    - name: "bodenbedeckung_befestigt"
+      sql_path: "/workspace/sql/av_bodenbedeckung_befestigt.sql"
+      entity_mapping:
+        entity: "IfcGeographicElement"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "art"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "CHGeodienste_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
+          - property: "Art"
+            property_set: "CH_AV_Bodenbedeckung"
+            source:
+              type: SQL
+              expression: "art"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bodenbedeckung"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+      color:
+        r: 0.50
+        g: 0.50
+        b: 0.50
+        a: 0.85
+    - name: "bodenbedeckung_bestockt"
+      sql_path: "/workspace/sql/av_bodenbedeckung_bestockt.sql"
+      entity_mapping:
+        entity: "IfcGeographicElement"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "art"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "CHGeodienste_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
+          - property: "Art"
+            property_set: "CH_AV_Bodenbedeckung"
+            source:
+              type: SQL
+              expression: "art"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bodenbedeckung"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+      color:
+        r: 0.15
+        g: 0.50
+        b: 0.25
+        a: 0.85
+    - name: "bodenbedeckung_gebaeude"
+      sql_path: "/workspace/sql/av_bodenbedeckung_gebaeude.sql"
+      entity_mapping:
+        entity: "IfcGeographicElement"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "art"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "CHGeodienste_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
+          - property: "Nummer"
+            property_set: "CH_AV_Gebaeudenummer"
+            source:
+              type: SQL
+              expression: "nummer"
+          - property: "GWR_EGID"
+            property_set: "CH_AV_Gebaeudenummer"
+            source:
+              type: SQL
+              expression: "gwr_egid"
+          - property: "Art"
+            property_set: "CH_AV_Bodenbedeckung"
+            source:
+              type: SQL
+              expression: "art"
+          - property: "Name"
+            property_set: "CH_AV_Objektname"
+            source:
+              type: SQL
+              expression: "gebaeudename"
+          - property: "StrasseHausnummer"
+            property_set: "CH_AV_Gebaeudeadresse"
+            source:
+              type: SQL
+              expression: "strasse_hausnummer"
+          - property: "OrtschaftsName"
+            property_set: "CH_AV_Gebaeudeadresse"
+            source:
+              type: SQL
+              expression: "ort"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bodenbedeckung"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+      color:
+        r: 0.95
+        g: 0.20
+        b: 0.15
+        a: 0.85
+    - name: "bodenbedeckung_gewaesser"
+      sql_path: "/workspace/sql/av_bodenbedeckung_gewaesser.sql"
+      entity_mapping:
+        entity: "IfcGeographicElement"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "art"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "CHGeodienste_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
+          - property: "Art"
+            property_set: "CH_AV_Bodenbedeckung"
+            source:
+              type: SQL
+              expression: "art"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bodenbedeckung"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+      color:
+        r: 0.16
+        g: 0.50
+        b: 0.95
+        a: 0.85
+    - name: "bodenbedeckung_humusiert"
+      sql_path: "/workspace/sql/av_bodenbedeckung_humusiert.sql"
+      entity_mapping:
+        entity: "IfcGeographicElement"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "art"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "CHGeodienste_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
+          - property: "Art"
+            property_set: "CH_AV_Bodenbedeckung"
+            source:
+              type: SQL
+              expression: "art"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bodenbedeckung"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+      color:
+        r: 0.20
+        g: 0.90
+        b: 0.40
+        a: 0.85
+    - name: "bodenbedeckung_vegetationslos"
+      sql_path: "/workspace/sql/av_bodenbedeckung_vegetationslos.sql"
+      entity_mapping:
+        entity: "IfcGeographicElement"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "art"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+        properties:
+          - property: "VollstaendigeGeometrie"
+            property_set: "CHGeodienste_Metadaten"
+            source:
+              type: SQL
+              expression: "complete_geometry"
+          - property: "Art"
+            property_set: "CH_AV_Bodenbedeckung"
+            source:
+              type: SQL
+              expression: "art"
+      entity_type_mapping:
+        attributes:
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ElementType"
+            source:
+              type: STATIC
+              expression: "AV_BODENBEDECKUNG"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Amtliche Vermessung"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Bodenbedeckung"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+      color:
+        r: 0.95
+        g: 0.61
+        b: 0.16
+        a: 0.85
+  building_feature_types:
+    - name: "all"
+      sql_path: "/workspace/sql/egid.sql"
+      egid_xpath: ".//gen:intAttribute[@name='EGID']/gen:value"
+      entity_mapping:
+        entity: "IfcBuilding"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: CITY_GML
+              expression: ".//gen:intAttribute[@name='EGID']/gen:value"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "3DSM_BUILDING_LOD2"
+        properties:
+          - property: "EGID"
+            property_set: "CHSWISSTOPO_SwissBuildings3d"
+            source:
+              type: CITY_GML
+              expression: ".//gen:intAttribute[@name='EGID']/gen:value"
+          - property: "Erstellung_Jahr"
+            property_set: "CHSWISSTOPO_SwissBuildings3d"
+            source:
+              type: CITY_GML
+              expression: ".//gen:intAttribute[@name='ERSTELLUNG_JAHR']/gen:value"
+          - property: "Erstellung_Monat"
+            property_set: "CHSWISSTOPO_SwissBuildings3d"
+            source:
+              type: CITY_GML
+              expression: ".//gen:intAttribute[@name='ERSTELLUNG_MONAT']/gen:value"
+        building_parts:
+          - entity: "IfcBuildingElementProxy"
+            geometry_mapping:
+              xpath: ".//bldg:lod2Solid/gml:Solid[@srsName='EPSG:2056' and @srsDimension='3']"
+              geometry: SOLID
+            color:
+              r: 1.00
+              g: 1.00
+              b: 1.00
+              a: 0.2
+          - entity: "IfcWall"
+            geometry_mapping:
+              xpath: ".//bldg:boundedBy/bldg:WallSurface/bldg:lod2MultiSurface/gml:MultiSurface"
+              geometry: MULTI_SURFACE
+            color:
+              r: 1.00
+              g: 1.00
+              b: 1.00
+              a: 0.00
+          - entity: "IfcRoof"
+            geometry_mapping:
+              xpath: ".//bldg:boundedBy/bldg:RoofSurface/bldg:lod2MultiSurface/gml:MultiSurface"
+              geometry: MULTI_SURFACE
+            color:
+              r: 1.00
+              g: 0.8
+              b: 0.8
+              a: 0.00
+          - entity: "IfcSlab"
+            geometry_mapping:
+              xpath: ".//bldg:boundedBy/bldg:GroundSurface/bldg:lod2MultiSurface/gml:MultiSurface"
+              geometry: MULTI_SURFACE
+            color:
+              r: 0.8
+              g: 0.8
+              b: 1.00
+              a: 0.00
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "3D-Stadtmodell"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Gebaeude"
+      group_mapping:
+        - type: STATIC
+          expression: "3D-Stadtmodell.Gebaeude"
+  extrusion_feature_types:
+    - name: "lklinie"
+      sql_path: "/workspace/sql/lk_map_linie.sql"
+      entity_mapping:
+        entity: "IfcDistributionFlowElement"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "name"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: SQL
+              expression: "objektart"
+        properties:
+          - property: "Lagebestimmung"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "lagebestimmung"
+          - property: "Hoehenbestimmung"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "hoehenbestimmung"
+          - property: "Status"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "status"
+          - property: "Eigentuemer"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "eigentuemer"
+          - property: "Objektart"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "objektart"
+          - property: "Breite"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "width"
+          - property: "Breite_Annahme"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "breite_annahme"
+          - property: "Profiltyp"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "profiltyp"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Leitungskataster"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Leitungskataster"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+    - name: "lkpunkt"
+      sql_path: "/workspace/sql/lk_map_punkt.sql"
+      entity_mapping:
+        entity: "IfcDistributionFlowElement"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "name"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: SQL
+              expression: "objektart"
+        properties:
+          - property: "Lagebestimmung"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "lagebestimmung"
+          - property: "Hoehenbestimmung"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "hoehenbestimmung"
+          - property: "Status"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "status"
+          - property: "Eigentuemer"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "eigentuemer"
+          - property: "Objektart"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "objektart"
+          - property: "Dimension1"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "width"
+          - property: "Dimension2"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "dimension2"
+          - property: "Dimension_Annahme"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "dimension_annahme"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Leitungskataster"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Leitungskataster"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+    - name: "lkflaeche"
+      sql_path: "/workspace/sql/lk_map_flaeche.sql"
+      entity_mapping:
+        entity: "IfcDistributionFlowElement"
+        attributes:
+          - attribute: "Name"
+            source:
+              type: SQL
+              expression: "name"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: SQL
+              expression: "objektart"
+        properties:
+          - property: "Lagebestimmung"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "lagebestimmung"
+          - property: "Hoehenbestimmung"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "hoehenbestimmung"
+          - property: "Status"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "status"
+          - property: "Eigentuemer"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "eigentuemer"
+          - property: "Objektart"
+            property_set: "CHSIA_LKMap"
+            source:
+              type: SQL
+              expression: "objektart"
+      spatial_structure_mapping:
+        attributes:
+          - attribute: "CompositionType"
+            source:
+              type: STATIC
+              expression: "COMPLEX"
+          - attribute: "PredefinedType"
+            source:
+              type: STATIC
+              expression: "USERDEFINED"
+          - attribute: "ObjectType"
+            source:
+              type: STATIC
+              expression: "Leitungskataster"
+          - attribute: "Name"
+            source:
+              type: STATIC
+              expression: "Leitungskataster"
+      group_mapping:
+        - type: SQL
+          expression: "group"
+  groups:
+    - path: "3D-Stadtmodell.Gebaeude"
+      entity_mapping:
+        entity: "IfcBuiltSystem"
+        attributes:
+          - attribute: "PredefinedType"
+            value: "USERDEFINED"
+          - attribute: "ObjectType"
+            value: "Gebaeude"
+    - path: "Leitungskataster.Abwasser"
+      entity_mapping:
+        entity: "IfcDistributionSystem"
+        attributes:
+          - attribute: "PredefinedType"
+            value: "SEWAGE"
+          - attribute: "ObjectType"
+            value: "Abwasser"
+    - path: "Leitungskataster.Elektrizitaet"
+      entity_mapping:
+        entity: "IfcDistributionSystem"
+        attributes:
+          - attribute: "PredefinedType"
+            value: "ELECTRICAL"
+          - attribute: "ObjectType"
+            value: "Elektrizitaet"
+    - path: "Leitungskataster.Fernwirkkabel"
+      entity_mapping:
+        entity: "IfcDistributionSystem"
+        attributes:
+          - attribute: "PredefinedType"
+            value: "CONTROL"
+          - attribute: "ObjectType"
+            value: "Fernwirkkabel"
+    - path: "Leitungskataster.Gas"
+      entity_mapping:
+        entity: "IfcDistributionSystem"
+        attributes:
+          - attribute: "PredefinedType"
+            value: "GAS"
+          - attribute: "ObjectType"
+            value: "Gas"
+    - path: "Leitungskataster.Kommunikation"
+      entity_mapping:
+        entity: "IfcDistributionSystem"
+        attributes:
+          - attribute: "PredefinedType"
+            value: "COMMUNICATION"
+          - attribute: "ObjectType"
+            value: "Kommunikation"
+    - path: "Leitungskataster.Schutzrohr"
+      entity_mapping:
+        entity: "IfcDistributionSystem"
+        attributes:
+          - attribute: "PredefinedType"
+            value: "USERDEFINED"
+          - attribute: "ObjectType"
+            value: "Schutzrohr"
+    - path: "Leitungskataster.Waerme"
+      entity_mapping:
+        entity: "IfcDistributionSystem"
+        attributes:
+          - attribute: "PredefinedType"
+            value: "HEATING"
+          - attribute: "ObjectType"
+            value: "Waerme"
+    - path: "Leitungskataster.Wasser"
+      entity_mapping:
+        entity: "IfcDistributionSystem"
+        attributes:
+          - attribute: "PredefinedType"
+            value: "WATERSUPPLY"
+          - attribute: "ObjectType"
+            value: "Wasser"
+    - path: "Leitungskataster.weitere Medien"
+      entity_mapping:
+        entity: "IfcDistributionSystem"
+        attributes:
+          - attribute: "PredefinedType"
+            value: "USERDEFINED"
+          - attribute: "ObjectType"
+            value: "weitereMedien"
