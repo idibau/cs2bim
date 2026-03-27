@@ -24,5 +24,4 @@ sync-to-github-pages:
   script:
     - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/idibau/cs2bim.git || true
     - git fetch origin gh-pages
-    - git checkout gh-pages
-    - git push github gh-pages
+    - git push github refs/remotes/origin/gh-pages:refs/heads/gh-pages
