@@ -31,7 +31,7 @@ class ExtrusionProcessor:
         feature_types = {ft.name: ft for ft in config.ifc.extrusion_feature_types if
                          not feature_types or ft.name in feature_types}
         if not feature_types:
-            logger.info("no building feature types configured")
+            logger.info("no extrusion feature types configured")
             return {}
 
         extrusions_by_key = {}
@@ -103,7 +103,7 @@ class ExtrusionProcessor:
                 self.add_properties(spatial_structure, feature_type.spatial_structure_mapping.properties, row)
                 extrusion.spatial_structure = spatial_structure
 
-                if not feature_type_key in extrusions_by_key:
+                if feature_type_key not in extrusions_by_key:
                     extrusions_by_key[feature_type_key] = []
                 extrusions_by_key[feature_type_key].append(extrusion)
         return extrusions_by_key

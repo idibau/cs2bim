@@ -25,18 +25,17 @@ class Solid(GmlGeometry):
                 composite_surface.from_gml(composite_surface_gml, project_origin)
                 self.interior.append(composite_surface)
 
+    def create_ifc_brep(self, ifc_file: IfcFile, ifc_style: entity_instance) -> entity_instance:
+        exterior_ifc_faces = self.exterior.create_ifc_faces(ifc_file)
+        interior_ifc_faces_list = [cs.create_ifc_faces(ifc_file) for cs in self.interior]
+        if interior_ifc_faces_list:
+            ifc_brep = ifc_file.create_ifc_faceted_brep_with_voids(exterior_ifc_faces, interior_ifc_faces_list)
+        else:
+            ifc_brep = ifc_file.create_ifc_faceted_brep(exterior_ifc_faces)
+        ifc_file.create_ifc_styled_item(ifc_brep, ifc_style)
+        return ifc_brep
+
     def map_to_ifc(self, ifc_file: IfcFile, ifc_style: entity_instance,
                    ifc_representation_sub_context: entity_instance) -> entity_instance:
-        exterior_ifc_faces = self.exterior.create_ifc_faces(ifc_file)
-        interior_ifc_faces_list = []
-        for composite_surface in self.interior:
-            interior_ifc_faces = composite_surface.create_ifc_faces(ifc_file)
-            interior_ifc_faces_list.append(interior_ifc_faces)
-        if interior_ifc_faces_list:
-            ifc_faceted_brep = ifc_file.create_ifc_faceted_brep_with_voids(exterior_ifc_faces, interior_ifc_faces_list)
-        else:
-            ifc_faceted_brep = ifc_file.create_ifc_faceted_brep(exterior_ifc_faces)
-        ifc_file.create_ifc_styled_item(ifc_faceted_brep, ifc_style)
-        ifc_product_definition_shape = ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context,
-                                                                                    "Brep", [ifc_faceted_brep])
-        return ifc_product_definition_shape
+        ifc_brep = self.create_ifc_brep(ifc_file, ifc_style)
+        return ifc_file.create_ifc_product_definition_shape(ifc_representation_sub_context, "Brep", [ifc_brep])

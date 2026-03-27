@@ -62,6 +62,8 @@ class Grid:
         """Calculates interpolated height for a vertex anywhere on the grid."""
         i = np.searchsorted(self.x_coords, vertex[0], side='right') - 1
         j = np.searchsorted(self.y_coords, vertex[1], side='right') - 1
+        if i < 0 or i >= len(self.x_coords) - 1 or j < 0 or j >= len(self.y_coords) - 1:
+            raise Exception(f"vertex {vertex} is outside the grid bounds")
 
         i00 = self.grid[j, i]
         i10 = self.grid[j, i + 1]

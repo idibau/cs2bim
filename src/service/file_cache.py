@@ -1,8 +1,9 @@
 import json
 import logging
-import redis
 import time
 from pathlib import Path
+
+import redis
 
 from config.configuration import config
 
@@ -92,6 +93,3 @@ class FileCache:
                 self.file_cache.delete(key)
                 Path(entry.file_path).unlink(missing_ok=True)
         return None
-
-    def clean_up(self):
-        pass  # TODO

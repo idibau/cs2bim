@@ -1,5 +1,3 @@
-![status: WIP](https://img.shields.io/badge/status-WIP-yellow)
-
 # cs2bim
 
 <!-- TOC -->
@@ -18,6 +16,9 @@
   * [Contact](#contact)
   * [References](#references)
 <!-- TOC -->
+
+> [!NOTE] 
+> See the detailed documentation [here](https://idibau.github.io/cs2bim/).
 
 ## Project description
 
@@ -65,12 +66,14 @@ technical parameters and options.
 To generate the document "configuration schema" do the following:
 
 Generate json schema:
+
 ```
 with open("configuration.json", "w") as stream:
     json.dump(Configuration.model_json_schema(), stream, indent=4)
 ```
 
 Generate markdown with [jsonschema-markdown](https://pypi.org/project/jsonschema-markdown/):
+
 ```
 jsonschema-markdown configuration.json > configuration_schema.md --no-empty-columns
 ```
@@ -122,6 +125,8 @@ started). For the program to work, these files must be provided.
 
 All generated ifc files are stored inside a docker volume called "ifc".
 All log files are stored inside a docker volume called "logs".
+All fetched data is stored inside a docker volume called "cache". Every file has time to live of 1 day. Redis
+is used to keep track of the cached files.
 
 ## Getting started (Development)
 
@@ -197,7 +202,7 @@ University of Applied Sciences and Arts Northwestern Switzerland, Institute of V
 
 Project head
 
-- Oliver Schneider
+- Prof. Oliver Schneider
 - Prof. Lukas Schildknecht
 
 Project staff

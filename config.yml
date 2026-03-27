@@ -1052,7 +1052,7 @@ ifc:
         - type: SQL
           expression: "group"
   groups:
-    - path: "Amtliche Vermessung.Gebaeude"
+    - path: "3D-Stadtmodell.Gebaeude"
       entity_mapping:
         entity: "IfcBuiltSystem"
         attributes:

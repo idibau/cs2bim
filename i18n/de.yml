@@ -91,4 +91,9 @@ abbaudeponie: "Abbau_Deponie"
 uebrigevegetationslose: "uebrige_vegetationslose"
 
 rechtskraeftig: "Rechtskraeftig"
-vollsteandig: "Vollsteandig"
+streitig: "Streitig"
+provisorisch: "Provisorisch"
+undefiniert: "Undefiniert"
+
+vollstaendig: "Vollstaendig"
+unvollstaendig: "Unvollstaendig"

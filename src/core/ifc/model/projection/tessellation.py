@@ -16,7 +16,7 @@ class Tessellation:
         for triangle in self.faces:
             triangle_indices = []
             for vertex in triangle:
-                if not vertex in vertices_dict:
+                if vertex not in vertices_dict:
                     vertices_dict[vertex] = len(vertices) + 1
                     vertices.append(vertex)
                 triangle_indices.append(vertices_dict[vertex])

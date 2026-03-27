@@ -14,6 +14,7 @@ from core.ifc.model.building.namespace import namespace
 from core.ifc.model.building.solid import Solid
 from core.ifc.model.element import Element
 from service.postgis_service import PostgisService
+from service.bounding_box import BoundingBox
 from service.stac_service import STACService
 
 logger = logging.getLogger(__name__)
@@ -33,7 +34,7 @@ class BuildingProcessor:
             return {}
 
         logger.info(f"fetch city gml files")
-        bounding_box = self.postgis_service.get_bounding_box([polygon])
+        bounding_box = BoundingBox.from_wkts([polygon])
         city_gmls = self.stac_service.fetch_city_gml_assets(bounding_box)
         logger.info(f"fetched {len(city_gmls)} city gml files")
 
@@ -47,10 +48,9 @@ class BuildingProcessor:
 
             for index, city_gml in enumerate(city_gmls):
                 logger.info(f"processing city gml {index + 1}/{len(city_gmls)}")
-                context_iter = etree.iterparse(city_gml, events=("end",),
-                                               tag="{http://www.opengis.net/citygml/building/2.0}Building")
-
                 for key, building_config in feature_types.items():
+                    context_iter = etree.iterparse(city_gml, events=("end",),
+                                                   tag="{http://www.opengis.net/citygml/building/2.0}Building")
                     for event, building_gml in context_iter:
                         value_elem = building_gml.find(building_config.egid_xpath, namespaces=namespace)
                         if value_elem is not None:
@@ -59,7 +59,7 @@ class BuildingProcessor:
                                 logger.debug(f"process building {egid}")
                                 building = self.create_building(building_gml, building_config, project_origin,
                                                                 element_rows_by_egid[egid])
-                                if not feature_type_key in buildings_by_key:
+                                if feature_type_key not in buildings_by_key:
                                     buildings_by_key[feature_type_key] = []
                                 buildings_by_key[feature_type_key].append(building)
                                 logger.debug(f"finished processing building")
