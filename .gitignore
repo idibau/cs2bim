@@ -11,4 +11,4 @@ __pycache__
 *.ifc
 /.quarto/
 **/*.quarto_ipynb
-/_book
+#/_book

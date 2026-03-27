@@ -34,9 +34,9 @@ Project team:
 - Lukas Schildknecht
 - Oliver Schneider
 - Joel Gschwind
-- Jonas Meyer  
+- Jonas Meyer
 - Christian Gamma
-
+  
 If you use this project for your research, please cite:
 
 ```

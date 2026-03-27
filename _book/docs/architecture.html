@@ -227,7 +227,17 @@ div.csl-indent {
   <li><a href="#system-architecture" id="toc-system-architecture" class="nav-link active" data-scroll-target="#system-architecture"><span class="header-section-number">3.1</span> System architecture</a>
   <ul>
   <li><a href="#context" id="toc-context" class="nav-link" data-scroll-target="#context"><span class="header-section-number">3.1.1</span> Context</a></li>
-  <li><a href="#internal" id="toc-internal" class="nav-link" data-scroll-target="#internal"><span class="header-section-number">3.1.2</span> Internal</a></li>
+  <li><a href="#internal" id="toc-internal" class="nav-link" data-scroll-target="#internal"><span class="header-section-number">3.1.2</span> Internal</a>
+  <ul>
+  <li><a href="#services" id="toc-services" class="nav-link" data-scroll-target="#services"><span class="header-section-number">3.1.2.1</span> Services</a>
+  <ul class="collapse">
+  <li><a href="#api" id="toc-api" class="nav-link" data-scroll-target="#api"><span class="header-section-number">3.1.2.1.1</span> api</a></li>
+  <li><a href="#worker" id="toc-worker" class="nav-link" data-scroll-target="#worker"><span class="header-section-number">3.1.2.1.2</span> worker</a></li>
+  <li><a href="#redis" id="toc-redis" class="nav-link" data-scroll-target="#redis"><span class="header-section-number">3.1.2.1.3</span> redis</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#docker-volumes" id="toc-docker-volumes" class="nav-link" data-scroll-target="#docker-volumes"><span class="header-section-number">3.1.3</span> Docker Volumes</a></li>
+  <li><a href="#volume-mappings" id="toc-volume-mappings" class="nav-link" data-scroll-target="#volume-mappings"><span class="header-section-number">3.1.4</span> Volume Mappings</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -259,16 +269,20 @@ div.csl-indent {
 <section id="context" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="context"><span class="header-section-number">3.1.1</span> Context</h3>
 <p>The service cs2bim is designed with the following conceptual components:</p>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="../uploads/system-architecture-context.jpg" class="img-fluid figure-img" style="width:65.0%"></p>
-<figcaption>CS2BIM System Architecture</figcaption>
+<div id="fig-system-architecture-context" class="quarto-float quarto-figure quarto-figure-left anchored" data-fig-align="left">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-system-architecture-context-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../uploads/system-architecture-context.jpg" class="img-fluid quarto-figure quarto-figure-left figure-img" style="width:65.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-system-architecture-context-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: CS2BIM System Architecture
+</figcaption>
 </figure>
 </div>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 6%">
-<col style="width: 93%">
+<col style="width: 7%">
+<col style="width: 92%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -303,11 +317,15 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<p>The following architectural enhancements are already being discussed and proposed as potential next steps for the further development and improvement of the service:</p>
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="../uploads/system-architecture-context-future.jpg" class="img-fluid figure-img" style="width:65.0%"></p>
-<figcaption>CS2BIM System Architecture, look ahead</figcaption>
+<p><br> <br> The following architectural enhancements are already being discussed and <strong><em>proposed as potential next steps</em></strong> for the further development and improvement of the service:</p>
+<div id="fig-system-architecture-context-future" class="quarto-float quarto-figure quarto-figure-left anchored" data-fig-align="left">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-system-architecture-context-future-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../uploads/system-architecture-context-future.jpg" class="img-fluid quarto-figure quarto-figure-left figure-img" style="width:65.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-system-architecture-context-future-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: CS2BIM System Architecture, look ahead
+</figcaption>
 </figure>
 </div>
 <ul>
@@ -322,12 +340,53 @@ div.csl-indent {
 </section>
 <section id="internal" class="level3" data-number="3.1.2">
 <h3 data-number="3.1.2" class="anchored" data-anchor-id="internal"><span class="header-section-number">3.1.2</span> Internal</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../uploads/system-architecture-2.jpg" class="img-fluid figure-img"></p>
-<figcaption>CS2BIM System Architecture</figcaption>
+<div id="fig-system-architecture-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-system-architecture-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../uploads/system-architecture-2.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-system-architecture-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: CS2BIM System Architecture
+</figcaption>
 </figure>
 </div>
+<section id="services" class="level4" data-number="3.1.2.1">
+<h4 data-number="3.1.2.1" class="anchored" data-anchor-id="services"><span class="header-section-number">3.1.2.1</span> Services</h4>
+<p>The system architecture is set up using three Docker services.</p>
+<p>The api and worker services are built from a custom Docker image based on <code>python:3.10</code>, which contains the application code base and all required dependencies. Both services share the same image but use different entry points. The redis service is created using the standard <code>redis:7</code> image.</p>
+<section id="api" class="level5" data-number="3.1.2.1.1">
+<h5 data-number="3.1.2.1.1" class="anchored" data-anchor-id="api"><span class="header-section-number">3.1.2.1.1</span> api</h5>
+<p>The entry point for this service is the <code>api.app</code> module. It is responsible for routing user requests. There are three endpoints that let the user interact with the application:</p>
+<ul>
+<li><code>POST /generate-model</code> – triggers the generation of an IFC model. Returns a <code>task_id</code> that can be used to track progress and retrieve the result.</li>
+<li><code>GET /generation-state/{task_id}</code> – returns the current state of a generation task.</li>
+<li><code>GET /generated-file/{task_id}</code> – returns the generated IFC file once the task is completed.</li>
+</ul>
+<p>The service uses FastAPI as the web framework and Uvicorn as the ASGI server to host it.</p>
+</section>
+<section id="worker" class="level5" data-number="3.1.2.1.2">
+<h5 data-number="3.1.2.1.2" class="anchored" data-anchor-id="worker"><span class="header-section-number">3.1.2.1.2</span> worker</h5>
+<p>The entry point for the worker service is the <code>worker.app</code> module. The service runs a Celery instance that manages and executes IFC model generation tasks. It connects to the required data sources (PostGIS database and SwissTopo STAC API) that provide the data needed for model generation.</p>
+</section>
+<section id="redis" class="level5" data-number="3.1.2.1.3">
+<h5 data-number="3.1.2.1.3" class="anchored" data-anchor-id="redis"><span class="header-section-number">3.1.2.1.3</span> redis</h5>
+<p>The redis service serves two purposes: as the message broker for the worker service (managing task queues between api and worker) and as the cache management layer, tracking which files are cached and whether cached files need to be refreshed.</p>
+</section>
+</section>
+</section>
+<section id="docker-volumes" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="docker-volumes"><span class="header-section-number">3.1.3</span> Docker Volumes</h3>
+<p>To store data produced during run-time, the docker-compose file defines four Docker volumes:</p>
+<ul>
+<li><strong>redis_data</strong> – persists all data stored in Redis. Prevents data loss on service rebuilds.</li>
+<li><strong>ifc</strong> – stores generated IFC files.</li>
+<li><strong>logs</strong> – stores log files for the api and worker services.</li>
+<li><strong>cache</strong> – stores cached data fetched from external data sources.</li>
+</ul>
+</section>
+<section id="volume-mappings" class="level3" data-number="3.1.4">
+<h3 data-number="3.1.4" class="anchored" data-anchor-id="volume-mappings"><span class="header-section-number">3.1.4</span> Volume Mappings</h3>
+<p>All configurable files are mapped from the host machine into the containers. This includes translation files (i18n), SQL query files, and the application configuration (<code>config.yml</code>). This way they can be easily edited without rebuilding the containers.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">

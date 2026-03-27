@@ -6,7 +6,7 @@
 
 The service cs2bim is designed with the following conceptual components:
 
-![CS2BIM System Architecture](../uploads/system-architecture-context.jpg){fig-align="left" width=65%}
+![CS2BIM System Architecture](../uploads/system-architecture-context.jpg){#fig-system-architecture-context fig-align="left" width=65%}
 
 | Component   | Description                                                                                                                                              |
 |-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -17,10 +17,13 @@ The service cs2bim is designed with the following conceptual components:
 | REST API    | REST API to interact with cs2bim: Start processing, get status of processing, get generated IFC file.                                                    |
 | ili2pg      | External component to transform INTERLIS data into PostGIS. This must be done as a standalone pre process.                                               |
 
-The following architectural enhancements are already being discussed and proposed as potential next steps for the
+  
+<br>
+<br>
+The following architectural enhancements are already being discussed and ***proposed as potential next steps*** for the
 further development and improvement of the service:
 
-![CS2BIM System Architecture, look ahead](../uploads/system-architecture-context-future.jpg){fig-align="left" width=65%}
+![CS2BIM System Architecture, look ahead](../uploads/system-architecture-context-future.jpg){#fig-system-architecture-context-future fig-align="left" width=65%}
 
 - Geopackage as additional data source format for GIS feature types.
     - Geopackage files could be stored locally (on the server) or could be accessed via STAC API
@@ -32,7 +35,7 @@ intended.
 
 ### Internal
 
-![CS2BIM System Architecture](../uploads/system-architecture-2.jpg)
+![CS2BIM System Architecture](../uploads/system-architecture-2.jpg){#fig-system-architecture-2}
 
 #### Services
 
