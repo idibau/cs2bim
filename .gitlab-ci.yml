@@ -13,6 +13,7 @@ sync-to-github:
   only:
     - main
     - develop
+    - gh-pages
   script:
     - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/idibau/cs2bim.git || true
     - git push github HEAD:${CI_COMMIT_BRANCH}
