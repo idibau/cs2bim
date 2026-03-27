@@ -5,6 +5,7 @@ __pycache__
 /cache
 /ifc
 /logs
+/_book
 
 # files
 *.stl
