@@ -18,7 +18,7 @@
 <!-- TOC -->
 
 > [!NOTE] 
-> See the detailed documentation [here](idibau.github.io/cs2bim/).
+> See the detailed documentation [here](https://idibau.github.io/cs2bim/).
 
 ## Project description
 
