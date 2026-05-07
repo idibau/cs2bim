@@ -20,9 +20,12 @@ The source code is available on [github](https://github.com/idibau/cs2bim/)
 
 
 ## Project
-This application was originally developed as part of the **cs2bim** project. The project has been launched by the Conference of Cantonal Geoinformation and Cadastral Offices (KGK) as *Cadastral Surveying Data to Building Information Modeling (CS2BIM)*. The _Institute of Virtual Design and Construction_ and the
-_Institute of Geomatics_ at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed the service 
-based on open source libraries. 
+This application was originally developed as part of the **cs2bim** project. The project has been launched by the Conference of Cantonal Geoinformation and Cadastral Offices (KGK) as *Cadastral Surveying Data to Building Information Modeling (CS2BIM)*.  
+The project is part of the initiative of [SGS/ Geostandards.ch](https://geostandards.ch/).  
+   
+![Geostandards.ch](uploads/logo-geostandards.png){fig-align="left" width=50%}
+  
+The _Institute of Virtual Design and Construction_ and the _Institute of Geomatics_ at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed the service based on open source libraries. 
 
 ## Authors
 [Institut Digitales Bauen](https://www.fhnw.ch/idibau)  
