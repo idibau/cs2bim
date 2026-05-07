@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; API – cs2bim</title>
+<title>2&nbsp; Mapping Principles – cs2bim</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -50,8 +50,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../docs/references.html" rel="next">
-<link href="../docs/configuration_schema.html" rel="prev">
+<link href="../docs/mapping_conventions.html" rel="next">
+<link href="../docs/concepts.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -103,7 +103,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/architecture.html">Application</a></li><li class="breadcrumb-item"><a href="../docs/api.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">API</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/concepts.html">Concepts</a></li><li class="breadcrumb-item"><a href="../docs/mapping_principles.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mapping Principles</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -115,8 +115,8 @@ div.csl-indent {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/architecture.html">Application</a></li><li class="breadcrumb-item"><a href="../docs/api.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">API</span></a></li></ol></nav>
-      <h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">API</span></h1>
+    <div class="quarto-title column-body"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/concepts.html">Concepts</a></li><li class="breadcrumb-item"><a href="../docs/mapping_principles.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mapping Principles</span></a></li></ol></nav>
+      <h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mapping Principles</span></h1>
                       </div>
   </div>
     
@@ -172,7 +172,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../docs/mapping_principles.html" class="sidebar-item-text sidebar-link">
+  <a href="../docs/mapping_principles.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mapping Principles</span></span></a>
   </div>
 </li>
@@ -213,7 +213,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../docs/api.html" class="sidebar-item-text sidebar-link active">
+  <a href="../docs/api.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">API</span></span></a>
   </div>
 </li>
@@ -241,19 +241,8 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#endpoints" id="toc-endpoints" class="nav-link active" data-scroll-target="#endpoints"><span class="header-section-number">7.1</span> Endpoints</a>
-  <ul>
-  <li><a href="#post-generate-model" id="toc-post-generate-model" class="nav-link" data-scroll-target="#post-generate-model"><span class="header-section-number">7.1.1</span> <code>POST /generate-model/</code></a></li>
-  <li><a href="#get-generation-statetask_id" id="toc-get-generation-statetask_id" class="nav-link" data-scroll-target="#get-generation-statetask_id"><span class="header-section-number">7.1.2</span> <code>GET /generation-state/{task_id}</code></a></li>
-  <li><a href="#get-generated-filetask_id" id="toc-get-generated-filetask_id" class="nav-link" data-scroll-target="#get-generated-filetask_id"><span class="header-section-number">7.1.3</span> <code>GET /generated-file/{task_id}</code></a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -262,57 +251,92 @@ div.csl-indent {
 
 
 
-<p>This API provides endpoints to generate IFC models based on polygon input, check the generation state, and retrieve the generated file. There is also a swagger documentation site documenting all endpoints: http://0.0.0.0:8000/docs</p>
-<section id="endpoints" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="endpoints"><span class="header-section-number">7.1</span> Endpoints</h2>
-<section id="post-generate-model" class="level3" data-number="7.1.1">
-<h3 data-number="7.1.1" class="anchored" data-anchor-id="post-generate-model"><span class="header-section-number">7.1.1</span> <code>POST /generate-model/</code></h3>
-<p><strong>Description:</strong> Starts the generation of a new IFC model.</p>
-<p><strong>Request Body (JSON):</strong></p>
+<p>To convert a typical geodataset to IFC, both semantic mappings and geometric conversions must be defined, see figure below.</p>
+<div id="fig-mapping-principles-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mapping-principles-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../uploads/mapping-principle-overview.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-principles-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: Mapping Principles Overview (<span class="citation" data-cites="schildknecht2025IntegrationLandAdministration">(<a href="references.html#ref-schildknecht2025IntegrationLandAdministration" role="doc-biblioref">Schildknecht et al., 2025a</a>)</span>)
+</figcaption>
+</figure>
+</div>
+<p>In <span class="citation" data-cites="schildknecht2025IntegrationLandAdministration">(<a href="references.html#ref-schildknecht2025IntegrationLandAdministration" role="doc-biblioref">Schildknecht et al., 2025a</a>)</span>, the various semantic and geometric mappings are described and discussed in detail.</p>
+<p>The semantic mapping implemented with cs2bim comprises five mapping levels (see also figure below):</p>
 <ul>
-<li><code>IFC_VERSION</code> <em>(string, required)</em>: The IFC version (<code>IFC4</code>, <code>IFC4X3_ADD2</code>).</li>
-<li><code>NAME</code> <em>(string, required)</em>: The name of the model.</li>
-<li><code>POLYGON</code> <em>(string, required)</em>: A closed polygon in WKT (Well-Known Text) format.</li>
-<li><code>PROJECT_ORIGIN</code> <em>(string, optional)</em>: Origin point as a comma-separated string <code>[x,y,z]</code>.</li>
-<li><code>LANGUAGE</code> <em>(string, optional)</em>: The language of the model (<code>DE</code>, <code>FR</code>, <code>IT</code>)</li>
+<li>Entity mapping</li>
+<li>Property mapping</li>
+<li>EntityType mapping</li>
+<li>Spatial structure mapping</li>
+<li>Group mapping</li>
 </ul>
-<p><strong>Responses:</strong></p>
-<ul>
-<li><code>200</code>: Model generation started successfully. Returns task ID.</li>
-<li><code>422</code>: Validation error in the input data.</li>
-<li><code>500</code>: Error.</li>
-</ul>
-<hr>
-</section>
-<section id="get-generation-statetask_id" class="level3" data-number="7.1.2">
-<h3 data-number="7.1.2" class="anchored" data-anchor-id="get-generation-statetask_id"><span class="header-section-number">7.1.2</span> <code>GET /generation-state/{task_id}</code></h3>
-<p><strong>Description:</strong> Retrieves the current state of a model generation task.</p>
-<p><strong>Path Parameter:</strong></p>
-<ul>
-<li><code>task_id</code> <em>(string, required)</em>: The ID of the generation task.</li>
-</ul>
-<p><strong>Responses:</strong></p>
-<ul>
-<li><code>200</code>: Returns the state of the task.</li>
-<li><code>500</code>: Error.</li>
-</ul>
-<hr>
-</section>
-<section id="get-generated-filetask_id" class="level3" data-number="7.1.3">
-<h3 data-number="7.1.3" class="anchored" data-anchor-id="get-generated-filetask_id"><span class="header-section-number">7.1.3</span> <code>GET /generated-file/{task_id}</code></h3>
-<p><strong>Description:</strong> Fetches the generated IFC file once the task is completed.</p>
-<p><strong>Path Parameter:</strong></p>
-<ul>
-<li><code>task_id</code> <em>(string, required)</em>: The ID of the generation task.</li>
-</ul>
-<p><strong>Responses:</strong></p>
-<ul>
-<li><code>200</code>: Returns the generated file.</li>
-<li><code>202</code>: Task is still ongoing.</li>
-<li><code>400</code>: Model generation failed.</li>
-<li><code>410</code>: File not found.</li>
-<li><code>500</code>: Error.</li>
-</ul>
+<div id="fig-mapping-principles-entity" class="quarto-float quarto-figure quarto-figure-left anchored" data-fig-align="left">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mapping-principles-entity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../uploads/mapping-principle-entity.jpg" class="img-fluid quarto-figure quarto-figure-left figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-principles-entity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: Mapping Principles Entities
+</figcaption>
+</figure>
+</div>
+<p>The figure above schematically illustrates how transformation functions can be defined from the geodatabase (GIS feature type) based on class or attribute rules for the various mapping levels.</p>
+<div id="tbl-mapping-levels" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mapping-levels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.1: Mapping levels
+</figcaption>
+<div aria-describedby="tbl-mapping-levels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 74%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Mapping level</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Entity mapping</td>
+<td style="text-align: left;">Entity mapping specifies which IFC entities (child elements of <code>IfcElement</code>) are instantiated from which instances of the geodatabase.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Property mapping</td>
+<td style="text-align: left;">Property mapping determines which attributes of the geodata instance are transferred as properties of the IFC instance.<br>In IFC, these properties can be defined either as IFC attributes or as properties (using PropertySets).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EntityType mapping</td>
+<td style="text-align: left;">The EntityType mapping specifies which type instance (IfcElementType) the generated IFC instance is assigned to (see the IFC typification concept).<br>The type instances used are also derived from the geodata instance, for example by assigning attribute values to the type instance.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Spatial structure mapping</td>
+<td style="text-align: left;">Spatial structure mapping determines which spatial structure (IfcSpatialStructureElement) the generated IFC instance is assigned to.<br>The spatial structure instances used are also derived from the geodata instance, for example by assigning attribute values to the spatial structure instance.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group mapping</td>
+<td style="text-align: left;">Group mapping determines which group (IfcGroup) the generated IFC instance is assigned to.<br>The group instances used are also derived from the geodata instance.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><br> <br> The geometric conversion is shown schematically in the figure below. Based on the defined conversion type, an IFC geometry is generated from the geometry of the geodata instance and assigned to the generated IFC instance. This process always involves at least one geometry type conversion from a WKT definition to an IFC definition. Depending on the source dataset, additional processing of the geometry may also occur — e.g., from 2D to 3D.</p>
+<div id="fig-mapping-principles-geometry" class="quarto-float quarto-figure quarto-figure-left anchored" data-fig-align="left">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mapping-principles-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../uploads/mapping-principle-geometry.jpg" class="img-fluid quarto-figure quarto-figure-left figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-principles-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.3: Mapping Principles Geometry
+</figcaption>
+</figure>
+</div>
+<p>This chapter focuses on semantic mapping; therefore, geometric conversion will not be discussed further here. For more information on geometric conversion, see the relevant sections in this documentation.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -341,10 +365,10 @@ Gröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. <em><span>OGC City Ge
 Schildknecht, L., 2023. <em>Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC</em>. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. <a href="https://doi.org/10.21428/71cd88bc.016ca100">https://doi.org/10.21428/71cd88bc.016ca100</a>
 </div>
 <div id="ref-schildknecht2025IntegrationGeodatenBIM" class="csl-entry" role="listitem">
-Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. <em>Integration von <span>Geodaten</span> in <span>BIM</span>/<span>IFC</span> - ein <span>Open-Source-Ansatz</span> für die <span>Daten</span> der amtlichen <span>Vermessung</span></em>. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. <a href="https://doi.org/10.21428/71cd88bc.1463dde3">https://doi.org/10.21428/71cd88bc.1463dde3</a>
+Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. <em>Integration von <span>Geodaten</span> in <span>BIM</span>/<span>IFC</span> - ein <span>Open-Source-Ansatz</span> für die <span>Daten</span> der amtlichen <span>Vermessung</span></em>. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. <a href="https://doi.org/10.21428/71cd88bc.1463dde3">https://doi.org/10.21428/71cd88bc.1463dde3</a>
 </div>
 <div id="ref-schildknecht2025IntegrationLandAdministration" class="csl-entry" role="listitem">
-Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. <em><a href="https://www.researchgate.net/publication/394433219_Integration_of_Land_Administration_Data_into_BIMIFC_-an_Open_Source_Approach_for_Swiss_Cadastral_Survey_Data#fullTextFileContent">Integration of land administration data into <span>BIM</span>/<span>IFC</span> - an open source approach for <span>Swiss</span> cadastral survey data</a></em>, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.
+Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. <em><a href="https://www.researchgate.net/publication/394433219_Integration_of_Land_Administration_Data_into_BIMIFC_-an_Open_Source_Approach_for_Swiss_Cadastral_Survey_Data#fullTextFileContent">Integration of land administration data into <span>BIM</span>/<span>IFC</span> - an open source approach for <span>Swiss</span> cadastral survey data</a></em>, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.
 </div>
 <div id="ref-sia2025SIA40082025" class="csl-entry" role="listitem">
 <span>SIA</span> 4008, 2025. <em><span>SIA</span> 4008:2025 <span>Leitungskataster</span> - <span>Wegleitung</span> zur <span>Norm SIA</span> 405</em>.
@@ -353,8 +377,6 @@ Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. <em>
 <span>SIA</span> 405, 2025. <em><span>SIA</span> 405:2025 <span>Geodaten</span> zu <span>Ver-</span> und <span>Entsorgungsleitungen</span></em>.
 </div>
 </div>
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -764,13 +786,13 @@ Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. <em>
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../docs/configuration_schema.html" class="pagination-link" aria-label="Configuration">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Configuration</span></span>
+      <a href="../docs/concepts.html" class="pagination-link" aria-label="Concepts">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Concepts</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../docs/references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../docs/mapping_conventions.html" class="pagination-link" aria-label="Mapping Conventions">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Mapping Conventions</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

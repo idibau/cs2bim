@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Mapping Principles – cs2bim</title>
+<title>3&nbsp; Mapping Conventions – cs2bim</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -51,7 +51,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../docs/architecture.html" rel="next">
-<link href="../docs/concepts.html" rel="prev">
+<link href="../docs/mapping_principles.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -62,7 +62,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-75f02de4d0792729241189e21b3d3496.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -97,13 +97,13 @@ div.csl-indent {
 <body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/concepts.html">Concepts</a></li><li class="breadcrumb-item"><a href="../docs/mapping_conventions.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mapping Principles</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/concepts.html">Concepts</a></li><li class="breadcrumb-item"><a href="../docs/mapping_conventions.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Mapping Conventions</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -113,7 +113,23 @@ div.csl-indent {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/concepts.html">Concepts</a></li><li class="breadcrumb-item"><a href="../docs/mapping_conventions.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Mapping Conventions</span></a></li></ol></nav>
+      <h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Mapping Conventions</span></h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
@@ -156,8 +172,14 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../docs/mapping_conventions.html" class="sidebar-item-text sidebar-link active">
+  <a href="../docs/mapping_principles.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mapping Principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../docs/mapping_conventions.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Mapping Conventions</span></span></a>
   </div>
 </li>
       </ul>
@@ -174,25 +196,25 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../docs/architecture.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Architecture</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Architecture</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../docs/configuration_overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Configuration Overview</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Configuration Overview</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../docs/configuration_schema.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Configuration</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Configuration</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../docs/api.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">API</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">API</span></span></a>
   </div>
 </li>
       </ul>
@@ -224,82 +246,379 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#basics" id="toc-basics" class="nav-link active" data-scroll-target="#basics"><span class="header-section-number">2.1</span> Basics</a></li>
-  <li><a href="#principles" id="toc-principles" class="nav-link" data-scroll-target="#principles"><span class="header-section-number">2.2</span> Principles</a></li>
+  <li><a href="#einleitung" id="toc-einleitung" class="nav-link active" data-scroll-target="#einleitung"><span class="header-section-number">3.1</span> Einleitung</a>
+  <ul>
+  <li><a href="#ausgangslage" id="toc-ausgangslage" class="nav-link" data-scroll-target="#ausgangslage"><span class="header-section-number">3.1.1</span> Ausgangslage</a></li>
+  <li><a href="#zweck-des-kapitels" id="toc-zweck-des-kapitels" class="nav-link" data-scroll-target="#zweck-des-kapitels"><span class="header-section-number">3.1.2</span> Zweck des Kapitels</a></li>
+  </ul></li>
+  <li><a href="#konventionen" id="toc-konventionen" class="nav-link" data-scroll-target="#konventionen"><span class="header-section-number">3.2</span> Konventionen</a>
+  <ul>
+  <li><a href="#entity-mapping" id="toc-entity-mapping" class="nav-link" data-scroll-target="#entity-mapping"><span class="header-section-number">3.2.1</span> Entity-Mapping</a></li>
+  <li><a href="#entitytype-mapping-typisierung" id="toc-entitytype-mapping-typisierung" class="nav-link" data-scroll-target="#entitytype-mapping-typisierung"><span class="header-section-number">3.2.2</span> EntityType-Mapping (Typisierung)</a></li>
+  <li><a href="#spatial-structure-mapping" id="toc-spatial-structure-mapping" class="nav-link" data-scroll-target="#spatial-structure-mapping"><span class="header-section-number">3.2.3</span> Spatial Structure Mapping</a></li>
+  <li><a href="#group-mapping" id="toc-group-mapping" class="nav-link" data-scroll-target="#group-mapping"><span class="header-section-number">3.2.4</span> Group-Mapping</a></li>
+  <li><a href="#property-mapping" id="toc-property-mapping" class="nav-link" data-scroll-target="#property-mapping"><span class="header-section-number">3.2.5</span> Property-Mapping</a>
+  <ul>
+  <li><a href="#propertysets" id="toc-propertysets" class="nav-link" data-scroll-target="#propertysets"><span class="header-section-number">3.2.5.1</span> PropertySets</a></li>
+  <li><a href="#property" id="toc-property" class="nav-link" data-scroll-target="#property"><span class="header-section-number">3.2.5.2</span> Property</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#umgang-mit-redundanz" id="toc-umgang-mit-redundanz" class="nav-link" data-scroll-target="#umgang-mit-redundanz"><span class="header-section-number">3.3</span> Umgang mit Redundanz</a></li>
+  <li><a href="#mappings-konkreter-geodatensätze" id="toc-mappings-konkreter-geodatensätze" class="nav-link" data-scroll-target="#mappings-konkreter-geodatensätze"><span class="header-section-number">3.4</span> Mappings konkreter Geodatensätze</a>
+  <ul>
+  <li><a href="#liegenschaften" id="toc-liegenschaften" class="nav-link" data-scroll-target="#liegenschaften"><span class="header-section-number">3.4.1</span> Liegenschaften</a></li>
+  <li><a href="#bodenbedeckung" id="toc-bodenbedeckung" class="nav-link" data-scroll-target="#bodenbedeckung"><span class="header-section-number">3.4.2</span> Bodenbedeckung</a></li>
+  <li><a href="#d-gebäude" id="toc-d-gebäude" class="nav-link" data-scroll-target="#d-gebäude"><span class="header-section-number">3.4.3</span> 3D-Gebäude</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docs/concepts.html">Concepts</a></li><li class="breadcrumb-item"><a href="../docs/mapping_conventions.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mapping Principles</span></a></li></ol></nav>
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mapping Principles</span></h1>
-</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
-
-
-<section id="basics" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="basics"><span class="header-section-number">2.1</span> Basics</h2>
-<p>To convert a typical geodataset to IFC, both semantic mappings and geometric conversions must be defined, see figure below.</p>
-<div id="fig-mapping-principles-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-mapping-principles-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../uploads/mapping-principle-overview.jpg" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-principles-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.1: Mapping Principles Overview (<span class="citation" data-cites="schildknecht2025IntegrationLandAdministration">(<a href="references.html#ref-schildknecht2025IntegrationLandAdministration" role="doc-biblioref">Schildknecht et al., 2025a</a>)</span>)
+<p>[This section is available only in German]<br>
+<br></p>
+<section id="einleitung" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="einleitung"><span class="header-section-number">3.1</span> Einleitung</h2>
+<section id="ausgangslage" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="ausgangslage"><span class="header-section-number">3.1.1</span> Ausgangslage</h3>
+<p>Die Kernfunktion von cs2bim ist die Transformation von Geodaten nach IFC. Für diese Transformation müssen Geodaten aus ihrem jeweiligen Geodatenmodell ins Datenmodell von IFC überführt werden. Dazu sind verschiedene Mappings von Klassen auf IFC-Entitys sowie zwischen Attributen notwendig. Das Datenmodell von IFC lässt auf Grund seiner generischen Erweiterungsmechanismen häufig verschiedene Mappings zu (siehe Grundlagen <a href="../docs/concepts.html#ifc-basic-principles">hier</a>).<br>
+Um die mit den Geodatenmodellen erreichte Standardisierung der Geodaten mit der Transformation nach IFC nicht zu verlieren, ist es notwendig - quasi als Ergänzung zum Geodatenmodell - auch die Transformationsregeln zur Überführung nach IFC festzulegen. Als Teil der nationalen Geodateninfrastruktur möchte Geodienste.ch die IFC-Mappings der publizierten Geodaten systematisch definieren und als Standard resp. Best Practice bereitstellen.</p>
+</section>
+<section id="zweck-des-kapitels" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="zweck-des-kapitels"><span class="header-section-number">3.1.2</span> Zweck des Kapitels</h3>
+<p>Das vorliegende Kapitel beschreibt die Methodik und Prinzipien sowie die im Projekt cs2bim gemachten Abwägungen zum Mapping der Geodaten nach IFC.<br>
+Es dient als Grundlage für die Diskussion von weiteren Mapping-Entscheiden sowie als Ergebnisdokumentation.</p>
+<p>Das Kapitel richtet sich an Fachpersonen aus dem Bereich Geoinformation und BIM mit einem Grundverständnis von IFC.</p>
+<p>Das Kapitel setzt das Grundlagenwissen zu <a href="../docs/concepts.html#ifc-basic-principles">IFC</a> sowie den <a href="../docs/mapping_principles.html">Prinzipien des Mappings</a> voraus. Darauf basierend sind die konkreten Mapping-Regeln für die im Projekt cs2bim behandelten Geodatensätze dokumentiert.</p>
+</section>
+</section>
+<section id="konventionen" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="konventionen"><span class="header-section-number">3.2</span> Konventionen</h2>
+<p>Das Datenmodell von IFC ist sehr umfassend und bietet zudem auch so genannte Erweiterungsmechanismen, die für nationale oder regionale Bedürfnisse Konkretisierungen des Datenmodells erlauben. Für eine einheitliche Anwendung des Datenmodells bedingt dies die Festlegung von Prinzipien und Konventionen, die festlegen, welche Teile von IFC und wie die Erweiterungsmechanismen genutzt werden sollen. In den nachfolgenden Kapiteln werden einige Prinzipien und Konventionen für das Mapping diskutiert und festgelegt.</p>
+<section id="entity-mapping" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="entity-mapping"><span class="header-section-number">3.2.1</span> Entity-Mapping</h3>
+<p>Beim Mapping eines GIS Featuretyps auf eine IFC-Entity sollte eine möglichst präzise semantische Abbildung erfolgen. Dazu sind einerseits die in IFC definierten Entitys möglichst genau zu wählen und andererseits auch der Erweiterungsmechanismus mit den so genannten PredefindedTypes zu nutzen. In IFC enthalten die Definitionen der PredefinedTypes bereits eine Aufzählung von semantisch spezielleren Ausprägungen einer Entity. Diese vordefinierten Aufzählungen können auch durch benutzerdefinierte Werte ergänzt werden. Beim Mapping ist daher zu prüfen, ob ein vordefinierter PredefinedType bereits semantisch genügend präzise ist oder ob eine spezifische Erweiterung zu definieren ist.</p>
+<p>Im Kontext von cs2bim und somit der Geobasisdaten bietet das Datenmodell von IFC keine grosse Auswahl an semantisch präzisen Entitys, da IFC primär Bauwerke und Bauprozesse beschreibt und administrativ-planerische Geodaten nicht im Fokus stehen. Aus der Literatur (z.B. <span class="citation" data-cites="atazadeh2021IntegrationCadastralSurvey">(<a href="references.html#ref-atazadeh2021IntegrationCadastralSurvey" role="doc-biblioref">Atazadeh et al., 2021</a>)</span>) sowie den bisherigen Best Practices kommen typischerweise folgende Entitys zur Abbildung von Geobasisdaten in Frage.</p>
+<div id="tbl-entity-mapping-candidates" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-entity-mapping-candidates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.1: Typische Entity-Mapping-Kandidaten für Geodaten
 </figcaption>
+<div aria-describedby="tbl-entity-mapping-candidates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 76%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">IFC Entity</th>
+<th style="text-align: left;">Erwägungen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">IfcGeographicElement</td>
+<td style="text-align: left;">“An IfcGeographicElement is a generalization of all elements within a geographical landscape. It includes occurrences of typical geographical elements, often referred to as features, such as trees or terrain.” <span class="citation" data-cites="buildingsmartinternational2023IFC4320DocumentationOfficial">(<a href="references.html#ref-buildingsmartinternational2023IFC4320DocumentationOfficial" role="doc-biblioref">buildingSmart International, 2023</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IfcSite</td>
+<td style="text-align: left;">“A site is a defined area of land, possibly covered with water, on which the project construction is to be completed. A site may be used to erect, retrofit or turn down building(s), or for other construction related developments.” <span class="citation" data-cites="buildingsmartinternational2023IFC4320DocumentationOfficial">(<a href="references.html#ref-buildingsmartinternational2023IFC4320DocumentationOfficial" role="doc-biblioref">buildingSmart International, 2023</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IfcSpatialZone</td>
+<td style="text-align: left;">“A spatial zone is a non-hierarchical and potentially overlapping decomposition of the project under some functional consideration. A spatial zone might be used to represent a thermal zone, a construction zone, a lighting zone, a usable area zone. A spatial zone might have its independent placement and shape representation.” <span class="citation" data-cites="buildingsmartinternational2023IFC4320DocumentationOfficial">(<a href="references.html#ref-buildingsmartinternational2023IFC4320DocumentationOfficial" role="doc-biblioref">buildingSmart International, 2023</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IfcAnnotation</td>
+<td style="text-align: left;">“An annotation is an information element within the geometric (and spatial) context of a project, that adds a note or meaning to the objects which constitutes the project model. Annotations include additional points, curves, text, dimensioning, hatching and other forms of graphical notes. It also includes virtual or symbolic representations of additional model components, not representing products or spatial structures, such as survey points and lines, contour lines or similar.” <span class="citation" data-cites="buildingsmartinternational2023IFC4320DocumentationOfficial">(<a href="references.html#ref-buildingsmartinternational2023IFC4320DocumentationOfficial" role="doc-biblioref">buildingSmart International, 2023</a>)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
 </figure>
 </div>
-<p>In <span class="citation" data-cites="schildknecht2025IntegrationLandAdministration">(<a href="references.html#ref-schildknecht2025IntegrationLandAdministration" role="doc-biblioref">Schildknecht et al., 2025a</a>)</span>, the various semantic and geometric mappings are described and discussed in detail.</p>
-<p>The semantic mapping implemented with cs2bim comprises five mapping levels (see also figure below):</p>
+</section>
+<section id="entitytype-mapping-typisierung" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="entitytype-mapping-typisierung"><span class="header-section-number">3.2.2</span> EntityType-Mapping (Typisierung)</h3>
+<p>Jedes erzeugte Element erhält eine klare Typzuweisung.</p>
+<p>Für die Typnamen gilt folgende Namenskonvention:</p>
+<p>Typname = <code>Thema</code>_<code>Klasse</code></p>
 <ul>
-<li>Entity mapping</li>
-<li>Property mapping</li>
-<li>EntityType mapping</li>
-<li>Spatial structure mapping</li>
-<li>Group mapping</li>
+<li><code>Thema</code>: Kürzel des Themas (z.B. das Geodatenmodell oder der Themenbereich), gemäss nachfolgender Tabelle.<br>
+</li>
+<li><code>Klasse</code>: Name der Klasse aus Geodatenmodell. In Ausnahmefällen kann auch der Name der Topic verwendet werden.</li>
 </ul>
-<div id="fig-mapping-principles-entity" class="quarto-float quarto-figure quarto-figure-left anchored" data-fig-align="left">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-mapping-principles-entity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../uploads/mapping-principle-entity.jpg" class="img-fluid quarto-figure quarto-figure-left figure-img" style="width:75.0%">
+<div id="tbl-topic-abbreviations" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-topic-abbreviations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.2: Themen-Kürzel
+</figcaption>
+<div aria-describedby="tbl-topic-abbreviations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Thema</th>
+<th style="text-align: left;">de</th>
+<th style="text-align: left;">fr</th>
+<th style="text-align: left;">it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Amtliche Vermessung</td>
+<td style="text-align: left;">AV</td>
+<td style="text-align: left;">MO</td>
+<td style="text-align: left;">MU</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3D-Gebäude (Stadtmodell)</td>
+<td style="text-align: left;">3DSM</td>
+<td style="text-align: left;">3D??</td>
+<td style="text-align: left;">3D??</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Leitungskataster</td>
+<td style="text-align: left;">LK</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Naturgefahrenhinweiskarte</td>
+<td style="text-align: left;">NGH</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">…</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-principles-entity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.2: Mapping Principles Entities
+</figure>
+</div>
+<p>Schreibweise: Typnamen in GROSSBUCHSTABEN, Leerschläge durch Tiefstriche “_” ersetzt.<br>
+Typnamen sind damit bewusst eher “technisch” geschrieben (im Gegensatz zu Gruppierungen, die “normal”, umgangssprachlicher geschrieben sind).</p>
+<p>Beispiele von Typnamen:</p>
+<div id="tbl-typename-examples" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-typename-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.3: Beispiele Typnamen
+</figcaption>
+<div aria-describedby="tbl-typename-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">de</th>
+<th style="text-align: left;">fr</th>
+<th style="text-align: left;">it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AV_LIEGENSCHAFT</td>
+<td style="text-align: left;">MO_BIEN_FONDS</td>
+<td style="text-align: left;">MU_BENE_IMMOBILE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AV_SELBSTRECHT</td>
+<td style="text-align: left;">MO_DDP</td>
+<td style="text-align: left;">MU_DPSSP</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AV_BERGWERK</td>
+<td style="text-align: left;">MO_MINE</td>
+<td style="text-align: left;">MU_MINIERA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AV_BODENBEDECKUNG</td>
+<td style="text-align: left;">MO_COUVERTURE_DU_SOL</td>
+<td style="text-align: left;">MU_COPERTURA_DEL_SUOLO</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Die Typzuweisung zu einem Element erfolgt zweifach mit beiden von IFC vorgesehenen Typisierungskonzepten:</p>
+<ul>
+<li>Attribut ObjectType: Der Typname wird im Attribut ObjectTyp gesetzt.<br>
+</li>
+<li>Verweis auf Objekttyp-Instanz: Für jeden Typ wird eine Typinstanz angelegt (IfcElementType) und die entsprechenden Elemente verweisen auf die Typinstanz.</li>
+</ul>
+</section>
+<section id="spatial-structure-mapping" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="spatial-structure-mapping"><span class="header-section-number">3.2.3</span> Spatial Structure Mapping</h3>
+<p>Die Raumstrukturierung von IFC (IfcSpatialStructureElement) wird für eine rein thematische Gruppierung verwendet.<br>
+Es wird dazu für jeden EntityType eine eigene Raumstruktur-Instanz (IfcSite) gebildet.<br>
+Es wird keine thematische Hierarchisierung gemacht, d.h. alle Raumstruktur-Instanzen liegen in einer “flachen” Auflistung vor (im Gegensatz zu den ebenfalls unterstützen IFC-Gruppen, siehe Group-Mapping in Kapitel 3.4).</p>
+<p>Anmerkung: Die in IFC eigentlich vorgesehene raum-logische Struktur wird für die Geobasisdaten nicht angestrebt. Dies ist darin begründet, dass einerseits eine raum-logische Strukturierung im Sinne von IFC für Geobasisdaten nur bedingt sinnvoll ist und andererseits aber viele BIM-Viewer die Raumstruktur als primäre Objektstruktur bereitstellen und somit die “typischen BIM-Benutzenden” diese Navigation gewohnt sind (–&gt; Unterstützung Benutzendenakzeptanz).</p>
+</section>
+<section id="group-mapping" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="group-mapping"><span class="header-section-number">3.2.4</span> Group-Mapping</h3>
+<p>Die Gruppierungsstrukturen von IFC werden genutzt, um die thematische Gliederung der Geodatensätze abzubilden. Dabei können auch beliebig tiefe Hierarchien gebildet werden, falls dies fachlich-thematisch sinnvoll ist.<br>
+Die Gruppennamen werden dabei möglichst sprechend und selbsterklärend gewählt und können daher (leicht) von den Namen der Raumstruktur und Typendefinitionen abweichen.</p>
+<p>Für cs2bim wird in der ersten Version folgende thematische Gliederung definiert:</p>
+<pre><code>Amtliche Vermessung  
+    Liegenschaften  
+        Liegenschaft  
+        SelbstRecht  
+        Bergwerk  
+    Bodenbedeckung  
+3D-Stadtmodell  </code></pre>
+<p>Die Gruppierungs-Struktur ist somit sehr ähnlich zur gewählten Raumstrukturierung (IfcSpatial-StructureElement), mit dem Unterschied, dass die Gruppierungs-Struktur eine tiefere Hierarchiestruktur abbildet.</p>
+</section>
+<section id="property-mapping" class="level3" data-number="3.2.5">
+<h3 data-number="3.2.5" class="anchored" data-anchor-id="property-mapping"><span class="header-section-number">3.2.5</span> Property-Mapping</h3>
+<p>Das Konzept der Propertys ist ein zentraler Erweiterungsmechanismus von IFC. Es erlaubt die Definition beliebiger Eigenschaften (Property) für jede IFC-Entity. Mit dem Standard IFC sind aber auch eine grosse Anzahl an Propertys vordefiniert, die eine klar definierte Semantik haben. Mit dem Ziel eines harmonisierten, standardisierten Datenaustausch ist es sehr wichtig, einheitlich definierte Propertys zu verwenden und nach Möglichkeit primär auch die bereits mit IFC vordefinierten Propertys zu nutzen.</p>
+<p>Die Propertys (und auch die PropertySets) können frei benannt werden (mit Ausnahme des Präfix “Pset_”, welcher für buildingSmart reserviert ist). Als Namenskonvention für die spezifisch definierten Propertys im Rahmen von cs2bim werden folgende Regeln definiert.</p>
+<section id="propertysets" class="level4" data-number="3.2.5.1">
+<h4 data-number="3.2.5.1" class="anchored" data-anchor-id="propertysets"><span class="header-section-number">3.2.5.1</span> PropertySets</h4>
+<p>PropertySet-Name = <code>Präfix</code>_<code>Thema</code>_<code>Klasse</code></p>
+<ul>
+<li><code>Präfix</code> = CH<code>Org-Kurzzeichen</code><br>
+Nationale Kennung “CH” sowie Kurzzeichen Organisation.<br>
+</li>
+<li><code>Org-Kurzzeichen</code>:<br>
+Kurzzeichen der verantwortlichen Organisation, z.B. Kantonskürzel.<br>
+Für nationale Geodatensätze wird das Org-Kurzzeichen weggelassen.<br>
+</li>
+<li><code>Thema</code>:<br>
+Kürzel des Themas (z.B. das Geodatenmodell oder der Themenbereich), siehe Definition bei EntityTypes in Kapitel 3.2.<br>
+</li>
+<li><code>Klasse</code>:<br>
+Name der Klasse oder aus Geodatenmodell. In Ausnahmefällen kann auch der Name der Topic verwendet werden, sofern die eindeutige Rückverfolgbarkeit der Propertys auf die Klasse gewährleistet ist.</li>
+</ul>
+<p>Die PropertySets sind sprachspezifisch in den Sprachen der MGDMs definiert. D.h. wenn ein MGDM in mehreren Sprachen vorliegt, werden entsprechend auch die PropertySets in diesen Sprachen geführt.</p>
+<p>Beispiele:</p>
+<ul>
+<li>CH_AV_Grundstueck</li>
+<li>CH_AV_Bodenbedeckung</li>
+<li>CH_MO_GenreImmeuble</li>
+<li>CH_MO_CouvertureDuSol</li>
+<li>CHSWISSTOPO_SwissBuildings3d</li>
+<li>CHLU_3DSM</li>
+</ul>
+<p>Schreibweise PSet-Namen: Präfix und Thema in Grossbuchstaben, Klasse in Kamelschreibweise.</p>
+</section>
+<section id="property" class="level4" data-number="3.2.5.2">
+<h4 data-number="3.2.5.2" class="anchored" data-anchor-id="property"><span class="header-section-number">3.2.5.2</span> Property</h4>
+<p>Property-Name = Nach Möglichkeit identisch zum Attributnamen des entsprechenden Geodatenmodells in der entsprechenden Sprache.</p>
+<p>Die PropertySets sind sprachspezifisch in den Sprachen der MGDMs definiert.</p>
+<p>Schreibweise: Identisch zur Schreibweise im Geodatenmodell (INTERLIS).</p>
+</section>
+</section>
+</section>
+<section id="umgang-mit-redundanz" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="umgang-mit-redundanz"><span class="header-section-number">3.3</span> Umgang mit Redundanz</h2>
+<p>Mit den gewählten Mapping-Definitionen werden im erzeugten IFC-Datensatz bewusst redundante Informationen erzeugt (z.B. thematische Gruppierung und Typdefinitionen, thematische Grup-pierung und Raumstrukturierung, Typdefinition auf der Instanz sowie auch auf der zugewiesenen Typinstanz).<br>
+Die Redundanzen sollen helfen, möglichst viele unterschiedliche Nutzungsweisen und Softwareanwendungen zu unterstützen. Die erzeugten IFC-Dateien werden als nicht weiter bearbeitbare Referenzinformationen genutzt, so dass keine Inkonsistenzen zu erwarten sind.</p>
+</section>
+<section id="mappings-konkreter-geodatensätze" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="mappings-konkreter-geodatensätze"><span class="header-section-number">3.4</span> Mappings konkreter Geodatensätze</h2>
+<p>Im Folgenden sind die in cs2bim konkret festgelegten Spezifikationen der Mapping-Regeln dokumentiert (für die Sprache Deutsch).</p>
+<p>Konventionen (der Dokumentation): - Konstante Werte in “Anführungszeichen” - Dynamisch aus den Daten abgeleitete Werte in normaler Schreibweise mit objektorientierter Notation, z.B. grundstueck.nbident (Wert der Tabelle grundstueck, Attribut nbident).</p>
+<section id="liegenschaften" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="liegenschaften"><span class="header-section-number">3.4.1</span> Liegenschaften</h3>
+<p>Quelldaten:</p>
+<ul>
+<li>DM01AVCH24LV95D.Liegenschaften.Liegenschaft / .SelbstRecht / .Bergwerk<br>
+</li>
+<li>DM01AVCH24LV95D.Liegenschaften.Grundstueck</li>
+</ul>
+<div id="fig-mapping-configuration-liegenschaft" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mapping-configuration-liegenschaft-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../uploads/mapping-configuration-liegenschaft.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-configuration-liegenschaft-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Mapping-Konfiguration: Liegenschaft
 </figcaption>
 </figure>
 </div>
-<p><br> <br> The geometric conversion is shown schematically in the figure below. Based on the defined conversion type, an IFC geometry is generated from the geometry of the geodata instance and assigned to the generated IFC instance. This process always involves at least one geometry type conversion from a WKT definition to an IFC definition. Depending on the source dataset, additional processing of the geometry may also occur — e.g., from 2D to 3D.</p>
-<div id="fig-mapping-principles-geometry" class="quarto-float quarto-figure quarto-figure-left anchored" data-fig-align="left">
+<div id="fig-mapping-configuration-selbstrecht" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-mapping-principles-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../uploads/mapping-principle-geometry.jpg" class="img-fluid quarto-figure quarto-figure-left figure-img" style="width:75.0%">
+<div aria-describedby="fig-mapping-configuration-selbstrecht-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../uploads/mapping-configuration-selbstrecht.jpg" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-principles-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.3: Mapping Principles Geometry
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-configuration-selbstrecht-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: Mapping-Konfiguration: SelbstRecht
+</figcaption>
+</figure>
+</div>
+<div id="fig-mapping-configuration-bergwerk" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mapping-configuration-bergwerk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../uploads/mapping-configuration-bergwerk.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-configuration-bergwerk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: Mapping-Konfiguration: Bergwerk
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="principles" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="principles"><span class="header-section-number">2.2</span> Principles</h2>
+<section id="bodenbedeckung" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="bodenbedeckung"><span class="header-section-number">3.4.2</span> Bodenbedeckung</h3>
+<p>Quelldaten:</p>
+<ul>
+<li>DM01AVCH24LV95D.Bodenbedeckung.BoFlaeche</li>
+</ul>
+<div id="fig-mapping-configuration-bodenbedeckung-alle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mapping-configuration-bodenbedeckung-alle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../uploads/mapping-configuration-bodenbedeckung-alle.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-configuration-bodenbedeckung-alle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.4: Mapping-Konfiguration: Bodenbedeckung (alle Arten ausser Gebaeude)
+</figcaption>
+</figure>
+</div>
+<div id="fig-mapping-configuration-bodenbedeckung-gebaeude" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mapping-configuration-bodenbedeckung-gebaeude-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../uploads/mapping-configuration-bodenbedeckung-gebaeude.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-configuration-bodenbedeckung-gebaeude-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.5: Mapping-Konfiguration: Bodenbedeckung (Art = Gebaeude)
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="d-gebäude" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="d-gebäude"><span class="header-section-number">3.4.3</span> 3D-Gebäude</h3>
+<p>Quelldaten:</p>
+<ul>
+<li>SwissBuildings3d, Version 3</li>
+</ul>
+<div id="fig-mapping-configuration-swissbuildings3d" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mapping-configuration-swissbuildings3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../uploads/mapping-configuration-swissbuildings3d.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mapping-configuration-swissbuildings3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.6: Mapping-Konfiguration: SwissBuildings3d, Gebäude
+</figcaption>
+</figure>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-atazadeh2021IntegrationCadastralSurvey" class="csl-entry" role="listitem">
+Atazadeh, B., Halalkhor Mirkalaei, L., Olfat, H., Rajabifard, A., Shojaei, D., 2021. <em>Integration of cadastral survey data into building information models</em>. Geo-spatial Information Science 24, 387–402. <a href="https://doi.org/10.1080/10095020.2021.1937336">https://doi.org/10.1080/10095020.2021.1937336</a>
+</div>
 <div id="ref-buildingsmartinternational2023IFC4320DocumentationOfficial" class="csl-entry" role="listitem">
 buildingSmart International, 2023. <span>IFC4</span>.3.2.0 <span>Documentation</span> (official 4.3.2.0) [WWW Document]. URL <a href="https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html">https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html</a> (accessed 11.28.2023).
 </div>
@@ -322,10 +641,10 @@ Gröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. <em><span>OGC City Ge
 Schildknecht, L., 2023. <em>Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC</em>. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. <a href="https://doi.org/10.21428/71cd88bc.016ca100">https://doi.org/10.21428/71cd88bc.016ca100</a>
 </div>
 <div id="ref-schildknecht2025IntegrationGeodatenBIM" class="csl-entry" role="listitem">
-Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. <em>Integration von <span>Geodaten</span> in <span>BIM</span>/<span>IFC</span> - ein <span>Open-Source-Ansatz</span> für die <span>Daten</span> der amtlichen <span>Vermessung</span></em>. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. <a href="https://doi.org/10.21428/71cd88bc.1463dde3">https://doi.org/10.21428/71cd88bc.1463dde3</a>
+Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. <em>Integration von <span>Geodaten</span> in <span>BIM</span>/<span>IFC</span> - ein <span>Open-Source-Ansatz</span> für die <span>Daten</span> der amtlichen <span>Vermessung</span></em>. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. <a href="https://doi.org/10.21428/71cd88bc.1463dde3">https://doi.org/10.21428/71cd88bc.1463dde3</a>
 </div>
 <div id="ref-schildknecht2025IntegrationLandAdministration" class="csl-entry" role="listitem">
-Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. <em><a href="https://www.researchgate.net/publication/394433219_Integration_of_Land_Administration_Data_into_BIMIFC_-an_Open_Source_Approach_for_Swiss_Cadastral_Survey_Data#fullTextFileContent">Integration of land administration data into <span>BIM</span>/<span>IFC</span> - an open source approach for <span>Swiss</span> cadastral survey data</a></em>, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.
+Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. <em><a href="https://www.researchgate.net/publication/394433219_Integration_of_Land_Administration_Data_into_BIMIFC_-an_Open_Source_Approach_for_Swiss_Cadastral_Survey_Data#fullTextFileContent">Integration of land administration data into <span>BIM</span>/<span>IFC</span> - an open source approach for <span>Swiss</span> cadastral survey data</a></em>, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.
 </div>
 <div id="ref-sia2025SIA40082025" class="csl-entry" role="listitem">
 <span>SIA</span> 4008, 2025. <em><span>SIA</span> 4008:2025 <span>Leitungskataster</span> - <span>Wegleitung</span> zur <span>Norm SIA</span> 405</em>.
@@ -334,6 +653,7 @@ Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. <em>
 <span>SIA</span> 405, 2025. <em><span>SIA</span> 405:2025 <span>Geodaten</span> zu <span>Ver-</span> und <span>Entsorgungsleitungen</span></em>.
 </div>
 </div>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -744,13 +1064,13 @@ Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. <em>
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../docs/concepts.html" class="pagination-link" aria-label="Concepts">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Concepts</span></span>
+      <a href="../docs/mapping_principles.html" class="pagination-link" aria-label="Mapping Principles">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Mapping Principles</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../docs/architecture.html" class="pagination-link" aria-label="Architecture">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Architecture</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Architecture</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -761,7 +1081,7 @@ Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. <em>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>FHNW - Institut Digitales Bauen <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img src="./_img/by-nc-sa.png" class="light-content img-fluid" width="50" alt="CC BY-NC-SA"></a></p>
+<p>Geostandards.ch / FHNW <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img src="./_img/by-nc-sa.png" class="light-content img-fluid" width="50" alt="CC BY-NC-SA"></a></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

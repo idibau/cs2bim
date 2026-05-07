@@ -14,7 +14,7 @@
     "href": "index.html#project",
     "title": "cs2bim",
     "section": "Project",
-    "text": "Project\nThis application was originally developed as part of the cs2bim project. The project has been launched by the Conference of Cantonal Geoinformation and Cadastral Offices (KGK) as Cadastral Surveying Data to Building Information Modeling (CS2BIM). The Institute of Virtual Design and Construction and the Institute of Geomatics at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed the service based on open source libraries.",
+    "text": "Project\nThis application was originally developed as part of the cs2bim project. The project has been launched by the Conference of Cantonal Geoinformation and Cadastral Offices (KGK) as Cadastral Surveying Data to Building Information Modeling (CS2BIM).\nThe project is part of the initiative of SGS/ Geostandards.ch.\n\n\n\nGeostandards.ch\n\n\nThe Institute of Virtual Design and Construction and the Institute of Geomatics at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed the service based on open source libraries.",
     "crumbs": [
       "Introduction"
     ]
@@ -34,7 +34,7 @@
     "href": "index.html#license",
     "title": "cs2bim",
     "section": "License",
-    "text": "License\nBY-NC-SA\n\n\n\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
+    "text": "License\nBY-NC-SA\n\n\n\n\n\nAtazadeh, B., Halalkhor Mirkalaei, L., Olfat, H., Rajabifard, A., Shojaei, D., 2021. Integration of cadastral survey data into building information models. Geo-spatial Information Science 24, 387–402. https://doi.org/10.1080/10095020.2021.1937336\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
     "crumbs": [
       "Introduction"
     ]
@@ -99,604 +99,637 @@
     "href": "docs/concepts.html#extrusions",
     "title": "1  Concepts",
     "section": "1.5 Extrusions",
-    "text": "1.5 Extrusions\nA typical use case for transforming geodata into IFC format involves utility cadastre data. In Switzerland there is a standard data model for utility cadastre called “LKMap”, which is specified in (SIA 405, 2025) and (SIA 4008, 2025). This information is often referred to as 2.5D, since it is primarily defined in 2D with additional height data.\nTo enable the conversion of pipe elements to IFC, the transformation needs special geometry conversion functions that can be used to generate extruded geometries. In accordance with the principles of SIA 405, two main methods can be distinguished for creating solid geometries from the 2.5D data in LKMap using extrusion:\n\nExtrusion along a polyline:\nA cross-section is extruded along a 3D polyline. This method is used specifically for pipes (LKLine).\nIn LKMap, the standard cross-sectional shapes are circle, ellipse, and rectangle. In specialized building information models, it is generally possible to specify freely definable cross-sectional shapes that deviate from the standard profiles. However, this is not possible with LKMap.\nVertical extrusion:\nA base area is extruded vertically between two elevation points. This method is used specifically for shaft structures (LKPunkt, LKFlaeche). The base area can be defined by any 2D polygon. However, circular base areas (shafts) are also common in the utility cadastre.\n\nFor vertical extrusion of utility cadastre objects, two main cases can be distinguished:\n\nPoint objects with standardized cross-sections\nArea shaped objects (surface)\n\nIn the GIS cadastre, all geometric data is defined in global coordinate systems (e.g. LV95).\nIn GIS cadastres, point objects are defined solely as point geometry in global coordinates (e.g. LV95). Symbols can be used to represent the point object with a geometric shape. For area objects, however, the entire geometric shape (the surface geometry) is defined in global coordinates. The shape of the surface can be defined arbitrarily. This fact is also taken into account in the transformation functions of the extrusion, so that three basic methods can be distinguished:\n\nPOLYGON: For the extrusion of pipes along an axis (polygon).\nPOINT: For the extrusion of point objects.\nSURFACE: For the extusion of area/surface objects.\n\nThe following figure shows a schematic representation of the different types of extrusion:\n\n\n\n\n\n\nFigure 1.10: Extrusion types\n\n\n\nDepending on the type of extrusion and the cross section, different additional parameters are required to define the extrusion algorithm. The following table lists the extrusion parameters required for each type of extrusion, while the table below explains each parameter in detail.\n\n\n\nTable 1.2: Extrusion parameter usage\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nextrusion_type\ncross_section_type\npolyline\npoint_start\npoint_end\nheight\nwidth\norientation\npolygon\n\n\nPOLYLINE\nCIRCLE, EGG\nx\n\n\n\nx\n\n\n\n\nPOLYLINE\nRECTANGLE\nx\n\n\nx\nx\n\n\n\n\nPOLYLINE\nPOLYGON_LOCAL\nx\n\n\n\n\n\nx(1)\n\n\nPOINT\nCIRCLE\n\nx\nx\n\nx\n\n\n\n\nPOINT\nRECTANGLE\n\nx\nx\nx\nx\nx\n\n\n\nPOINT\nPOLYGON_LOCAL\n\nx\nx\n\n\nx\nx(1)\n\n\nSURFACE\nPOLYGON_GLOBAL\n\nx\nx\n\n\n\nx(2)\n\n\n\n\n\n\n\nPolygondefinition in lokalem Koordinatensystem\n\nPolygondefinition in LV95\n\n\n\n\nTable 1.3: Extrusion parameters\n\n\n\n\n\n\n\n\n\nParameter\nBeschreibung\n\n\n\n\nextrusion_type\nPOLYLINE extruding along 3D polyline.POINT extruding point geometry between two points.SURFACE extruding surface geometry. Extrusion vector and lenght is defined by two points\n\n\ncross_section_type\nCIRCLEEGGRECTANGLEPOLYGON_LOCAL arbitrary cross sections defined in local coordinate systemPOLYGON_GLOBAL arbitrary cross sections defined in global coordinate system\n\n\npolyline\nExtrusion axis for extrusion_type = POLYLINE;3D polyline in WKT format.The extrusion axis is centered in the cross-section with respect to both height and width.\n\n\npoint_start\nStarting point for extrusion for extrusion_type = POINT, SURFACE;3D point in WKT format, global coordinate system (e.g. LV95)\n\n\npoint_end\nEnding point for extrusion for extrusion_type = POINT, SURFACE;3D point in WKT format, global coordinate system (e.g. LV95)\n\n\nheight\nHeight of the cross section in [m]\n\n\nwidth\nWidth of the cross section in [m]\n\n\norientation\nIf extrusion_type = POINT and cross_section_type = RECTANGELE, POLYGON. Orientation of the cross section.Degrees 0.0 .. 359.9\n\n\npolygon\nCross section, 2D polygon in WKT format in [m].If extrusion_type = POLYLINE: A cross-sectional area defined in a local coordinate system in which the extrusion axis passes through the origin (0,0). The cross-sectional area is always defined as being orthogonal to the extrusion axis.If extrusion_type = POINT: A cross-sectional area in local coordinate system. The area is always defined in the xy-plane of the parent, absolute coordinate system (e.g. LV95).The cross-sectional area is extruded between the points point_start and point_end without being rotated relative to the xy-plane.If extrusion_type = SURFACE: Surface in absolute coordinate system (e.g. LV95). The surface is always defined in the xy-plane of the parent coordinate system (e.g. LV95). The surface is extruded between the z-values of the points point_start and point_end and in the direction defined by point_start and point_end, without being rotated relative to the xy-plane.\n\n\n\n\n\n\n \nThe conversion of the extrusion types described above into IFC geometry types is performed according to the following mapping table:\n\n\n\nTable 1.4: Extrusion types IFC mapping\n\n\n\n\n\n\n\n\n\n\nextrusion type\ncross section type\nIFC geometry type\n\n\n\n\nPOLYLINE\nCIRCLE\nIfcSweptDiskSolid\n\n\nPOLYLINE\nEGG, RECTANGLE, POLYGON\nIfcFixedReferenceSweptAreaSolid\n\n\nPOINT, SURFACE\n[all]\nIfcExtrudedAreaSolid\n\n\n\n\n\n\n\n\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
+    "text": "1.5 Extrusions\nA typical use case for transforming geodata into IFC format involves utility cadastre data. In Switzerland there is a standard data model for utility cadastre called “LKMap”, which is specified in (SIA 405, 2025) and (SIA 4008, 2025). This information is often referred to as 2.5D, since it is primarily defined in 2D with additional height data.\nTo enable the conversion of pipe elements to IFC, the transformation needs special geometry conversion functions that can be used to generate extruded geometries. In accordance with the principles of SIA 405, two main methods can be distinguished for creating solid geometries from the 2.5D data in LKMap using extrusion:\n\nExtrusion along a polyline:\nA cross-section is extruded along a 3D polyline. This method is used specifically for pipes (LKLine).\nIn LKMap, the standard cross-sectional shapes are circle, ellipse, and rectangle. In specialized building information models, it is generally possible to specify freely definable cross-sectional shapes that deviate from the standard profiles. However, this is not possible with LKMap.\nVertical extrusion:\nA base area is extruded vertically between two elevation points. This method is used specifically for shaft structures (LKPunkt, LKFlaeche). The base area can be defined by any 2D polygon. However, circular base areas (shafts) are also common in the utility cadastre.\n\nFor vertical extrusion of utility cadastre objects, two main cases can be distinguished:\n\nPoint objects with standardized cross-sections\nArea shaped objects (surface)\n\nIn the GIS cadastre, all geometric data is defined in global coordinate systems (e.g. LV95).\nIn GIS cadastres, point objects are defined solely as point geometry in global coordinates (e.g. LV95). Symbols can be used to represent the point object with a geometric shape. For area objects, however, the entire geometric shape (the surface geometry) is defined in global coordinates. The shape of the surface can be defined arbitrarily. This fact is also taken into account in the transformation functions of the extrusion, so that three basic methods can be distinguished:\n\nPOLYGON: For the extrusion of pipes along an axis (polygon).\nPOINT: For the extrusion of point objects.\nSURFACE: For the extusion of area/surface objects.\n\nThe following figure shows a schematic representation of the different types of extrusion:\n\n\n\n\n\n\nFigure 1.10: Extrusion types\n\n\n\nDepending on the type of extrusion and the cross section, different additional parameters are required to define the extrusion algorithm. The following table lists the extrusion parameters required for each type of extrusion, while the table below explains each parameter in detail.\n\n\n\nTable 1.2: Extrusion parameter usage\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nextrusion_type\ncross_section_type\npolyline\npoint_start\npoint_end\nheight\nwidth\norientation\npolygon\n\n\nPOLYLINE\nCIRCLE, EGG\nx\n\n\n\nx\n\n\n\n\nPOLYLINE\nRECTANGLE\nx\n\n\nx\nx\n\n\n\n\nPOLYLINE\nPOLYGON_LOCAL\nx\n\n\n\n\n\nx(1)\n\n\nPOINT\nCIRCLE\n\nx\nx\n\nx\n\n\n\n\nPOINT\nRECTANGLE\n\nx\nx\nx\nx\nx\n\n\n\nPOINT\nPOLYGON_LOCAL\n\nx\nx\n\n\nx\nx(1)\n\n\nSURFACE\nPOLYGON_GLOBAL\n\nx\nx\n\n\n\nx(2)\n\n\n\n\n\n\n\nPolygondefinition in lokalem Koordinatensystem\n\nPolygondefinition in LV95\n\n\n\n\nTable 1.3: Extrusion parameters\n\n\n\n\n\n\n\n\n\nParameter\nBeschreibung\n\n\n\n\nextrusion_type\nPOLYLINE extruding along 3D polyline.POINT extruding point geometry between two points.SURFACE extruding surface geometry. Extrusion vector and lenght is defined by two points\n\n\ncross_section_type\nCIRCLEEGGRECTANGLEPOLYGON_LOCAL arbitrary cross sections defined in local coordinate systemPOLYGON_GLOBAL arbitrary cross sections defined in global coordinate system\n\n\npolyline\nExtrusion axis for extrusion_type = POLYLINE;3D polyline in WKT format.The extrusion axis is centered in the cross-section with respect to both height and width.\n\n\npoint_start\nStarting point for extrusion for extrusion_type = POINT, SURFACE;3D point in WKT format, global coordinate system (e.g. LV95)\n\n\npoint_end\nEnding point for extrusion for extrusion_type = POINT, SURFACE;3D point in WKT format, global coordinate system (e.g. LV95)\n\n\nheight\nHeight of the cross section in [m]\n\n\nwidth\nWidth of the cross section in [m]\n\n\norientation\nIf extrusion_type = POINT and cross_section_type = RECTANGELE, POLYGON. Orientation of the cross section.Degrees 0.0 .. 359.9\n\n\npolygon\nCross section, 2D polygon in WKT format in [m].If extrusion_type = POLYLINE: A cross-sectional area defined in a local coordinate system in which the extrusion axis passes through the origin (0,0). The cross-sectional area is always defined as being orthogonal to the extrusion axis.If extrusion_type = POINT: A cross-sectional area in local coordinate system. The area is always defined in the xy-plane of the parent, absolute coordinate system (e.g. LV95).The cross-sectional area is extruded between the points point_start and point_end without being rotated relative to the xy-plane.If extrusion_type = SURFACE: Surface in absolute coordinate system (e.g. LV95). The surface is always defined in the xy-plane of the parent coordinate system (e.g. LV95). The surface is extruded between the z-values of the points point_start and point_end and in the direction defined by point_start and point_end, without being rotated relative to the xy-plane.\n\n\n\n\n\n\n \nThe conversion of the extrusion types described above into IFC geometry types is performed according to the following mapping table:\n\n\n\nTable 1.4: Extrusion types IFC mapping\n\n\n\n\n\n\n\n\n\n\nextrusion type\ncross section type\nIFC geometry type\n\n\n\n\nPOLYLINE\nCIRCLE\nIfcSweptDiskSolid\n\n\nPOLYLINE\nEGG, RECTANGLE, POLYGON\nIfcFixedReferenceSweptAreaSolid\n\n\nPOINT, SURFACE\n[all]\nIfcExtrudedAreaSolid\n\n\n\n\n\n\n\n\n\n\nAtazadeh, B., Halalkhor Mirkalaei, L., Olfat, H., Rajabifard, A., Shojaei, D., 2021. Integration of cadastral survey data into building information models. Geo-spatial Information Science 24, 387–402. https://doi.org/10.1080/10095020.2021.1937336\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
     "crumbs": [
       "Concepts",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Concepts</span>"
     ]
   },
   {
+    "objectID": "docs/mapping_principles.html",
+    "href": "docs/mapping_principles.html",
+    "title": "2  Mapping Principles",
+    "section": "",
+    "text": "To convert a typical geodataset to IFC, both semantic mappings and geometric conversions must be defined, see figure below.\n\n\n\n\n\n\nFigure 2.1: Mapping Principles Overview ((Schildknecht et al., 2025a))\n\n\n\nIn (Schildknecht et al., 2025a), the various semantic and geometric mappings are described and discussed in detail.\nThe semantic mapping implemented with cs2bim comprises five mapping levels (see also figure below):\n\nEntity mapping\nProperty mapping\nEntityType mapping\nSpatial structure mapping\nGroup mapping\n\n\n\n\n\n\n\nFigure 2.2: Mapping Principles Entities\n\n\n\nThe figure above schematically illustrates how transformation functions can be defined from the geodatabase (GIS feature type) based on class or attribute rules for the various mapping levels.\n\n\n\nTable 2.1: Mapping levels\n\n\n\n\n\n\n\n\n\nMapping level\nDescription\n\n\n\n\nEntity mapping\nEntity mapping specifies which IFC entities (child elements of IfcElement) are instantiated from which instances of the geodatabase.\n\n\nProperty mapping\nProperty mapping determines which attributes of the geodata instance are transferred as properties of the IFC instance.In IFC, these properties can be defined either as IFC attributes or as properties (using PropertySets).\n\n\nEntityType mapping\nThe EntityType mapping specifies which type instance (IfcElementType) the generated IFC instance is assigned to (see the IFC typification concept).The type instances used are also derived from the geodata instance, for example by assigning attribute values to the type instance.\n\n\nSpatial structure mapping\nSpatial structure mapping determines which spatial structure (IfcSpatialStructureElement) the generated IFC instance is assigned to.The spatial structure instances used are also derived from the geodata instance, for example by assigning attribute values to the spatial structure instance.\n\n\nGroup mapping\nGroup mapping determines which group (IfcGroup) the generated IFC instance is assigned to.The group instances used are also derived from the geodata instance.\n\n\n\n\n\n\n  The geometric conversion is shown schematically in the figure below. Based on the defined conversion type, an IFC geometry is generated from the geometry of the geodata instance and assigned to the generated IFC instance. This process always involves at least one geometry type conversion from a WKT definition to an IFC definition. Depending on the source dataset, additional processing of the geometry may also occur — e.g., from 2D to 3D.\n\n\n\n\n\n\nFigure 2.3: Mapping Principles Geometry\n\n\n\nThis chapter focuses on semantic mapping; therefore, geometric conversion will not be discussed further here. For more information on geometric conversion, see the relevant sections in this documentation.\n\n\n\n\nAtazadeh, B., Halalkhor Mirkalaei, L., Olfat, H., Rajabifard, A., Shojaei, D., 2021. Integration of cadastral survey data into building information models. Geo-spatial Information Science 24, 387–402. https://doi.org/10.1080/10095020.2021.1937336\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
+    "crumbs": [
+      "Concepts",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Mapping Principles</span>"
+    ]
+  },
+  {
     "objectID": "docs/mapping_conventions.html",
     "href": "docs/mapping_conventions.html",
-    "title": "2  Mapping Principles",
+    "title": "3  Mapping Conventions",
     "section": "",
-    "text": "2.1 Basics\nTo convert a typical geodataset to IFC, both semantic mappings and geometric conversions must be defined, see figure below.\nIn (Schildknecht et al., 2025a), the various semantic and geometric mappings are described and discussed in detail.\nThe semantic mapping implemented with cs2bim comprises five mapping levels (see also figure below):\nThe geometric conversion is shown schematically in the figure below. Based on the defined conversion type, an IFC geometry is generated from the geometry of the geodata instance and assigned to the generated IFC instance. This process always involves at least one geometry type conversion from a WKT definition to an IFC definition. Depending on the source dataset, additional processing of the geometry may also occur — e.g., from 2D to 3D.",
+    "text": "3.1 Einleitung\n[This section is available only in German]",
     "crumbs": [
       "Concepts",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Mapping Principles</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Mapping Conventions</span>"
     ]
   },
   {
-    "objectID": "docs/mapping_conventions.html#basics",
-    "href": "docs/mapping_conventions.html#basics",
-    "title": "2  Mapping Principles",
+    "objectID": "docs/mapping_conventions.html#einleitung",
+    "href": "docs/mapping_conventions.html#einleitung",
+    "title": "3  Mapping Conventions",
     "section": "",
-    "text": "Figure 2.1: Mapping Principles Overview ((Schildknecht et al., 2025a))\n\n\n\n\n\n\nEntity mapping\nProperty mapping\nEntityType mapping\nSpatial structure mapping\nGroup mapping\n\n\n\n\n\n\n\nFigure 2.2: Mapping Principles Entities\n\n\n\n\n\n\n\n\n\n\nFigure 2.3: Mapping Principles Geometry",
+    "text": "3.1.1 Ausgangslage\nDie Kernfunktion von cs2bim ist die Transformation von Geodaten nach IFC. Für diese Transformation müssen Geodaten aus ihrem jeweiligen Geodatenmodell ins Datenmodell von IFC überführt werden. Dazu sind verschiedene Mappings von Klassen auf IFC-Entitys sowie zwischen Attributen notwendig. Das Datenmodell von IFC lässt auf Grund seiner generischen Erweiterungsmechanismen häufig verschiedene Mappings zu (siehe Grundlagen hier).\nUm die mit den Geodatenmodellen erreichte Standardisierung der Geodaten mit der Transformation nach IFC nicht zu verlieren, ist es notwendig - quasi als Ergänzung zum Geodatenmodell - auch die Transformationsregeln zur Überführung nach IFC festzulegen. Als Teil der nationalen Geodateninfrastruktur möchte Geodienste.ch die IFC-Mappings der publizierten Geodaten systematisch definieren und als Standard resp. Best Practice bereitstellen.\n\n\n3.1.2 Zweck des Kapitels\nDas vorliegende Kapitel beschreibt die Methodik und Prinzipien sowie die im Projekt cs2bim gemachten Abwägungen zum Mapping der Geodaten nach IFC.\nEs dient als Grundlage für die Diskussion von weiteren Mapping-Entscheiden sowie als Ergebnisdokumentation.\nDas Kapitel richtet sich an Fachpersonen aus dem Bereich Geoinformation und BIM mit einem Grundverständnis von IFC.\nDas Kapitel setzt das Grundlagenwissen zu IFC sowie den Prinzipien des Mappings voraus. Darauf basierend sind die konkreten Mapping-Regeln für die im Projekt cs2bim behandelten Geodatensätze dokumentiert.",
     "crumbs": [
       "Concepts",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Mapping Principles</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Mapping Conventions</span>"
     ]
   },
   {
-    "objectID": "docs/mapping_conventions.html#principles",
-    "href": "docs/mapping_conventions.html#principles",
-    "title": "2  Mapping Principles",
-    "section": "2.2 Principles",
-    "text": "2.2 Principles\n\n\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
+    "objectID": "docs/mapping_conventions.html#konventionen",
+    "href": "docs/mapping_conventions.html#konventionen",
+    "title": "3  Mapping Conventions",
+    "section": "3.2 Konventionen",
+    "text": "3.2 Konventionen\nDas Datenmodell von IFC ist sehr umfassend und bietet zudem auch so genannte Erweiterungsmechanismen, die für nationale oder regionale Bedürfnisse Konkretisierungen des Datenmodells erlauben. Für eine einheitliche Anwendung des Datenmodells bedingt dies die Festlegung von Prinzipien und Konventionen, die festlegen, welche Teile von IFC und wie die Erweiterungsmechanismen genutzt werden sollen. In den nachfolgenden Kapiteln werden einige Prinzipien und Konventionen für das Mapping diskutiert und festgelegt.\n\n3.2.1 Entity-Mapping\nBeim Mapping eines GIS Featuretyps auf eine IFC-Entity sollte eine möglichst präzise semantische Abbildung erfolgen. Dazu sind einerseits die in IFC definierten Entitys möglichst genau zu wählen und andererseits auch der Erweiterungsmechanismus mit den so genannten PredefindedTypes zu nutzen. In IFC enthalten die Definitionen der PredefinedTypes bereits eine Aufzählung von semantisch spezielleren Ausprägungen einer Entity. Diese vordefinierten Aufzählungen können auch durch benutzerdefinierte Werte ergänzt werden. Beim Mapping ist daher zu prüfen, ob ein vordefinierter PredefinedType bereits semantisch genügend präzise ist oder ob eine spezifische Erweiterung zu definieren ist.\nIm Kontext von cs2bim und somit der Geobasisdaten bietet das Datenmodell von IFC keine grosse Auswahl an semantisch präzisen Entitys, da IFC primär Bauwerke und Bauprozesse beschreibt und administrativ-planerische Geodaten nicht im Fokus stehen. Aus der Literatur (z.B. (Atazadeh et al., 2021)) sowie den bisherigen Best Practices kommen typischerweise folgende Entitys zur Abbildung von Geobasisdaten in Frage.\n\n\n\nTable 3.1: Typische Entity-Mapping-Kandidaten für Geodaten\n\n\n\n\n\n\n\n\n\nIFC Entity\nErwägungen\n\n\n\n\nIfcGeographicElement\n“An IfcGeographicElement is a generalization of all elements within a geographical landscape. It includes occurrences of typical geographical elements, often referred to as features, such as trees or terrain.” (buildingSmart International, 2023)\n\n\nIfcSite\n“A site is a defined area of land, possibly covered with water, on which the project construction is to be completed. A site may be used to erect, retrofit or turn down building(s), or for other construction related developments.” (buildingSmart International, 2023)\n\n\nIfcSpatialZone\n“A spatial zone is a non-hierarchical and potentially overlapping decomposition of the project under some functional consideration. A spatial zone might be used to represent a thermal zone, a construction zone, a lighting zone, a usable area zone. A spatial zone might have its independent placement and shape representation.” (buildingSmart International, 2023)\n\n\nIfcAnnotation\n“An annotation is an information element within the geometric (and spatial) context of a project, that adds a note or meaning to the objects which constitutes the project model. Annotations include additional points, curves, text, dimensioning, hatching and other forms of graphical notes. It also includes virtual or symbolic representations of additional model components, not representing products or spatial structures, such as survey points and lines, contour lines or similar.” (buildingSmart International, 2023)\n\n\n\n\n\n\n\n\n3.2.2 EntityType-Mapping (Typisierung)\nJedes erzeugte Element erhält eine klare Typzuweisung.\nFür die Typnamen gilt folgende Namenskonvention:\nTypname = Thema_Klasse\n\nThema: Kürzel des Themas (z.B. das Geodatenmodell oder der Themenbereich), gemäss nachfolgender Tabelle.\n\nKlasse: Name der Klasse aus Geodatenmodell. In Ausnahmefällen kann auch der Name der Topic verwendet werden.\n\n\n\n\nTable 3.2: Themen-Kürzel\n\n\n\n\n\nThema\nde\nfr\nit\n\n\n\n\nAmtliche Vermessung\nAV\nMO\nMU\n\n\n3D-Gebäude (Stadtmodell)\n3DSM\n3D??\n3D??\n\n\nLeitungskataster\nLK\n\n\n\n\nNaturgefahrenhinweiskarte\nNGH\n\n\n\n\n…\n\n\n\n\n\n\n\n\n\nSchreibweise: Typnamen in GROSSBUCHSTABEN, Leerschläge durch Tiefstriche “_” ersetzt.\nTypnamen sind damit bewusst eher “technisch” geschrieben (im Gegensatz zu Gruppierungen, die “normal”, umgangssprachlicher geschrieben sind).\nBeispiele von Typnamen:\n\n\n\nTable 3.3: Beispiele Typnamen\n\n\n\n\n\nde\nfr\nit\n\n\n\n\nAV_LIEGENSCHAFT\nMO_BIEN_FONDS\nMU_BENE_IMMOBILE\n\n\nAV_SELBSTRECHT\nMO_DDP\nMU_DPSSP\n\n\nAV_BERGWERK\nMO_MINE\nMU_MINIERA\n\n\nAV_BODENBEDECKUNG\nMO_COUVERTURE_DU_SOL\nMU_COPERTURA_DEL_SUOLO\n\n\n\n\n\n\n\n\n\n\n\nDie Typzuweisung zu einem Element erfolgt zweifach mit beiden von IFC vorgesehenen Typisierungskonzepten:\n\nAttribut ObjectType: Der Typname wird im Attribut ObjectTyp gesetzt.\n\nVerweis auf Objekttyp-Instanz: Für jeden Typ wird eine Typinstanz angelegt (IfcElementType) und die entsprechenden Elemente verweisen auf die Typinstanz.\n\n\n\n3.2.3 Spatial Structure Mapping\nDie Raumstrukturierung von IFC (IfcSpatialStructureElement) wird für eine rein thematische Gruppierung verwendet.\nEs wird dazu für jeden EntityType eine eigene Raumstruktur-Instanz (IfcSite) gebildet.\nEs wird keine thematische Hierarchisierung gemacht, d.h. alle Raumstruktur-Instanzen liegen in einer “flachen” Auflistung vor (im Gegensatz zu den ebenfalls unterstützen IFC-Gruppen, siehe Group-Mapping in Kapitel 3.4).\nAnmerkung: Die in IFC eigentlich vorgesehene raum-logische Struktur wird für die Geobasisdaten nicht angestrebt. Dies ist darin begründet, dass einerseits eine raum-logische Strukturierung im Sinne von IFC für Geobasisdaten nur bedingt sinnvoll ist und andererseits aber viele BIM-Viewer die Raumstruktur als primäre Objektstruktur bereitstellen und somit die “typischen BIM-Benutzenden” diese Navigation gewohnt sind (–&gt; Unterstützung Benutzendenakzeptanz).\n\n\n3.2.4 Group-Mapping\nDie Gruppierungsstrukturen von IFC werden genutzt, um die thematische Gliederung der Geodatensätze abzubilden. Dabei können auch beliebig tiefe Hierarchien gebildet werden, falls dies fachlich-thematisch sinnvoll ist.\nDie Gruppennamen werden dabei möglichst sprechend und selbsterklärend gewählt und können daher (leicht) von den Namen der Raumstruktur und Typendefinitionen abweichen.\nFür cs2bim wird in der ersten Version folgende thematische Gliederung definiert:\nAmtliche Vermessung  \n    Liegenschaften  \n        Liegenschaft  \n        SelbstRecht  \n        Bergwerk  \n    Bodenbedeckung  \n3D-Stadtmodell  \nDie Gruppierungs-Struktur ist somit sehr ähnlich zur gewählten Raumstrukturierung (IfcSpatial-StructureElement), mit dem Unterschied, dass die Gruppierungs-Struktur eine tiefere Hierarchiestruktur abbildet.\n\n\n3.2.5 Property-Mapping\nDas Konzept der Propertys ist ein zentraler Erweiterungsmechanismus von IFC. Es erlaubt die Definition beliebiger Eigenschaften (Property) für jede IFC-Entity. Mit dem Standard IFC sind aber auch eine grosse Anzahl an Propertys vordefiniert, die eine klar definierte Semantik haben. Mit dem Ziel eines harmonisierten, standardisierten Datenaustausch ist es sehr wichtig, einheitlich definierte Propertys zu verwenden und nach Möglichkeit primär auch die bereits mit IFC vordefinierten Propertys zu nutzen.\nDie Propertys (und auch die PropertySets) können frei benannt werden (mit Ausnahme des Präfix “Pset_”, welcher für buildingSmart reserviert ist). Als Namenskonvention für die spezifisch definierten Propertys im Rahmen von cs2bim werden folgende Regeln definiert.\n\n3.2.5.1 PropertySets\nPropertySet-Name = Präfix_Thema_Klasse\n\nPräfix = CHOrg-Kurzzeichen\nNationale Kennung “CH” sowie Kurzzeichen Organisation.\n\nOrg-Kurzzeichen:\nKurzzeichen der verantwortlichen Organisation, z.B. Kantonskürzel.\nFür nationale Geodatensätze wird das Org-Kurzzeichen weggelassen.\n\nThema:\nKürzel des Themas (z.B. das Geodatenmodell oder der Themenbereich), siehe Definition bei EntityTypes in Kapitel 3.2.\n\nKlasse:\nName der Klasse oder aus Geodatenmodell. In Ausnahmefällen kann auch der Name der Topic verwendet werden, sofern die eindeutige Rückverfolgbarkeit der Propertys auf die Klasse gewährleistet ist.\n\nDie PropertySets sind sprachspezifisch in den Sprachen der MGDMs definiert. D.h. wenn ein MGDM in mehreren Sprachen vorliegt, werden entsprechend auch die PropertySets in diesen Sprachen geführt.\nBeispiele:\n\nCH_AV_Grundstueck\nCH_AV_Bodenbedeckung\nCH_MO_GenreImmeuble\nCH_MO_CouvertureDuSol\nCHSWISSTOPO_SwissBuildings3d\nCHLU_3DSM\n\nSchreibweise PSet-Namen: Präfix und Thema in Grossbuchstaben, Klasse in Kamelschreibweise.\n\n\n3.2.5.2 Property\nProperty-Name = Nach Möglichkeit identisch zum Attributnamen des entsprechenden Geodatenmodells in der entsprechenden Sprache.\nDie PropertySets sind sprachspezifisch in den Sprachen der MGDMs definiert.\nSchreibweise: Identisch zur Schreibweise im Geodatenmodell (INTERLIS).",
     "crumbs": [
       "Concepts",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Mapping Principles</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Mapping Conventions</span>"
+    ]
+  },
+  {
+    "objectID": "docs/mapping_conventions.html#umgang-mit-redundanz",
+    "href": "docs/mapping_conventions.html#umgang-mit-redundanz",
+    "title": "3  Mapping Conventions",
+    "section": "3.3 Umgang mit Redundanz",
+    "text": "3.3 Umgang mit Redundanz\nMit den gewählten Mapping-Definitionen werden im erzeugten IFC-Datensatz bewusst redundante Informationen erzeugt (z.B. thematische Gruppierung und Typdefinitionen, thematische Grup-pierung und Raumstrukturierung, Typdefinition auf der Instanz sowie auch auf der zugewiesenen Typinstanz).\nDie Redundanzen sollen helfen, möglichst viele unterschiedliche Nutzungsweisen und Softwareanwendungen zu unterstützen. Die erzeugten IFC-Dateien werden als nicht weiter bearbeitbare Referenzinformationen genutzt, so dass keine Inkonsistenzen zu erwarten sind.",
+    "crumbs": [
+      "Concepts",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Mapping Conventions</span>"
+    ]
+  },
+  {
+    "objectID": "docs/mapping_conventions.html#mappings-konkreter-geodatensätze",
+    "href": "docs/mapping_conventions.html#mappings-konkreter-geodatensätze",
+    "title": "3  Mapping Conventions",
+    "section": "3.4 Mappings konkreter Geodatensätze",
+    "text": "3.4 Mappings konkreter Geodatensätze\nIm Folgenden sind die in cs2bim konkret festgelegten Spezifikationen der Mapping-Regeln dokumentiert (für die Sprache Deutsch).\nKonventionen (der Dokumentation): - Konstante Werte in “Anführungszeichen” - Dynamisch aus den Daten abgeleitete Werte in normaler Schreibweise mit objektorientierter Notation, z.B. grundstueck.nbident (Wert der Tabelle grundstueck, Attribut nbident).\n\n3.4.1 Liegenschaften\nQuelldaten:\n\nDM01AVCH24LV95D.Liegenschaften.Liegenschaft / .SelbstRecht / .Bergwerk\n\nDM01AVCH24LV95D.Liegenschaften.Grundstueck\n\n\n\n\n\n\n\nFigure 3.1: Mapping-Konfiguration: Liegenschaft\n\n\n\n\n\n\n\n\n\nFigure 3.2: Mapping-Konfiguration: SelbstRecht\n\n\n\n\n\n\n\n\n\nFigure 3.3: Mapping-Konfiguration: Bergwerk\n\n\n\n\n\n3.4.2 Bodenbedeckung\nQuelldaten:\n\nDM01AVCH24LV95D.Bodenbedeckung.BoFlaeche\n\n\n\n\n\n\n\nFigure 3.4: Mapping-Konfiguration: Bodenbedeckung (alle Arten ausser Gebaeude)\n\n\n\n\n\n\n\n\n\nFigure 3.5: Mapping-Konfiguration: Bodenbedeckung (Art = Gebaeude)\n\n\n\n\n\n3.4.3 3D-Gebäude\nQuelldaten:\n\nSwissBuildings3d, Version 3\n\n\n\n\n\n\n\nFigure 3.6: Mapping-Konfiguration: SwissBuildings3d, Gebäude\n\n\n\n\n\n\n\nAtazadeh, B., Halalkhor Mirkalaei, L., Olfat, H., Rajabifard, A., Shojaei, D., 2021. Integration of cadastral survey data into building information models. Geo-spatial Information Science 24, 387–402. https://doi.org/10.1080/10095020.2021.1937336\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
+    "crumbs": [
+      "Concepts",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Mapping Conventions</span>"
     ]
   },
   {
     "objectID": "docs/architecture.html",
     "href": "docs/architecture.html",
-    "title": "3  Architecture",
+    "title": "4  Architecture",
     "section": "",
-    "text": "3.1 System architecture",
+    "text": "4.1 System architecture",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Architecture</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Architecture</span>"
     ]
   },
   {
     "objectID": "docs/architecture.html#system-architecture",
     "href": "docs/architecture.html#system-architecture",
-    "title": "3  Architecture",
+    "title": "4  Architecture",
     "section": "",
-    "text": "3.1.1 Context\nThe service cs2bim is designed with the following conceptual components:\n\n\n\n\n\n\nFigure 3.1: CS2BIM System Architecture\n\n\n\n\n\n\n\n\n\n\nComponent\nDescription\n\n\n\n\ncs2bim\nMain component to transform feature types into IFC instances.Including transformation algorithms, IFC serialisation, service task management etc.\n\n\nPostGIS/WKT\nDatabase holding the GIS feature types. In current state, this is a PostGIS database.The component cs2bim has a postgres connection to the database.\n\n\nDTM\nData store with Digital Terrain Model data. DTM data is expected in format XYZ. The cs2bim component gets the DTM data over a STAC API request.\n\n\nCityGML\nData store with CityGML data. CityGML data is expected in version 2 of CityGML. The cs2bim component gets the CityGML data over a STAC API request.\n\n\nREST API\nREST API to interact with cs2bim: Start processing, get status of processing, get generated IFC file.\n\n\nili2pg\nExternal component to transform INTERLIS data into PostGIS. This must be done as a standalone pre process.\n\n\n\n  The following architectural enhancements are already being discussed and proposed as potential next steps for the further development and improvement of the service:\n\n\n\n\n\n\nFigure 3.2: CS2BIM System Architecture, look ahead\n\n\n\n\nGeopackage as additional data source format for GIS feature types.\n\nGeopackage files could be stored locally (on the server) or could be accessed via STAC API\n\nDMT files stored locally (on the server)\nCityGML files stored locally (on the server)\n\nThese improvements would simplify the “local” execution of the service as a “standalone” application, as originally intended.\n\n\n3.1.2 Internal\n\n\n\n\n\n\nFigure 3.3: CS2BIM System Architecture\n\n\n\n\n3.1.2.1 Services\nThe system architecture is set up using three Docker services.\nThe api and worker services are built from a custom Docker image based on python:3.10, which contains the application code base and all required dependencies. Both services share the same image but use different entry points. The redis service is created using the standard redis:7 image.\n\n3.1.2.1.1 api\nThe entry point for this service is the api.app module. It is responsible for routing user requests. There are three endpoints that let the user interact with the application:\n\nPOST /generate-model – triggers the generation of an IFC model. Returns a task_id that can be used to track progress and retrieve the result.\nGET /generation-state/{task_id} – returns the current state of a generation task.\nGET /generated-file/{task_id} – returns the generated IFC file once the task is completed.\n\nThe service uses FastAPI as the web framework and Uvicorn as the ASGI server to host it.\n\n\n3.1.2.1.2 worker\nThe entry point for the worker service is the worker.app module. The service runs a Celery instance that manages and executes IFC model generation tasks. It connects to the required data sources (PostGIS database and SwissTopo STAC API) that provide the data needed for model generation.\n\n\n3.1.2.1.3 redis\nThe redis service serves two purposes: as the message broker for the worker service (managing task queues between api and worker) and as the cache management layer, tracking which files are cached and whether cached files need to be refreshed.\n\n\n\n\n3.1.3 Docker Volumes\nTo store data produced during run-time, the docker-compose file defines four Docker volumes:\n\nredis_data – persists all data stored in Redis. Prevents data loss on service rebuilds.\nifc – stores generated IFC files.\nlogs – stores log files for the api and worker services.\ncache – stores cached data fetched from external data sources.\n\n\n\n3.1.4 Volume Mappings\nAll configurable files are mapped from the host machine into the containers. This includes translation files (i18n), SQL query files, and the application configuration (config.yml). This way they can be easily edited without rebuilding the containers.\n\n\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
+    "text": "4.1.1 Context\nThe service cs2bim is designed with the following conceptual components:\n\n\n\n\n\n\nFigure 4.1: CS2BIM System Architecture\n\n\n\n\n\n\n\n\n\n\nComponent\nDescription\n\n\n\n\ncs2bim\nMain component to transform feature types into IFC instances.Including transformation algorithms, IFC serialisation, service task management etc.\n\n\nPostGIS/WKT\nDatabase holding the GIS feature types. In current state, this is a PostGIS database.The component cs2bim has a postgres connection to the database.\n\n\nDTM\nData store with Digital Terrain Model data. DTM data is expected in format XYZ. The cs2bim component gets the DTM data over a STAC API request.\n\n\nCityGML\nData store with CityGML data. CityGML data is expected in version 2 of CityGML. The cs2bim component gets the CityGML data over a STAC API request.\n\n\nREST API\nREST API to interact with cs2bim: Start processing, get status of processing, get generated IFC file.\n\n\nili2pg\nExternal component to transform INTERLIS data into PostGIS. This must be done as a standalone pre process.\n\n\n\n  The following architectural enhancements are already being discussed and proposed as potential next steps for the further development and improvement of the service:\n\n\n\n\n\n\nFigure 4.2: CS2BIM System Architecture, look ahead\n\n\n\n\nGeopackage as additional data source format for GIS feature types.\nGeopackage files could be stored locally (on the server) or could be accessed via STAC API.\nDMT files stored locally (on the server).\nCityGML files stored locally (on the server).\n\nThese improvements would simplify the “local” execution of the service as a “standalone” application, as originally intended.\n\n\n4.1.2 Internal\n\n\n\n\n\n\nFigure 4.3: CS2BIM System Architecture\n\n\n\n\n4.1.2.1 Services\nThe system architecture is set up using three Docker services.\nThe api and worker services are built from a custom Docker image based on python:3.10, which contains the application code base and all required dependencies. Both services share the same image but use different entry points. The redis service is created using the standard redis:7 image.\n\n4.1.2.1.1 api\nThe entry point for this service is the api.app module. It is responsible for routing user requests. There are three endpoints that let the user interact with the application:\n\nPOST /generate-model – triggers the generation of an IFC model. Returns a task_id that can be used to track progress and retrieve the result.\nGET /generation-state/{task_id} – returns the current state of a generation task.\nGET /generated-file/{task_id} – returns the generated IFC file once the task is completed.\n\nThe service uses FastAPI as the web framework and Uvicorn as the ASGI server to host it.\n\n\n4.1.2.1.2 worker\nThe entry point for the worker service is the worker.app module. The service runs a Celery instance that manages and executes IFC model generation tasks. It connects to the required data sources (PostGIS database and SwissTopo STAC API) that provide the data needed for model generation.\n\n\n4.1.2.1.3 redis\nThe redis service serves two purposes: as the message broker for the worker service (managing task queues between api and worker) and as the cache management layer, tracking which files are cached and whether cached files need to be refreshed.\n\n\n\n\n4.1.3 Docker Volumes\nTo store data produced during run-time, the docker-compose file defines four Docker volumes:\n\nredis_data – persists all data stored in Redis. Prevents data loss on service rebuilds.\nifc – stores generated IFC files.\nlogs – stores log files for the api and worker services.\ncache – stores cached data fetched from external data sources.\n\n\n\n4.1.4 Volume Mappings\nAll configurable files are mapped from the host machine into the containers. This includes translation files (i18n), SQL query files, and the application configuration (config.yml). This way they can be easily edited without rebuilding the containers.\n\n\n\n\nAtazadeh, B., Halalkhor Mirkalaei, L., Olfat, H., Rajabifard, A., Shojaei, D., 2021. Integration of cadastral survey data into building information models. Geo-spatial Information Science 24, 387–402. https://doi.org/10.1080/10095020.2021.1937336\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Architecture</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Architecture</span>"
     ]
   },
   {
     "objectID": "docs/configuration_overview.html",
     "href": "docs/configuration_overview.html",
-    "title": "4  Configuration Overview",
+    "title": "5  Configuration Overview",
     "section": "",
-    "text": "4.1 Internationalization Support\nThe application is configured using a YAML file. Below, you’ll find an overview of the main configuration concepts. You can find the full and more technical documentation of the configuration file here.\nThe configuration is divided into several sections:\nThe concepts and principles of the configuration and the most important parameters are described in the following sections.\nThe configuration supports referencing translation files for multiple languages. The values affected by translation are fixed and not configurable:\nIf a translation key cannot be found, the original value is written unchanged. The following characters are allowed for keys in the table: letters (lowercase), numbers and underscore (_).\nKeys derived from dynamic values are generated as follows:\nExample: “Year ( 1990 )” → “year ( 1990 )” → “year 1990” → “year 1990” → “year_1990”",
+    "text": "5.1 Internationalization Support\nThe application is configured using a YAML file. Below, you’ll find an overview of the main configuration concepts. You can find the full and more technical documentation of the configuration file here.\nThe configuration is divided into several sections:\nThe concepts and principles of the configuration and the most important parameters are described in the following sections.\nThe configuration supports referencing translation files for multiple languages. The values affected by translation are fixed and not configurable:\nIf a translation key cannot be found, the original value is written unchanged. The following characters are allowed for keys in the table: letters (lowercase), numbers and underscore (_).\nKeys derived from dynamic values are generated as follows:\nExample: “Year ( 1990 )” → “year ( 1990 )” → “year 1990” → “year 1990” → “year_1990”",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Configuration Overview</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration Overview</span>"
     ]
   },
   {
     "objectID": "docs/configuration_overview.html#internationalization-support",
     "href": "docs/configuration_overview.html#internationalization-support",
-    "title": "4  Configuration Overview",
+    "title": "5  Configuration Overview",
     "section": "",
     "text": "Attribute values\nProperty set names\nProperty names\nProperty values\nGroup names\n\n\n\n\nkey = lower_case(key)\nkey = remove_special_characters_except_spaces(key)\nkey = trim_leading_and_trailing_spaces(key)\nkey = replace_sequences_of_spaces_with_single_underscore(key)",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Configuration Overview</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration Overview</span>"
     ]
   },
   {
     "objectID": "docs/configuration_overview.html#external-data",
     "href": "docs/configuration_overview.html#external-data",
-    "title": "4  Configuration Overview",
-    "section": "4.2 External Data",
-    "text": "4.2 External Data\nThe projection feature types require a DTM file source provided via a STAC API. The building feature types require a CityGML file source. These URLs must be defined in the STAC configuration.\n\n4.2.1 DTM\nNeeds to be set if there are projection feature types configured. Expected asset properties:\n\ntype = application/x.ascii-xyz+zip\neo:gsd / gsd = config.tin.grid_size\n\n\n\n4.2.2 Buildings\nNeeds to be set if there are building feature types configured. Expected asset properties:\n\ntype = application/x.gml+zip",
+    "title": "5  Configuration Overview",
+    "section": "5.2 External Data",
+    "text": "5.2 External Data\nThe projection feature types require a DTM file source provided via a STAC API. The building feature types require a CityGML file source. These URLs must be defined in the STAC configuration.\n\n5.2.1 DTM\nNeeds to be set if there are projection feature types configured. Expected asset properties:\n\ntype = application/x.ascii-xyz+zip\neo:gsd / gsd = config.tin.grid_size\n\n\n\n5.2.2 Buildings\nNeeds to be set if there are building feature types configured. Expected asset properties:\n\ntype = application/x.gml+zip",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Configuration Overview</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration Overview</span>"
     ]
   },
   {
     "objectID": "docs/configuration_overview.html#ifc-export",
     "href": "docs/configuration_overview.html#ifc-export",
-    "title": "4  Configuration Overview",
-    "section": "4.3 IFC Export",
-    "text": "4.3 IFC Export\n\n4.3.1 Geo referencing\nYou can provide the so-called “Level of Georeferencing” (LoGeoRef), according to (Clemen&Görne, 2019) [^LoGeoRef].\nThe different levels represent different methods of defining information about georeferencing in IFC.\nSupported values are:\n\nLO_GEO_REF_30\n\nIfcObjectPlacement of an IfcSpatialStructureElement contains georeferencing\nSuitability for local projects on a smaller scale\nIFC 2.3\n\nLO_GEO_REF_40\n\nIfcGeometricRepresentation context of IfcProject contains georeferencing\nSuited for larger infrastructure projects\nIFC 2.3\n\nLO_GEO_REF_50\n\nIfcMapConversion defines georeferencing of the “SurveyPoint”, including coordinate system parameters\nSuited for large-scale and linear project expansions\nIFC 4.0\n\n\n\n\n\nLevels of Georeferencing LoGeoRef\n\n\nCoordinates and Offsets\nYou can provide a project origin in LV95 coordinates (Easting, Northing, Height). The project origin can also be set to (0,0,0).\nIf not provided, the system sets a project origin in the lower left corner on a minimum bounding box of the perimeter.\n\n\n\nLevels of Georeferencing LoGeoRef\n\n\n\n\n4.3.2 Feature types\nA “feature type” is the definition of a set of objects that are exported as instances of an IFC entity with common definitions. Each feature type is defined through a configuration that describes how data from the GIS database is transformed into IFC instances. For every configured feature type, a set of instances is created. Currently, three different kinds of feature types are supported. They differ according to the type of geometry conversion.\n\nProjection (projection_feature_types)\nProjections are feature types that generate IFC structures by projecting 2D areas onto a 3D surface (in this case the terrain model).\nBuilding (building_feature_types)\nBuildings are feature types that are generated by transforming 3D building geometries from CityGML into IFC structures.\nExtrusion (extrusion_feature_types)\nExtrusions are feature types that are generated by extruding 2D areas along a polyline. Five different cross-section types (CIRCLE, EGG, RECTANGLE, POLYGON_GLOBAL, POLYGON_LOCAL) and three different extrusion types (POLYLINE (horizontal) , SURFACE (vertical) and POINT (vertical)) are supported.\n\n\n\n4.3.3 SQL\nThe basis of a feature type is a SQL statement, that selects data from a geodata source. The SQL statement is stored in a separate file. It is executed at the beginning of constructing of the feature type instances. It determines what objects to create for the feature type. The input parameter “%(polygon)s” is the input WKT string of the application. It is expected that this input parameter is used to select the relevant feature type instances for the request. Each result row is converted into an IFC instance. The required return columns differ from feature type to feature type.\n\nProjection: Expects a column with the name wkt[2d_wkt_polygon] that represents the area to be projected.\nBuilding: Expects a column with the name egid[number] that contains the egid number to identify the building.\nExtrusion: Extrusions are a bit more complicated because there are different cross-sections and extrusion types that require different columns. The columns cross_section [cross_section_type] and extrusion_type [extrusion_type] are always mandatory and used to identify the cross-section and extrusion type. Depending on the cross_section and extrusion_type additional columns are needed. See this section for more details.\n\nAdditional columns can be included to provide values that can be referenced in the attribute, property, or group configurations, see this section for more details.\nSelecting the data by SQL is flexible and can be done in various ways. Specifically use geometry functions (e.g. intersections) and aggregation functions. There are some examples in the sql folder.\n\n\n\nPolygon\n\n\n\nThe input polygon\nAll areas that intersect with the polygon are included (Parcels, Land covers, Land covers buildings)\nAll areas are cut off at the border of the polygon (Parcels intersection, Land covers intersection)\nAll areas that are fully contained by the polygon are included (Parcels contains, Land covers contains)\nThe entire area of the input polygon without subdivisions (Polygon)\n\nUseful postgis functions\nST_GeomFromText: Constructs a PostGIS ST_Geometry object\nST_AsText: Returns the OGC WKT representation of the geometry\nST_CurveToLine: Converts a given geometry to a linear geometry\nST_Intersects: Returns true if two geometries intersect. Geometries intersect if they have any point in common. ST_Contains: Returns true if the first geometry contains the second.\nHint: The wildcard character ‘%’ needs to be escaped like this ‘%%’.\n\n\n4.3.4 Entity Mapping\nSpecifies the IFC entity used to create instances for feature types. The configuration expects a string containing the exact name of the entity as defined in the IFC schema.\nNot all entities are supported by all IFC versions, so only entities that are available across the supported versions should be used. An exception to this rule applies to IfcBuiltSystem / IfcBuildingSystem. If either of these entities is configured, the system will automatically create the appropriate entity for the selected IFC version.\nIncorrect or unsupported entity names will result in errors. The responsibility for providing a valid and compatible entity name lies with the user.\n\n\n4.3.5 Attributes, properties and group mappings\nTo define a value for an attribute, property or group name, the source needs to be defined. The source is defined by a type and an expression. There are three different types of sources to evaluate the values of attributes, properties and group names:\n\nSQL: The value is determined by an attribute of the SQL statement.\nSTATIC: The value is static and defined directly in the configuration\nCITY_GML (for buildins feature types only): The value is determined by an XPath expression\n\nIt is important that the expression matches the type being used. An SQL source expects a column name to retrieve a value from the SQL result set. A CityGML source expects an XPath expression that selects the desired value (starting from bldg:Building). The static source does not resolve any value and therefore has no requirements for the expression.\nAttributes cannot be freely selected and depend on the ifc entity that is selected. If a configured attribute does not exist, it is ignored. Properties that are configured but not found as output column in the sql result are also ignored.\nThe following figure shows schematically the attributes of the sql statement and their referene as parameters in the configuration.\n\n\n\n4.3.6 Spatial Structure Mapping\nSpecifies the IFC spatial structure element that a created instance is linked to. Spatial structures are shared among instances if their attribute or property values are identical — even across different feature types. As a result, the total number of spatial structures ranges from one up to the number of feature type instances.\n\n\n4.3.7 Entity Type Mapping\nSpecifies an IFC entity type linked to each created instance. Entity types are shared among other instances of this feature type if their attribute or property values are identical. Entity types are only supported by certain IFC entities. The responsibility for configuring this correctly lies with the user. Configured entity types that do not exist are ignored. Attributes cannot be freely selected and depend on the ifc entity that is selected. If a configured attribute does not exist, it is ignored.\n\n\n4.3.8 Groups\nEach feature type instance can be assigned to one or more groups. This configuration is optional—if omitted, no group assignment will be made. For every group assignment, the system creates an IFC group based on the specified group configuration, including its parameters such as entity and any number of attributes or properties. If no configuration exists for a given assigned value, the system will generate a basic IFC group entity without additional attributes or properties. When defining groups, the “.” character can be used to create nested group structures.\nFor example, the group “Amtliche Vermessung.Bodenbedeckung.befestigt” results in the creation of three nested groups. The feature type instances are assigned to the final group in this hierarchy.\n\nAmtliche Vermessung\n\nBodenbedeckung\n\nbefestigt\n\nFeature type instance 1\nFeature type instance 2\nFeature type instance 3\n…\n\n\n\n\n\n\n4.3.9 Special configurations (feature type specific)\nIn this section some feature type specific configurations and concepts are described.\n\n4.3.9.1 Building (building_feature_type)\nThe processing of buildings from CityGML is based on the EGID (a unique identification for all buildings in Switzerland). In the first step, all EGID located within the processing perimeter are identified. To do this, the EGID are queried using an SQL statement from a geodata source within the database (attribute egid in the SQL statement).\nIn a second step, the corresponding building objects are identified within the CityGML files. This is done via an attributive selection, i.e., the EGID must be included in the CityGML records. The parameter egid_xpath defines the XQuery expression through which the EGID number is defined within the CityGML objects.\nThe parameter egid_xpath defines an XQuery expression used to query a geometry definition within CityGML. This parameter can be used to define both the LOG to be processed and the BuildingParts to be processed by formulating the appropriate XQuery expressions.\n\n\n4.3.9.2 Extrusion (extrusion_feature_type)\nExtrusions are a bit more complicated because there are different cross-sections and extrusion types that require different columns. The columns cross_section [cross_section_type] and extrusion_type [extrusion_type] are always mandatory and used to identify the cross-section and extrusion type. See this table in this section that shows the valid values for these columns and the additional required columns for each valid combination.\nFor a list of all extrusion parameters see also this table.\n\n\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
+    "title": "5  Configuration Overview",
+    "section": "5.3 IFC Export",
+    "text": "5.3 IFC Export\n\n5.3.1 Geo referencing\nYou can provide the so-called “Level of Georeferencing” (LoGeoRef), according to (Clemen&Görne, 2019) [^LoGeoRef].\nThe different levels represent different methods of defining information about georeferencing in IFC.\nSupported values are:\n\nLO_GEO_REF_30\n\nIfcObjectPlacement of an IfcSpatialStructureElement contains georeferencing\nSuitability for local projects on a smaller scale\nIFC 2.3\n\nLO_GEO_REF_40\n\nIfcGeometricRepresentation context of IfcProject contains georeferencing\nSuited for larger infrastructure projects\nIFC 2.3\n\nLO_GEO_REF_50\n\nIfcMapConversion defines georeferencing of the “SurveyPoint”, including coordinate system parameters\nSuited for large-scale and linear project expansions\nIFC 4.0\n\n\n\n\n\nLevels of Georeferencing LoGeoRef\n\n\nCoordinates and Offsets\nYou can provide a project origin in LV95 coordinates (Easting, Northing, Height). The project origin can also be set to (0,0,0).\nIf not provided, the system sets a project origin in the lower left corner on a minimum bounding box of the perimeter.\n\n\n\nLevels of Georeferencing LoGeoRef\n\n\n\n\n5.3.2 Feature types\nA “feature type” is the definition of a set of objects that are exported as instances of an IFC entity with common definitions. Each feature type is defined through a configuration that describes how data from the GIS database is transformed into IFC instances. For every configured feature type, a set of instances is created. Currently, three different kinds of feature types are supported. They differ according to the type of geometry conversion.\n\nProjection (projection_feature_types)\nProjections are feature types that generate IFC structures by projecting 2D areas onto a 3D surface (in this case the terrain model).\nBuilding (building_feature_types)\nBuildings are feature types that are generated by transforming 3D building geometries from CityGML into IFC structures.\nExtrusion (extrusion_feature_types)\nExtrusions are feature types that are generated by extruding 2D areas along a polyline. Five different cross-section types (CIRCLE, EGG, RECTANGLE, POLYGON_GLOBAL, POLYGON_LOCAL) and three different extrusion types (POLYLINE (horizontal) , SURFACE (vertical) and POINT (vertical)) are supported.\n\n\n\n5.3.3 SQL\nThe basis of a feature type is a SQL statement, that selects data from a geodata source. The SQL statement is stored in a separate file. It is executed at the beginning of constructing of the feature type instances. It determines what objects to create for the feature type. The input parameter “%(polygon)s” is the input WKT string of the application. It is expected that this input parameter is used to select the relevant feature type instances for the request. Each result row is converted into an IFC instance. The required return columns differ from feature type to feature type.\n\nProjection: Expects a column with the name wkt[2d_wkt_polygon] that represents the area to be projected.\nBuilding: Expects a column with the name egid[number] that contains the egid number to identify the building.\nExtrusion: Extrusions are a bit more complicated because there are different cross-sections and extrusion types that require different columns. The columns cross_section [cross_section_type] and extrusion_type [extrusion_type] are always mandatory and used to identify the cross-section and extrusion type. Depending on the cross_section and extrusion_type additional columns are needed. See this section for more details.\n\nAdditional columns can be included to provide values that can be referenced in the attribute, property, or group configurations, see this section for more details.\nSelecting the data by SQL is flexible and can be done in various ways. Specifically use geometry functions (e.g. intersections) and aggregation functions. There are some examples in the sql folder.\n\n\n\nPolygon\n\n\n\nThe input polygon\nAll areas that intersect with the polygon are included (Parcels, Land covers, Land covers buildings)\nAll areas are cut off at the border of the polygon (Parcels intersection, Land covers intersection)\nAll areas that are fully contained by the polygon are included (Parcels contains, Land covers contains)\nThe entire area of the input polygon without subdivisions (Polygon)\n\nUseful postgis functions\nST_GeomFromText: Constructs a PostGIS ST_Geometry object\nST_AsText: Returns the OGC WKT representation of the geometry\nST_CurveToLine: Converts a given geometry to a linear geometry\nST_Intersects: Returns true if two geometries intersect. Geometries intersect if they have any point in common. ST_Contains: Returns true if the first geometry contains the second.\nHint: The wildcard character ‘%’ needs to be escaped like this ‘%%’.\n\n\n5.3.4 Entity Mapping\nSpecifies the IFC entity used to create instances for feature types. The configuration expects a string containing the exact name of the entity as defined in the IFC schema.\nNot all entities are supported by all IFC versions, so only entities that are available across the supported versions should be used. An exception to this rule applies to IfcBuiltSystem / IfcBuildingSystem. If either of these entities is configured, the system will automatically create the appropriate entity for the selected IFC version.\nIncorrect or unsupported entity names will result in errors. The responsibility for providing a valid and compatible entity name lies with the user.\n\n\n5.3.5 Attributes, properties and group mappings\nTo define a value for an attribute, property or group name, the source needs to be defined. The source is defined by a type and an expression. There are three different types of sources to evaluate the values of attributes, properties and group names:\n\nSQL: The value is determined by an attribute of the SQL statement.\nSTATIC: The value is static and defined directly in the configuration\nCITY_GML (for buildins feature types only): The value is determined by an XPath expression\n\nIt is important that the expression matches the type being used. An SQL source expects a column name to retrieve a value from the SQL result set. A CityGML source expects an XPath expression that selects the desired value (starting from bldg:Building). The static source does not resolve any value and therefore has no requirements for the expression.\nAttributes cannot be freely selected and depend on the ifc entity that is selected. If a configured attribute does not exist, it is ignored. Properties that are configured but not found as output column in the sql result are also ignored.\nThe following figure shows schematically the attributes of the sql statement and their referene as parameters in the configuration.\n\n\n\n5.3.6 Spatial Structure Mapping\nSpecifies the IFC spatial structure element that a created instance is linked to. Spatial structures are shared among instances if their attribute or property values are identical — even across different feature types. As a result, the total number of spatial structures ranges from one up to the number of feature type instances.\n\n\n5.3.7 Entity Type Mapping\nSpecifies an IFC entity type linked to each created instance. Entity types are shared among other instances of this feature type if their attribute or property values are identical. Entity types are only supported by certain IFC entities. The responsibility for configuring this correctly lies with the user. Configured entity types that do not exist are ignored. Attributes cannot be freely selected and depend on the ifc entity that is selected. If a configured attribute does not exist, it is ignored.\n\n\n5.3.8 Groups\nEach feature type instance can be assigned to one or more groups. This configuration is optional—if omitted, no group assignment will be made. For every group assignment, the system creates an IFC group based on the specified group configuration, including its parameters such as entity and any number of attributes or properties. If no configuration exists for a given assigned value, the system will generate a basic IFC group entity without additional attributes or properties. When defining groups, the “.” character can be used to create nested group structures.\nFor example, the group “Amtliche Vermessung.Bodenbedeckung.befestigt” results in the creation of three nested groups. The feature type instances are assigned to the final group in this hierarchy.\n\nAmtliche Vermessung\n\nBodenbedeckung\n\nbefestigt\n\nFeature type instance 1\nFeature type instance 2\nFeature type instance 3\n…\n\n\n\n\n\n\n5.3.9 Special configurations (feature type specific)\nIn this section some feature type specific configurations and concepts are described.\n\n5.3.9.1 Building (building_feature_type)\nThe processing of buildings from CityGML is based on the EGID (a unique identification for all buildings in Switzerland). In the first step, all EGID located within the processing perimeter are identified. To do this, the EGID are queried using an SQL statement from a geodata source within the database (attribute egid in the SQL statement).\nIn a second step, the corresponding building objects are identified within the CityGML files. This is done via an attributive selection, i.e., the EGID must be included in the CityGML records. The parameter egid_xpath defines the XQuery expression through which the EGID number is defined within the CityGML objects.\nThe parameter egid_xpath defines an XQuery expression used to query a geometry definition within CityGML. This parameter can be used to define both the LOG to be processed and the BuildingParts to be processed by formulating the appropriate XQuery expressions.\n\n\n5.3.9.2 Extrusion (extrusion_feature_type)\nExtrusions are a bit more complicated because there are different cross-sections and extrusion types that require different columns. The columns cross_section [cross_section_type] and extrusion_type [extrusion_type] are always mandatory and used to identify the cross-section and extrusion type. See this table in this section that shows the valid values for these columns and the additional required columns for each valid combination.\nFor a list of all extrusion parameters see also this table.\n\n\n\n\nAtazadeh, B., Halalkhor Mirkalaei, L., Olfat, H., Rajabifard, A., Shojaei, D., 2021. Integration of cadastral survey data into building information models. Geo-spatial Information Science 24, 387–402. https://doi.org/10.1080/10095020.2021.1937336\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Configuration Overview</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration Overview</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html",
     "href": "docs/configuration_schema.html",
-    "title": "5  Configuration",
+    "title": "6  Configuration",
     "section": "",
-    "text": "5.1 Type: object\nRoot application configuration.\nThis class defines the complete configuration model for the application. It aggregates settings for logging, internationalization (i18n), Redis and PostGIS database connections, STAC data sources, TIN generation, and IFC export configuration. The configuration is typically loaded from a YAML file using the load() class method, which supports environment variable expansion.",
+    "text": "6.1 Type: object\nRoot application configuration.\nThis class defines the complete configuration model for the application. It aggregates settings for logging, internationalization (i18n), Redis and PostGIS database connections, STAC data sources, TIN generation, and IFC export configuration. The configuration is typically loaded from a YAML file using the load() class method, which supports environment variable expansion.",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#type-object",
     "href": "docs/configuration_schema.html#type-object",
-    "title": "5  Configuration",
+    "title": "6  Configuration",
     "section": "",
     "text": "Property\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nlogging_level\nstring\n✅\nstring\n\nLogging level for the application (e.g., DEBUG, INFO, WARNING)\n\n\nredis\nobject\n✅\nRedisConfig\n\nRedis configuration\n\n\ndb\nobject\n✅\nDBConfig\n\nDatabase configuration\n\n\nifc\nobject\n✅\nIFCConfig\n\nIFC (Industry Foundation Classes) export configuration\n\n\ni18n\nobject or null\n\nI18nConfig\nnull\nInternationalization (i18n) configuration\n\n\nstac\nobject\n\nSTACConfig\n\nSTAC configuration for external data sources\n\n\ntin\nobject\n\nTINConfig\n\nTIN (Triangulated Irregular Network) generation configuration",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#attributeconfig",
     "href": "docs/configuration_schema.html#attributeconfig",
-    "title": "5  Configuration",
-    "section": "6.1 AttributeConfig",
-    "text": "6.1 AttributeConfig\nAttribute mapping configuration\n\n6.1.0.1 Type: object\n\n\n\n\n\n\n\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nattribute\nstring\n✅\nstring\nAttribute name (Only applied if the attribute exists on the entity)\n\n\nvalue\nstring\n✅\nstring\nAttribute value",
+    "title": "6  Configuration",
+    "section": "7.1 AttributeConfig",
+    "text": "7.1 AttributeConfig\nAttribute mapping configuration\n\n7.1.0.1 Type: object\n\n\n\n\n\n\n\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nattribute\nstring\n✅\nstring\nAttribute name (Only applied if the attribute exists on the entity)\n\n\nvalue\nstring\n✅\nstring\nAttribute value",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#buildingattributeconfig",
     "href": "docs/configuration_schema.html#buildingattributeconfig",
-    "title": "5  Configuration",
-    "section": "6.2 BuildingAttributeConfig",
-    "text": "6.2 BuildingAttributeConfig\nAttribute mapping configuration for building feature type\n\n6.2.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nattribute\nstring\n✅\nstring\nAttribute name (Only applied if the attribute exists on the entity)\n\n\nsource\nobject\n✅\nBuildingSourceConfig\nSource configuration for this attribute",
+    "title": "6  Configuration",
+    "section": "7.2 BuildingAttributeConfig",
+    "text": "7.2 BuildingAttributeConfig\nAttribute mapping configuration for building feature type\n\n7.2.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nattribute\nstring\n✅\nstring\nAttribute name (Only applied if the attribute exists on the entity)\n\n\nsource\nobject\n✅\nBuildingSourceConfig\nSource configuration for this attribute",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#buildingentityconfig",
     "href": "docs/configuration_schema.html#buildingentityconfig",
-    "title": "5  Configuration",
-    "section": "6.3 BuildingEntityConfig",
-    "text": "6.3 BuildingEntityConfig\nEntity mapping configuration for building feature type\n\n6.3.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nattributes\narray\n\nBuildingAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nBuildingPropertyConfig\n[]\nList of property mappings\n\n\nbuilding_parts\narray\n\nBuildingPartConfig\n[]\nList of building parts belonging to this building entity",
+    "title": "6  Configuration",
+    "section": "7.3 BuildingEntityConfig",
+    "text": "7.3 BuildingEntityConfig\nEntity mapping configuration for building feature type\n\n7.3.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nattributes\narray\n\nBuildingAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nBuildingPropertyConfig\n[]\nList of property mappings\n\n\nbuilding_parts\narray\n\nBuildingPartConfig\n[]\nList of building parts belonging to this building entity",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#buildingfeaturetype",
     "href": "docs/configuration_schema.html#buildingfeaturetype",
-    "title": "5  Configuration",
-    "section": "6.4 BuildingFeatureType",
-    "text": "6.4 BuildingFeatureType\nFeature type configuration for building feature type\n\n6.4.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nname\nstring\n✅\nstring\n\nFeature type name for the building\n\n\nsql_path\nstring\n✅\nstring\n\nPath to SQL definition for the building feature type. Must return at least a column named ‘egid’.\n\n\negid_xpath\nstring\n✅\nstring\n\nXPath expression to extract EGID identifier from city gml building entities\n\n\nentity_mapping\nobject\n✅\nBuildingEntityConfig\n\nEntity mapping configuration for the building\n\n\nspatial_structure_mapping\nobject\n\nBuildingSpatialEntityConfig\n\nSpatial structure mapping for the building\n\n\ngroup_mapping\narray\n\nBuildingSourceConfig\n[]\nGroup mappings for the building feature type",
+    "title": "6  Configuration",
+    "section": "7.4 BuildingFeatureType",
+    "text": "7.4 BuildingFeatureType\nFeature type configuration for building feature type\n\n7.4.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nname\nstring\n✅\nstring\n\nFeature type name for the building\n\n\nsql_path\nstring\n✅\nstring\n\nPath to SQL definition for the building feature type. Must return at least a column named ‘egid’.\n\n\negid_xpath\nstring\n✅\nstring\n\nXPath expression to extract EGID identifier from city gml building entities\n\n\nentity_mapping\nobject\n✅\nBuildingEntityConfig\n\nEntity mapping configuration for the building\n\n\nspatial_structure_mapping\nobject\n\nBuildingSpatialEntityConfig\n\nSpatial structure mapping for the building\n\n\ngroup_mapping\narray\n\nBuildingSourceConfig\n[]\nGroup mappings for the building feature type",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#buildingpartconfig",
     "href": "docs/configuration_schema.html#buildingpartconfig",
-    "title": "5  Configuration",
-    "section": "6.5 BuildingPartConfig",
-    "text": "6.5 BuildingPartConfig\nBuilding part configuration for building feature type\n\n6.5.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nName of entity according to IFC schema, e.g. ‘IfcWall’\n\n\ngeometry_mapping\nobject or null\n\nGmlGeometryMapping\nnull\nGeometry mapping for the building part\n\n\ncolor\nobject\n\nColor\n\"white\"\nColor assigned to the building part",
+    "title": "6  Configuration",
+    "section": "7.5 BuildingPartConfig",
+    "text": "7.5 BuildingPartConfig\nBuilding part configuration for building feature type\n\n7.5.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nName of entity according to IFC schema, e.g. ‘IfcWall’\n\n\ngeometry_mapping\nobject or null\n\nGmlGeometryMapping\nnull\nGeometry mapping for the building part\n\n\ncolor\nobject\n\nColor\n\"white\"\nColor assigned to the building part",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#buildingpropertyconfig",
     "href": "docs/configuration_schema.html#buildingpropertyconfig",
-    "title": "5  Configuration",
-    "section": "6.6 BuildingPropertyConfig",
-    "text": "6.6 BuildingPropertyConfig\nProperty mapping configuration for building feature type\n\n6.6.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nproperty\nstring\n✅\nstring\nProperty name\n\n\nproperty_set\nstring\n✅\nstring\nProperty set name\n\n\nsource\nobject\n✅\nBuildingSourceConfig\nSource configuration for this property",
+    "title": "6  Configuration",
+    "section": "7.6 BuildingPropertyConfig",
+    "text": "7.6 BuildingPropertyConfig\nProperty mapping configuration for building feature type\n\n7.6.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nproperty\nstring\n✅\nstring\nProperty name\n\n\nproperty_set\nstring\n✅\nstring\nProperty set name\n\n\nsource\nobject\n✅\nBuildingSourceConfig\nSource configuration for this property",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#buildingsource",
     "href": "docs/configuration_schema.html#buildingsource",
-    "title": "5  Configuration",
-    "section": "6.7 BuildingSource",
-    "text": "6.7 BuildingSource\nSupported source types for properties and attributes in building feature types\n\n6.7.0.1 Type: string\nPossible Values: STATIC or SQL or CITY_GML",
+    "title": "6  Configuration",
+    "section": "7.7 BuildingSource",
+    "text": "7.7 BuildingSource\nSupported source types for properties and attributes in building feature types\n\n7.7.0.1 Type: string\nPossible Values: STATIC or SQL or CITY_GML",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#buildingsourceconfig",
     "href": "docs/configuration_schema.html#buildingsourceconfig",
-    "title": "5  Configuration",
-    "section": "6.8 BuildingSourceConfig",
-    "text": "6.8 BuildingSourceConfig\nSource configuration for building feature type\n\n6.8.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\ntype\nstring\n✅\nBuildingSource\nType of the data source\n\n\nexpression\nstring\n✅\nstring\nExpression defining the source data",
+    "title": "6  Configuration",
+    "section": "7.8 BuildingSourceConfig",
+    "text": "7.8 BuildingSourceConfig\nSource configuration for building feature type\n\n7.8.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\ntype\nstring\n✅\nBuildingSource\nType of the data source\n\n\nexpression\nstring\n✅\nstring\nExpression defining the source data",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#buildingspatialentityconfig",
     "href": "docs/configuration_schema.html#buildingspatialentityconfig",
-    "title": "5  Configuration",
-    "section": "6.9 BuildingSpatialEntityConfig",
-    "text": "6.9 BuildingSpatialEntityConfig\nSpatial structure mapping configuration for building feature type\n\n6.9.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nattributes\narray\n\nBuildingAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nBuildingPropertyConfig\n[]\nList of property mappings",
+    "title": "6  Configuration",
+    "section": "7.9 BuildingSpatialEntityConfig",
+    "text": "7.9 BuildingSpatialEntityConfig\nSpatial structure mapping configuration for building feature type\n\n7.9.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nattributes\narray\n\nBuildingAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nBuildingPropertyConfig\n[]\nList of property mappings",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#color",
     "href": "docs/configuration_schema.html#color",
-    "title": "5  Configuration",
-    "section": "6.10 Color",
-    "text": "6.10 Color\nColor configuration based on red, green, blue and alpha channels\n\n6.10.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nr\nnumber\n✅\n0.0 &lt;= x &lt;= 1.0\n\nRed channel\n\n\ng\nnumber\n✅\n0.0 &lt;= x &lt;= 1.0\n\nGreen channel\n\n\nb\nnumber\n✅\n0.0 &lt;= x &lt;= 1.0\n\nBlue channel\n\n\na\nnumber\n\n0.0 &lt;= x &lt;= 1.0\n0.0\nAlpha channel",
+    "title": "6  Configuration",
+    "section": "7.10 Color",
+    "text": "7.10 Color\nColor configuration based on red, green, blue and alpha channels\n\n7.10.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nr\nnumber\n✅\n0.0 &lt;= x &lt;= 1.0\n\nRed channel\n\n\ng\nnumber\n✅\n0.0 &lt;= x &lt;= 1.0\n\nGreen channel\n\n\nb\nnumber\n✅\n0.0 &lt;= x &lt;= 1.0\n\nBlue channel\n\n\na\nnumber\n\n0.0 &lt;= x &lt;= 1.0\n0.0\nAlpha channel",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#coordinatereferencesystem",
     "href": "docs/configuration_schema.html#coordinatereferencesystem",
-    "title": "5  Configuration",
-    "section": "6.11 CoordinateReferenceSystem",
-    "text": "6.11 CoordinateReferenceSystem\nCoordinate reference system for IFC export\n\n6.11.0.1 Type: object\n\n\n\n\n\n\n\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nepsg_code\nstring\n✅\nstring\nEPSG code for the coordinate reference system\n\n\ndescription\nstring\n✅\nstring\nDescription of the coordinate reference system\n\n\ngeodetic_datum\nstring\n✅\nstring\nGeodetic datum for the coordinate reference system\n\n\nvertical_datum\nstring\n✅\nstring\nVertical datum for the coordinate reference system",
+    "title": "6  Configuration",
+    "section": "7.11 CoordinateReferenceSystem",
+    "text": "7.11 CoordinateReferenceSystem\nCoordinate reference system for IFC export\n\n7.11.0.1 Type: object\n\n\n\n\n\n\n\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nepsg_code\nstring\n✅\nstring\nEPSG code for the coordinate reference system\n\n\ndescription\nstring\n✅\nstring\nDescription of the coordinate reference system\n\n\ngeodetic_datum\nstring\n✅\nstring\nGeodetic datum for the coordinate reference system\n\n\nvertical_datum\nstring\n✅\nstring\nVertical datum for the coordinate reference system",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#dbconfig",
     "href": "docs/configuration_schema.html#dbconfig",
-    "title": "5  Configuration",
-    "section": "6.12 DBConfig",
-    "text": "6.12 DBConfig\nPostgis connection configuration\n\n6.12.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\ndbname\nstring\n✅\nstring\nDatabase name\n\n\nuser\nstring\n✅\nstring\nDatabase username\n\n\nhost\nstring\n✅\nstring\nDatabase host address\n\n\nport\ninteger\n✅\ninteger\nDatabase port number\n\n\npassword\nstring\n✅\nstring\nDatabase password",
+    "title": "6  Configuration",
+    "section": "7.12 DBConfig",
+    "text": "7.12 DBConfig\nPostgis connection configuration\n\n7.12.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\ndbname\nstring\n✅\nstring\nDatabase name\n\n\nuser\nstring\n✅\nstring\nDatabase username\n\n\nhost\nstring\n✅\nstring\nDatabase host address\n\n\nport\ninteger\n✅\ninteger\nDatabase port number\n\n\npassword\nstring\n✅\nstring\nDatabase password",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#extrusionattributeconfig",
     "href": "docs/configuration_schema.html#extrusionattributeconfig",
-    "title": "5  Configuration",
-    "section": "6.13 ExtrusionAttributeConfig",
-    "text": "6.13 ExtrusionAttributeConfig\nAttribute mapping configuration for extrusion feature type\n\n6.13.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nattribute\nstring\n✅\nstring\nAttribute name (Only applied if the attribute exists on the entity)\n\n\nsource\nobject\n✅\nExtrusionConfigSource\nSource configuration for this attribute",
+    "title": "6  Configuration",
+    "section": "7.13 ExtrusionAttributeConfig",
+    "text": "7.13 ExtrusionAttributeConfig\nAttribute mapping configuration for extrusion feature type\n\n7.13.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nattribute\nstring\n✅\nstring\nAttribute name (Only applied if the attribute exists on the entity)\n\n\nsource\nobject\n✅\nExtrusionConfigSource\nSource configuration for this attribute",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#extrusionconfigsource",
     "href": "docs/configuration_schema.html#extrusionconfigsource",
-    "title": "5  Configuration",
-    "section": "6.14 ExtrusionConfigSource",
-    "text": "6.14 ExtrusionConfigSource\nSource configuration for extrusion feature type\n\n6.14.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\ntype\nstring\n✅\nExtrusionSource\nType of the data source\n\n\nexpression\nstring\n✅\nstring\nExpression defining the source data",
+    "title": "6  Configuration",
+    "section": "7.14 ExtrusionConfigSource",
+    "text": "7.14 ExtrusionConfigSource\nSource configuration for extrusion feature type\n\n7.14.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\ntype\nstring\n✅\nExtrusionSource\nType of the data source\n\n\nexpression\nstring\n✅\nstring\nExpression defining the source data",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#extrusionentityconfig",
     "href": "docs/configuration_schema.html#extrusionentityconfig",
-    "title": "5  Configuration",
-    "section": "6.15 ExtrusionEntityConfig",
-    "text": "6.15 ExtrusionEntityConfig\nEntity mapping configuration for extrusion feature type\n\n6.15.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nName of entity according to IFC schema, e.g. ‘IfcWall’\n\n\nattributes\narray\n\nExtrusionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nExtrusionPropertyConfig\n[]\nList of property mappings",
+    "title": "6  Configuration",
+    "section": "7.15 ExtrusionEntityConfig",
+    "text": "7.15 ExtrusionEntityConfig\nEntity mapping configuration for extrusion feature type\n\n7.15.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nName of entity according to IFC schema, e.g. ‘IfcWall’\n\n\nattributes\narray\n\nExtrusionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nExtrusionPropertyConfig\n[]\nList of property mappings",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#extrusionentitytypeconfig",
     "href": "docs/configuration_schema.html#extrusionentitytypeconfig",
-    "title": "5  Configuration",
-    "section": "6.16 ExtrusionEntityTypeConfig",
-    "text": "6.16 ExtrusionEntityTypeConfig\nEntity type mapping configuration for extrusion feature type\n\n6.16.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nattributes\narray\n\nExtrusionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nExtrusionPropertyConfig\n[]\nList of property mappings",
+    "title": "6  Configuration",
+    "section": "7.16 ExtrusionEntityTypeConfig",
+    "text": "7.16 ExtrusionEntityTypeConfig\nEntity type mapping configuration for extrusion feature type\n\n7.16.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nattributes\narray\n\nExtrusionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nExtrusionPropertyConfig\n[]\nList of property mappings",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#extrusionfeaturetype",
     "href": "docs/configuration_schema.html#extrusionfeaturetype",
-    "title": "5  Configuration",
-    "section": "6.17 ExtrusionFeatureType",
-    "text": "6.17 ExtrusionFeatureType\nFeature type configuration for extrusion feature type\n\n6.17.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nname\nstring\n✅\nstring\n\nFeature type name for the extrusion\n\n\nentity_mapping\nobject\n✅\nExtrusionEntityConfig\n\nEntity mapping configuration for the extrusion\n\n\nsql_path\nstring or null\n\nstring\nnull\nPath to SQL definition for the extrusion feature type. Exact specification can be found in the configuration documentation.\n\n\nentity_type_mapping\nobject or null\n\nExtrusionEntityTypeConfig\nnull\nEntity type mapping configuration for the extrusion. (Only supported for entities with TypeObject)\n\n\nspatial_structure_mapping\nobject\n\nExtrusionSpatialEntityConfig\n\nSpatial structure mapping for the projection\n\n\ngroup_mapping\narray\n\nExtrusionConfigSource\n[]\nGroup mappings for the projection feature type\n\n\ncolor\nobject\n\nColor\n\"white\"\nColor assigned to the extrusion feature type",
+    "title": "6  Configuration",
+    "section": "7.17 ExtrusionFeatureType",
+    "text": "7.17 ExtrusionFeatureType\nFeature type configuration for extrusion feature type\n\n7.17.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nname\nstring\n✅\nstring\n\nFeature type name for the extrusion\n\n\nentity_mapping\nobject\n✅\nExtrusionEntityConfig\n\nEntity mapping configuration for the extrusion\n\n\nsql_path\nstring or null\n\nstring\nnull\nPath to SQL definition for the extrusion feature type. Exact specification can be found in the configuration documentation.\n\n\nentity_type_mapping\nobject or null\n\nExtrusionEntityTypeConfig\nnull\nEntity type mapping configuration for the extrusion. (Only supported for entities with TypeObject)\n\n\nspatial_structure_mapping\nobject\n\nExtrusionSpatialEntityConfig\n\nSpatial structure mapping for the projection\n\n\ngroup_mapping\narray\n\nExtrusionConfigSource\n[]\nGroup mappings for the projection feature type\n\n\ncolor\nobject\n\nColor\n\"white\"\nColor assigned to the extrusion feature type",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#extrusionpropertyconfig",
     "href": "docs/configuration_schema.html#extrusionpropertyconfig",
-    "title": "5  Configuration",
-    "section": "6.18 ExtrusionPropertyConfig",
-    "text": "6.18 ExtrusionPropertyConfig\nProperty mapping configuration for extrusion feature type\n\n6.18.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nproperty\nstring\n✅\nstring\nProperty name\n\n\nproperty_set\nstring\n✅\nstring\nProperty set name\n\n\nsource\nobject\n✅\nExtrusionConfigSource\nSource configuration for this property",
+    "title": "6  Configuration",
+    "section": "7.18 ExtrusionPropertyConfig",
+    "text": "7.18 ExtrusionPropertyConfig\nProperty mapping configuration for extrusion feature type\n\n7.18.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nproperty\nstring\n✅\nstring\nProperty name\n\n\nproperty_set\nstring\n✅\nstring\nProperty set name\n\n\nsource\nobject\n✅\nExtrusionConfigSource\nSource configuration for this property",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#extrusionsource",
     "href": "docs/configuration_schema.html#extrusionsource",
-    "title": "5  Configuration",
-    "section": "6.19 ExtrusionSource",
-    "text": "6.19 ExtrusionSource\nSupported source types for properties and attributes in extrusion feature types\n\n6.19.0.1 Type: string\nPossible Values: STATIC or SQL",
+    "title": "6  Configuration",
+    "section": "7.19 ExtrusionSource",
+    "text": "7.19 ExtrusionSource\nSupported source types for properties and attributes in extrusion feature types\n\n7.19.0.1 Type: string\nPossible Values: STATIC or SQL",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#extrusionspatialentityconfig",
     "href": "docs/configuration_schema.html#extrusionspatialentityconfig",
-    "title": "5  Configuration",
-    "section": "6.20 ExtrusionSpatialEntityConfig",
-    "text": "6.20 ExtrusionSpatialEntityConfig\nSpatial structure mapping configuration for extrusion feature type\n\n6.20.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nattributes\narray\n\nExtrusionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nExtrusionPropertyConfig\n[]\nList of property mappings",
+    "title": "6  Configuration",
+    "section": "7.20 ExtrusionSpatialEntityConfig",
+    "text": "7.20 ExtrusionSpatialEntityConfig\nSpatial structure mapping configuration for extrusion feature type\n\n7.20.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nattributes\narray\n\nExtrusionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nExtrusionPropertyConfig\n[]\nList of property mappings",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#georeferencing",
     "href": "docs/configuration_schema.html#georeferencing",
-    "title": "5  Configuration",
-    "section": "6.21 GeoReferencing",
-    "text": "6.21 GeoReferencing\nSupported geo referencing methods\n\n6.21.0.1 Type: string\nPossible Values: LO_GEO_REF_30 or LO_GEO_REF_40 or LO_GEO_REF_50",
+    "title": "6  Configuration",
+    "section": "7.21 GeoReferencing",
+    "text": "7.21 GeoReferencing\nSupported geo referencing methods\n\n7.21.0.1 Type: string\nPossible Values: LO_GEO_REF_30 or LO_GEO_REF_40 or LO_GEO_REF_50",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#gmlgeometry",
     "href": "docs/configuration_schema.html#gmlgeometry",
-    "title": "5  Configuration",
-    "section": "6.22 GmlGeometry",
-    "text": "6.22 GmlGeometry\nSupported gml geometry types\n\n6.22.0.1 Type: string\nPossible Values: MULTI_SURFACE or SOLID or COMPOSITE_SOLID",
+    "title": "6  Configuration",
+    "section": "7.22 GmlGeometry",
+    "text": "7.22 GmlGeometry\nSupported gml geometry types\n\n7.22.0.1 Type: string\nPossible Values: MULTI_SURFACE or SOLID or COMPOSITE_SOLID",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#gmlgeometrymapping",
     "href": "docs/configuration_schema.html#gmlgeometrymapping",
-    "title": "5  Configuration",
-    "section": "6.23 GmlGeometryMapping",
-    "text": "6.23 GmlGeometryMapping\nGeometry mapping for building part\n\n6.23.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nxpath\nstring\n✅\nstring\nXPath expression to locate the building part geometry in source data\n\n\ngeometry\nstring\n✅\nGmlGeometry\nReferenced geometry type of the building part",
+    "title": "6  Configuration",
+    "section": "7.23 GmlGeometryMapping",
+    "text": "7.23 GmlGeometryMapping\nGeometry mapping for building part\n\n7.23.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nxpath\nstring\n✅\nstring\nXPath expression to locate the building part geometry in source data\n\n\ngeometry\nstring\n✅\nGmlGeometry\nReferenced geometry type of the building part",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#gridsize",
     "href": "docs/configuration_schema.html#gridsize",
-    "title": "5  Configuration",
-    "section": "6.24 GridSize",
-    "text": "6.24 GridSize\nAvailable grid sizes for projections\n\n6.24.0.1 Type: number\nPossible Values: 0.5 or 2.0",
+    "title": "6  Configuration",
+    "section": "7.24 GridSize",
+    "text": "7.24 GridSize\nAvailable grid sizes for projections\n\n7.24.0.1 Type: number\nPossible Values: 0.5 or 2.0",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#groupconfig",
     "href": "docs/configuration_schema.html#groupconfig",
-    "title": "5  Configuration",
-    "section": "6.25 GroupConfig",
-    "text": "6.25 GroupConfig\nGroup configuration for IFC export\n\n6.25.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\npath\nstring\n✅\nstring\nPath identifier for the group\n\n\nentity_mapping\nobject\n✅\nGroupEntityConfig\nEntity mapping configuration for the group",
+    "title": "6  Configuration",
+    "section": "7.25 GroupConfig",
+    "text": "7.25 GroupConfig\nGroup configuration for IFC export\n\n7.25.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\npath\nstring\n✅\nstring\nPath identifier for the group\n\n\nentity_mapping\nobject\n✅\nGroupEntityConfig\nEntity mapping configuration for the group",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#groupentityconfig",
     "href": "docs/configuration_schema.html#groupentityconfig",
-    "title": "5  Configuration",
-    "section": "6.26 GroupEntityConfig",
-    "text": "6.26 GroupEntityConfig\nEntity mapping configuration for group\n\n6.26.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nName of entity according to IFC schema, e.g. ‘IfcWall’\n\n\nattributes\narray\n\nAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nPropertyConfig\n[]\nList of property mappings",
+    "title": "6  Configuration",
+    "section": "7.26 GroupEntityConfig",
+    "text": "7.26 GroupEntityConfig\nEntity mapping configuration for group\n\n7.26.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nName of entity according to IFC schema, e.g. ‘IfcWall’\n\n\nattributes\narray\n\nAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nPropertyConfig\n[]\nList of property mappings",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#i18nconfig",
     "href": "docs/configuration_schema.html#i18nconfig",
-    "title": "5  Configuration",
-    "section": "6.27 I18nConfig",
-    "text": "6.27 I18nConfig\nInternationalization (i18n) configuration\n\n6.27.0.1 Type: object\n\n\n\n\n\n\n\n\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nde\nstring or null\n\nstring\nnull\nPath to the german translation file\n\n\nfr\nstring or null\n\nstring\nnull\nPath to the french translation string\n\n\nit\nstring or null\n\nstring\nnull\nPath to the italian translation string",
+    "title": "6  Configuration",
+    "section": "7.27 I18nConfig",
+    "text": "7.27 I18nConfig\nInternationalization (i18n) configuration\n\n7.27.0.1 Type: object\n\n\n\n\n\n\n\n\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nde\nstring or null\n\nstring\nnull\nPath to the german translation file\n\n\nfr\nstring or null\n\nstring\nnull\nPath to the french translation string\n\n\nit\nstring or null\n\nstring\nnull\nPath to the italian translation string",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#ifcconfig",
     "href": "docs/configuration_schema.html#ifcconfig",
-    "title": "5  Configuration",
-    "section": "6.28 IFCConfig",
-    "text": "6.28 IFCConfig\nIFC export configuration\n\n6.28.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nauthor\nstring\n✅\nstring\n\nAuthor of the IFC model\n\n\nversion\nstring\n✅\nstring\n\nIFC schema version\n\n\napplication_name\nstring\n✅\nstring\n\nName of the application generating IFC\n\n\nproject_name\nstring\n✅\nstring\n\nProject name in IFC\n\n\ngeo_referencing\nstring\n✅\nGeoReferencing\n\nGeoreferencing configuration for IFC\n\n\ncoordinate_reference_system\nobject\n✅\nCoordinateReferenceSystem\n\nCoordinate reference system for IFC\n\n\nprojection_feature_types\narray\n\nProjectionFeatureType\n[]\nList of projection feature type definitions\n\n\nbuilding_feature_types\narray\n\nBuildingFeatureType\n[]\nList of building feature type definitions\n\n\nextrusion_feature_types\narray\n\nExtrusionFeatureType\n[]\nList of extrusion feature type definitions\n\n\ngroups\narray\n\nGroupConfig\n[]\nList of group configurations for IFC",
+    "title": "6  Configuration",
+    "section": "7.28 IFCConfig",
+    "text": "7.28 IFCConfig\nIFC export configuration\n\n7.28.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nauthor\nstring\n✅\nstring\n\nAuthor of the IFC model\n\n\nversion\nstring\n✅\nstring\n\nIFC schema version\n\n\napplication_name\nstring\n✅\nstring\n\nName of the application generating IFC\n\n\nproject_name\nstring\n✅\nstring\n\nProject name in IFC\n\n\ngeo_referencing\nstring\n✅\nGeoReferencing\n\nGeoreferencing configuration for IFC\n\n\ncoordinate_reference_system\nobject\n✅\nCoordinateReferenceSystem\n\nCoordinate reference system for IFC\n\n\nprojection_feature_types\narray\n\nProjectionFeatureType\n[]\nList of projection feature type definitions\n\n\nbuilding_feature_types\narray\n\nBuildingFeatureType\n[]\nList of building feature type definitions\n\n\nextrusion_feature_types\narray\n\nExtrusionFeatureType\n[]\nList of extrusion feature type definitions\n\n\ngroups\narray\n\nGroupConfig\n[]\nList of group configurations for IFC",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#projectionattributeconfig",
     "href": "docs/configuration_schema.html#projectionattributeconfig",
-    "title": "5  Configuration",
-    "section": "6.29 ProjectionAttributeConfig",
-    "text": "6.29 ProjectionAttributeConfig\nAttribute mapping configuration for projection feature type\n\n6.29.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nattribute\nstring\n✅\nstring\nAttribute name (Only applied if the attribute exists on the entity)\n\n\nsource\nobject\n✅\nProjectionConfigSource\nSource configuration for this attribute",
+    "title": "6  Configuration",
+    "section": "7.29 ProjectionAttributeConfig",
+    "text": "7.29 ProjectionAttributeConfig\nAttribute mapping configuration for projection feature type\n\n7.29.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nattribute\nstring\n✅\nstring\nAttribute name (Only applied if the attribute exists on the entity)\n\n\nsource\nobject\n✅\nProjectionConfigSource\nSource configuration for this attribute",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#projectionconfigsource",
     "href": "docs/configuration_schema.html#projectionconfigsource",
-    "title": "5  Configuration",
-    "section": "6.30 ProjectionConfigSource",
-    "text": "6.30 ProjectionConfigSource\nSource configuration for projection feature type\n\n6.30.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\ntype\nstring\n✅\nProjectionSource\nType of the data source\n\n\nexpression\nstring\n✅\nstring\nExpression defining the source data",
+    "title": "6  Configuration",
+    "section": "7.30 ProjectionConfigSource",
+    "text": "7.30 ProjectionConfigSource\nSource configuration for projection feature type\n\n7.30.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\ntype\nstring\n✅\nProjectionSource\nType of the data source\n\n\nexpression\nstring\n✅\nstring\nExpression defining the source data",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#projectionentityconfig",
     "href": "docs/configuration_schema.html#projectionentityconfig",
-    "title": "5  Configuration",
-    "section": "6.31 ProjectionEntityConfig",
-    "text": "6.31 ProjectionEntityConfig\nEntity mapping configuration for projection feature type\n\n6.31.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nName of entity according to IFC schema, e.g. ‘IfcWall’\n\n\nattributes\narray\n\nProjectionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nProjectionPropertyConfig\n[]\nList of property mappings",
+    "title": "6  Configuration",
+    "section": "7.31 ProjectionEntityConfig",
+    "text": "7.31 ProjectionEntityConfig\nEntity mapping configuration for projection feature type\n\n7.31.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nentity\nstring\n✅\nstring\n\nName of entity according to IFC schema, e.g. ‘IfcWall’\n\n\nattributes\narray\n\nProjectionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nProjectionPropertyConfig\n[]\nList of property mappings",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#projectionentitytypeconfig",
     "href": "docs/configuration_schema.html#projectionentitytypeconfig",
-    "title": "5  Configuration",
-    "section": "6.32 ProjectionEntityTypeConfig",
-    "text": "6.32 ProjectionEntityTypeConfig\nEntity type mapping configuration for projection feature type\n\n6.32.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nattributes\narray\n\nProjectionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nProjectionPropertyConfig\n[]\nList of property mappings",
+    "title": "6  Configuration",
+    "section": "7.32 ProjectionEntityTypeConfig",
+    "text": "7.32 ProjectionEntityTypeConfig\nEntity type mapping configuration for projection feature type\n\n7.32.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nattributes\narray\n\nProjectionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nProjectionPropertyConfig\n[]\nList of property mappings",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#projectionfeaturetype",
     "href": "docs/configuration_schema.html#projectionfeaturetype",
-    "title": "5  Configuration",
-    "section": "6.33 ProjectionFeatureType",
-    "text": "6.33 ProjectionFeatureType\nFeature type configuration for projection feature type\n\n6.33.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nname\nstring\n✅\nstring\n\nFeature type name for the projection\n\n\nsql_path\nstring\n✅\nstring\n\nPath to SQL definition for the projection feature type. Must return at least a column named ‘wkt’.\n\n\nentity_mapping\nobject\n✅\nProjectionEntityConfig\n\nEntity mapping configuration for the projection\n\n\nentity_type_mapping\nobject or null\n\nProjectionEntityTypeConfig\nnull\nEntity type mapping configuration for the projection. (Only supported for entities with TypeObject)\n\n\nspatial_structure_mapping\nobject\n\nProjectionSpatialEntityConfig\n\nSpatial structure mapping for the projection\n\n\ngroup_mapping\narray\n\nProjectionConfigSource\n[]\nGroup mappings for the projection feature type\n\n\ncolor\nobject\n\nColor\n\"white\"\nColor assigned to the projection feature type",
+    "title": "6  Configuration",
+    "section": "7.33 ProjectionFeatureType",
+    "text": "7.33 ProjectionFeatureType\nFeature type configuration for projection feature type\n\n7.33.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nname\nstring\n✅\nstring\n\nFeature type name for the projection\n\n\nsql_path\nstring\n✅\nstring\n\nPath to SQL definition for the projection feature type. Must return at least a column named ‘wkt’.\n\n\nentity_mapping\nobject\n✅\nProjectionEntityConfig\n\nEntity mapping configuration for the projection\n\n\nentity_type_mapping\nobject or null\n\nProjectionEntityTypeConfig\nnull\nEntity type mapping configuration for the projection. (Only supported for entities with TypeObject)\n\n\nspatial_structure_mapping\nobject\n\nProjectionSpatialEntityConfig\n\nSpatial structure mapping for the projection\n\n\ngroup_mapping\narray\n\nProjectionConfigSource\n[]\nGroup mappings for the projection feature type\n\n\ncolor\nobject\n\nColor\n\"white\"\nColor assigned to the projection feature type",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#projectionpropertyconfig",
     "href": "docs/configuration_schema.html#projectionpropertyconfig",
-    "title": "5  Configuration",
-    "section": "6.34 ProjectionPropertyConfig",
-    "text": "6.34 ProjectionPropertyConfig\nProperty mapping configuration for projection feature type\n\n6.34.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nproperty\nstring\n✅\nstring\nProperty name\n\n\nproperty_set\nstring\n✅\nstring\nProperty set name\n\n\nsource\nobject\n✅\nProjectionConfigSource\nSource configuration for this property",
+    "title": "6  Configuration",
+    "section": "7.34 ProjectionPropertyConfig",
+    "text": "7.34 ProjectionPropertyConfig\nProperty mapping configuration for projection feature type\n\n7.34.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nproperty\nstring\n✅\nstring\nProperty name\n\n\nproperty_set\nstring\n✅\nstring\nProperty set name\n\n\nsource\nobject\n✅\nProjectionConfigSource\nSource configuration for this property",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#projectionsource",
     "href": "docs/configuration_schema.html#projectionsource",
-    "title": "5  Configuration",
-    "section": "6.35 ProjectionSource",
-    "text": "6.35 ProjectionSource\nSupported source types for properties and attributes in projection feature types\n\n6.35.0.1 Type: string\nPossible Values: STATIC or SQL",
+    "title": "6  Configuration",
+    "section": "7.35 ProjectionSource",
+    "text": "7.35 ProjectionSource\nSupported source types for properties and attributes in projection feature types\n\n7.35.0.1 Type: string\nPossible Values: STATIC or SQL",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#projectionspatialentityconfig",
     "href": "docs/configuration_schema.html#projectionspatialentityconfig",
-    "title": "5  Configuration",
-    "section": "6.36 ProjectionSpatialEntityConfig",
-    "text": "6.36 ProjectionSpatialEntityConfig\nSpatial structure mapping configuration for projection feature type\n\n6.36.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nattributes\narray\n\nProjectionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nProjectionPropertyConfig\n[]\nList of property mappings",
+    "title": "6  Configuration",
+    "section": "7.36 ProjectionSpatialEntityConfig",
+    "text": "7.36 ProjectionSpatialEntityConfig\nSpatial structure mapping configuration for projection feature type\n\n7.36.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nattributes\narray\n\nProjectionAttributeConfig\n[]\nList of attribute mappings\n\n\nproperties\narray\n\nProjectionPropertyConfig\n[]\nList of property mappings",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#propertyconfig",
     "href": "docs/configuration_schema.html#propertyconfig",
-    "title": "5  Configuration",
-    "section": "6.37 PropertyConfig",
-    "text": "6.37 PropertyConfig\nProperty mapping configuration\n\n6.37.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nproperty\nstring\n✅\nstring\nProperty name\n\n\nproperty_set\nstring\n✅\nstring\nProperty set name\n\n\nvalue\nstring\n✅\nstring\nProperty value",
+    "title": "6  Configuration",
+    "section": "7.37 PropertyConfig",
+    "text": "7.37 PropertyConfig\nProperty mapping configuration\n\n7.37.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\nproperty\nstring\n✅\nstring\nProperty name\n\n\nproperty_set\nstring\n✅\nstring\nProperty set name\n\n\nvalue\nstring\n✅\nstring\nProperty value",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#redisconfig",
     "href": "docs/configuration_schema.html#redisconfig",
-    "title": "5  Configuration",
-    "section": "6.38 RedisConfig",
-    "text": "6.38 RedisConfig\nRedis connection configuration\n\n6.38.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nhost\nstring\n✅\nstring\n\nRedis host address\n\n\nport\ninteger\n✅\ninteger\n\nRedis port number\n\n\ndb\nobject\n✅\nRedisDBConfig\n\nNested Redis database configuration\n\n\nglobal_keyprefix\nstring or null\n\nstring\nnull\nOptional global keyprefix for the Redis result backend\n\n\nqueue\nstring or null\n\nstring\nnull\nOptional queue name for Celery tasks",
+    "title": "6  Configuration",
+    "section": "7.38 RedisConfig",
+    "text": "7.38 RedisConfig\nRedis connection configuration\n\n7.38.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\nhost\nstring\n✅\nstring\n\nRedis host address\n\n\nport\ninteger\n✅\ninteger\n\nRedis port number\n\n\ndb\nobject\n✅\nRedisDBConfig\n\nNested Redis database configuration\n\n\nglobal_keyprefix\nstring or null\n\nstring\nnull\nOptional global keyprefix for the Redis result backend\n\n\nqueue\nstring or null\n\nstring\nnull\nOptional queue name for Celery tasks",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#redisdbconfig",
     "href": "docs/configuration_schema.html#redisdbconfig",
-    "title": "5  Configuration",
-    "section": "6.39 RedisDBConfig",
-    "text": "6.39 RedisDBConfig\nRedis databases configuration\n\n6.39.0.1 Type: object\n\n\n\n\n\n\n\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\ncelery_broker\ninteger\n✅\n0 &lt;= x\nDB index for Celery broker\n\n\ncelery_backend\ninteger\n✅\n0 &lt;= x\nDB index for Celery result backend\n\n\nfile_cache\ninteger\n✅\n0 &lt;= x\nDB index for file cache",
+    "title": "6  Configuration",
+    "section": "7.39 RedisDBConfig",
+    "text": "7.39 RedisDBConfig\nRedis databases configuration\n\n7.39.0.1 Type: object\n\n\n\n\n\n\n\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\ncelery_broker\ninteger\n✅\n0 &lt;= x\nDB index for Celery broker\n\n\ncelery_backend\ninteger\n✅\n0 &lt;= x\nDB index for Celery result backend\n\n\nfile_cache\ninteger\n✅\n0 &lt;= x\nDB index for file cache",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#stacconfig",
     "href": "docs/configuration_schema.html#stacconfig",
-    "title": "5  Configuration",
-    "section": "6.40 STACConfig",
-    "text": "6.40 STACConfig\nSTAC URLs configuration for external data sources\n\n6.40.0.1 Type: object\n\n\n\n\n\n\n\n\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\ndtm_items_url\nstring or null\n\nstring\nnull\nURL to STAC items for DTM data\n\n\nbuilding_items_url\nstring or null\n\nstring\nnull\nURL to STAC items for building data",
+    "title": "6  Configuration",
+    "section": "7.40 STACConfig",
+    "text": "7.40 STACConfig\nSTAC URLs configuration for external data sources\n\n7.40.0.1 Type: object\n\n\n\n\n\n\n\n\n\n\n\nProperty\nType\nRequired\nPossible values\nDefault\nDescription\n\n\n\n\ndtm_items_url\nstring or null\n\nstring\nnull\nURL to STAC items for DTM data\n\n\nbuilding_items_url\nstring or null\n\nstring\nnull\nURL to STAC items for building data",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/configuration_schema.html#tinconfig",
     "href": "docs/configuration_schema.html#tinconfig",
-    "title": "5  Configuration",
-    "section": "6.41 TINConfig",
-    "text": "6.41 TINConfig\nTIN generation configuration\n\n6.41.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\ngrid_size\nnumber\n✅\nGridSize\nTIN grid size\n\n\nmax_height_error\nnumber\n✅\n0.0 &lt;= x &lt;= 0.05\nMaximum allowed height error for TIN generation\n\n\n\n\nMarkdown generated with jsonschema-markdown.\n\n\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
+    "title": "6  Configuration",
+    "section": "7.41 TINConfig",
+    "text": "7.41 TINConfig\nTIN generation configuration\n\n7.41.0.1 Type: object\n\n\n\nProperty\nType\nRequired\nPossible values\nDescription\n\n\n\n\ngrid_size\nnumber\n✅\nGridSize\nTIN grid size\n\n\nmax_height_error\nnumber\n✅\n0.0 &lt;= x &lt;= 0.05\nMaximum allowed height error for TIN generation\n\n\n\n\nMarkdown generated with jsonschema-markdown.\n\n\n\n\nAtazadeh, B., Halalkhor Mirkalaei, L., Olfat, H., Rajabifard, A., Shojaei, D., 2021. Integration of cadastral survey data into building information models. Geo-spatial Information Science 24, 387–402. https://doi.org/10.1080/10095020.2021.1937336\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Configuration</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Configuration</span>"
     ]
   },
   {
     "objectID": "docs/api.html",
     "href": "docs/api.html",
-    "title": "6  API",
+    "title": "7  API",
     "section": "",
-    "text": "6.1 Endpoints\nThis API provides endpoints to generate IFC models based on polygon input, check the generation state, and retrieve the generated file. There is also a swagger documentation site documenting all endpoints: http://0.0.0.0:8000/docs",
+    "text": "7.1 Endpoints\nThis API provides endpoints to generate IFC models based on polygon input, check the generation state, and retrieve the generated file. There is also a swagger documentation site documenting all endpoints: http://0.0.0.0:8000/docs",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>API</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>API</span>"
     ]
   },
   {
     "objectID": "docs/api.html#endpoints",
     "href": "docs/api.html#endpoints",
-    "title": "6  API",
+    "title": "7  API",
     "section": "",
-    "text": "6.1.1 POST /generate-model/\nDescription: Starts the generation of a new IFC model.\nRequest Body (JSON):\n\nIFC_VERSION (string, required): The IFC version (IFC4, IFC4X3_ADD2).\nNAME (string, required): The name of the model.\nPOLYGON (string, required): A closed polygon in WKT (Well-Known Text) format.\nPROJECT_ORIGIN (string, optional): Origin point as a comma-separated string [x,y,z].\nLANGUAGE (string, optional): The language of the model (DE, FR, IT)\n\nResponses:\n\n200: Model generation started successfully. Returns task ID.\n422: Validation error in the input data.\n500: Error.\n\n\n\n\n6.1.2 GET /generation-state/{task_id}\nDescription: Retrieves the current state of a model generation task.\nPath Parameter:\n\ntask_id (string, required): The ID of the generation task.\n\nResponses:\n\n200: Returns the state of the task.\n500: Error.\n\n\n\n\n6.1.3 GET /generated-file/{task_id}\nDescription: Fetches the generated IFC file once the task is completed.\nPath Parameter:\n\ntask_id (string, required): The ID of the generation task.\n\nResponses:\n\n200: Returns the generated file.\n202: Task is still ongoing.\n400: Model generation failed.\n410: File not found.\n500: Error.\n\n\n\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
+    "text": "7.1.1 POST /generate-model/\nDescription: Starts the generation of a new IFC model.\nRequest Body (JSON):\n\nIFC_VERSION (string, required): The IFC version (IFC4, IFC4X3_ADD2).\nNAME (string, required): The name of the model.\nPOLYGON (string, required): A closed polygon in WKT (Well-Known Text) format.\nPROJECT_ORIGIN (string, optional): Origin point as a comma-separated string [x,y,z].\nLANGUAGE (string, optional): The language of the model (DE, FR, IT)\n\nResponses:\n\n200: Model generation started successfully. Returns task ID.\n422: Validation error in the input data.\n500: Error.\n\n\n\n\n7.1.2 GET /generation-state/{task_id}\nDescription: Retrieves the current state of a model generation task.\nPath Parameter:\n\ntask_id (string, required): The ID of the generation task.\n\nResponses:\n\n200: Returns the state of the task.\n500: Error.\n\n\n\n\n7.1.3 GET /generated-file/{task_id}\nDescription: Fetches the generated IFC file once the task is completed.\nPath Parameter:\n\ntask_id (string, required): The ID of the generation task.\n\nResponses:\n\n200: Returns the generated file.\n202: Task is still ongoing.\n400: Model generation failed.\n410: File not found.\n500: Error.\n\n\n\n\n\nAtazadeh, B., Halalkhor Mirkalaei, L., Olfat, H., Rajabifard, A., Shojaei, D., 2021. Integration of cadastral survey data into building information models. Geo-spatial Information Science 24, 387–402. https://doi.org/10.1080/10095020.2021.1937336\n\n\nbuildingSmart International, 2023. IFC4.3.2.0 Documentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html (accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 – Referenzhandbuch, Version 2.1.0, eCH Government Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC City Geography Markup Language (CityGML) Encoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024 Industry Foundation Classes (IFC) for data sharing in the construction and facility management industries — Part 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006 Geographic information - Simple feature access - Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup Language (CityGML) Part 1: Conceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur Nutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025a. Integration von Geodaten in BIM/IFC - ein Open-Source-Ansatz für die Daten der amtlichen Vermessung. Phase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. Integration of land administration data into BIM/IFC - an open source approach for Swiss cadastral survey data, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025 Leitungskataster - Wegleitung zur Norm SIA 405.\n\n\nSIA 405, 2025. SIA 405:2025 Geodaten zu Ver- und Entsorgungsleitungen.",
     "crumbs": [
       "Application",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>API</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>API</span>"
     ]
   },
   {
@@ -704,7 +737,7 @@
     "href": "docs/references.html",
     "title": "References",
     "section": "",
-    "text": "buildingSmart International, 2023. IFC4.3.2.0\nDocumentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html\n(accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 –\nReferenzhandbuch, Version 2.1.0, eCH\nGovernment Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC\nCity Geography Markup Language (CityGML)\nEncoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024\nIndustry Foundation Classes (IFC) for data\nsharing in the construction and facility management industries —\nPart 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006\nGeographic information - Simple feature access\n- Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup\nLanguage (CityGML) Part 1:\nConceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur\nNutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen\nund Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J.,\n2025a. Integration von Geodaten in\nBIM/IFC - ein Open-Source-Ansatz\nfür die Daten der amtlichen Vermessung.\nPhase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J.,\n2025b. Integration\nof land administration data into BIM/IFC - an\nopen source approach for Swiss cadastral survey\ndata, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025\nLeitungskataster - Wegleitung zur Norm\nSIA 405.\n\n\nSIA 405, 2025. SIA 405:2025\nGeodaten zu Ver- und\nEntsorgungsleitungen.",
+    "text": "Atazadeh, B., Halalkhor Mirkalaei, L., Olfat, H., Rajabifard, A.,\nShojaei, D., 2021. Integration of cadastral survey data into\nbuilding information models. Geo-spatial Information Science 24,\n387–402. https://doi.org/10.1080/10095020.2021.1937336\n\n\nbuildingSmart International, 2023. IFC4.3.2.0\nDocumentation (official 4.3.2.0) [WWW Document]. URL https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/index.html\n(accessed 11.28.2023).\n\n\neCH-0031 iliRefMan, 2024. eCH-0031 INTERLIS 2 –\nReferenzhandbuch, Version 2.1.0, eCH\nGovernment Standards.\n\n\nGröger, G., Kolbe, T.H., Nagel, C., Häfele, K.-H., 2012. OGC\nCity Geography Markup Language (CityGML)\nEncoding Standard. OGC Version 2.0.0, 344.\n\n\nISO 16739-1, 2024. ISO 16739-1:2024\nIndustry Foundation Classes (IFC) for data\nsharing in the construction and facility management industries —\nPart 1: Data schema.\n\n\nISO 19125-1, 2006. ISO 19125-1:2006\nGeographic information - Simple feature access\n- Part 1: Common architecture.\n\n\nCityGML CM, 2021. OGC City Geography Markup\nLanguage (CityGML) Part 1:\nConceptual Model Standard.\n\n\nSchildknecht, L., 2023. Leitungskataster nach SIA405 - Analyse zur\nNutzung von IFC. Phase0 - Journal für integriertes Planen, Bauen\nund Betreiben. https://doi.org/10.21428/71cd88bc.016ca100\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J.,\n2025a. Integration von Geodaten in\nBIM/IFC - ein Open-Source-Ansatz\nfür die Daten der amtlichen Vermessung.\nPhase0 - Journal für integriertes Planen, Bauen und Betreiben. https://doi.org/10.21428/71cd88bc.1463dde3\n\n\nSchildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J.,\n2025b. Integration\nof land administration data into BIM/IFC - an\nopen source approach for Swiss cadastral survey\ndata, Dreiländertagung der DGPF, der OVG und der SGPF; Band 33.\n\n\nSIA 4008, 2025. SIA 4008:2025\nLeitungskataster - Wegleitung zur Norm\nSIA 405.\n\n\nSIA 405, 2025. SIA 405:2025\nGeodaten zu Ver- und\nEntsorgungsleitungen.",
     "crumbs": [
       "Appendices",
       "References"
