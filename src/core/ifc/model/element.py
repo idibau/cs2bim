@@ -15,7 +15,7 @@ class Element:
     def add_property(self, property_set: str, key: str, value: Any):
         if property_set not in self.property_sets:
             self.property_sets[property_set] = PropertySet(property_set)
-        self.property_sets[property_set].add_property(key, str(value))
+        self.property_sets[property_set].add_property(key, value)
 
     def add_attribute(self, name: str, value: Any):
         if name not in self.attributes:

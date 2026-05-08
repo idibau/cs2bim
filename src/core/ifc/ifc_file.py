@@ -2,9 +2,12 @@
 This module contains wrapper functions to simplify the process of building an ifc using ifcopenshells "create_entity" function.
 """
 
-import math
 import datetime
 import logging
+import math
+from decimal import Decimal
+from typing import Any
+
 from ifcopenshell import file, entity_instance, guid
 from shapely import Point
 
@@ -394,8 +397,15 @@ class IfcFile:
             BasisCurve=basis_curve,
         )
 
-    def create_ifc_property_single_value(self, name: str, text: str) -> entity_instance:
-        nominal_value = self.file.create_entity("IfcText", self.translator.translate(text, self.language))
+    def create_ifc_property_single_value(self, name: str, value: Any) -> entity_instance:
+        if isinstance(value, bool):
+            nominal_value = self.file.create_entity("IfcBoolean", value)
+        elif isinstance(value, (Decimal, float)):
+            nominal_value = self.file.create_entity("IfcReal", float(value))
+        elif isinstance(value, int):
+            nominal_value = self.file.create_entity("IfcInteger", value)
+        else:
+            nominal_value = self.file.create_entity("IfcText", self.translator.translate(str(value), self.language))
         return self.file.create_entity("IfcPropertySingleValue", Name=self.translator.translate(name, self.language),
                                        NominalValue=nominal_value)
 
