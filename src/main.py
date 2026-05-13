@@ -13,6 +13,7 @@ Example:
           --POLYGON=<polygon> \
           --PROJECT_ORIGIN=<origin>
           --LANGUAGE=<langugae>
+          --FEATURE_TYPES=<feature_types>
 
 Required Arguments:
     --IFC_VERSION (str): The IFC version (e.g., "IFC4").
@@ -23,6 +24,7 @@ Optional Arguments:
     --PROJECT_ORIGIN (str): Comma-separated XYZ coordinates for project origin
         (e.g., "0.0,0.0,0.0"). If omitted, a calculated origin is used.
     --LANGUAGE (str): Language code for localization (e.g., "EN").
+    --FEATURE_TYPES (str): Comma-separated list of feature types to include in the model.
 """
 
 import argparse
@@ -56,8 +58,9 @@ parser = argparse.ArgumentParser(description="Generate an IFC model based on pro
 parser.add_argument("--IFC_VERSION", help="IFC version (e.g., IFC4)")
 parser.add_argument("--NAME", help="Project name")
 parser.add_argument("--POLYGON", help="Polygon data for the IFC model")
-parser.add_argument("--PROJECT_ORIGIN", help="Project origin as 'x,y,z'")
+parser.add_argument("--PROJECT_ORIGIN", help="Project origin as 'x,y,z' (optional)")
 parser.add_argument("--LANGUAGE", help="Language code (optional)")
+parser.add_argument("--FEATURE_TYPES", help="Feature types (optional)")
 
 args = parser.parse_args()
 
@@ -93,9 +96,15 @@ else:
 
     language = Language(args.LANGUAGE) if args.LANGUAGE else None
 
+    if args.FEATURE_TYPES:
+        feature_types = [ft.strip() for ft in args.FEATURE_TYPES.split(",")]
+    else:
+        feature_types = None
+
     logger.info(
         f"IFC_VERSION: {ifc_version.name}, NAME: {args.NAME}, POLYGON: {args.POLYGON}, "
         f"PROJECT_ORIGIN: {project_origin if project_origin else 'calculated'}, LANGUAGE: {language}"
+        f"FEATURE_TYPES: {feature_types}"
     )
 
     # -----------------------------------------------------------------------
@@ -105,7 +114,7 @@ else:
 
     log_memory_usage()
 
-    model = model_generator.generate(ifc_version, args.NAME, args.POLYGON, project_origin)
+    model = model_generator.generate(ifc_version, args.NAME, args.POLYGON, project_origin, feature_types)
     ifc_file = model.map_to_ifc(language)
     logger.info("writing ifc")
     ifc_file.write(get_output_path(args.NAME))

@@ -26,7 +26,8 @@ class ModelGenerator:
 
         return Point(min_x, min_y, 0)
 
-    def generate(self, ifc_version: IfcVersion, name: str, polygon: str, project_origin: Point | None):
+    def generate(self, ifc_version: IfcVersion, name: str, polygon: str, project_origin: Point,
+                 feature_types: list[str]):
         logger.info("start generating model")
         if project_origin is None:
             project_origin = self.calculate_origin_from_polygon(polygon)
@@ -35,19 +36,19 @@ class ModelGenerator:
 
         logger.info("process projection feature types")
         projection_processor = ProjectionProcessor()
-        projections = projection_processor.process(polygon, project_origin)
+        projections = projection_processor.process(polygon, project_origin, feature_types)
         for key, projections in projections.items():
             model.add_projections(key, projections)
 
         logger.info("process building feature types")
         building_processor = BuildingProcessor()
-        buildings = building_processor.process(polygon, project_origin)
+        buildings = building_processor.process(polygon, project_origin, feature_types)
         for key, buildings in buildings.items():
             model.add_buildings(key, buildings)
 
         logger.info("process extrusion feature types")
         extrusion_processor = ExtrusionProcessor()
-        extrusions = extrusion_processor.process(polygon, project_origin)
+        extrusions = extrusion_processor.process(polygon, project_origin, feature_types)
         for key, extrusion in extrusions.items():
             model.add_extrusions(key, extrusion)
 

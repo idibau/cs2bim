@@ -56,3 +56,13 @@ There is also a swagger documentation site documenting all endpoints: http://0.0
 - `400`: Model generation failed.
 - `410`: File not found.
 - `500`: Error.
+
+### 4. `GET /feature-types`
+
+**Description:** Returns a list of all feature types supported by the backend. This can be used to populate the dropdown
+in the frontend.
+
+**Responses:**
+
+- `200`: Returns the list.
+- `500`: Error.

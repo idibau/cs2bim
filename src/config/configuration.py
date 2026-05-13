@@ -388,11 +388,21 @@ class Configuration(BaseModel):
         Raises:
             ValueError: If `stac.dtm_items_url` is missing while projections are defined,
                 or if `stac.building_items_url` is missing while building feature types are defined.
+            ValueError: If feature type names are not unique.
         """
         if self.ifc.projection_feature_types and self.stac.dtm_items_url is None:
             raise ValueError("stac.dtm_items_url is required when ifc.projection_feature_types is not empty")
         if self.ifc.building_feature_types and self.stac.building_items_url is None:
             raise ValueError("stac.building_items_url is required when ifc.building_feature_types is not empty")
+
+        feature_types = []
+        feature_types.extend([ft.name for ft in self.ifc.projection_feature_types])
+        feature_types.extend([ft.name for ft in self.ifc.building_feature_types])
+        feature_types.extend([ft.name for ft in self.ifc.extrusion_feature_types])
+
+        if len(feature_types) != len(set(feature_types)):
+            raise ValueError("feature type names must be unique")
+
         return self
 
 
