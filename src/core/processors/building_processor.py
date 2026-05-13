@@ -30,7 +30,7 @@ class BuildingProcessor:
         feature_types = {ft.name: ft for ft in config.ifc.building_feature_types if
                          not feature_types or ft.name in feature_types}
         if not feature_types:
-            logger.info("no building feature types configured")
+            logger.info("no building feature types configured or selected")
             return {}
 
         logger.info(f"fetch city gml files")

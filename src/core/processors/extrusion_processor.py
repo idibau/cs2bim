@@ -31,7 +31,7 @@ class ExtrusionProcessor:
         feature_types = {ft.name: ft for ft in config.ifc.extrusion_feature_types if
                          not feature_types or ft.name in feature_types}
         if not feature_types:
-            logger.info("no extrusion feature types configured")
+            logger.info("no extrusion feature types configured or selected")
             return {}
 
         extrusions_by_key = {}

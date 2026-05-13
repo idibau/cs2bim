@@ -30,7 +30,7 @@ class ProjectionProcessor:
         feature_types_by_key = {ft.name: ft for ft in config.ifc.projection_feature_types if
                                 not feature_types or ft.name in feature_types}
         if not feature_types_by_key:
-            logger.info("no projection feature types configured")
+            logger.info("no projection feature types configured or selected")
             return {}
 
         wkts = []
