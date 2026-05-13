@@ -1,3 +1,5 @@
+from typing import Any
+
 class PropertySet:
     """Class holding a set of properties"""
 
@@ -5,7 +7,7 @@ class PropertySet:
         self.name = name
         self.properties = {}
 
-    def add_property(self, key: str, value: str):
+    def add_property(self, key: str, value: Any):
         if key not in self.properties:
             self.properties[key] = value
         else:

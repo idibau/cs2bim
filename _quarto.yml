@@ -3,19 +3,21 @@ project:
 
 book:
   title: "cs2bim"
+  subtitle: "Geostandards.ch"
   author: "FHNW Institut Digitales Bauen"
-  date: 2026-03-26
+  date: 2026-05-08
   date-format: DD.MM.YYYY
   downloads: [pdf]
   sidebar:
     collapse-level: 5   # to show a deep toc-hierarchy in the sidebar
   page-footer: 
-    center: FHNW - Institut Digitales Bauen [![CC BY-NC-SA](./_img/by-nc-sa.png){width=50px .light-content}](https://creativecommons.org/licenses/by-nc-sa/4.0/){target="_blank"}
+    center: Geostandards.ch / FHNW  [![CC BY-NC-SA](./_img/by-nc-sa.png){width=50px .light-content}](https://creativecommons.org/licenses/by-nc-sa/4.0/){target="_blank"}
   chapters:
     - index.md
     - part: Concepts
       chapters:
         - docs/concepts.md
+        - docs/mapping_principles.md
         - docs/mapping_conventions.md
     - part: Application
       chapters:
@@ -39,11 +41,12 @@ format:
     toc-depth: 5   # to show a deep toc-hierarchy in the sidebar
     theme:
 #      - flatly
-#      - cosmo
+      - cosmo
 #      - brand
-      - yeti
+#      - yeti
     link-external-newwindow: true
-    
+    title-block-banner: true
+
   pdf:
     documentclass: scrreprt
     # toc-title: Inhaltsverzeichnis
