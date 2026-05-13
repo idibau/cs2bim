@@ -45,24 +45,28 @@ Example: "Year ( 1990 )" → "year ( 1990 )" → "year 1990 " → "year 1990" �
 
 ## External Data
 
-The projection feature types require a DTM file source provided via a STAC API. The building feature types require a
-CityGML file source.
-These URLs must be defined in the STAC configuration.
+External data is retrieved via the STAC API v1. Responses must include the specific data source attributes defined
+below. In cases where a returned compressed file contains multiple files, the system will only process the first file
+that matches the required format.
 
 ### DTM
 
-Needs to be set if there are projection feature types configured.
-Expected asset properties:
+Required if projection feature types are configured.
 
-- type = application/x.ascii-xyz+zip
-- eo:gsd / gsd = config.tin.grid_size
+* **Format:** ASCII XYZ file.
+* **Compression:** Must be a `.zip` archive.
+* **Asset Properties:**
+    - `type` = `application/x.ascii-xyz+zip`
+    - `eo:gsd` / `gsd` = `config.tin.grid_size`
 
 ### Buildings
 
-Needs to be set if there are building feature types configured.
-Expected asset properties:
+Required if building feature types are configured.
 
-- type = application/x.gml+zip
+* **Format:** CityGML file.
+* **Compression:** Must be a `.zip` archive.
+* **Asset Properties:**
+    - `type` = `application/x.gml+zip`
 
 ## IFC Export
 
