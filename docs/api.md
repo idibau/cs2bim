@@ -59,7 +59,8 @@ There is also a swagger documentation site documenting all endpoints: http://0.0
 
 ### 4. `GET /feature-types`
 
-**Description:** Returns a list of all feature types supported by the backend.
+**Description:** Returns a list of all feature types supported by the backend. This can be used to populate the dropdown
+in the frontend.
 
 **Responses:**
 

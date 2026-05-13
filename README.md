@@ -102,6 +102,7 @@ The run parameters are:
   is set, all other geometry values in the ifc are calculated relative to the origin.
 - LANGUAGE (optional): The language into which the model should be translated (supported values,
   see [Language](./src/i18n/language.py)).
+- FEATURE_TYPES (optional): Optional comma-separated list of feature types to export.
 
 Example:
 
@@ -116,7 +117,8 @@ curl -X 'POST' \
   "NAME": "API Test",
   "POLYGON": "POLYGON((2615490.59 1264657.53, 2615782.92 1264674.74, 2615747.00 1264604.23, 2615490.59 1264657.53))",
   "PROJECT_ORIGIN": "2600000,1200000,0",
-  "LANGUAGE": "DE"
+  "LANGUAGE": "DE",
+  "FEATURE_TYPES": "liegenschaft,selbstrecht"
 }
 ```
 
@@ -172,6 +174,7 @@ python main.py \
   --POLYGON=<polygon> \
   --PROJECT_ORIGIN=<origin>
   --LANGUAGE=<langugae>
+  --FEATURE_TYPES=<feature_types>
 ```
 
 ## Resulting IFC Files

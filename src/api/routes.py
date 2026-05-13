@@ -95,7 +95,7 @@ async def generate_model(request_data: GenerateModelRequest):
         feature_types = [ft.strip() for ft in request_data.FEATURE_TYPES.split(",")]
 
     logger.info(
-        f"Received generate-model request: IFC_VERSION={ifc_version}, NAME={name}, POLYGON={polygon}, PROJECT_ORIGIN={project_origin if project_origin else 'calculated'}"
+        f"Received generate-model request: IFC_VERSION={ifc_version}, NAME={name}, POLYGON={polygon}, PROJECT_ORIGIN={project_origin if project_origin else 'calculated'}, FEATURE_TYPES={feature_types}"
     )
 
     task = model_generation_task.delay(ifc_version.value, name, polygon, project_origin,
