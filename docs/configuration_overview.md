@@ -129,11 +129,9 @@ all EGID located within the processing perimeter are identified. To do this, the
 from a geodata source within the database.
 In a second step, the corresponding building objects are identified within the CityGML files. This is done via an
 attributive selection, i.e., the EGID must be included in the CityGML records. The parameter ```egid_xpath``` defines
-the XQuery expression through which the EGID number is defined within the CityGML objects.
-
-The parameter ```egid_xpath``` defines an XQuery expression used to query a geometry definition within CityGML. This
-parameter can be used to define both the LOG to be processed and the BuildingParts to be processed by formulating the
-appropriate XQuery expressions.
+the XQuery expression through which the EGID number is defined within the CityGML objects. This parameter can be used to
+define both the LOD to be processed and the BuildingParts to be processed by formulating the appropriate XQuery
+expressions.
 
 ##### SQL Requirements
 
