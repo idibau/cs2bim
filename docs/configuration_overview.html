@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>5&nbsp; Configuration Overview – cs2bim</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -54,15 +57,14 @@ div.csl-indent {
 <link href="../docs/architecture.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -132,9 +134,7 @@ div.csl-indent {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../index.html" class="sidebar-logo-link">
-      </a>
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">cs2bim</a> 
         <div class="sidebar-tools-main">
@@ -255,18 +255,27 @@ div.csl-indent {
   <li><a href="#ifc-export" id="toc-ifc-export" class="nav-link" data-scroll-target="#ifc-export"><span class="header-section-number">5.3</span> IFC Export</a>
   <ul>
   <li><a href="#geo-referencing" id="toc-geo-referencing" class="nav-link" data-scroll-target="#geo-referencing"><span class="header-section-number">5.3.1</span> Geo referencing</a></li>
-  <li><a href="#feature-types" id="toc-feature-types" class="nav-link" data-scroll-target="#feature-types"><span class="header-section-number">5.3.2</span> Feature types</a></li>
-  <li><a href="#sql" id="toc-sql" class="nav-link" data-scroll-target="#sql"><span class="header-section-number">5.3.3</span> SQL</a></li>
+  <li><a href="#feature-types" id="toc-feature-types" class="nav-link" data-scroll-target="#feature-types"><span class="header-section-number">5.3.2</span> Feature Types</a>
+  <ul>
+  <li><a href="#projection-projection_feature_types" id="toc-projection-projection_feature_types" class="nav-link" data-scroll-target="#projection-projection_feature_types"><span class="header-section-number">5.3.2.1</span> Projection (<code>projection_feature_types</code>)</a>
+  <ul class="collapse">
+  <li><a href="#sql-requirements" id="toc-sql-requirements" class="nav-link" data-scroll-target="#sql-requirements"><span class="header-section-number">5.3.2.1.1</span> SQL Requirements</a></li>
+  </ul></li>
+  <li><a href="#building-building_feature_types" id="toc-building-building_feature_types" class="nav-link" data-scroll-target="#building-building_feature_types"><span class="header-section-number">5.3.2.2</span> Building (<code>building_feature_types</code>)</a>
+  <ul class="collapse">
+  <li><a href="#sql-requirements-1" id="toc-sql-requirements-1" class="nav-link" data-scroll-target="#sql-requirements-1"><span class="header-section-number">5.3.2.2.1</span> SQL Requirements</a></li>
+  </ul></li>
+  <li><a href="#extrusion-extrusion_feature_types" id="toc-extrusion-extrusion_feature_types" class="nav-link" data-scroll-target="#extrusion-extrusion_feature_types"><span class="header-section-number">5.3.2.3</span> Extrusion (<code>extrusion_feature_types</code>)</a>
+  <ul class="collapse">
+  <li><a href="#sql-requirements-2" id="toc-sql-requirements-2" class="nav-link" data-scroll-target="#sql-requirements-2"><span class="header-section-number">5.3.2.3.1</span> SQL Requirements</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#sql-configuration" id="toc-sql-configuration" class="nav-link" data-scroll-target="#sql-configuration"><span class="header-section-number">5.3.3</span> SQL configuration</a></li>
   <li><a href="#entity-mapping" id="toc-entity-mapping" class="nav-link" data-scroll-target="#entity-mapping"><span class="header-section-number">5.3.4</span> Entity Mapping</a></li>
   <li><a href="#attributes-properties-and-group-mappings" id="toc-attributes-properties-and-group-mappings" class="nav-link" data-scroll-target="#attributes-properties-and-group-mappings"><span class="header-section-number">5.3.5</span> Attributes, properties and group mappings</a></li>
   <li><a href="#spatial-structure-mapping" id="toc-spatial-structure-mapping" class="nav-link" data-scroll-target="#spatial-structure-mapping"><span class="header-section-number">5.3.6</span> Spatial Structure Mapping</a></li>
   <li><a href="#entity-type-mapping" id="toc-entity-type-mapping" class="nav-link" data-scroll-target="#entity-type-mapping"><span class="header-section-number">5.3.7</span> Entity Type Mapping</a></li>
   <li><a href="#groups" id="toc-groups" class="nav-link" data-scroll-target="#groups"><span class="header-section-number">5.3.8</span> Groups</a></li>
-  <li><a href="#special-configurations-feature-type-specific" id="toc-special-configurations-feature-type-specific" class="nav-link" data-scroll-target="#special-configurations-feature-type-specific"><span class="header-section-number">5.3.9</span> Special configurations (feature type specific)</a>
-  <ul>
-  <li><a href="#building-building_feature_type" id="toc-building-building_feature_type" class="nav-link" data-scroll-target="#building-building_feature_type"><span class="header-section-number">5.3.9.1</span> Building (building_feature_type)</a></li>
-  <li><a href="#extrusion-extrusion_feature_type" id="toc-extrusion-extrusion_feature_type" class="nav-link" data-scroll-target="#extrusion-extrusion_feature_type"><span class="header-section-number">5.3.9.2</span> Extrusion (extrusion_feature_type)</a></li>
-  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -315,20 +324,30 @@ Define how data will be structured and exported to IFC.</li>
 </section>
 <section id="external-data" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="external-data"><span class="header-section-number">5.2</span> External Data</h2>
-<p>The projection feature types require a DTM file source provided via a STAC API. The building feature types require a CityGML file source. These URLs must be defined in the STAC configuration.</p>
+<p>External data is retrieved via the STAC API v1. Responses must include the specific data source attributes defined below. In cases where a returned compressed file contains multiple files, the system will only process the first file that matches the required format.</p>
 <section id="dtm" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="dtm"><span class="header-section-number">5.2.1</span> DTM</h3>
-<p>Needs to be set if there are projection feature types configured. Expected asset properties:</p>
+<p>Required if projection feature types are configured.</p>
 <ul>
-<li>type = application/x.ascii-xyz+zip</li>
-<li>eo:gsd / gsd = config.tin.grid_size</li>
+<li><strong>Format:</strong> ASCII XYZ file.</li>
+<li><strong>Compression:</strong> Must be a <code>.zip</code> archive.</li>
+<li><strong>Asset Properties:</strong>
+<ul>
+<li><code>type</code> = <code>application/x.ascii-xyz+zip</code></li>
+<li><code>eo:gsd</code> / <code>gsd</code> = <code>config.tin.grid_size</code></li>
+</ul></li>
 </ul>
 </section>
 <section id="buildings" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="buildings"><span class="header-section-number">5.2.2</span> Buildings</h3>
-<p>Needs to be set if there are building feature types configured. Expected asset properties:</p>
+<p>Required if building feature types are configured.</p>
 <ul>
-<li>type = application/x.gml+zip</li>
+<li><strong>Format:</strong> CityGML file.</li>
+<li><strong>Compression:</strong> Must be a <code>.zip</code> archive.</li>
+<li><strong>Asset Properties:</strong>
+<ul>
+<li><code>type</code> = <code>application/x.gml+zip</code></li>
+</ul></li>
 </ul>
 </section>
 </section>
@@ -376,27 +395,91 @@ If not provided, the system sets a project origin in the lower left corner on a 
 </div>
 </section>
 <section id="feature-types" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="feature-types"><span class="header-section-number">5.3.2</span> Feature types</h3>
-<p>A “feature type” is the definition of a set of objects that are exported as instances of an IFC entity with common definitions. Each feature type is defined through a configuration that describes how data from the GIS database is transformed into IFC instances. For every configured feature type, a set of instances is created. Currently, three different kinds of feature types are supported. They differ according to the type of geometry conversion.</p>
-<ul>
-<li><p><strong>Projection</strong> (projection_feature_types)<br>
-Projections are feature types that generate IFC structures by projecting 2D areas onto a 3D surface (in this case the terrain model).</p></li>
-<li><p><strong>Building</strong> (building_feature_types)<br>
-Buildings are feature types that are generated by transforming 3D building geometries from CityGML into IFC structures.</p></li>
-<li><p><strong>Extrusion</strong> (extrusion_feature_types)<br>
-Extrusions are feature types that are generated by extruding 2D areas along a polyline. Five different cross-section types (CIRCLE, EGG, RECTANGLE, POLYGON_GLOBAL, POLYGON_LOCAL) and three different extrusion types (POLYLINE (horizontal) , SURFACE (vertical) and POINT (vertical)) are supported.</p></li>
-</ul>
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="feature-types"><span class="header-section-number">5.3.2</span> Feature Types</h3>
+<p>A “feature type” is the definition of a set of objects that are exported as instances of an IFC entity with common definitions. Each feature type is defined through a configuration that describes how data from the GIS database is transformed into IFC instances. For every configured feature type, a set of instances is created.</p>
+<p>The basis of a feature type is a SQL statement that selects data from a geodata source. The SQL statement is stored in a separate file and executed at the beginning of constructing the feature type instances. It determines what objects to create for the feature type. The input parameter <code>%(polygon)s</code> is the input WKT string of the application and is expected to be used to select the relevant instances for the request. Each result row is converted into an IFC instance. The required return columns differ per feature type and are documented below.</p>
+<section id="projection-projection_feature_types" class="level4" data-number="5.3.2.1">
+<h4 data-number="5.3.2.1" class="anchored" data-anchor-id="projection-projection_feature_types"><span class="header-section-number">5.3.2.1</span> Projection (<code>projection_feature_types</code>)</h4>
+<p>Projections are feature types that generate IFC structures by projecting 2D areas onto a 3D surface (in this case the terrain model).</p>
+<section id="sql-requirements" class="level5" data-number="5.3.2.1.1">
+<h5 data-number="5.3.2.1.1" class="anchored" data-anchor-id="sql-requirements"><span class="header-section-number">5.3.2.1.1</span> SQL Requirements</h5>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>wkt</code></td>
+<td>2D WKT Polygon</td>
+<td>The area to be projected</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="sql" class="level3" data-number="5.3.3">
-<h3 data-number="5.3.3" class="anchored" data-anchor-id="sql"><span class="header-section-number">5.3.3</span> SQL</h3>
-<p>The basis of a feature type is a SQL statement, that selects data from a geodata source. The SQL statement is stored in a separate file. It is executed at the beginning of constructing of the feature type instances. It determines what objects to create for the feature type. The input parameter “%(polygon)s” is the input WKT string of the application. It is expected that this input parameter is used to select the relevant feature type instances for the request. Each result row is converted into an IFC instance. The required return columns differ from feature type to feature type.</p>
-<ul>
-<li>Projection: Expects a column with the name <code>wkt</code>[2d_wkt_polygon] that represents the area to be projected.</li>
-<li>Building: Expects a column with the name <code>egid</code>[number] that contains the egid number to identify the building.</li>
-<li>Extrusion: Extrusions are a bit more complicated because there are different cross-sections and extrusion types that require different columns. The columns <code>cross_section</code> [<a href="../src/core/ifc/model/extrusion/cross_section_type.py">cross_section_type</a>] and <code>extrusion_type</code> [<a href="../src/core/ifc/model/extrusion/extrusion_type.py">extrusion_type</a>] are always mandatory and used to identify the cross-section and extrusion type. Depending on the <code>cross_section</code> and <code>extrusion_type</code> additional columns are needed. See <a href="#building-building_feature_type">this section</a> for more details.</li>
-</ul>
-<p>Additional columns can be included to provide values that can be referenced in the attribute, property, or group configurations, see <a href="#attributes-properties-and-group-mappings">this section</a> for more details.</p>
-<p>Selecting the data by SQL is flexible and can be done in various ways. Specifically use geometry functions (e.g.&nbsp;intersections) and aggregation functions. There are some examples in the sql folder.</p>
+</section>
+<section id="building-building_feature_types" class="level4" data-number="5.3.2.2">
+<h4 data-number="5.3.2.2" class="anchored" data-anchor-id="building-building_feature_types"><span class="header-section-number">5.3.2.2</span> Building (<code>building_feature_types</code>)</h4>
+<p>Buildings are feature types that are generated by transforming 3D building geometries from CityGML into IFC structures. Each building is identified by its EGID (Eidgenössischer Gebäudeidentifikator). In the first step, all EGID located within the processing perimeter are identified. To do this, the EGID are queried using an SQL statement from a geodata source within the database. In a second step, the corresponding building objects are identified within the CityGML files. This is done via an attributive selection, i.e., the EGID must be included in the CityGML records. The parameter <code>egid_xpath</code> defines the XQuery expression through which the EGID number is defined within the CityGML objects. This parameter can be used to define both the LOD to be processed and the BuildingParts to be processed by formulating the appropriate XQuery expressions.</p>
+<section id="sql-requirements-1" class="level5" data-number="5.3.2.2.1">
+<h5 data-number="5.3.2.2.1" class="anchored" data-anchor-id="sql-requirements-1"><span class="header-section-number">5.3.2.2.1</span> SQL Requirements</h5>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>egid</code></td>
+<td>number</td>
+<td>The EGID number to identify the building</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="extrusion-extrusion_feature_types" class="level4" data-number="5.3.2.3">
+<h4 data-number="5.3.2.3" class="anchored" data-anchor-id="extrusion-extrusion_feature_types"><span class="header-section-number">5.3.2.3</span> Extrusion (<code>extrusion_feature_types</code>)</h4>
+<p>Extrusions are feature types that generate 3D geometry by extruding 2D cross-sections along a polyline. Five different cross-section types (CIRCLE, EGG, RECTANGLE, POLYGON_GLOBAL, POLYGON_LOCAL) and three different extrusion types ( POLYLINE (horizontal), SURFACE (vertical), POINT (vertical)) are supported. The required columns depend on the combination of cross-section and extrusion type.</p>
+<section id="sql-requirements-2" class="level5" data-number="5.3.2.3.1">
+<h5 data-number="5.3.2.3.1" class="anchored" data-anchor-id="sql-requirements-2"><span class="header-section-number">5.3.2.3.1</span> SQL Requirements</h5>
+<p>The following columns are always mandatory:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cross_section</code></td>
+<td><a href="../src/core/ifc/model/extrusion/cross_section_type.py">cross_section_type</a></td>
+<td>Identifies the cross-section shape</td>
+</tr>
+<tr class="even">
+<td><code>extrusion_type</code></td>
+<td><a href="../src/core/ifc/model/extrusion/extrusion_type.py">extrusion_type</a></td>
+<td>Identifies how the shape is extruded</td>
+</tr>
+</tbody>
+</table>
+<p>Depending on the <code>cross_section</code> and <code>extrusion_type</code>, additional columns are needed. See <a href="../docs/concepts.html#tbl-extrusion-parameter-usage">this table</a> in <a href="../docs/concepts.html#extrusions">this section</a> that shows the valid values for these columns and the additional required columns for each valid combination.</p>
+<p>For a list of all extrusion parameters see also <a href="../docs/concepts.html#tbl-extrusion-parameters">this table</a>.</p>
+</section>
+</section>
+</section>
+<section id="sql-configuration" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="sql-configuration"><span class="header-section-number">5.3.3</span> SQL configuration</h3>
+<p>Each feature type requires a specific SQL statement with the requirements described in the chapter above. Additional columns can be included to provide values that can be referenced in the attribute, property, or group configurations, see <a href="#attributes-properties-and-group-mappings">this section</a> for more details.</p>
+<p>Selecting the data by SQL is flexible and can be done in various ways. Specifically use geometry functions (e.g. intersections) and aggregation functions. There are some examples in the sql folder.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../uploads/sql.jpg" class="img-fluid figure-img"></p>
@@ -432,8 +515,8 @@ Extrusions are feature types that are generated by extruding 2D areas along a po
 <li><code>CITY_GML</code> (for buildins feature types only): The value is determined by an XPath expression</li>
 </ul>
 <p>It is important that the expression matches the type being used. An SQL source expects a column name to retrieve a value from the SQL result set. A CityGML source expects an XPath expression that selects the desired value (starting from bldg:Building). The static source does not resolve any value and therefore has no requirements for the expression.<br>
-Attributes cannot be freely selected and depend on the ifc entity that is selected. If a configured attribute does not exist, it is ignored. Properties that are configured but not found as output column in the sql result are also ignored.</p>
-<p>The following figure shows schematically the attributes of the sql statement and their referene as parameters in the configuration.<br>
+Attributes cannot be freely selected and depend on the ifc entity that is selected. If a configured attribute does not exist, it is ignored. Properties that are configured but not found as output column in the SQL result are also ignored.</p>
+<p>The following figure shows schematically the attributes of the SQL statement and their reference as parameters in the configuration.<br>
 <img src="../uploads/configuration-schema.png" class="img-fluid quarto-figure quarto-figure-left" style="width:75.0%" alt="SQL Configuration Schema"></p>
 </section>
 <section id="spatial-structure-mapping" class="level3" data-number="5.3.6">
@@ -463,20 +546,6 @@ Attributes cannot be freely selected and depend on the ifc entity that is select
 </ul></li>
 </ul></li>
 </ul>
-</section>
-<section id="special-configurations-feature-type-specific" class="level3" data-number="5.3.9">
-<h3 data-number="5.3.9" class="anchored" data-anchor-id="special-configurations-feature-type-specific"><span class="header-section-number">5.3.9</span> Special configurations (feature type specific)</h3>
-<p>In this section some feature type specific configurations and concepts are described.</p>
-<section id="building-building_feature_type" class="level4" data-number="5.3.9.1">
-<h4 data-number="5.3.9.1" class="anchored" data-anchor-id="building-building_feature_type"><span class="header-section-number">5.3.9.1</span> Building (building_feature_type)</h4>
-<p>The processing of buildings from CityGML is based on the EGID (a unique identification for all buildings in Switzerland). In the first step, all EGID located within the processing perimeter are identified. To do this, the EGID are queried using an SQL statement from a geodata source within the database (attribute <code>egid</code> in the SQL statement).<br>
-In a second step, the corresponding building objects are identified within the CityGML files. This is done via an attributive selection, i.e., the EGID must be included in the CityGML records. The parameter <code>egid_xpath</code> defines the XQuery expression through which the EGID number is defined within the CityGML objects.</p>
-<p>The parameter <code>egid_xpath</code> defines an XQuery expression used to query a geometry definition within CityGML. This parameter can be used to define both the LOG to be processed and the BuildingParts to be processed by formulating the appropriate XQuery expressions.</p>
-</section>
-<section id="extrusion-extrusion_feature_type" class="level4" data-number="5.3.9.2">
-<h4 data-number="5.3.9.2" class="anchored" data-anchor-id="extrusion-extrusion_feature_type"><span class="header-section-number">5.3.9.2</span> Extrusion (extrusion_feature_type)</h4>
-<p>Extrusions are a bit more complicated because there are different cross-sections and extrusion types that require different columns. The columns <code>cross_section</code> [<a href="../src/core/ifc/model/extrusion/cross_section_type.py">cross_section_type</a>] and <code>extrusion_type</code> [<a href="../src/core/ifc/model/extrusion/extrusion_type.py">extrusion_type</a>] are always mandatory and used to identify the cross-section and extrusion type. See <a href="../docs/concepts.html#tbl-extrusion-parameter-usage">this table</a> in <a href="../docs/concepts.html#extrusions">this section</a> that shows the valid values for these columns and the additional required columns for each valid combination.</p>
-<p>For a list of all extrusion parameters see also <a href="../docs/concepts.html#tbl-extrusion-parameters">this table</a>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -517,7 +586,6 @@ Schildknecht, L., Schneider, O., Meyer, J., Gamma, C., Gschwind, J., 2025b. <em>
 <span>SIA</span> 405, 2025. <em><span>SIA</span> 405:2025 <span>Geodaten</span> zu <span>Ver-</span> und <span>Entsorgungsleitungen</span></em>.
 </div>
 </div>
-</section>
 </section>
 </section>
 
