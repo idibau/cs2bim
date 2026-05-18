@@ -17,16 +17,20 @@
   * [References](#references)
 <!-- TOC -->
 
-> [!NOTE] 
+> [!NOTE]
 > See the detailed documentation [here](https://idibau.github.io/cs2bim/).
 
 ## Project description
 
 The Conference of Cantonal Geoinformation and Cadastral Offices (KGK) has launched a research project *Cadastral
-Surveying Data to Building Information Modeling (CS2BIM)*. The _Institute of Virtual Design and Construction_ and the
-_Institute of Geomatics_ at the University of Applied Sciences Northwestern Switzerland (FHNW) have developed a service
-based on open source libraries. The service transforms GIS-based cadastral survey (CS) data with area geometries (2D) to
-IFC instances with 3D surface geometries.
+Surveying Data to Building Information Modeling (CS2BIM)*. The project is part of the initiative
+of [SGS/ Geostandards.ch](https://geostandards.ch/).
+
+![Geostandards.ch](uploads/logo-geostandards.png){fig-align="left" width=50%}
+
+The _Institute of Virtual Design and Construction_ and the _Institute of Geomatics_ at the University of Applied
+Sciences Northwestern Switzerland (FHNW) have developed a service based on open source libraries. The service transforms
+GIS-based cadastral survey (CS) data with area geometries (2D) to IFC instances with 3D surface geometries.
 
 The service contains the following major components:
 
