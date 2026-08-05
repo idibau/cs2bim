@@ -60,12 +60,10 @@ class ExtrusionProcessor:
                 }
 
                 factory_func = SECTION_FACTORIES.get(cross_section_type)
-                if not factory_func:
-                    logger.warning(f"Not supported cross section type: {cross_section_type.name}")
-                    continue
 
                 cross_section = factory_func(row)
                 if cross_section is None:
+                    logger.warning(f"Not supported cross section type: {cross_section_type.name}")
                     continue
 
                 try:

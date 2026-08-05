@@ -38,6 +38,9 @@ class Area:
         if not self.raster_points_buffer:
             raise ValueError("No raster points found for area")
 
+        if self.polygon.area <= 0.01:
+            raise ValueError("Area is too small too process")
+
         self.raster_points_buffer = np.vstack(self.raster_points_buffer)
         if self.raster_points_within:
             self.raster_points_within = np.vstack(self.raster_points_within)
