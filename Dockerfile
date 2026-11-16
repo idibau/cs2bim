@@ -5,6 +5,8 @@ LABEL org.opencontainers.image.source="https://github.com/idibau/cs2bim"
 WORKDIR /workspace
 
 RUN apt-get update
+RUN apt-get install -y --no-install-recommends ca-certificates
+RUN update-ca-certificates
 
 RUN useradd -m appuser
 RUN chown -R appuser:appuser /workspace
